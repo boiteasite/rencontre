@@ -1,0 +1,75 @@
+.rencLabel{position:relative;width:340px;float:left;}
+.rencLabel>span,.rencType[onclick]{cursor:pointer;color:blue;}
+.rencType{color:blue;}
+.rencValeur{margin-left:350px;}
+a.rencSupp,span.rencSupp{display:inline-block;background:transparent url("../images/sprite.png") no-repeat scroll -5px -7px;width:12px;height:12px;margin:0 3px;cursor:pointer;}
+a.rencPlus,span.rencPlus{display:inline-block;background:transparent url("../images/sprite.png") no-repeat scroll -5px -31px;width:12px;height:12px;margin:0 3px;cursor:pointer;}
+a.rencEdit{display:inline-block;background:transparent url("../images/sprite.png") no-repeat scroll -5px -57px;width:12px;height:12px;margin:0 3px;}
+a.rencUp{display:inline-block;background:transparent url("../images/sprite.png") no-repeat scroll -7px -138px;width:6px;height:12px;margin:0 3px;}
+a.rencDown{display:inline-block;background:transparent url("../images/sprite.png") no-repeat scroll -7px -165px;width:6px;height:12px;margin:0 3px;}
+a.rencBlockon{display:inline-block;background:transparent url("../images/eyeVert16.png") no-repeat scroll 0 0;width:16px;height:16px;margin:0 3px;}
+a.rencBlockoff{display:inline-block;background:transparent url("../images/eyeRouge16.png") no-repeat scroll 0 0;width:16px;height:16px;margin:0 3px;}
+a.rencMailon{display:inline-block;background:transparent url("../images/mailVert16.png") no-repeat scroll 0 0;width:16px;height:16px;margin:0 3px;}
+a.rencMailoff{display:inline-block;background:transparent url("../images/mailRouge16.png") no-repeat scroll 0 0;width:16px;height:16px;margin:0 3px;}
+table.membre, table.prison{text-align:center;}
+table.membre tr:nth-child(2n+2), table.prison tr:nth-child(2n+2) {background-color:#e5d4ac;}
+table.membre td{max-width:100px;padding:4px 10px 0;}
+table.portraitTable input{width:auto;}
+table.prison td{padding:4px 15px 0;}
+table.tem{text-align:center;border:2px solid #0074a2;width:auto; margin:15px;}
+table.tem tr:nth-child(2n+1){background-color:#9bd0e8;}
+table.tem td:first-child{text-align:left;}
+table.tem td:nth-child(3){color:green;}
+table.tem th,table.tem td{padding:4px 6px;vertical-align:middle;}
+
+.left{float:left;}
+.right{float:right;}
+.clear{clear:both;}
+.calign{text-align:center;}
+.br{height:10px;}
+.rencBox{position:relative;border:2px solid #e5d4ac;border-radius:5px;padding:5px;margin-bottom:1%;font-size:14px;}
+.rencBox a{text-decoration:none;}
+.rencBox ul iframe{position:absolute;width:150px;top:-2px;left:20px;max-height:22px!important;}
+.demiBox{width:49%;}
+.pleineBox{width:100%;}
+.petiteBox{width:33%;}
+.grandeBox {width:66%;}
+.portraitPhoto{min-width:268px;}
+.rencPortrait{min-height:600px;}
+.rencPortrait img.flag{float:right;margin:10px;border:1px solid #555;border-radius:2px;}
+.rencPortrait .titre{margin-bottom:10px;}
+.rencPortrait .ville{color:#dd6e28;margin:-10px 0 5px;}
+.renc1{color:#dd6e28;margin:5px 0;font-weight:700;}
+.rencPortrait p{clear:both;margin-top:10px;font-size:85%;}
+.rencPortrait ul, .rencMenu ul{list-style:none;margin-bottom:0;}
+.rencPortrait ul li, .rencMenu ul li{display:-moz-inline-box;display:inline-block;background-color:#e5d4ac;color:#1c0d02;border:1px solid #9f5824;border-radius:4px;margin:3px;padding:5px;font-size:90%;}
+.rencPortrait .portraitOnglet{display:inline-block;font-size:.8em;line-height:1em;padding:6px 4px 10px;margin:0 1px 0 0;border-radius:4px;border:1px solid #e8e5ce;cursor:pointer;}
+.portraitProfil table{font-size:80%;margin-top:-2px;width:100%;display:none;border:1px solid #e5d4ac;}
+.portraitProfil table tr:nth-child(2n+1){background-color:#e5d4ac;}
+.portraitProfil table tr{width:100%;}
+.portraitProfil table td{padding:2px 0 2px 10px;line-height:2em;}
+.rencPortrait input{width:90%;}
+.rencPortrait label{font-weight:700;}
+.rencPortrait .portraitProfil label{display:inline-block;font-weight:400;}
+.compte{float:left;height:80px;border:1px solid #e5d4ac;border-radius:3px;margin:1px;padding:5px;}
+.compte span{font-weight:700;}
+.compte select{height:auto;}
+.compte input[type="checkbox"]{width:auto;}
+
+.bouton{display:-moz-inline-box;display:inline-block;background-color:#e5d4ac;border:1px solid #555;border-radius:4px;margin:3px;padding:5px;font-size:90%;}
+.bouton:hover{cursor:pointer;background-color:#bfb190;}
+.bouton a{color:#555;text-decoration:none;}
+#portraitSauv{margin:20px;}
+#portraitSauv span{color:#555;margin-right:10px;padding:5px 10px;border-radius:4px;background-color:#e5d4ac;border:1px solid #555;}
+#portraitSauv span:hover{cursor:pointer;background-color:#bfb190;}
+img#portraitGrande{}
+.rencBlocimg{max-width:260px;}
+#bulle{position:absolute;display:none;background-color:#9bd0e8;color:#333;width:400px;border:2px solid #0074a2;padding:5px;word-wrap:break-word;overflow:hidden;font-size:.9em;line-height:1.1em;}
+@media screen and (max-width:1200px){
+	#rencDonation{display:none;}
+}
+@media screen and (max-width:480px){
+	.rencPortrait th,.rencPortrait td,.rencPortrait tr{display:block;}
+	.rencPortrait table tr:nth-child(2n+1){background:none;}
+	.rencPortrait table td:nth-child(2n+1){background-color:#e8e5ce;}
+}

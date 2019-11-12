@@ -1,0 +1,2472 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rencontre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-11 09:55+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: malgrange <jacques.malgrange@gmail.com>\n"
+"Language-Team: boiteasite.fr <contacter@boiteasite.fr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../inc/base.php:137
+msgid "lines"
+msgstr "satırlar"
+
+#: ../inc/base.php:350 ../inc/base.php:1286
+msgid "Done!"
+msgstr "Bitti!"
+
+#: ../inc/base.php:350 ../inc/rencontre_filter.php:1516
+msgid "photo"
+msgstr "Fotoğraf"
+
+#: ../inc/base.php:421 ../inc/base.php:532 ../inc/base.php:535
+msgid "TO CHANGE"
+msgstr "DEĞİŞMEK İÇİN"
+
+#: ../inc/base.php:443 ../inc/base.php:2565
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Unit"
+msgstr "Birim"
+
+#: ../inc/base.php:1078 ../inc/base.php:2399
+msgid "Update member profile"
+msgstr "Üye profilini güncelle"
+
+#: ../inc/base.php:1079 ../inc/base.php:2400
+msgid "You have made changes. Remember to update when you're done."
+msgstr "Değişiklik yaptınız. İşiniz bittiğinde güncellemeyi unutmayın."
+
+#: ../inc/base.php:1084 ../rencontre.php:236
+msgid "General"
+msgstr "Genel"
+
+#: ../inc/base.php:1085 ../inc/rencontre_filter.php:275
+#: ../inc/rencontre_filter.php:597 ../inc/rencontre_filter.php:796
+msgid "Login"
+msgstr "Giriş"
+
+#: ../inc/base.php:1086
+msgid "Display"
+msgstr "Görüntüle"
+
+#: ../inc/base.php:1087
+msgid "E-mails"
+msgstr "E-postalar"
+
+#: ../inc/base.php:1088
+msgid "CSV"
+msgstr "CSV"
+
+#: ../inc/base.php:1093
+msgid "Premium"
+msgstr "Premium"
+
+#: ../inc/base.php:1114
+msgid ""
+"OpenSSL doesn't seem to be working. Some features of this plugin will not be "
+"available."
+msgstr ""
+"OpenSSL çalışmıyor gibi görünüyor. Bu eklentinin bazı özellikleri "
+"kullanılamayacak."
+
+#: ../inc/base.php:1118
+msgid "Plugin page"
+msgstr "Eklenti sayfası"
+
+#: ../inc/base.php:1132
+msgid "Country selected by default"
+msgstr "Ülke varsayılan olarak seçildi"
+
+#: ../inc/base.php:1140
+msgid "Number of days in jail (deleted account)"
+msgstr "Kodesteki gün sayısı (silinen hesap)"
+
+#: ../inc/base.php:1153
+msgid "Use member's picture as WordPress avatar"
+msgstr "Üyenin resmini WordPress avatarı olarak kullan"
+
+#: ../inc/base.php:1157
+msgid "Old messages deleted during maintenance (recommended)"
+msgstr "Eski mesajlar bakım sırasında silinir (önerilen)"
+
+#: ../inc/base.php:1160 ../inc/base.php:1172 ../inc/base.php:1298
+#: ../inc/base.php:1403 ../inc/base.php:1451 ../inc/base.php:3155
+#: ../inc/base.php:3182
+msgid "No"
+msgstr "Hayır"
+
+#: ../inc/base.php:1161 ../inc/base.php:1452
+msgid "Monthly"
+msgstr "Aylık"
+
+#: ../inc/base.php:1162
+msgid "Quarterly"
+msgstr "Üç aylık"
+
+#: ../inc/base.php:1163
+msgid "Biannual"
+msgstr "Yılda iki defa"
+
+#: ../inc/base.php:1164
+msgid "Annual"
+msgstr "Yıllık"
+
+#: ../inc/base.php:1169
+msgid "Inactive users deleted during maintenance"
+msgstr "İnaktif kullanıcıların bakım sırasında silinmesi"
+
+#: ../inc/base.php:1173
+msgid "Year"
+msgstr "yıl"
+
+#: ../inc/base.php:1174 ../inc/base.php:1175 ../inc/base.php:1176
+#: ../inc/base.php:1177
+msgid "Years"
+msgstr "yıl"
+
+#: ../inc/base.php:1182
+msgid "Hour maintenance tasks (off peak)"
+msgstr "Bakım görevleri saati (mesai saati dışı)"
+
+#: ../inc/base.php:1187
+msgid "hours"
+msgstr "saatler"
+
+#: ../inc/base.php:1193
+msgid "Framework for the Facebook Like button"
+msgstr "Facebook için Beğen düğmesi çerçevesi"
+
+#: ../inc/base.php:1197
+msgid "Do not remove WP roles"
+msgstr "WP rollerini kaldırma"
+
+#: ../inc/base.php:1201
+msgid "Do not remove user in WP when remove in Rencontre"
+msgstr "Kullanıcıları Rencontre'den kaldırırken WP'den kaldırmayın"
+
+#: ../inc/base.php:1207
+msgid ""
+"Unchecked : WP roles will be destroyed. Users who are not in Rencontre will "
+"be destroyed. This is the best mode for a big and exclusive dating site."
+msgstr ""
+"İşaretlenmemiş: WP rolleri yok olacak. Rencontre'de olmayan kullanıcılar "
+"imha edilecek. Bu, büyük ve seçkin tanışma sitesi için en iyi moddur."
+
+#: ../inc/base.php:1208
+msgid ""
+"Checked : Better choice to test this plugin or to use with other one "
+"(forum...). Over time, the site will be slower with numerous abandoned "
+"account."
+msgstr ""
+"İşaretlenmiş: Bu eklentiyi test etmek veya diğeriyle (forum ...) kullanmak "
+"için daha iyi bir seçim. Zaman içinde, site çok sayıda terk edilmiş hesapla "
+"daha yavaş olacaktır."
+
+#: ../inc/base.php:1212
+msgid "Clean-up when uninstall"
+msgstr "Kaldırırken tenmizle"
+
+#: ../inc/base.php:1217 ../inc/base.php:1274 ../inc/base.php:1431
+#: ../inc/base.php:1523 ../inc/base.php:2995 ../inc/base.php:3129
+#: ../inc/base.php:3207 ../inc/base.php:3442
+#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:279
+#: ../templates/rencontre_registration_part1.php:144
+#: ../templates/rencontre_registration_part2.php:58
+#: ../templates/rencontre_registration_part3.php:109
+msgid "Save"
+msgstr "Kaydet"
+
+#: ../inc/base.php:1222
+msgid "Images names"
+msgstr "Resim adları"
+
+#: ../inc/base.php:1223
+msgid "Be careful, all pictures of the members will have another name."
+msgstr "Dikkatli olun, üyelerin tüm resimlerinin başka bir adı olacak."
+
+#: ../inc/base.php:1230
+msgid "Images names are encoded"
+msgstr "Resim adları şifrelenmiştir"
+
+#: ../inc/base.php:1231
+msgid "Images names are not encoded"
+msgstr "Resim adları şifrelenmemiştir"
+
+#: ../inc/base.php:1232
+msgid "I don't know if it's encoded or not"
+msgstr "Şifrelenmiş olup olmadığını bilmiyorum"
+
+#: ../inc/base.php:1239
+msgid "Encode all images names"
+msgstr "Bütün resimleri şifrele"
+
+#: ../inc/base.php:1240
+msgid "Decode all images names"
+msgstr "Bütün resimlerin şifrelerini çöz"
+
+#: ../inc/base.php:1242
+msgid "Cleanup abandoned images"
+msgstr "Terk edilmiş görüntüleri temizleme"
+
+#: ../inc/base.php:1257
+msgid "AppID for Facebook login (empty if not installed)"
+msgstr "AppID for Facebook bağlantısı (yüklü değilse boştur)"
+
+#: ../inc/base.php:1261
+msgid "Enable rapid registration"
+msgstr "Hızlı kaydı etkinleştir"
+
+#: ../inc/base.php:1265
+msgid "Do not request a new password after registration"
+msgstr "Kayıttan sonra bir şifre talep etme"
+
+#: ../inc/base.php:1269
+msgid "Redirect to the plugin page after login"
+msgstr "Giriş yaptıktan sonra eklenti sayfasına yönlendir"
+
+#: ../inc/base.php:1295
+msgid "Display a different name than login"
+msgstr "Giriş yapmadan farklı bir isim göster"
+
+#: ../inc/base.php:1299
+msgid "Uneditable after registration"
+msgstr "Kayıt işleminden sonra düzenlenemez"
+
+#: ../inc/base.php:1300
+msgid "Editable in \"my account\""
+msgstr "\"Hesabım\" bölümünde düzenlenebilir"
+
+#: ../inc/base.php:1305
+msgid "Number of portrait on logged out plugin homepage"
+msgstr "Ana sayfadaki bağlanmamış portre sayısı"
+
+#: ../inc/base.php:1314
+msgid "Width of portrait on logged out plugin homepage"
+msgstr "Çıkış yapılan eklenti ana sayfasında portre genişliği"
+
+#: ../inc/base.php:1317
+msgid "Empty"
+msgstr "Boş"
+
+#: ../inc/base.php:1323
+msgid "Update plugin homepage for logged out users"
+msgstr "Bağlantısız ana sayfayı tekrardan yükle"
+
+#: ../inc/base.php:1326
+msgid "24h (recommended)"
+msgstr "24 saat (önerilen)"
+
+#: ../inc/base.php:1327 ../inc/base.php:1328 ../inc/base.php:1329
+#: ../inc/base.php:1330
+msgid "h"
+msgstr "saat"
+
+#: ../inc/base.php:1331 ../inc/base.php:1332 ../inc/base.php:1333
+#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
+#: ../templates/rencontre_search.php:79
+msgid "min"
+msgstr "minimum"
+
+#: ../inc/base.php:1335
+msgid "Update now"
+msgstr "Şimdi yükle"
+
+#: ../inc/base.php:1339
+msgid "Number of days to wait before presence homepage"
+msgstr "Ana sayfanın görünmesinden önce beklenecek gün sayısı"
+
+#: ../inc/base.php:1347
+msgid "Max number of results per search"
+msgstr "Arama başına maksimum sonuç sayısı"
+
+#: ../inc/base.php:1359
+msgid "Display profiles searched in a new tab"
+msgstr "Yeni bir sekmede aranan profilleri görüntüleme"
+
+#: ../inc/base.php:1365
+msgid "Only members from the same country on the logged on plugin homepage"
+msgstr "Yalnızca ana sayfamdaki ülkem"
+
+#: ../inc/base.php:1371 ../templates/rencontre_my_home.php:28
+msgid "Today's birthday"
+msgstr "Bugünün doğumgünü"
+
+#: ../inc/base.php:1375
+msgid "Profiles currently online"
+msgstr "Şu an çevrimiçi olan profiller"
+
+#: ../inc/base.php:1379
+msgid "Enable chat"
+msgstr "Sohbeti etkinleştir"
+
+#: ../inc/base.php:1383
+msgid "Geolocation"
+msgstr "Coğrafi Konum"
+
+#: ../inc/base.php:1387
+msgid "Number of photos"
+msgstr "Fotoğraf sayısı"
+
+#: ../inc/base.php:1395
+msgid "Regenerate all photos"
+msgstr "Tüm fotoğrafları yeniden oluştur"
+
+#: ../inc/base.php:1400
+msgid "View a discrete copyright on photos"
+msgstr "Fotoğraflarda ayrı telif hakkı görüntüle"
+
+#: ../inc/base.php:1404
+msgid "Upwardly inclined"
+msgstr "Yukarı doğru eğimli"
+
+#: ../inc/base.php:1405
+msgid "Downwardly inclined"
+msgstr "Aşağı doğru eğimli"
+
+#: ../inc/base.php:1410
+msgid "Copyright text on pictures. Empty => Site URL."
+msgstr "Resimlerle ilgili telif hakkı metni. Boş => Site URL'si."
+
+#: ../inc/base.php:1414
+msgid "Members without photo are less visible"
+msgstr "Fotoğrafsız üyeler daha az görünür"
+
+#: ../inc/base.php:1418
+msgid "Members without photo cannot zoom other members"
+msgstr "Fotoğrafsız üyeler diğer üye fotoğreflarını büyütemez"
+
+#: ../inc/base.php:1422
+msgid "Members without photo, attention-catcher and ad cannot send message"
+msgstr ""
+"Fotoğrafı, dikkat çekici metini ve reklamı olmayan üyeler, mesaj gönderemez"
+
+#: ../inc/base.php:1426
+msgid "Members without photo, attention-catcher and ad cannot make a report"
+msgstr ""
+"Fotoğrafı, dikkat çekici metini ve reklamı olmayan üyeler, rapor edemez"
+
+#: ../inc/base.php:1444
+msgid "Send an email to the user whose account is deleted"
+msgstr "Hesabı silnen kullanıcılara e-posta gönder"
+
+#: ../inc/base.php:1448
+msgid "Automatic sending a summary email to members (shared daily)"
+msgstr "Üyelere otomatik olarak özet e-posta gönder (günlük paylaşılır)"
+
+#: ../inc/base.php:1453
+msgid "Fortnightly"
+msgstr "İki haftada bir"
+
+#: ../inc/base.php:1454
+msgid "Weekly"
+msgstr "Haftalık"
+
+#: ../inc/base.php:1458 ../inc/base.php:1509
+msgid "Up this week"
+msgstr "Bu hafta kadar"
+
+#: ../inc/base.php:1458 ../inc/base.php:1509
+msgid "mail/hour"
+msgstr "posta/saat"
+
+#: ../inc/base.php:1458
+msgid "sent during maintenance"
+msgstr "bakım sırasında gönderildi"
+
+#: ../inc/base.php:1463
+msgid ""
+"Introductory text for the summary email (After hello login - Before the "
+"smiles and contact requests)"
+msgstr ""
+"Aylık e-postanın tanıtım metni (Merhaba girişinden sonra - gülümsemelerden "
+"ve iletişim taleplerinden önce)"
+
+#: ../inc/base.php:1469
+msgid "Only my country in summary email"
+msgstr "Özet e-postayla yalnızca benim ülkem"
+
+#: ../inc/base.php:1476
+msgid "Also send an email for a smile"
+msgstr "Ayrıca bir gülümseme için bir e-posta da gönder"
+
+#: ../inc/base.php:1482
+msgid "Automatically sending an email happy birthday members"
+msgstr "Otomatik olarak doğum günün kutlu olsun e-postası gönder"
+
+#: ../inc/base.php:1486
+msgid "Full text for the birthday mail (After hello pseudo)"
+msgstr "Doğum günü postası için tam metin (Sahte merhaba'dan sonra)"
+
+#: ../inc/base.php:1490
+msgid "Max number of mails sent per hour"
+msgstr "Saat başı gönderilen maksimum e-posta sayısı"
+
+#: ../inc/base.php:1509
+msgid "except during maintenance"
+msgstr "bakım sırası hariç"
+
+#: ../inc/base.php:1514
+msgid "No members without photo in automatic mails"
+msgstr "Otomatik postalarda fotoğrafı olmayan üye yok"
+
+#: ../inc/base.php:1518
+msgid "Force HTML mode (mail not readable)"
+msgstr "HTML modunu zorla (posta okunamıyor)"
+
+#: ../inc/base.php:1544
+msgid "Export members in CSV"
+msgstr "CSV'de üyeleri dışa aktar"
+
+#: ../inc/base.php:1548
+msgid "All members"
+msgstr "Tüm üyeler"
+
+#: ../inc/base.php:1549
+msgid "Active last month"
+msgstr "Geçen ay aktif"
+
+#: ../inc/base.php:1550
+msgid "Active last 2 months"
+msgstr "2 ay önce aktif"
+
+#: ../inc/base.php:1551
+msgid "Active last 6 months"
+msgstr "6 ay önce aktif"
+
+#: ../inc/base.php:1552
+msgid "Active last 12 months"
+msgstr "12 ay önce aktif"
+
+#: ../inc/base.php:1556
+msgid "Only members with photo"
+msgstr "Sadece fotoğraf olan üyeler"
+
+#: ../inc/base.php:1559
+msgid "Only members with attention-catcher and ad"
+msgstr "Yalnızca dikkat çekici metni ve reklamı olan üyeler"
+
+#: ../inc/base.php:1561
+msgid "Export in CSV"
+msgstr "CSV olarak dışa aktar"
+
+#: ../inc/base.php:1564
+msgid "Get back photos by FTP in wp-content/uploads/tmp/"
+msgstr " wp-content/uploads/tmp/ dizininde fotoğrafları FTP ile geri al"
+
+#: ../inc/base.php:1567
+msgid "Import members in CSV"
+msgstr "CSV'ye üye aktar"
+
+#: ../inc/base.php:1569
+msgid ""
+"Put members photos in wp-content/uploads/tmp/photo_import/ by FTP before the "
+"start (right RW - no sub folder - .jpg - no zip)."
+msgstr ""
+"Başlamadan önce üyelerin fotoğraflarını wp-content / uploads / tmp / "
+"photo_import / adresinde FTP ile yerleştirin (doğru RW - alt klasör yok - ."
+"jpg - no zip)."
+
+#: ../inc/base.php:1570
+msgid "Select your CSV file (.csv - no zip)."
+msgstr "CSV dosyanızı seçin (.csv - no zip)."
+
+#: ../inc/base.php:1571 ../inc/base.php:1584
+msgid "Import in CSV"
+msgstr "CSV'ye içe aktar"
+
+#: ../inc/base.php:1573
+msgid ""
+"Make an export and look at it to get the right format (The first line is not "
+"treated)."
+msgstr ""
+"Dışa aktarın ve doğru bir biçimde aktarıldımı kontrol edin (İlk satır için "
+"işlemez)."
+
+#: ../inc/base.php:1574
+msgid ""
+"In case of interruption during the import of photos, restart the procedure. "
+"Doubloons are killed."
+msgstr ""
+"Fotoğrafların alınması sırasında kesinti olması durumunda prosedürü yeniden "
+"başlatın. Çifte olanlar yok edilir."
+
+#: ../inc/base.php:1578
+msgid "CSV File"
+msgstr "CVS dosyası"
+
+#: ../inc/base.php:1585
+msgid "File loaded"
+msgstr "Dosya yüklendi"
+
+#: ../inc/base.php:1586
+msgid "Error !"
+msgstr "Hata!"
+
+#: ../inc/base.php:1587
+msgid "Import data"
+msgstr "Verileri içe aktar"
+
+#: ../inc/base.php:1588
+msgid "completed"
+msgstr "tamamlandı"
+
+#: ../inc/base.php:1590
+msgid "Photos Import"
+msgstr "Fotoğraf Aktar"
+
+#: ../inc/base.php:1592
+msgid "Import completed"
+msgstr "Aktarma tamamlandı"
+
+#: ../inc/base.php:1626 ../rencontre.php:237 ../rencontre.php:245
+msgid "Members"
+msgstr "Üyeler"
+
+#: ../inc/base.php:1635
+msgid "Number of registered members"
+msgstr "Kayıtlı üye sayısı"
+
+#: ../inc/base.php:1636
+msgid "Number of members with profile and photo"
+msgstr "Profil ve fotoğraf sahibi üye sayısı"
+
+#: ../inc/base.php:1637 ../inc/rencontre_widget.php:1259
+#: ../templates/rencontre_my_home.php:44 ../templates/rencontre_my_home.php:46
+msgid "Online now"
+msgstr "Şu an çevrim içi"
+
+#: ../inc/base.php:1643
+msgid "Statistic"
+msgstr "İstatistik"
+
+#: ../inc/base.php:1668
+msgid "Add new from WordPress"
+msgstr "WordPress'den yeni ekle"
+
+#: ../inc/base.php:1672
+msgid "Alias or email or ID"
+msgstr "Diğer adlar veya e-posta veya kimlik"
+
+#: ../inc/base.php:1674 ../templates/rencontre_search.php:168
+#: ../templates/rencontre_sidebar_quick_search.php:107
+msgid "Find"
+msgstr "Bul"
+
+#: ../inc/base.php:1693 ../inc/rencontre_filter.php:1512 ../rencontre.php:341
+#: ../templates/rencontre_account_delete.php:14
+msgid "Account deletion"
+msgstr "Hesap silime"
+
+#: ../inc/base.php:1694 ../inc/rencontre_filter.php:1513 ../rencontre.php:342
+msgid "Your account has been deleted"
+msgstr "Hesabınız silindi"
+
+#: ../inc/base.php:1767
+msgid "Reason for this action"
+msgstr "Bu eylemin nedeni"
+
+#: ../inc/base.php:1772 ../templates/rencontre_message_write.php:57
+msgid "Send"
+msgstr "Gönder"
+
+#: ../inc/base.php:1783 ../inc/base.php:1784 ../inc/base.php:1786
+#: ../inc/base.php:1788 ../inc/base.php:1793 ../inc/base.php:1794
+#: ../inc/base.php:1795 ../inc/base.php:1797 ../inc/base.php:2311
+#: ../inc/base.php:2312 ../inc/base.php:2313 ../inc/base.php:2315
+msgid "Sort"
+msgstr "Sırala"
+
+#: ../inc/base.php:1784
+msgid "Action"
+msgstr "Eylem"
+
+#: ../inc/base.php:1785
+msgid "Photo"
+msgstr "Fotoğraf"
+
+#: ../inc/base.php:1786 ../templates/rencontre_search.php:160
+msgid "Alias"
+msgstr "Takma ad"
+
+#: ../inc/base.php:1786 ../inc/rencontre_filter.php:1310
+#: ../templates/rencontre_account.php:64
+msgid "My name"
+msgstr "Benim adım"
+
+#: ../inc/base.php:1787
+msgid "Sex"
+msgstr "Cinsiyet"
+
+#: ../inc/base.php:1788 ../templates/rencontre_search.php:31
+msgid "Age"
+msgstr "Yaş"
+
+#: ../inc/base.php:1789 ../templates/rencontre_search.php:53
+msgid "Height"
+msgstr "Yükseklik"
+
+#: ../inc/base.php:1790 ../templates/rencontre_search.php:79
+msgid "Weight"
+msgstr "Kilo"
+
+#: ../inc/base.php:1791 ../inc/base.php:2815 ../inc/base.php:3971
+#: ../templates/rencontre_libre_search.php:61
+#: ../templates/rencontre_menu.php:33 ../templates/rencontre_menu.php:36
+#: ../templates/rencontre_search.php:15
+msgid "Search"
+msgstr "Ara"
+
+#: ../inc/base.php:1792
+msgid "Hang"
+msgstr "As"
+
+#: ../inc/base.php:1793
+msgid "Place"
+msgstr "Yer"
+
+#: ../inc/base.php:1794
+msgid "Ad (change)"
+msgstr "Reklam (değiştir)"
+
+#: ../inc/base.php:1794
+msgid "Registered"
+msgstr "Kayıtlı"
+
+#: ../inc/base.php:1795 ../inc/base.php:2313
+msgid "IP address"
+msgstr "IP adresi"
+
+#: ../inc/base.php:1797
+msgid "Reporting"
+msgstr "Rapor ediliyor"
+
+#: ../inc/base.php:1820 ../inc/base.php:1830
+msgid "See"
+msgstr "Gör"
+
+#: ../inc/base.php:1823
+msgid "Unblock this member"
+msgstr "Bu üyenin engelini kaldır"
+
+#: ../inc/base.php:1823
+msgid "Block this member"
+msgstr "Bu üyeyi engelle"
+
+#: ../inc/base.php:1824
+msgid "Allow sending message"
+msgstr "Mesaj göndermine izin ver"
+
+#: ../inc/base.php:1824
+msgid "Prohibit contact"
+msgstr "İletişimi yasakla"
+
+#: ../inc/base.php:1826
+msgid "New fast account not completed"
+msgstr "Yeni hızlı hesap tamamlanmadı"
+
+#: ../inc/base.php:1827
+msgid "Remove - Black list email"
+msgstr "Kaldır - Kara liste e-postası"
+
+#: ../inc/base.php:1838 ../inc/base.php:2085
+#: ../templates/rencontre_account.php:159
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:112
+#: ../templates/rencontre_search.php:59 ../templates/rencontre_search.php:68
+msgid "cm"
+msgstr "cm"
+
+#: ../inc/base.php:1838 ../inc/base.php:2086
+#: ../templates/rencontre_account.php:162
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:115
+#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
+msgid "ft"
+msgstr "ft"
+
+#: ../inc/base.php:1838 ../inc/base.php:2086
+#: ../templates/rencontre_account.php:162
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:115
+#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
+msgid "in"
+msgstr "in"
+
+#: ../inc/base.php:1839 ../inc/base.php:2098
+#: ../templates/rencontre_account.php:178
+#: ../templates/rencontre_portrait.php:88
+#: ../templates/rencontre_registration_part1.php:130
+#: ../templates/rencontre_search.php:85 ../templates/rencontre_search.php:94
+msgid "kg"
+msgstr "kg"
+
+#: ../inc/base.php:1839 ../inc/base.php:2099
+#: ../templates/rencontre_account.php:181
+#: ../templates/rencontre_portrait.php:88
+#: ../templates/rencontre_registration_part1.php:133
+#: ../templates/rencontre_search.php:86 ../templates/rencontre_search.php:95
+msgid "lbs"
+msgstr "lbs"
+
+#: ../inc/base.php:1841
+msgid "multiple choice"
+msgstr "çoktan seçmeli"
+
+#: ../inc/base.php:1843
+msgid "to"
+msgstr "ile"
+
+#: ../inc/base.php:1970
+msgid "Change My Profile"
+msgstr "Proflimi Değiş"
+
+#: ../inc/base.php:1971 ../inc/rencontre_widget.php:1385
+#: ../inc/rencontre_widget.php:2545
+msgid "Previous page"
+msgstr "Önceki sayfa"
+
+#: ../inc/base.php:1978 ../templates/rencontre_portrait_edit.php:98
+#: ../templates/rencontre_portrait_edit.php:174
+msgid "Save profile"
+msgstr "Profili kaydet"
+
+#: ../inc/base.php:1988 ../templates/rencontre_portrait_edit.php:47
+msgid "Click to delete"
+msgstr "Silmek için tıkla"
+
+#: ../inc/base.php:1991 ../templates/rencontre_portrait_edit.php:54
+msgid "Click to add a photo"
+msgstr "Fotoğraf eklemek için tıkla"
+
+#: ../inc/base.php:1996 ../templates/rencontre_portrait_edit.php:67
+msgid "Delete all photos"
+msgstr "Tüm fotoğrafları sil"
+
+#: ../inc/base.php:2007 ../templates/rencontre_portrait_edit.php:89
+msgid "My attention-catcher"
+msgstr "Dikkat çekici metinim"
+
+#: ../inc/base.php:2009 ../templates/rencontre_portrait_edit.php:93
+msgid "My ad"
+msgstr "Reklamım"
+
+#: ../inc/base.php:2017 ../templates/rencontre_account.php:70
+#: ../templates/rencontre_registration_part1.php:60
+msgid "I am"
+msgstr "Ben"
+
+#: ../inc/base.php:2027 ../templates/rencontre_account.php:82
+#: ../templates/rencontre_registration_part1.php:72
+msgid "Born"
+msgstr "Doğum"
+
+#: ../inc/base.php:2049 ../templates/rencontre_account.php:122
+#: ../templates/rencontre_registration_part2.php:29
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:15
+msgid "My country"
+msgstr "Ülkem"
+
+#: ../inc/base.php:2060 ../templates/rencontre_account.php:133
+#: ../templates/rencontre_registration_part2.php:40
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:26
+msgid "My region"
+msgstr "Bölgem"
+
+#: ../inc/base.php:2071 ../templates/rencontre_account.php:143
+#: ../templates/rencontre_registration_part2.php:49
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:34
+msgid "My city"
+msgstr "Şehrim"
+
+#: ../inc/base.php:2074
+msgid "Reset GPS"
+msgstr "GPS' i sıfırla"
+
+#: ../inc/base.php:2081 ../templates/rencontre_account.php:154
+#: ../templates/rencontre_registration_part1.php:107
+msgid "My height"
+msgstr "Boyum"
+
+#: ../inc/base.php:2094 ../templates/rencontre_account.php:173
+#: ../templates/rencontre_registration_part1.php:125
+msgid "My weight"
+msgstr "Kilom"
+
+#: ../inc/base.php:2106 ../inc/rencontre_filter.php:1315
+#: ../templates/rencontre_account.php:192 ../templates/rencontre_imgreg.php:30
+#: ../templates/rencontre_libre_search.php:26
+#: ../templates/rencontre_portrait.php:132
+#: ../templates/rencontre_registration_part3.php:32
+#: ../templates/rencontre_search_result.php:49
+#: ../templates/rencontre_sidebar_top.php:41
+msgid "I'm looking for"
+msgstr "İlgili alanım;"
+
+#: ../inc/base.php:2122 ../templates/rencontre_account.php:219
+#: ../templates/rencontre_registration_part3.php:59
+msgid "Age min/max"
+msgstr "Yaş min/max"
+
+#: ../inc/base.php:2127 ../inc/base.php:2134 ../inc/rencontre_widget.php:456
+#: ../templates/rencontre_account.php:225
+#: ../templates/rencontre_account.php:234
+#: ../templates/rencontre_libre_search.php:42
+#: ../templates/rencontre_libre_search.php:52
+#: ../templates/rencontre_mini_portrait.php:36
+#: ../templates/rencontre_mini_portrait_chat.php:30
+#: ../templates/rencontre_portrait.php:81
+#: ../templates/rencontre_registration_part3.php:65
+#: ../templates/rencontre_registration_part3.php:74
+#: ../templates/rencontre_search.php:36 ../templates/rencontre_search.php:43
+#: ../templates/rencontre_search_result.php:34
+#: ../templates/rencontre_search_result.php:54
+#: ../templates/rencontre_sidebar_quick_search.php:30
+#: ../templates/rencontre_sidebar_quick_search.php:38
+#: ../templates/rencontre_sidebar_top.php:30
+msgid "years"
+msgstr "yaş"
+
+#: ../inc/base.php:2142 ../templates/rencontre_account.php:244
+#: ../templates/rencontre_registration_part3.php:84
+msgid "For"
+msgstr "-"
+
+#: ../inc/base.php:2157
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: ../inc/base.php:2159
+msgid "Actions (contact request...)"
+msgstr "İşlemler (iletişim talebi ...)"
+
+#: ../inc/base.php:2160
+msgid "Reports"
+msgstr "Raporlar"
+
+#: ../inc/base.php:2163
+msgid "no mail"
+msgstr "posta yok"
+
+#: ../inc/base.php:2169 ../templates/rencontre_portrait.php:106
+#: ../templates/rencontre_portrait.php:136
+#: ../templates/rencontre_search_result.php:72
+msgid "online"
+msgstr "çevrimiçi"
+
+#: ../inc/base.php:2176 ../inc/rencontre_filter.php:1399
+msgid "Confirmation email"
+msgstr "Doğrulama postası"
+
+#: ../inc/base.php:2178 ../lang/rencontre-js-admin-lang.php:5
+msgid "Confirm"
+msgstr "Doğrula"
+
+#: ../inc/base.php:2251 ../inc/rencontre_widget.php:668
+msgid "Done"
+msgstr "Tamam"
+
+#: ../inc/base.php:2277 ../rencontre.php:238 ../rencontre.php:246
+msgid "Jail"
+msgstr "Kodes"
+
+#: ../inc/base.php:2278
+msgid ""
+"List of members removed by Admin. They are blacklisted. Subscription blocked"
+msgstr ""
+"Yönetici tarafından kaldırılan üyelerin listesi. Kara listeye alındıalr. "
+"Abonelik engellendi"
+
+#: ../inc/base.php:2278
+msgid "days"
+msgstr "günler"
+
+#: ../inc/base.php:2311
+msgid "Date"
+msgstr "Tarih"
+
+#: ../inc/base.php:2312
+msgid "Email address"
+msgstr "E-posta adresi"
+
+#: ../inc/base.php:2314
+msgid "End"
+msgstr "Son"
+
+#: ../inc/base.php:2315
+msgid "Banning"
+msgstr "Yasakla"
+
+#: ../inc/base.php:2323
+msgid "Release"
+msgstr "Serbest bırak"
+
+#: ../inc/base.php:2324
+msgid "Only email"
+msgstr "Sadece e-posta"
+
+#: ../inc/base.php:2324
+msgid "Only IP"
+msgstr "Sadece IP"
+
+#: ../inc/base.php:2324
+msgid "Email and IP"
+msgstr "E-posta ve IP"
+
+#: ../inc/base.php:2329
+msgid "Banning IP is a Premium feature."
+msgstr "IP yasaklama Premium özelliktir."
+
+#: ../inc/base.php:2391 ../rencontre.php:239
+#: ../templates/rencontre_mail_regular.php:40
+#: ../templates/rencontre_message_write.php:29
+#: ../templates/rencontre_mini_portrait.php:46
+#: ../templates/rencontre_search_result.php:102
+#: ../templates/rencontre_search_result.php:105
+msgid "Profile"
+msgstr "Profil"
+
+#: ../inc/base.php:2394
+msgid ""
+"It does not appear to be any profile. You can load the default profile if "
+"you wish."
+msgstr ""
+"Hiçbir profil gibi gözükmüyor. İsterseniz varsayılan profili "
+"yükleyebilirsiniz."
+
+#: ../inc/base.php:2395
+msgid "Load profiles"
+msgstr "Profileri yükle"
+
+#: ../inc/base.php:2403
+msgid "You can create, rename and delete items from the profile."
+msgstr ""
+"Profilden öğeler oluşturabilir, bunları yeniden adlandırabilir veya "
+"silebilirsiniz."
+
+#: ../inc/base.php:2405
+msgid ""
+"Warning, this is not without consequences. The changes will be applied to "
+"the member profiles that can offend. Caution !"
+msgstr ""
+"Uyarı, değişikliklerin akıbetinde üye profilleri zarar görebilir. Dikkat!"
+
+#: ../inc/base.php:2407 ../inc/base.php:2679
+msgid "Ref language"
+msgstr "Referans dili"
+
+#: ../inc/base.php:2407 ../inc/base.php:2679
+msgid "Other"
+msgstr "Diğer"
+
+#: ../inc/base.php:2416 ../inc/base.php:2690
+msgid "Add Language (2 lowercase letters comply with country code)"
+msgstr "Dil Ekle (2 küçük harf ülke kodu için uygundur)"
+
+#: ../inc/base.php:2418 ../inc/base.php:2692
+msgid "Add a language"
+msgstr "Dil ekle"
+
+#: ../inc/base.php:2421 ../inc/base.php:2695
+msgid "Remove a language and all related content"
+msgstr "Dili ilgili tüm içeriği kaldır"
+
+#: ../inc/base.php:2425 ../inc/base.php:2699
+msgid "Remove a language"
+msgstr "Dili kaldır"
+
+#: ../inc/base.php:2431
+msgid "Add category"
+msgstr "Kategori ekle"
+
+#: ../inc/base.php:2462 ../inc/base.php:2482 ../inc/base.php:2516
+#: ../inc/base.php:2544
+msgid "Move Up"
+msgstr "Yukarı Taşı"
+
+#: ../inc/base.php:2463 ../inc/base.php:2483 ../inc/base.php:2517
+#: ../inc/base.php:2545
+msgid "Move Down"
+msgstr "Aşağı İndir"
+
+#: ../inc/base.php:2464
+msgid "Change the name"
+msgstr "İsmi değiş"
+
+#: ../inc/base.php:2465
+msgid "Remove the category"
+msgstr "Kategoriyi kaldır"
+
+#: ../inc/base.php:2469 ../inc/base.php:2470
+msgid "Add value to this category"
+msgstr "Du kategoriye değer ekle"
+
+#: ../inc/base.php:2484 ../inc/base.php:2724
+msgid "Change the name or type"
+msgstr "İsmi veya türü değiş"
+
+#: ../inc/base.php:2485 ../inc/base.php:2519 ../inc/base.php:2547
+#: ../inc/base.php:2735 ../inc/base.php:2946 ../inc/base.php:2967
+#: ../lang/rencontre-js-admin-lang.php:7
+msgid "Remove"
+msgstr "Kaldır"
+
+#: ../inc/base.php:2492
+msgid "A line of text (TEXT)"
+msgstr "Bir metin satırı (METİN)"
+
+#: ../inc/base.php:2496
+msgid "Large text box (TEXTAREA)"
+msgstr "Büyük metin kutusu (METİNALANI)"
+
+#: ../inc/base.php:2501 ../inc/base.php:2529 ../inc/base.php:2729
+#: ../inc/base.php:2947 ../inc/base.php:2968
+msgid "Add Value"
+msgstr "Değer Ekle"
+
+#: ../inc/base.php:2502
+msgid "Single choice list (SELECT)"
+msgstr "Tek seçim listesi (SEÇ)"
+
+#: ../inc/base.php:2518 ../inc/base.php:2546 ../inc/base.php:2562
+#: ../inc/base.php:2734 ../templates/rencontre_account.php:46
+msgid "Change"
+msgstr "Değiştir"
+
+#: ../inc/base.php:2530
+msgid "Multiple choice list (CHECKBOX)"
+msgstr "Çoktan seçmeli liste (ONAYKUTUSU)"
+
+#: ../inc/base.php:2557
+msgid "Numeric choice list (SELECT)"
+msgstr "SAyısal seçim listesi (SEÇ)"
+
+#: ../inc/base.php:2564 ../lang/rencontre-js-admin-lang.php:33
+msgid "Step"
+msgstr "Adım"
+
+#: ../inc/base.php:2571
+msgid "A date (DATE)"
+msgstr "Bir tarih (DATE)"
+
+#: ../inc/base.php:2598 ../inc/base.php:2671
+msgid "Countries and Regions"
+msgstr "Ülkeler ve Bölgeler"
+
+#: ../inc/base.php:2599
+msgid "Cleaner"
+msgstr "Temizleyici"
+
+#: ../inc/base.php:2654
+msgid "Datas are old. You should delete all countries and load the new ones."
+msgstr "Eski olan veriler. Tüm ülkeleri silmeli ve yenilerini yüklemeliyiz."
+
+#: ../inc/base.php:2663
+msgid ""
+"If a country is loaded in wp-geonames, the regions list of this country will "
+"come from the wp-geonames base and not from here."
+msgstr ""
+"Bir ülke wp-geonames'e yüklenirse, bu ülkenin bölge listesi, buradan değil, "
+"wp-geonames tabanından gelecektir."
+
+#: ../inc/base.php:2674
+msgid ""
+"The country table is empty. You can load the countries and regions by "
+"default if you wish."
+msgstr ""
+"Ülke tablosu boş. İsterseniz, varsayılan olarak ülkeleri ve bölgeleri "
+"yükleyebilirsiniz."
+
+#: ../inc/base.php:2675
+msgid "Load countries"
+msgstr "Ülkeleri yükle"
+
+#: ../inc/base.php:2678
+msgid "You can create, rename and delete countries and regions."
+msgstr ""
+"Ülkeleri ve bölgeleri oluşturabilir, yeniden adlandırabilir ve "
+"silebilirsiniz."
+
+#: ../inc/base.php:2705 ../inc/base.php:2706
+msgid "Add a country"
+msgstr "Ülke ekle"
+
+#: ../inc/base.php:2708 ../inc/base.php:2709
+msgid "Delete all countries"
+msgstr "Tüm ülkeleri sil"
+
+#: ../inc/base.php:2730
+msgid "Regions"
+msgstr "Bölgeler"
+
+#: ../inc/base.php:2749
+msgid "Cleaning missing regions in users data"
+msgstr "Kullanıcı verilerindeki eksik bölgelerin temizlenmesi"
+
+#: ../inc/base.php:2753
+msgid "Missing regions"
+msgstr "Eksik bölgeler"
+
+#: ../inc/base.php:2773
+msgid "Existing regions"
+msgstr "Mevcut bölgeler"
+
+#: ../inc/base.php:2785
+msgid "Replace"
+msgstr "değiştirmek"
+
+#: ../inc/base.php:2813
+msgid "Features"
+msgstr "Özellikler"
+
+#: ../inc/base.php:2814
+msgid "Words"
+msgstr "Kelimeler"
+
+#: ../inc/base.php:2816
+msgid "Templates"
+msgstr "Şablonlar"
+
+#: ../inc/base.php:2837
+msgid "No country"
+msgstr "Ülke yok"
+
+#: ../inc/base.php:2841
+msgid "No region"
+msgstr "Bölge yok"
+
+#: ../inc/base.php:2845
+msgid "No localisation"
+msgstr "Yerleştirme yok"
+
+#: ../inc/base.php:2849
+msgid "No birth date"
+msgstr "Doğum tarihi yok"
+
+#: ../inc/base.php:2853
+msgid "Min age"
+msgstr "Minimum yaş"
+
+#: ../inc/base.php:2865
+msgid "Max age"
+msgstr "Maksimum yaş"
+
+#: ../inc/base.php:2877
+msgid "No smiles"
+msgstr "Gülümseme yok"
+
+#: ../inc/base.php:2881
+msgid "No contact request"
+msgstr "İletişim isteği yok"
+
+#: ../inc/base.php:2885
+msgid "No weight"
+msgstr "Ağırlık yok"
+
+#: ../inc/base.php:2889
+msgid "Weight unit"
+msgstr "Ağırlık birimi"
+
+#: ../inc/base.php:2892
+msgid "Kilograms"
+msgstr "Kilogram"
+
+#: ../inc/base.php:2893
+msgid "Pounds"
+msgstr "Pound"
+
+#: ../inc/base.php:2898
+msgid "No height"
+msgstr "Yükseklik yok"
+
+#: ../inc/base.php:2902
+msgid "Height unit"
+msgstr "Yükseklik ünitesi"
+
+#: ../inc/base.php:2905
+msgid "Meter"
+msgstr "Metre"
+
+#: ../inc/base.php:2906
+msgid "Feet and Inches"
+msgstr "Ayak ve İnç"
+
+#: ../inc/base.php:2911
+msgid "No report"
+msgstr "Rapor yok"
+
+#: ../inc/base.php:2915
+msgid "No emoticon"
+msgstr "İfade yok"
+
+#: ../inc/base.php:2919
+msgid "No menu (I use WordPress menu)"
+msgstr "Menü yok (Wordpress menüsünü kullanıyrum)"
+
+#: ../inc/base.php:2923
+msgid "No sidebar (I put it with widget)"
+msgstr "Kenar çubuğu yok (araçlarla (widget) yerleştirdim)"
+
+#: ../inc/base.php:2927
+msgid "No ads on logged out plugin homepage"
+msgstr "Bağlanmamış ana sayfada reklam yok"
+
+#: ../inc/base.php:2931
+msgid "Only photo on logged out plugin homepage"
+msgstr "Bağlanmamış ana sayfada sadece fotoğraf"
+
+#: ../inc/base.php:2935
+msgid "Change relation type"
+msgstr "İlişki cinsini değiş"
+
+#: ../inc/base.php:2956
+msgid "Change sex values"
+msgstr "Cinsiyet değerini değiş"
+
+#: ../inc/base.php:2977
+msgid "Allow multi choice in relation and sex"
+msgstr "İlişki ve cinsiyet bakımından birden fazla seçime izin ver"
+
+#: ../inc/base.php:2981
+msgid "No homosexual"
+msgstr "Homoseksüllik yok"
+
+#: ../inc/base.php:2985
+msgid "Change register link on click a portrait"
+msgstr "Bir portreyi tıklamak için kayıt bağlantısını değiştir"
+
+#: ../inc/base.php:2985
+msgid "(empty => default WP)"
+msgstr "(boş => varsayılan WP)"
+
+#: ../inc/base.php:2989
+msgid "No 'no email' button"
+msgstr "'E-posta' butonu yok"
+
+#: ../inc/base.php:2993
+msgid ""
+"Be careful, already registered members will be in a category that no longer "
+"exists. They should update their account."
+msgstr ""
+"Dikkat, kayıtlı olan üyeler artık var olmayan bir kategoride olacaklar. "
+"Hesaplarını güncellemeleri gerek."
+
+#: ../inc/base.php:3012
+msgid "Change welcome text for new user"
+msgstr "Yeni kullanıcı için hoşgeldin metnini değiş"
+
+#: ../inc/base.php:3016 ../templates/rencontre_registration_part1.php:34
+msgid ""
+"You will access all the possibilities offered by the site in few minutes."
+msgstr "Sitenin sunduğu tüm olanaklara birkaç dakika içinde erişeceksiniz."
+
+#: ../inc/base.php:3017 ../templates/rencontre_registration_part1.php:35
+msgid "Before that, you need to provide some information requested below."
+msgstr "Bundan önce, aşağıda istenen bazı bilgileri sağlamanız gerekiyor."
+
+#: ../inc/base.php:3018 ../templates/rencontre_registration_part1.php:39
+msgid ""
+"We would like to inform you that we do not use your personal data outside of "
+"this site."
+msgstr ""
+"Kişisel verilerinizi bu sitenin dışında kullanmadığımızı size bildirmek "
+"isteriz."
+
+#: ../inc/base.php:3019 ../templates/rencontre_registration_part1.php:40
+msgid ""
+"Deleting your account on your part or ours, causes the deletion of all your "
+"data."
+msgstr ""
+"Hesabınız sizin veya bizim tarafımızdan sildiğinde, bu tüm verilerinizin "
+"silinmesine neden olur."
+
+#: ../inc/base.php:3020 ../templates/rencontre_registration_part1.php:41
+msgid ""
+"This also applies to messages that you have sent to other members as well as "
+"those they have sent to you."
+msgstr ""
+"Bu, diğer üyelere gönderdiğiniz mesajların yanı sıra size gönderdikleri "
+"mesajlar için de geçerlidir."
+
+#: ../inc/base.php:3021 ../templates/rencontre_registration_part1.php:45
+msgid "We wish you nice encounters."
+msgstr "Size güzel karşılaşmalar dileriz."
+
+#: ../inc/base.php:3027
+msgid "Change warning account blocked"
+msgstr "Hesap bloke oldu uyarısını değiştirin"
+
+#: ../inc/base.php:3031 ../inc/base.php:3033 ../inc/rencontre_widget.php:171
+msgid "Your account is blocked. You are invisible. Change your profile."
+msgstr "Hesabınız engellendi. Görünmezsiniz. Profilinizi değiştirin."
+
+#: ../inc/base.php:3037
+msgid "Change warning empty profile"
+msgstr "Boş profil uyarısını değiştirin"
+
+#: ../inc/base.php:3041 ../inc/base.php:3043
+#: ../templates/rencontre_modal_warning.php:45
+msgid ""
+"Your profile is empty. To take advantage of the site and being more visible, "
+"thank you to complete it."
+msgstr ""
+"Profiliniz boş. Sitenin avantajlarından yararlanmak ve daha görünür "
+"olabilmek için profilinizi tamamlayın. Teşekkür ederiz."
+
+#: ../inc/base.php:3047
+msgid "Change the quarantine warning"
+msgstr "Karantina uyarısını değiştir"
+
+#: ../inc/base.php:3051 ../inc/base.php:3053 ../inc/rencontre_filter.php:1337
+#: ../templates/rencontre_registration_jail.php:16
+msgid "Your email address is currently in quarantine. Sorry"
+msgstr "E-posta adresiniz şu anda karantinada. Afedersiniz"
+
+#: ../inc/base.php:3057
+msgid "Change the no-photo warning"
+msgstr "Fotoğraf yok uyarısını değiştirin"
+
+#: ../inc/base.php:3061 ../inc/base.php:3063 ../inc/rencontre_widget.php:371
+#: ../inc/rencontre_widget.php:518 ../inc/rencontre_widget.php:1326
+#: ../inc/rencontre_widget.php:1989 ../inc/rencontre_widget.php:2483
+msgid ""
+"To be more visible and to view photos of other members, you should add one "
+"to your profile."
+msgstr ""
+"Daha görünür olabilmek ve diğer üyelerin fotoğraflarını görüntülemek için "
+"profilinize bir fotoğraf eklemelisiniz."
+
+#: ../inc/base.php:3067
+msgid "Change the follow-up email"
+msgstr "Takip e-postasını değiştirin"
+
+#: ../inc/base.php:3072 ../inc/rencontre_filter.php:271
+msgid ""
+"You registered on our website but you did not complete the procedure. You'll "
+"miss a date. That's too bad."
+msgstr ""
+"Web sitemize kayıt oldunuz, ancak işlemi tamamlamadınız. Bir randevu "
+"kaçırabilirsiniz. Bu çok kötü."
+
+#: ../inc/base.php:3073 ../inc/rencontre_filter.php:272
+msgid ""
+"Thus take two minutes to finish the registration. You should not be "
+"disappointed."
+msgstr ""
+"Kaydı bitirmek için iki dakikanızı ayırın böylece hayal kırıklığına "
+"uğramayın."
+
+#: ../inc/base.php:3074 ../inc/rencontre_filter.php:273
+#: ../inc/rencontre_filter.php:592 ../inc/rencontre_filter.php:1393
+#: ../templates/rencontre_mail_info.php:46
+#: ../templates/rencontre_mail_instant.php:46
+msgid "Regards,"
+msgstr "Saygılarımla,"
+
+#: ../inc/base.php:3080
+msgid "Change Smile word"
+msgstr "Gülümseme kelimesini değiş"
+
+#: ../inc/base.php:3080 ../inc/base.php:3114
+msgid "(empty => no change)"
+msgstr "(boş => değişiklik yok)"
+
+#: ../inc/base.php:3084 ../inc/base.php:3085
+#: ../templates/rencontre_mail_regular.php:30
+#: ../templates/rencontre_portrait.php:185
+#: ../templates/rencontre_portrait.php:188
+#: ../templates/rencontre_search_result.php:94
+#: ../templates/rencontre_search_result.php:97
+#: ../templates/rencontre_sidebar_top.php:51
+msgid "Smile"
+msgstr "Gülümse"
+
+#: ../inc/base.php:3088 ../inc/base.php:3089
+#: ../templates/rencontre_sidebar_top.php:101
+msgid "Who I smiled ?"
+msgstr "Kime gülümsedim?"
+
+#: ../inc/base.php:3092 ../inc/base.php:3093 ../inc/rencontre_widget.php:1085
+msgid "I smiled at"
+msgstr "Şu kişiye gülümsedim"
+
+#: ../inc/base.php:3096 ../inc/base.php:3097 ../inc/rencontre_filter.php:508
+#: ../templates/rencontre_mail_info.php:29
+#: ../templates/rencontre_mail_instant.php:29
+msgid "You have received a smile from"
+msgstr "Şu kişiden gülümseme aldınız"
+
+#: ../inc/base.php:3100 ../inc/base.php:3101 ../inc/rencontre_widget.php:2841
+msgid "Smile already sent"
+msgstr "Gülümseme zaten gönderildi"
+
+#: ../inc/base.php:3104 ../inc/base.php:3105 ../inc/rencontre_widget.php:2867
+msgid "Smile sent"
+msgstr "Gülümseme göderildi"
+
+#: ../inc/base.php:3108 ../inc/base.php:3109 ../inc/rencontre_widget.php:1116
+msgid "I got a smile from"
+msgstr "Şu kişiden gülümseme aldım"
+
+#: ../inc/base.php:3114
+msgid "Change Look word"
+msgstr "Bak kelimesini değiş"
+
+#: ../inc/base.php:3118 ../inc/base.php:3119
+#: ../templates/rencontre_sidebar_top.php:66
+msgid "Look"
+msgstr "Bak"
+
+#: ../inc/base.php:3122 ../inc/base.php:3123 ../inc/rencontre_widget.php:1203
+msgid "I was watched by"
+msgstr "Şu kişi tarafından izlendim"
+
+#: ../inc/base.php:3144
+msgid "Add relation type in quick search"
+msgstr "Çabuk aramaya ilişki türünü ekle"
+
+#: ../inc/base.php:3148
+msgid "No ad in search results"
+msgstr "Arama sonuçlarında reklam yok"
+
+#: ../inc/base.php:3152 ../inc/base.php:3179
+msgid "Add a profile element in quick search"
+msgstr "Hızlı aramaya profil öğesi ekle"
+
+#: ../inc/base.php:3200
+msgid "Add also numerous profile elements in search ? Get the kit Premium."
+msgstr "Aramada çok sayıda profil öğesi ekleyin? Premium kit alın."
+
+#: ../inc/base.php:3226
+msgid "Menu color"
+msgstr "Menü rengi"
+
+#: ../inc/base.php:3241 ../inc/base.php:3256 ../inc/base.php:3271
+msgid "Menu buttons color"
+msgstr "Menü düğmeleri rengi"
+
+#: ../inc/base.php:3256
+msgid "warning"
+msgstr "uyarı"
+
+#: ../inc/base.php:3271
+msgid "hover"
+msgstr "duraksamak"
+
+#: ../inc/base.php:3286
+msgid "Block background color"
+msgstr "Arka plan rengini engelle"
+
+#: ../inc/base.php:3301
+msgid "Title color"
+msgstr "Başlık rengi"
+
+#: ../inc/base.php:3316
+msgid "Text color"
+msgstr "Metin rengi"
+
+#: ../inc/base.php:3331
+msgid "Label color"
+msgstr "Etiket rengi"
+
+#: ../inc/base.php:3346
+msgid "Line and border color"
+msgstr "Çizgi ve kenarlık rengi"
+
+#: ../inc/base.php:3361
+msgid "Input background color"
+msgstr "Girdi arka plan rengi"
+
+#: ../inc/base.php:3376
+msgid "Select background color"
+msgstr "Arka plan rengini seç"
+
+#: ../inc/base.php:3391
+msgid "Warning bar background color"
+msgstr "Uyarı çubuğu arka plan rengi"
+
+#: ../inc/base.php:3406
+msgid "Message sent background color"
+msgstr "Mesaj arka plan rengini gönderdi"
+
+#: ../inc/base.php:3421
+msgid "Message received background color"
+msgstr "Mesaj arka plan rengini aldı"
+
+#: ../inc/base.php:3436
+msgid "Fit portraits width in home page"
+msgstr "Portrelerin genişliğini ana sayfaya sığdır"
+
+#: ../inc/base.php:3504
+msgid "Custom templates in your theme"
+msgstr "Temanızdaki özel şablonlar"
+
+#: ../inc/base.php:3507
+msgid "Template file"
+msgstr "Şablon dosyası"
+
+#: ../inc/base.php:3508
+msgid "Plugin version"
+msgstr "Eklenti sürümü"
+
+#: ../inc/base.php:3509
+msgid "Theme version"
+msgstr "Tema sürümü"
+
+#: ../inc/base.php:3967 ../templates/rencontre_menu.php:12
+msgid "My homepage"
+msgstr "Ana sayfam"
+
+#: ../inc/base.php:3968 ../templates/rencontre_menu.php:13
+msgid "My card"
+msgstr "Kartvizitim"
+
+#: ../inc/base.php:3969 ../templates/rencontre_menu.php:16
+#: ../templates/rencontre_menu.php:19
+#: ../templates/rencontre_portrait_edit.php:30
+msgid "Edit My Profile"
+msgstr "Profilimi Düzenle"
+
+#: ../inc/base.php:3970 ../templates/rencontre_menu.php:23
+#: ../templates/rencontre_menu.php:26
+msgid "Messaging"
+msgstr "Mesajlaşma"
+
+#: ../inc/base.php:3972 ../templates/rencontre_account.php:56
+#: ../templates/rencontre_menu.php:39
+msgid "My Account"
+msgstr "Hesabım"
+
+#: ../inc/base.php:3975 ../inc/rencontre_filter.php:990
+msgid "Log in"
+msgstr "Giriş"
+
+#: ../inc/base.php:3976 ../inc/rencontre_filter.php:997 ../rencontre.php:800
+#: ../rencontre.php:801 ../rencontre.php:844
+msgid "Register"
+msgstr "Kaydol"
+
+#: ../inc/rencontre_don.php:4
+msgid "About This Plugin"
+msgstr "Bu eklenti hakkında"
+
+#: ../inc/rencontre_don.php:8
+msgid ""
+"Enjoyed this free dating plugin?  A donation or a good review will help us "
+"to spend more time to make it evolve. Thanks for your contribution."
+msgstr ""
+"Bu ücretsiz tanışma eklentisinin keyfini çıkarın? Bir bağış veya iyi bir "
+"inceleme, gelişmesi için daha fazla zaman harcamamıza yardımcı olacaktır. "
+"Katkınız için teşekkürler."
+
+#: ../inc/rencontre_don.php:16
+msgid "US"
+msgstr "BİZ"
+
+#: ../inc/rencontre_don.php:17
+msgid "Rencontre Plugin Donation"
+msgstr "Rencontre Eklentisi Bağışı"
+
+#: ../inc/rencontre_don.php:22
+msgid "PayPal - The most secure online payment solution !"
+msgstr "PayPal - En güvenli online ödeme çözümü!"
+
+#: ../inc/rencontre_don.php:29
+msgid "is a recommended plugin to use with Rencontre."
+msgstr "Rencontre ile birlikte kullanılması önerilen bir eklentidir."
+
+#: ../inc/rencontre_don.php:35
+msgid ""
+"You want an integrated payment system, an easy moderation panel and a lot of "
+"features?"
+msgstr ""
+"Entegre bir ödeme sistemi, kolay kontrol paneli ve birçok özellik istiyor "
+"musunuz?"
+
+#: ../inc/rencontre_don.php:35
+msgid "Add this kit PREMIUM"
+msgstr "Kit Premium'u ekleyin"
+
+#: ../inc/rencontre_don.php:61
+msgid "How to install this plugin ?"
+msgstr "Bu eklenti nasıl yüklenir?"
+
+#: ../inc/rencontre_don.php:63
+msgid ""
+"In <a href=\"edit.php?post_type=page\">Pages</a>, edit or create the page of "
+"your choice. Add the shortcodes <code>[rencontre][rencontre_libre]</code> in "
+"this page content."
+msgstr ""
+" <a href=\"edit.php?post_type=page\"> Sayfalar</a> bölümünde, istediğiniz "
+"sayfayı düzenleyin veya oluşturun. Bu sayfa içeriğine kısa kodları <code> "
+"[rencontre] [rencontre_libre] </ code> ekleyin."
+
+#: ../inc/rencontre_don.php:64
+msgid ""
+"In <a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>, set the "
+"plugin page and save."
+msgstr ""
+"<a href=\"admin.php?page=rencontre.php\"> Rencontre / General </a> "
+"adresinde, eklenti sayfasını ayarlayın ve kaydedin."
+
+#: ../inc/rencontre_don.php:65
+msgid ""
+"You need the WordPress Login / Logout / Register links. Take a look in <a "
+"href=\"nav-menus.php\">Appearance / Menus</a> if your theme has not these "
+"links."
+msgstr ""
+"WordPress Giriş / Çıkış / Kayıt bağlantılarına ihtiyacınız var. Temanızın bu "
+"bağlantıları yoksa, <a href=\"nav-menus.php\"> Görünüm / Menüler </a> 'e bir "
+"göz atın."
+
+#: ../inc/rencontre_don.php:66
+msgid ""
+"Add a new subscriber member in WP. Login this member and go to the plugin "
+"page (1)."
+msgstr ""
+"WP'ye yeni bir abone üye ekleyin. Bu üye ile giriş yapın ve eklenti "
+"sayfasına gidin (1)."
+
+#: ../inc/rencontre_don.php:67
+msgid ""
+"To facilitate the settings after installing, you can download and install "
+"via CSV (<a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>) "
+"20 test profiles with photo"
+msgstr ""
+"Kurulumdan sonra ayarları kolaylaştırmak için CSV ile indirebilir ve "
+"yükleyebilirsiniz (<a href=\"admin.php?page=rencontre.php\">Rencontre/Genel</"
+"a>) Fotoğraflı 20 test profili"
+
+#: ../inc/rencontre_don.php:70
+msgid ""
+"More details in the <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
+"target=\"_blank\">F.A.Q</a>."
+msgstr ""
+"Daha fazla ayrıntı için <a href=\"https://wordpress.org/plugins/rencontre/"
+"#faq\" target=\"_blank\">F.A.Q</a>."
+
+#: ../inc/rencontre_filter.php:268 ../inc/rencontre_filter.php:337
+#: ../inc/rencontre_filter.php:449 ../inc/rencontre_filter.php:1391
+#: ../templates/rencontre_mail_info.php:14
+#: ../templates/rencontre_mail_instant.php:14
+#: ../templates/rencontre_registration_part1.php:27
+#: ../templates/rencontre_registration_part2.php:19
+#: ../templates/rencontre_registration_part3.php:27
+msgid "Hello"
+msgstr "Merhaba"
+
+#: ../inc/rencontre_filter.php:283
+msgid "Registration"
+msgstr "Kayıt"
+
+#: ../inc/rencontre_filter.php:339 ../inc/rencontre_filter.php:347
+msgid "Happy Birthday"
+msgstr "Doğum Günün Kutlu Olsun"
+
+#: ../inc/rencontre_filter.php:452
+msgid "Your profile has been visited"
+msgstr "Profiliniz ziyaret edildi"
+
+#: ../inc/rencontre_filter.php:452
+msgid "time"
+msgstr "zaman"
+
+#: ../inc/rencontre_filter.php:490
+msgid "Here's a selection of members that may interest you"
+msgstr "İşte ilginizi çekebilleceğini düşündüğümüz üye listesi"
+
+#: ../inc/rencontre_filter.php:548 ../templates/rencontre_mail_info.php:17
+#: ../templates/rencontre_mail_instant.php:17
+msgid "You have received a contact request from"
+msgstr "Şu kişiden bir iletişim talebi aldınız:"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:39
+#: ../templates/rencontre_mail_instant.php:39
+msgid "You have"
+msgstr "-"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:40
+#: ../templates/rencontre_mail_instant.php:40
+msgid "messages"
+msgstr "mesajlar"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:40
+#: ../templates/rencontre_mail_instant.php:40
+msgid "message"
+msgstr "mesaj"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:41
+#: ../templates/rencontre_mail_instant.php:41
+msgid "in your inbox."
+msgstr "gelen kutunuzda."
+
+#: ../inc/rencontre_filter.php:592
+msgid "Do not hesitate to send us your comments."
+msgstr "Yorumlarınızı bize göndermekten çekinmeyin."
+
+#: ../inc/rencontre_filter.php:813 ../templates/rencontre_mail_info.php:11
+#: ../templates/rencontre_mail_instant.php:11
+msgid "A member contact you"
+msgstr "Bir üye sizinle bağlantıya geçti"
+
+#: ../inc/rencontre_filter.php:986
+msgid "Log out"
+msgstr "Çıkış"
+
+#: ../inc/rencontre_filter.php:1072 ../inc/rencontre_filter.php:1089
+msgid "Unimportant"
+msgstr "Önemsiz"
+
+#: ../inc/rencontre_filter.php:1306 ../templates/rencontre_imgreg.php:26
+#: ../templates/rencontre_imgreg.php:55
+msgid "Password"
+msgstr "Şifre"
+
+#: ../inc/rencontre_filter.php:1325
+msgid "<strong>ERROR</strong>: Invalid password (6 characters min)."
+msgstr "<strong> HATA </ strong>: Geçersiz şifre (6 karakter dakika)."
+
+#: ../inc/rencontre_filter.php:1381
+msgid "Confirmation email already sent"
+msgstr "Onay e-postası zaten gönderildi"
+
+#: ../inc/rencontre_filter.php:1391
+msgid "You should confirm your email with this link"
+msgstr "Bu bağlantıyla e-postanızı teyit etmelisiniz"
+
+#: ../inc/rencontre_filter.php:1401
+msgid "Confirmation email sent"
+msgstr "Onay e-postası gönderildi"
+
+#: ../inc/rencontre_filter.php:1515 ../inc/rencontre_filter.php:1516
+#: ../inc/rencontre_filter.php:1517 ../inc/rencontre_filter.php:1518
+#: ../inc/rencontre_filter.php:1519
+msgid "Fake"
+msgstr "Sahte"
+
+#: ../inc/rencontre_filter.php:1517
+msgid "profile"
+msgstr "Profil"
+
+#: ../inc/rencontre_filter.php:1518
+msgid "IP"
+msgstr "IP"
+
+#: ../inc/rencontre_filter.php:1519
+msgid "email"
+msgstr "E-posta"
+
+#: ../inc/rencontre_filter.php:1520
+msgid "Inadequate image"
+msgstr "Yetersiz görüntü"
+
+#: ../inc/rencontre_filter.php:1521
+msgid "Inappropriate presentation"
+msgstr "Uygunsuz sunum"
+
+#: ../inc/rencontre_filter.php:1522
+msgid "Many reports"
+msgstr "Birçok rapor"
+
+#: ../inc/rencontre_filter.php:1523
+msgid "Behavior on the site"
+msgstr "Sitede davranış"
+
+#: ../inc/rencontre_widget.php:5
+msgid "Widget to integrate the dating website"
+msgstr "Tanışma web sitesini ntgre etmek için araç (widget)"
+
+#: ../inc/rencontre_widget.php:11
+msgid "You are connected as ADMIN"
+msgstr "ADMIN olarak bağlandınız"
+
+#: ../inc/rencontre_widget.php:12
+msgid "You cannot use RENCONTRE as a user if you have ADMIN rights"
+msgstr "ADMIN haklarınız varsa, RENCONTRE'yi kullanıcı olarak kullanamazsınız"
+
+#: ../inc/rencontre_widget.php:314 ../inc/rencontre_widget.php:1316
+#: ../inc/rencontre_widget.php:2473
+#, php-format
+msgid "%s ago"
+msgstr "%s önce"
+
+#: ../inc/rencontre_widget.php:389
+msgid "(blocked)"
+msgstr "(engelli)"
+
+#: ../inc/rencontre_widget.php:439
+msgid "gay"
+msgstr "eşcinsel"
+
+#: ../inc/rencontre_widget.php:441 ../inc/rencontre_widget.php:453
+#: ../templates/rencontre_search_result.php:59
+#: ../templates/rencontre_sidebar_top.php:44
+msgid "for"
+msgstr "olan"
+
+#: ../inc/rencontre_widget.php:456 ../templates/rencontre_libre_search.php:38
+#: ../templates/rencontre_search_result.php:54
+msgid "between"
+msgstr "aralığı"
+
+#: ../inc/rencontre_widget.php:456 ../templates/rencontre_libre_search.php:48
+#: ../templates/rencontre_search_result.php:54
+msgid "and"
+msgstr "ve"
+
+#: ../inc/rencontre_widget.php:517
+msgid "You have no photo on your profile ?"
+msgstr "Profilinizde hiç resim yok?"
+
+#: ../inc/rencontre_widget.php:669 ../inc/rencontre_widget.php:1425
+msgid "You should complete your profile and add a photo to send messages."
+msgstr ""
+"Mesaj göndermek için profilinizi doldurmanız ve bir fotoğraf eklemeniz "
+"gerekir."
+
+#: ../inc/rencontre_widget.php:676
+msgid "Add a photo"
+msgstr "Fotoğraf ekle"
+
+#: ../inc/rencontre_widget.php:1145
+msgid "I asked a contact"
+msgstr "Bir bağlantı sordum"
+
+#: ../inc/rencontre_widget.php:1173
+msgid "I had a contact request from"
+msgstr "Şu kişiden bir bağlantı talebim var:"
+
+#: ../inc/rencontre_widget.php:1231
+msgid "I locked"
+msgstr "Kilitledim"
+
+#: ../inc/rencontre_widget.php:1378 ../inc/rencontre_widget.php:2542
+msgid "Sorry, but nothing matched your search terms."
+msgstr "Üzgünüz, ancak hiçbir şey arama terimlerinizle eşleşmedi."
+
+#: ../inc/rencontre_widget.php:1390 ../inc/rencontre_widget.php:2550
+msgid "Next Page"
+msgstr "Sonraki Sayfa"
+
+#: ../inc/rencontre_widget.php:1424 ../inc/rencontre_widget.php:1425
+#: ../inc/rencontre_widget.php:1426 ../inc/rencontre_widget.php:2196
+msgid "Not sent"
+msgstr "Gönderilmedi"
+
+#: ../inc/rencontre_widget.php:1424
+msgid "You are no longer allowed to send messages."
+msgstr "Artık mesaj göndermenize izin verilmiyor."
+
+#: ../inc/rencontre_widget.php:1920 ../inc/rencontre_widget.php:1941
+msgid "Immaterial"
+msgstr "Önemsiz"
+
+#: ../inc/rencontre_widget.php:2193
+msgid "Message sent"
+msgstr "Mesaj gönderildi"
+
+#: ../inc/rencontre_widget.php:2490
+msgid "Astrological affinity"
+msgstr "Astrolojik benzerlik"
+
+#: ../inc/rencontre_widget.php:2494
+msgid "Affinity with my profile"
+msgstr "Profilimle benzerlik"
+
+#: ../inc/rencontre_widget.php:2494
+msgid "points"
+msgstr "puanlar"
+
+#: ../inc/rencontre_widget.php:2749
+msgid "Region field is empty or outdated !"
+msgstr "Bölge alanı boş veya zaman aşımına uğramış!"
+
+#: ../inc/rencontre_widget.php:2787
+msgid ""
+"You are currently hidden to other members and you can't communicate because "
+"your account is not complete. You should promptly update this page otherwise "
+"your access will be canceled."
+msgstr ""
+"Hesabınız tamamlanmamış olduğundan dolayı şu anda diğer üyelere karşı "
+"gizlenmiş durumdasınız ve onlarla iletişim kuramıyorsunuz. Bu sayfayı derhal "
+"güncellemelisiniz, aksi halde erişiminiz iptal edilecektir."
+
+#: ../inc/rencontre_widget.php:2789
+msgid ""
+"You also need to confirm your email address by clicking the link that you "
+"received. You have 24 hours. Do not delay."
+msgstr ""
+"Ayrıca, aldığınız e-posta bağlantısına tıklayarak e-posta adresinizi "
+"onaylamanız gerekir. 24 saatiniz var. Geciktirmeyin."
+
+#: ../inc/rencontre_widget.php:2790
+msgid "Email not received"
+msgstr "E-posta alınmadı"
+
+#: ../inc/rencontre_widget.php:2898
+msgid "Contact already requested"
+msgstr "Bağlantı talebi zaten gönderildi"
+
+#: ../inc/rencontre_widget.php:2922
+msgid "Contact request sent"
+msgstr "Bağlantı talebi gönderildi"
+
+#: ../inc/rencontre_widget.php:2934
+msgid "Reporting already done"
+msgstr "Raporlama zaten tamamlandı"
+
+#: ../inc/rencontre_widget.php:2941
+msgid "Thank you for your report"
+msgstr "Raporunuz için teşekkür ederim"
+
+#: ../inc/rencontre_widget.php:3046
+msgid "from my position"
+msgstr "benim durumumda"
+
+#: ../inc/rencontre_widget.php:3089
+msgid "Yesterday"
+msgstr "Dün"
+
+#: ../inc/rencontre_widget.php:3100
+msgid "Widget to integrate the Rencontre sidebar in your theme sidebar"
+msgstr ""
+"Rencontre kenar çubuğunu temanın kenar çubuğuna entegre etmek için Araç "
+"(Widget)"
+
+#: ../inc/rencontre_widget.php:3213
+msgid "Password changed !"
+msgstr "Şifre değişti!"
+
+#: ../lang/rencontre-js-admin-lang.php:3
+msgid "Change the value"
+msgstr "Değeri değiş"
+
+#: ../lang/rencontre-js-admin-lang.php:6
+msgid "Del"
+msgstr "Sil"
+
+#: ../lang/rencontre-js-admin-lang.php:8
+msgid "Category"
+msgstr "Kategori"
+
+#: ../lang/rencontre-js-admin-lang.php:9
+msgid "Value"
+msgstr "Değer"
+
+#: ../lang/rencontre-js-admin-lang.php:10
+msgid "New Item"
+msgstr "Yeni Öğe"
+
+#: ../lang/rencontre-js-admin-lang.php:11
+msgid "Add"
+msgstr "Ekle"
+
+#: ../lang/rencontre-js-admin-lang.php:12 ../rencontre.php:240
+#: ../templates/rencontre_search.php:118
+#: ../templates/rencontre_sidebar_quick_search.php:46
+msgid "Country"
+msgstr "Ülke"
+
+#: ../lang/rencontre-js-admin-lang.php:13 ../templates/rencontre_search.php:129
+#: ../templates/rencontre_sidebar_quick_search.php:56
+msgid "Region"
+msgstr "Bölge"
+
+#: ../lang/rencontre-js-admin-lang.php:14
+msgid "Code ISO"
+msgstr "Kod ISO"
+
+#: ../lang/rencontre-js-admin-lang.php:15
+msgid "Image file"
+msgstr "Görüntü dosyası"
+
+#: ../lang/rencontre-js-admin-lang.php:16 ../lang/rencontre-js-lang.php:5
+#: ../templates/rencontre_portrait_add_photo.php:38
+msgid "Add this photo"
+msgstr "Bu fooğrafı ekle"
+
+#: ../lang/rencontre-js-admin-lang.php:17 ../lang/rencontre-js-lang.php:4
+msgid "Delete photo"
+msgstr "Fotoğrafı sil"
+
+#: ../lang/rencontre-js-admin-lang.php:18 ../lang/rencontre-js-lang.php:3
+msgid "Delete this photo"
+msgstr "Bu fotoğrafı sil"
+
+#: ../lang/rencontre-js-admin-lang.php:19
+msgid "Delete Account ?"
+msgstr "Hesabı sil?"
+
+#: ../lang/rencontre-js-admin-lang.php:20
+msgid "Release this mail ?"
+msgstr "Bu postayı göder?"
+
+#: ../lang/rencontre-js-admin-lang.php:21
+msgid "Number of daily registrations"
+msgstr "Günlük kayıt sayısı"
+
+#: ../lang/rencontre-js-admin-lang.php:22
+msgid "Entries already exist"
+msgstr "Girişler zaten var"
+
+#: ../lang/rencontre-js-admin-lang.php:23
+msgid "Entries active (<3 month)"
+msgstr "Aktif kayıtlar (<3 ay)"
+
+#: ../lang/rencontre-js-admin-lang.php:24
+msgid "Hourly traffic (local time)"
+msgstr "Saatlik trafik (yerel saat)"
+
+#: ../lang/rencontre-js-admin-lang.php:25
+msgid "Traffic on the week"
+msgstr "Haftalık trafik"
+
+#: ../lang/rencontre-js-admin-lang.php:26
+msgid "sun"
+msgstr "pazar"
+
+#: ../lang/rencontre-js-admin-lang.php:27
+msgid "mon"
+msgstr "ptesi"
+
+#: ../lang/rencontre-js-admin-lang.php:28
+msgid "tue"
+msgstr "salı"
+
+#: ../lang/rencontre-js-admin-lang.php:29
+msgid "wed"
+msgstr "çarş"
+
+#: ../lang/rencontre-js-admin-lang.php:30
+msgid "thu"
+msgstr "perş"
+
+#: ../lang/rencontre-js-admin-lang.php:31
+msgid "fri"
+msgstr "cuma"
+
+#: ../lang/rencontre-js-admin-lang.php:32
+msgid "sat"
+msgstr "ctesi"
+
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Min"
+msgstr "Min"
+
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Max"
+msgstr "Maksimum"
+
+#: ../lang/rencontre-js-lang.php:6
+msgid "incomplete fields or error"
+msgstr "eksik alan veya hata"
+
+#: ../lang/rencontre-js-lang.php:7
+msgid "Nickname unavailable"
+msgstr "Rumuz kullanılamıyor"
+
+#: ../lang/rencontre-js-lang.php:8
+msgid "Confirm the deletion of the account ?"
+msgstr "Hesabın silinmesini onayla?"
+
+#: ../lang/rencontre-js-lang.php:9
+msgid "New Passwords are differents"
+msgstr "Yeni Şifreler farklı"
+
+#: ../lang/rencontre-js-lang.php:10
+msgid "The original password is wrong"
+msgstr "Orijinal şifre yanlış"
+
+#: ../lang/rencontre-js-lang.php:11
+msgid "Write and press <Enter>"
+msgstr "Yazın ve <Enter> tuşuna basın"
+
+#: ../lang/rencontre-js-lang.php:12
+msgid "Chat request sent. Wait ..."
+msgstr "Sohbet isteği gönderildi. Bekle ..."
+
+#: ../lang/rencontre-js-lang.php:13
+msgid "Chat request accepted. You can start..."
+msgstr "Sohbet isteği kabul edildi. Başlayabilirsin..."
+
+#: ../lang/rencontre-js-lang.php:14
+msgid "You have a chat request"
+msgstr "Bir sohbet isteğiniz var"
+
+#: ../lang/rencontre-js-lang.php:15
+msgid "Your contact closed his window."
+msgstr "Bağlantınız penceresini kapattı."
+
+#: ../rencontre.php:12
+msgid ""
+"A free powerful and exhaustive dating plugin with private messaging, webcam "
+"chat, search by profile and automatic sending of email. No third party."
+msgstr ""
+"Özel mesajlaşma, webcam sohbet, profille arama ve e-postanın otomatik "
+"gönderimi ile ücretsiz, güçlü ve ayrıntılı bir arkadaşlık eklentisi. Üçüncü "
+"taraf yok."
+
+#: ../rencontre.php:204
+msgid "Serious relationship"
+msgstr "Ciddi bir ilişki"
+
+#: ../rencontre.php:205
+msgid "Open relationship"
+msgstr "Serbest ilişki"
+
+#: ../rencontre.php:206
+msgid "Friendship"
+msgstr "Arkadaşlık"
+
+#: ../rencontre.php:214
+msgid "a man"
+msgstr "erkek"
+
+#: ../rencontre.php:215
+msgid "a woman"
+msgstr "kadın"
+
+#: ../rencontre.php:236
+msgid "Rencontre - General"
+msgstr "Rencontre - Genel"
+
+#: ../rencontre.php:237 ../rencontre.php:245
+msgid "Rencontre - Members"
+msgstr "Rencontre - Üyeler"
+
+#: ../rencontre.php:238 ../rencontre.php:246
+msgid "Rencontre - Jail"
+msgstr "Rencontre - Kodes"
+
+#: ../rencontre.php:239
+msgid "Rencontre - Profile"
+msgstr "Rencontre - Profil"
+
+#: ../rencontre.php:240
+msgid "Rencontre - Countries"
+msgstr "Rencontre - Ülkeler"
+
+#: ../rencontre.php:241
+msgid "Rencontre - Custom"
+msgstr "Rencontre - Özel"
+
+#: ../rencontre.php:241
+msgid "Custom"
+msgstr "Özel"
+
+#: ../templates/rencontre_account.php:27
+msgid "Change password"
+msgstr "Şifreyi değiş"
+
+#: ../templates/rencontre_account.php:32
+msgid "Former"
+msgstr "Eski"
+
+#: ../templates/rencontre_account.php:36
+msgid "New"
+msgstr "Yeni"
+
+#: ../templates/rencontre_account.php:40
+msgid "Retype the new"
+msgstr "Yeniyi yeniden yazın"
+
+#: ../templates/rencontre_account.php:269
+msgid "No email from this site"
+msgstr "Bu siteden e-posta alma"
+
+#: ../templates/rencontre_account_delete.php:19
+msgid ""
+"This action will result in the complete deletion of your account and "
+"everything about you from our server. We do not keep historical accounts."
+msgstr ""
+"Bu işlem, hesabınızın ve sizinle ilgili her şeyin sunucudan silinmesine "
+"neden olacaktır. Geçmiş hesaplar tutmuyoruz."
+
+#: ../templates/rencontre_account_delete.php:20
+msgid "Please note that this action is irreversible !"
+msgstr "Lütfen bu hareketin geri döndürülemez olduğunu unutmayın!"
+
+#: ../templates/rencontre_account_delete.php:23
+msgid "Delete Account"
+msgstr "Hesabı sil"
+
+#: ../templates/rencontre_imgreg.php:16
+msgid "Username"
+msgstr "Kullanıcı adı"
+
+#: ../templates/rencontre_imgreg.php:20
+msgid "Email"
+msgstr "E-posta"
+
+#: ../templates/rencontre_imgreg.php:39
+msgid "Registration confirmation will be emailed to you."
+msgstr "Kayıt onayı e-postayla size gönderilecektir."
+
+#: ../templates/rencontre_imgreg.php:51
+msgid "Username or Email Address"
+msgstr "Kullanıcı Adı yada Eposta Adresi"
+
+#: ../templates/rencontre_mail_regular.php:24
+#: ../templates/rencontre_portrait.php:194
+#: ../templates/rencontre_portrait.php:197
+msgid "Ask for a contact"
+msgstr "Bağlantı talebinde bulun"
+
+#: ../templates/rencontre_mail_regular.php:35
+#: ../templates/rencontre_portrait.php:177
+#: ../templates/rencontre_portrait.php:180
+#: ../templates/rencontre_search_result.php:86
+#: ../templates/rencontre_search_result.php:89
+msgid "Send a message"
+msgstr "Mesaj gönder"
+
+#: ../templates/rencontre_message_conversation.php:33
+#: ../templates/rencontre_message_inbox.php:25
+#: ../templates/rencontre_message_write.php:33
+msgid "Inbox"
+msgstr "Gelen Kutusu"
+
+#: ../templates/rencontre_message_conversation.php:36
+#: ../templates/rencontre_message_conversation.php:39
+msgid "Answer"
+msgstr "Cevap ver"
+
+#: ../templates/rencontre_message_conversation.php:44
+msgid "Delete the conversation"
+msgstr "Sohbeti sil"
+
+#: ../templates/rencontre_message_write.php:47
+msgid "Send a message to"
+msgstr "Şu kişiye mesaj gönder:"
+
+#: ../templates/rencontre_mini_portrait_chat.php:41
+msgid "Accept"
+msgstr "Kabul et"
+
+#: ../templates/rencontre_mini_portrait_chat.php:44
+msgid "Ignore"
+msgstr "Reddet"
+
+#: ../templates/rencontre_modal_warning.php:17
+msgid "Your email is validated"
+msgstr "E-postanız doğrulanmıştır"
+
+#: ../templates/rencontre_modal_warning.php:31
+#, php-format
+msgid ""
+"Welcome to %s. You will stay hidden without interaction to other members as "
+"long as your account is not completed."
+msgstr ""
+"%s 'ye hoş geldiniz. Hesabınız tamamlanmadığı sürece diğer üyelerle "
+"etkileşim kurmadan gizli kalacaksınız."
+
+#: ../templates/rencontre_modal_warning.php:32
+msgid "You have 24 hours to confirm your email."
+msgstr "E-postanızı doğrulamak için 24 saatiniz var."
+
+#: ../templates/rencontre_my_home.php:18
+msgid "Featured profiles"
+msgstr "Öne çıkan profiller"
+
+#: ../templates/rencontre_my_home.php:57
+msgid "New entrants"
+msgstr "Yeni gelenler"
+
+#: ../templates/rencontre_my_home.php:67
+msgid "My favourites"
+msgstr "Favorikerim"
+
+#: ../templates/rencontre_portrait.php:109
+msgid "offline"
+msgstr "çevrimdışı"
+
+#: ../templates/rencontre_portrait.php:113
+msgid "You are blocked !"
+msgstr "Engellendiniz!"
+
+#: ../templates/rencontre_portrait.php:203
+#: ../templates/rencontre_portrait.php:206
+msgid "Chat"
+msgstr "Sohbet"
+
+#: ../templates/rencontre_portrait.php:211
+#: ../templates/rencontre_portrait.php:214
+msgid "Block"
+msgstr "Engelle"
+
+#: ../templates/rencontre_portrait.php:211
+msgid "Unblock"
+msgstr "Engeli kaldır"
+
+#: ../templates/rencontre_portrait.php:218
+msgid "Report a fake profile or inappropriate content"
+msgstr "Sahte bir profili veya uygunsuz içeriği bildirin"
+
+#: ../templates/rencontre_portrait.php:218
+#: ../templates/rencontre_portrait.php:221
+msgid "Report"
+msgstr "Rapor et"
+
+#: ../templates/rencontre_portrait.php:225
+msgid "Add to my favorites"
+msgstr "Favorilerime ekle"
+
+#: ../templates/rencontre_portrait.php:225
+#: ../templates/rencontre_portrait.php:228
+msgid "Favorite"
+msgstr "Favori"
+
+#: ../templates/rencontre_portrait.php:228
+msgid "Delete from my favorites"
+msgstr "Favorilerimi sil"
+
+#: ../templates/rencontre_portrait_add_photo.php:32
+msgid "Facebook Profile Photo"
+msgstr "Facebook profil fotoğrafı"
+
+#: ../templates/rencontre_portrait_edit.php:58
+msgid "You are limited"
+msgstr "Kısırlısınız"
+
+#: ../templates/rencontre_portrait_edit.php:65
+msgid "Click the photo"
+msgstr "Fotoğrafa tıkla"
+
+#: ../templates/rencontre_registration_part1.php:27
+#: ../templates/rencontre_registration_part2.php:19
+#: ../templates/rencontre_registration_part3.php:27
+msgid "welcome to the site"
+msgstr "siteye hoşgeldiniz"
+
+#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
+#: ../templates/rencontre_search.php:79
+msgid "max"
+msgstr "maksimum"
+
+#: ../templates/rencontre_search.php:105
+msgid "Gender"
+msgstr "Cinsiyet"
+
+#: ../templates/rencontre_search.php:138
+msgid "City"
+msgstr "Şehir"
+
+#: ../templates/rencontre_search.php:145
+#: ../templates/rencontre_sidebar_quick_search.php:66
+msgid "Relation"
+msgstr "İlişki"
+
+#: ../templates/rencontre_search.php:156
+msgid "Word in the ad"
+msgstr "Reklamdaki kelime"
+
+#: ../templates/rencontre_search.php:165
+msgid "Only with picture"
+msgstr "Sadece resimli"
+
+#: ../templates/rencontre_search_result.php:68
+msgid "The"
+msgstr "-"
+
+#: ../templates/rencontre_sidebar_quick_search.php:13
+msgid "Quick Search"
+msgstr "Hızlı arama"
+
+#: ../templates/rencontre_sidebar_quick_search.php:27
+msgid "From"
+msgstr "Itibaren"
+
+#: ../templates/rencontre_sidebar_quick_search.php:35
+msgid "To"
+msgstr "kadar"
+
+#: ../templates/rencontre_sidebar_quick_search.php:86
+#: ../templates/rencontre_sidebar_quick_search.php:101
+msgid "After"
+msgstr "Sonra"
+
+#: ../templates/rencontre_sidebar_quick_search.php:86
+#: ../templates/rencontre_sidebar_quick_search.php:101
+msgid "Before"
+msgstr "Önce"
+
+#: ../templates/rencontre_sidebar_top.php:81
+msgid "Contact requests"
+msgstr "Bağlantı talepleri"
+
+#: ../templates/rencontre_sidebar_top.php:109
+msgid "Who I asked for a contact ?"
+msgstr "Kime bağlantı talebinde bulundum?"
+
+#: ../templates/rencontre_sidebar_top.php:114
+msgid "Who I've blocked ?"
+msgstr "Kimi engelledim?"
+
+#~ msgid "Change login name (after, it will not be possible)"
+#~ msgstr "Giriş adını değiştir (daha sonra, mümkün olmayacak)"
+
+#~ msgid "New password (6 min)"
+#~ msgstr "Yeni şifre (min 6)"
+
+#~ msgid "New password (again)"
+#~ msgstr "Yeni şifre (tekrar)"
+
+#~ msgid ""
+#~ "Rencontre no longer uses \"GeoIP Detect\". You can disable and delete "
+#~ "this plugin."
+#~ msgstr ""
+#~ "Rencontre artık \"GeoIP Algılama\" yı kullanmıyor. Bu eklentiyi devre "
+#~ "dışı bırakabilir ve silebilirsiniz."
+
+#~ msgid "No flags on logged out plugin homepage"
+#~ msgstr "Bağlanmamış ana sayfada bayrak yok"
+
+#~ msgid "Member"
+#~ msgstr "Üye"
+
+#~ msgid "Message"
+#~ msgstr "Mesaj"
+
+#~ msgid "Close"
+#~ msgstr "Kapat"
+
+#~ msgid "from"
+#~ msgstr "-den/-dan"
+
+#~ msgid "Connection"
+#~ msgstr "Bağlantı"
+
+#~ msgid "Reload unconnected homepage"
+#~ msgstr "Bağlantısız ana sayfayı tekrardan yükle"
+
+#~ msgid "Reload now"
+#~ msgstr "Şimdi yükle"
+
+#~ msgid "Only my country on my home page"
+#~ msgstr "Yalnızca ana sayfamdaki ülkem"
+
+#~ msgid "Size"
+#~ msgstr "Ölçü"
+
+#~ msgid "My size"
+#~ msgstr "Boyum"
+
+#~ msgid "No size"
+#~ msgstr "Ölçü yok"
+
+#~ msgid "Size unit"
+#~ msgstr "Ölçü birimi"
+
+#~ msgid "Back Members"
+#~ msgstr "Üyelere Geri Dön"
+
+#~ msgid "Remove inactive members for one year"
+#~ msgstr "Bir yıl boyunca aktif olmayan üyeleri kaldır"

@@ -1,0 +1,36 @@
+<?php
+$lang = array(
+	'mod_valeur'=>__('Change the value','rencontre'),
+	'sauvegarde'=>__('Save','rencontre'),
+	'confirmer'=>__('Confirm','rencontre'),
+	'supp'=>__('Del','rencontre'),
+	'supprimer'=>__('Remove','rencontre'),
+	'categ'=>__('Category','rencontre'),
+	'valeur'=>__('Value','rencontre'),
+	'nouvelit'=>__('New Item','rencontre'),
+	'ajoute'=>__('Add','rencontre'),
+	'pays'=>__('Country','rencontre'),
+	'region'=>__('Region','rencontre'),
+	'code_iso'=>__('Code ISO','rencontre'),
+	'fichier_im'=>__('Image file','rencontre'),
+	'ajouter_photo'=>__('Add this photo','rencontre'),
+	'supp_la_photo'=>__('Delete photo','rencontre'),
+	'supp_photo'=>__('Delete this photo','rencontre'),
+	'supp_compte'=>__('Delete Account ?','rencontre'),
+	'libre_mail'=>__('Release this mail ?','rencontre'),
+	'nb_registered'=>__('Number of daily registrations','rencontre'),
+	'nb_exist'=>__('Entries already exist','rencontre'),
+	'nb_actif'=>__('Entries active (<3 month)','rencontre'),
+	'trafic'=>__('Hourly traffic (local time)','rencontre'),
+	'trafic_sem'=>__('Traffic on the week','rencontre'),
+	'dim'=>__('sun','rencontre'),
+	'lun'=>__('mon','rencontre'),
+	'mar'=>__('tue','rencontre'),
+	'mer'=>__('wed','rencontre'),
+	'jeu'=>__('thu','rencontre'),
+	'ven'=>__('fri','rencontre'),
+	'sam'=>__('sat','rencontre'),
+	'numselect'=>array(__('Min','rencontre'),__('Max','rencontre'),__('Step','rencontre'),__('Unit','rencontre'))
+	);
+	// rencobjet.sauvegarde
+?>

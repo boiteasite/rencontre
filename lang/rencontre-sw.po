@@ -1,0 +1,2481 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rencontre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-11 09:55+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: malgrange <jacques.malgrange@gmail.com>\n"
+"Language-Team: boiteasite.fr <contacter@boiteasite.fr>\n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../inc/base.php:137
+msgid "lines"
+msgstr "mistari"
+
+#: ../inc/base.php:350 ../inc/base.php:1286
+msgid "Done!"
+msgstr "Imefanyika!"
+
+#: ../inc/base.php:350 ../inc/rencontre_filter.php:1516
+msgid "photo"
+msgstr "Picha"
+
+#: ../inc/base.php:421 ../inc/base.php:532 ../inc/base.php:535
+msgid "TO CHANGE"
+msgstr "KUBADIRI"
+
+#: ../inc/base.php:443 ../inc/base.php:2565
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Unit"
+msgstr "Kitengo"
+
+#: ../inc/base.php:1078 ../inc/base.php:2399
+msgid "Update member profile"
+msgstr "Badiri muonekano wa profaili yako"
+
+#: ../inc/base.php:1079 ../inc/base.php:2400
+msgid "You have made changes. Remember to update when you're done."
+msgstr "Umefanya mabadiriko. Ukimaliza ukumbuke kubadiri (update)"
+
+#: ../inc/base.php:1084 ../rencontre.php:236
+msgid "General"
+msgstr "Kwa ujumla"
+
+#: ../inc/base.php:1085 ../inc/rencontre_filter.php:275
+#: ../inc/rencontre_filter.php:597 ../inc/rencontre_filter.php:796
+msgid "Login"
+msgstr "Ingia"
+
+#: ../inc/base.php:1086
+msgid "Display"
+msgstr "Onyesha"
+
+#: ../inc/base.php:1087
+msgid "E-mails"
+msgstr "Barua Pepe"
+
+#: ../inc/base.php:1088
+msgid "CSV"
+msgstr "CSV"
+
+#: ../inc/base.php:1093
+msgid "Premium"
+msgstr "Yakulipia"
+
+#: ../inc/base.php:1114
+msgid ""
+"OpenSSL doesn't seem to be working. Some features of this plugin will not be "
+"available."
+msgstr ""
+"\"OpenSSL\" haionekani kuwa inafanya kazi. Vipengele vingine vya Plugin hii "
+"haipatikani."
+
+#: ../inc/base.php:1118
+msgid "Plugin page"
+msgstr "Ukurasa wa Plugin"
+
+#: ../inc/base.php:1132
+msgid "Country selected by default"
+msgstr "Nchi iliyochaguliwa kwa default"
+
+#: ../inc/base.php:1140
+msgid "Number of days in jail (deleted account)"
+msgstr "Idadi ya siku za kuwa jela (akaunti iliyofutwa)"
+
+#: ../inc/base.php:1153
+msgid "Use member's picture as WordPress avatar"
+msgstr "Tumia picha ya mwanachama kama avatar ya WordPress"
+
+#: ../inc/base.php:1157
+msgid "Old messages deleted during maintenance (recommended)"
+msgstr "Ujumbe wa zamani ulifutwa wakati wa matengenezo (Inashauriwa)"
+
+#: ../inc/base.php:1160 ../inc/base.php:1172 ../inc/base.php:1298
+#: ../inc/base.php:1403 ../inc/base.php:1451 ../inc/base.php:3155
+#: ../inc/base.php:3182
+msgid "No"
+msgstr "Hapana"
+
+#: ../inc/base.php:1161 ../inc/base.php:1452
+msgid "Monthly"
+msgstr "Kwa Mwezi"
+
+#: ../inc/base.php:1162
+msgid "Quarterly"
+msgstr "Kwa Robo Mwaka"
+
+#: ../inc/base.php:1163
+msgid "Biannual"
+msgstr "Kwa Nusu Mwaka"
+
+#: ../inc/base.php:1164
+msgid "Annual"
+msgstr "Kwa Mwaka"
+
+#: ../inc/base.php:1169
+msgid "Inactive users deleted during maintenance"
+msgstr "Watumiaji wasio na kazi walifutwa wakati wa matengenezo"
+
+#: ../inc/base.php:1173
+msgid "Year"
+msgstr "mwaka"
+
+#: ../inc/base.php:1174 ../inc/base.php:1175 ../inc/base.php:1176
+#: ../inc/base.php:1177
+msgid "Years"
+msgstr "yıl"
+
+#: ../inc/base.php:1182
+msgid "Hour maintenance tasks (off peak)"
+msgstr "Matengenezo kwa saa (off peak)"
+
+#: ../inc/base.php:1187
+msgid "hours"
+msgstr "masaa"
+
+#: ../inc/base.php:1193
+msgid "Framework for the Facebook Like button"
+msgstr "Mfumo wa Facebook kama kifungo"
+
+#: ../inc/base.php:1197
+msgid "Do not remove WP roles"
+msgstr "Usiondoe majukumu ya WP"
+
+#: ../inc/base.php:1201
+msgid "Do not remove user in WP when remove in Rencontre"
+msgstr "Usimuondoe mtumiaji kwenye WP wakati unapomtoa toka Rencontre"
+
+#: ../inc/base.php:1207
+msgid ""
+"Unchecked : WP roles will be destroyed. Users who are not in Rencontre will "
+"be destroyed. This is the best mode for a big and exclusive dating site."
+msgstr ""
+"Usitiki : Majukumu ya WP yataharibiwa. Watumiaji ambao hawako Rencontre "
+"watafutwa. Hii ni njia bora kabisa ya tovuti kubwa na za kipekee za "
+"mahusiano."
+
+#: ../inc/base.php:1208
+msgid ""
+"Checked : Better choice to test this plugin or to use with other one "
+"(forum...). Over time, the site will be slower with numerous abandoned "
+"account."
+msgstr ""
+"Tiki: Chaguo bora kwa ajili ya kuipima hii programu au kuitumia na nyingine "
+"(jukwaa ...). Baada ya muda, tovuti itakuwa polepole na akaunti "
+"nyingizitaachwa."
+
+#: ../inc/base.php:1212
+msgid "Clean-up when uninstall"
+msgstr "Safisha wakati ina-uninstall"
+
+#: ../inc/base.php:1217 ../inc/base.php:1274 ../inc/base.php:1431
+#: ../inc/base.php:1523 ../inc/base.php:2995 ../inc/base.php:3129
+#: ../inc/base.php:3207 ../inc/base.php:3442
+#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:279
+#: ../templates/rencontre_registration_part1.php:144
+#: ../templates/rencontre_registration_part2.php:58
+#: ../templates/rencontre_registration_part3.php:109
+msgid "Save"
+msgstr "Hifadhi"
+
+#: ../inc/base.php:1222
+msgid "Images names"
+msgstr "Majina ya Picha"
+
+#: ../inc/base.php:1223
+msgid "Be careful, all pictures of the members will have another name."
+msgstr "Kuwa mwangalifu, picha zote za wanachama zitakuwa na majina tofauti."
+
+#: ../inc/base.php:1230
+msgid "Images names are encoded"
+msgstr "Majina ya picha yamebadirishwa"
+
+#: ../inc/base.php:1231
+msgid "Images names are not encoded"
+msgstr "Majina ya picha hayajabadirishwa"
+
+#: ../inc/base.php:1232
+msgid "I don't know if it's encoded or not"
+msgstr "Sijui kama yamebadirishwa au la"
+
+#: ../inc/base.php:1239
+msgid "Encode all images names"
+msgstr "Badiri majina ya picha zote"
+
+#: ../inc/base.php:1240
+msgid "Decode all images names"
+msgstr "Rudisha majina yote ya picha"
+
+#: ../inc/base.php:1242
+msgid "Cleanup abandoned images"
+msgstr "Ondoa picha zilizoachwa"
+
+#: ../inc/base.php:1257
+msgid "AppID for Facebook login (empty if not installed)"
+msgstr "AppID ya kiunganishi cha Facebook (usijazwe kama haikuwekwa)"
+
+#: ../inc/base.php:1261
+msgid "Enable rapid registration"
+msgstr "Ruhusu usajiri wa haraka"
+
+#: ../inc/base.php:1265
+msgid "Do not request a new password after registration"
+msgstr "Usihitaji nywila mpya baada ya kujisajiri"
+
+#: ../inc/base.php:1269
+msgid "Redirect to the plugin page after login"
+msgstr "Impeleke kwenye ukurasa wa plugin baada ya kuingia"
+
+#: ../inc/base.php:1295
+msgid "Display a different name than login"
+msgstr "Onyesha jina tofauti kuliko kuingia"
+
+#: ../inc/base.php:1299
+msgid "Uneditable after registration"
+msgstr "Haikufaa baada ya usajili"
+
+#: ../inc/base.php:1300
+msgid "Editable in \"my account\""
+msgstr "Badilisha katika \"akaunti yangu\""
+
+#: ../inc/base.php:1305
+msgid "Number of portrait on logged out plugin homepage"
+msgstr ""
+"Idadi ya picha za washiriki kwenye home page ambayo hakuna mshiriki "
+"aliyeingia"
+
+#: ../inc/base.php:1314
+msgid "Width of portrait on logged out plugin homepage"
+msgstr ""
+"Upana wa picha za washiriki kwenye home page ambayo hakuna mshiriki "
+"aliyeingia"
+
+#: ../inc/base.php:1317
+msgid "Empty"
+msgstr "Tupu"
+
+#: ../inc/base.php:1323
+msgid "Update plugin homepage for logged out users"
+msgstr "Ipakue tena kwenye home page ambayo hakuna mshiriki aliyeingia"
+
+#: ../inc/base.php:1326
+msgid "24h (recommended)"
+msgstr "24 (inashauriwa)"
+
+#: ../inc/base.php:1327 ../inc/base.php:1328 ../inc/base.php:1329
+#: ../inc/base.php:1330
+msgid "h"
+msgstr "h"
+
+#: ../inc/base.php:1331 ../inc/base.php:1332 ../inc/base.php:1333
+#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
+#: ../templates/rencontre_search.php:79
+msgid "min"
+msgstr "dk"
+
+#: ../inc/base.php:1335
+msgid "Update now"
+msgstr "Pakia tena sasa"
+
+#: ../inc/base.php:1339
+msgid "Number of days to wait before presence homepage"
+msgstr "Idadi ya siku za kusubiri kabla ya kuonekana kwa homepage"
+
+#: ../inc/base.php:1347
+msgid "Max number of results per search"
+msgstr "Idadi kubwa ya washiriki uliowatafuta"
+
+#: ../inc/base.php:1359
+msgid "Display profiles searched in a new tab"
+msgstr "Kuonyesha maelezo yaliyotajwa kwenye kichupo kipya"
+
+#: ../inc/base.php:1365
+msgid "Only members from the same country on the logged on plugin homepage"
+msgstr "Nchi yangu tu kwenye ukurasa wangu wa nyumbani"
+
+#: ../inc/base.php:1371 ../templates/rencontre_my_home.php:28
+msgid "Today's birthday"
+msgstr "Waliozaliwa leo"
+
+#: ../inc/base.php:1375
+msgid "Profiles currently online"
+msgstr "Walio Mubashara"
+
+#: ../inc/base.php:1379
+msgid "Enable chat"
+msgstr "Ruhusu mazungumzo"
+
+#: ../inc/base.php:1383
+msgid "Geolocation"
+msgstr "Geolocation"
+
+#: ../inc/base.php:1387
+msgid "Number of photos"
+msgstr "Idadi ya picha"
+
+#: ../inc/base.php:1395
+msgid "Regenerate all photos"
+msgstr "Rejesha picha zote"
+
+#: ../inc/base.php:1400
+msgid "View a discrete copyright on photos"
+msgstr "Onyesha hatimiliki katika picha"
+
+#: ../inc/base.php:1404
+msgid "Upwardly inclined"
+msgstr "Inayoelekea juu"
+
+#: ../inc/base.php:1405
+msgid "Downwardly inclined"
+msgstr "Inayoelekea chini"
+
+#: ../inc/base.php:1410
+msgid "Copyright text on pictures. Empty => Site URL."
+msgstr "Maneno ya hatimiliki kwenye picha. Usipoweka => Site URL."
+
+#: ../inc/base.php:1414
+msgid "Members without photo are less visible"
+msgstr "Mshiriki asiye na picha hawezi kuonekana kwa wenzie"
+
+#: ../inc/base.php:1418
+msgid "Members without photo cannot zoom other members"
+msgstr "Mshiriki asiye na picha hawezi kuikuza picha ya mshiriki mwingine"
+
+#: ../inc/base.php:1422
+msgid "Members without photo, attention-catcher and ad cannot send message"
+msgstr ""
+"Mshiriki asiye na picha, na wala hajajaza maelezo yake binafsi yanayomuhusu "
+"yeye hataweza kutuma ujumbe"
+
+#: ../inc/base.php:1426
+msgid "Members without photo, attention-catcher and ad cannot make a report"
+msgstr ""
+"Mshiriki asiye na picha, na wala hajajaza maelezo yake binafsi yanayomuhusu "
+"yeye hataweza kumchongea mwenzake"
+
+#: ../inc/base.php:1444
+msgid "Send an email to the user whose account is deleted"
+msgstr "Tuma email kwa mtumiaji mwenye akaunti iliyo futwa"
+
+#: ../inc/base.php:1448
+msgid "Automatic sending a summary email to members (shared daily)"
+msgstr "Itume muhtasari wa hali ya washiliki kwa barua pepe (itume kilasiku)"
+
+#: ../inc/base.php:1453
+msgid "Fortnightly"
+msgstr "Kwa wiki mbili"
+
+#: ../inc/base.php:1454
+msgid "Weekly"
+msgstr "Weekly"
+
+#: ../inc/base.php:1458 ../inc/base.php:1509
+msgid "Up this week"
+msgstr "Ndan ya hii wiki"
+
+#: ../inc/base.php:1458 ../inc/base.php:1509
+msgid "mail/hour"
+msgstr "barua pepe kwa saa"
+
+#: ../inc/base.php:1458
+msgid "sent during maintenance"
+msgstr "tuma wakati wa matengenezo"
+
+#: ../inc/base.php:1463
+msgid ""
+"Introductory text for the summary email (After hello login - Before the "
+"smiles and contact requests)"
+msgstr ""
+"Maneno ya utangulizi kwa barua pepe za kila mwezi ( baada ya hello ingia - "
+"kabla ya tabasamu na omba contact)"
+
+#: ../inc/base.php:1469
+msgid "Only my country in summary email"
+msgstr "Nchi yangu tu katika barua pepe ya muhtasari"
+
+#: ../inc/base.php:1476
+msgid "Also send an email for a smile"
+msgstr "Pia tuma barua pepe kwa tabasamu"
+
+#: ../inc/base.php:1482
+msgid "Automatically sending an email happy birthday members"
+msgstr "Itume Barua pepe za kuwatakia heri ya kuzaliwa washiriki"
+
+#: ../inc/base.php:1486
+msgid "Full text for the birthday mail (After hello pseudo)"
+msgstr ""
+"Maneno kamili kwenye barua pepe ya siku ya kuzaliwa ( baada ya hello pseudo)"
+
+#: ../inc/base.php:1490
+msgid "Max number of mails sent per hour"
+msgstr "Idadi kubwa ya barua pepe itakayotumwa kwa saa"
+
+#: ../inc/base.php:1509
+msgid "except during maintenance"
+msgstr "isipikuwa wakati wa matengenezo"
+
+#: ../inc/base.php:1514
+msgid "No members without photo in automatic mails"
+msgstr "Mshiriki asiye na picha hatatumia barua pepe kiautomatiki"
+
+#: ../inc/base.php:1518
+msgid "Force HTML mode (mail not readable)"
+msgstr "Lazimisha mode ya HTML (kam barua pepe isiposomeka)"
+
+#: ../inc/base.php:1544
+msgid "Export members in CSV"
+msgstr "Leta washiriki wakiwa kwenye hali ya CSV"
+
+#: ../inc/base.php:1548
+msgid "All members"
+msgstr "Washiriki wote"
+
+#: ../inc/base.php:1549
+msgid "Active last month"
+msgstr "Alikuwepo mwezi uliopita"
+
+#: ../inc/base.php:1550
+msgid "Active last 2 months"
+msgstr "Alikuwepo miezi miwili iliyopita"
+
+#: ../inc/base.php:1551
+msgid "Active last 6 months"
+msgstr "Alikuwepo miezi 6 iliyopita"
+
+#: ../inc/base.php:1552
+msgid "Active last 12 months"
+msgstr "Alikuwepo mwaka uliopita"
+
+#: ../inc/base.php:1556
+msgid "Only members with photo"
+msgstr "Washiriki tu mwenyepicha"
+
+#: ../inc/base.php:1559
+msgid "Only members with attention-catcher and ad"
+msgstr "Washiriki tu waliojaza maelezo yao binafsi na kuhusu wao"
+
+#: ../inc/base.php:1561
+msgid "Export in CSV"
+msgstr "Tuma ikiwa kwenye CSV"
+
+#: ../inc/base.php:1564
+msgid "Get back photos by FTP in wp-content/uploads/tmp/"
+msgstr "Rudisha picha kwa kutumia FTP katika wp-content/uploads/tmp/"
+
+#: ../inc/base.php:1567
+msgid "Import members in CSV"
+msgstr "Leta washiriki wakiwa kwenye CSV"
+
+#: ../inc/base.php:1569
+msgid ""
+"Put members photos in wp-content/uploads/tmp/photo_import/ by FTP before the "
+"start (right RW - no sub folder - .jpg - no zip)."
+msgstr ""
+"Weka picha za washiriki kwenye wp-content/uploads/tmp/photo_import/ kwa "
+"kutumia FTP kabla ya kuanza (right RW - no sub folder - .jpg - no zip)."
+
+#: ../inc/base.php:1570
+msgid "Select your CSV file (.csv - no zip)."
+msgstr "Chagua faili lako la CSV (.csv - no zip)."
+
+#: ../inc/base.php:1571 ../inc/base.php:1584
+msgid "Import in CSV"
+msgstr "Leta ikiwa kwenye CSV"
+
+#: ../inc/base.php:1573
+msgid ""
+"Make an export and look at it to get the right format (The first line is not "
+"treated)."
+msgstr ""
+"Litume na uliangalie likiwa kwenye fomati sahihi (mstari wa kwanza "
+"hauhusiki)."
+
+#: ../inc/base.php:1574
+msgid ""
+"In case of interruption during the import of photos, restart the procedure. "
+"Doubloons are killed."
+msgstr ""
+"Kama utapata tatizo ukiwa unaleta faili picha, anza tena. Zizazoingia "
+"marambili zinaondolewa."
+
+#: ../inc/base.php:1578
+msgid "CSV File"
+msgstr "Faili la CSV"
+
+#: ../inc/base.php:1585
+msgid "File loaded"
+msgstr "Faili limewekwa"
+
+#: ../inc/base.php:1586
+msgid "Error !"
+msgstr "Tatizo!"
+
+#: ../inc/base.php:1587
+msgid "Import data"
+msgstr "Leta data"
+
+#: ../inc/base.php:1588
+msgid "completed"
+msgstr "imemaliza"
+
+#: ../inc/base.php:1590
+msgid "Photos Import"
+msgstr "Leta picha"
+
+#: ../inc/base.php:1592
+msgid "Import completed"
+msgstr "Zimeshaletwa"
+
+#: ../inc/base.php:1626 ../rencontre.php:237 ../rencontre.php:245
+msgid "Members"
+msgstr "Washiriki"
+
+#: ../inc/base.php:1635
+msgid "Number of registered members"
+msgstr "Idadi ya washiriki waliojirejista"
+
+#: ../inc/base.php:1636
+msgid "Number of members with profile and photo"
+msgstr "Idadi ya washiriki wenye profaili na picha"
+
+#: ../inc/base.php:1637 ../inc/rencontre_widget.php:1259
+#: ../templates/rencontre_my_home.php:44 ../templates/rencontre_my_home.php:46
+msgid "Online now"
+msgstr "Waliomubashara sasa hivi"
+
+#: ../inc/base.php:1643
+msgid "Statistic"
+msgstr "Takwimu"
+
+#: ../inc/base.php:1668
+msgid "Add new from WordPress"
+msgstr "Ongeza mpya kutoka WordPress"
+
+#: ../inc/base.php:1672
+msgid "Alias or email or ID"
+msgstr "Jina au baruapepe au ID"
+
+#: ../inc/base.php:1674 ../templates/rencontre_search.php:168
+#: ../templates/rencontre_sidebar_quick_search.php:107
+msgid "Find"
+msgstr "Tafuta"
+
+#: ../inc/base.php:1693 ../inc/rencontre_filter.php:1512 ../rencontre.php:341
+#: ../templates/rencontre_account_delete.php:14
+msgid "Account deletion"
+msgstr "Akaunti imefutwa"
+
+#: ../inc/base.php:1694 ../inc/rencontre_filter.php:1513 ../rencontre.php:342
+msgid "Your account has been deleted"
+msgstr "Akaunti yako imefutwa"
+
+#: ../inc/base.php:1767
+msgid "Reason for this action"
+msgstr "Sababu ya kitendo hiki"
+
+#: ../inc/base.php:1772 ../templates/rencontre_message_write.php:57
+msgid "Send"
+msgstr "Tuma"
+
+#: ../inc/base.php:1783 ../inc/base.php:1784 ../inc/base.php:1786
+#: ../inc/base.php:1788 ../inc/base.php:1793 ../inc/base.php:1794
+#: ../inc/base.php:1795 ../inc/base.php:1797 ../inc/base.php:2311
+#: ../inc/base.php:2312 ../inc/base.php:2313 ../inc/base.php:2315
+msgid "Sort"
+msgstr "Panga"
+
+#: ../inc/base.php:1784
+msgid "Action"
+msgstr "Tendo"
+
+#: ../inc/base.php:1785
+msgid "Photo"
+msgstr "Picha"
+
+#: ../inc/base.php:1786 ../templates/rencontre_search.php:160
+msgid "Alias"
+msgstr "Jina"
+
+#: ../inc/base.php:1786 ../inc/rencontre_filter.php:1310
+#: ../templates/rencontre_account.php:64
+msgid "My name"
+msgstr "Jina langu"
+
+#: ../inc/base.php:1787
+msgid "Sex"
+msgstr "Jinsia"
+
+#: ../inc/base.php:1788 ../templates/rencontre_search.php:31
+msgid "Age"
+msgstr "Umri"
+
+#: ../inc/base.php:1789 ../templates/rencontre_search.php:53
+msgid "Height"
+msgstr "Urefu"
+
+#: ../inc/base.php:1790 ../templates/rencontre_search.php:79
+msgid "Weight"
+msgstr "Uzito"
+
+#: ../inc/base.php:1791 ../inc/base.php:2815 ../inc/base.php:3971
+#: ../templates/rencontre_libre_search.php:61
+#: ../templates/rencontre_menu.php:33 ../templates/rencontre_menu.php:36
+#: ../templates/rencontre_search.php:15
+msgid "Search"
+msgstr "Tafuta"
+
+#: ../inc/base.php:1792
+msgid "Hang"
+msgstr "Panga"
+
+#: ../inc/base.php:1793
+msgid "Place"
+msgstr "Pahala"
+
+#: ../inc/base.php:1794
+msgid "Ad (change)"
+msgstr "Maelezo yako (badiri)"
+
+#: ../inc/base.php:1794
+msgid "Registered"
+msgstr "Imeshajiunga"
+
+#: ../inc/base.php:1795 ../inc/base.php:2313
+msgid "IP address"
+msgstr "Utambulisho wa IP"
+
+#: ../inc/base.php:1797
+msgid "Reporting"
+msgstr "Mchongee"
+
+#: ../inc/base.php:1820 ../inc/base.php:1830
+msgid "See"
+msgstr "Ona"
+
+#: ../inc/base.php:1823
+msgid "Unblock this member"
+msgstr "Fungulia mwanachama huyu"
+
+#: ../inc/base.php:1823
+msgid "Block this member"
+msgstr "Mfungie mwanachama huyu"
+
+#: ../inc/base.php:1824
+msgid "Allow sending message"
+msgstr "Kubali utume ujumbe"
+
+#: ../inc/base.php:1824
+msgid "Prohibit contact"
+msgstr "Zuia contact"
+
+#: ../inc/base.php:1826
+msgid "New fast account not completed"
+msgstr "Akaunti mpya ya haraka haijatimia"
+
+#: ../inc/base.php:1827
+msgid "Remove - Black list email"
+msgstr "Toa - Barua pepe zilizokuwa kwenye Blakilisti"
+
+#: ../inc/base.php:1838 ../inc/base.php:2085
+#: ../templates/rencontre_account.php:159
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:112
+#: ../templates/rencontre_search.php:59 ../templates/rencontre_search.php:68
+msgid "cm"
+msgstr "sm"
+
+#: ../inc/base.php:1838 ../inc/base.php:2086
+#: ../templates/rencontre_account.php:162
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:115
+#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
+msgid "ft"
+msgstr "ft"
+
+#: ../inc/base.php:1838 ../inc/base.php:2086
+#: ../templates/rencontre_account.php:162
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:115
+#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
+msgid "in"
+msgstr "in"
+
+#: ../inc/base.php:1839 ../inc/base.php:2098
+#: ../templates/rencontre_account.php:178
+#: ../templates/rencontre_portrait.php:88
+#: ../templates/rencontre_registration_part1.php:130
+#: ../templates/rencontre_search.php:85 ../templates/rencontre_search.php:94
+msgid "kg"
+msgstr "kg"
+
+#: ../inc/base.php:1839 ../inc/base.php:2099
+#: ../templates/rencontre_account.php:181
+#: ../templates/rencontre_portrait.php:88
+#: ../templates/rencontre_registration_part1.php:133
+#: ../templates/rencontre_search.php:86 ../templates/rencontre_search.php:95
+msgid "lbs"
+msgstr "lbs"
+
+#: ../inc/base.php:1841
+msgid "multiple choice"
+msgstr "kuchagua"
+
+#: ../inc/base.php:1843
+msgid "to"
+msgstr "kwa"
+
+#: ../inc/base.php:1970
+msgid "Change My Profile"
+msgstr "Badirisha Profaili yako"
+
+#: ../inc/base.php:1971 ../inc/rencontre_widget.php:1385
+#: ../inc/rencontre_widget.php:2545
+msgid "Previous page"
+msgstr "Ukurasa uliopita"
+
+#: ../inc/base.php:1978 ../templates/rencontre_portrait_edit.php:98
+#: ../templates/rencontre_portrait_edit.php:174
+msgid "Save profile"
+msgstr "Hifadhi profaili yako"
+
+#: ../inc/base.php:1988 ../templates/rencontre_portrait_edit.php:47
+msgid "Click to delete"
+msgstr "Bofya ili ufute"
+
+#: ../inc/base.php:1991 ../templates/rencontre_portrait_edit.php:54
+msgid "Click to add a photo"
+msgstr "Bofya ili kuongeza picha"
+
+#: ../inc/base.php:1996 ../templates/rencontre_portrait_edit.php:67
+msgid "Delete all photos"
+msgstr "Futa picha zote"
+
+#: ../inc/base.php:2007 ../templates/rencontre_portrait_edit.php:89
+msgid "My attention-catcher"
+msgstr "Kuhusu mimi"
+
+#: ../inc/base.php:2009 ../templates/rencontre_portrait_edit.php:93
+msgid "My ad"
+msgstr "Maelezo binafsi"
+
+#: ../inc/base.php:2017 ../templates/rencontre_account.php:70
+#: ../templates/rencontre_registration_part1.php:60
+msgid "I am"
+msgstr "Mimi ni"
+
+#: ../inc/base.php:2027 ../templates/rencontre_account.php:82
+#: ../templates/rencontre_registration_part1.php:72
+msgid "Born"
+msgstr "Kuzaliwa"
+
+#: ../inc/base.php:2049 ../templates/rencontre_account.php:122
+#: ../templates/rencontre_registration_part2.php:29
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:15
+msgid "My country"
+msgstr "Nchi yangu"
+
+#: ../inc/base.php:2060 ../templates/rencontre_account.php:133
+#: ../templates/rencontre_registration_part2.php:40
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:26
+msgid "My region"
+msgstr "Mkoa wangu"
+
+#: ../inc/base.php:2071 ../templates/rencontre_account.php:143
+#: ../templates/rencontre_registration_part2.php:49
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:34
+msgid "My city"
+msgstr "Mji/Jiji langu"
+
+#: ../inc/base.php:2074
+msgid "Reset GPS"
+msgstr "Rekebisha GPS tena"
+
+#: ../inc/base.php:2081 ../templates/rencontre_account.php:154
+#: ../templates/rencontre_registration_part1.php:107
+msgid "My height"
+msgstr "Urefu wangu"
+
+#: ../inc/base.php:2094 ../templates/rencontre_account.php:173
+#: ../templates/rencontre_registration_part1.php:125
+msgid "My weight"
+msgstr "Uzito wangu"
+
+#: ../inc/base.php:2106 ../inc/rencontre_filter.php:1315
+#: ../templates/rencontre_account.php:192 ../templates/rencontre_imgreg.php:30
+#: ../templates/rencontre_libre_search.php:26
+#: ../templates/rencontre_portrait.php:132
+#: ../templates/rencontre_registration_part3.php:32
+#: ../templates/rencontre_search_result.php:49
+#: ../templates/rencontre_sidebar_top.php:41
+msgid "I'm looking for"
+msgstr "Ninatafuta"
+
+#: ../inc/base.php:2122 ../templates/rencontre_account.php:219
+#: ../templates/rencontre_registration_part3.php:59
+msgid "Age min/max"
+msgstr "Umri min/max"
+
+#: ../inc/base.php:2127 ../inc/base.php:2134 ../inc/rencontre_widget.php:456
+#: ../templates/rencontre_account.php:225
+#: ../templates/rencontre_account.php:234
+#: ../templates/rencontre_libre_search.php:42
+#: ../templates/rencontre_libre_search.php:52
+#: ../templates/rencontre_mini_portrait.php:36
+#: ../templates/rencontre_mini_portrait_chat.php:30
+#: ../templates/rencontre_portrait.php:81
+#: ../templates/rencontre_registration_part3.php:65
+#: ../templates/rencontre_registration_part3.php:74
+#: ../templates/rencontre_search.php:36 ../templates/rencontre_search.php:43
+#: ../templates/rencontre_search_result.php:34
+#: ../templates/rencontre_search_result.php:54
+#: ../templates/rencontre_sidebar_quick_search.php:30
+#: ../templates/rencontre_sidebar_quick_search.php:38
+#: ../templates/rencontre_sidebar_top.php:30
+msgid "years"
+msgstr "miaka"
+
+#: ../inc/base.php:2142 ../templates/rencontre_account.php:244
+#: ../templates/rencontre_registration_part3.php:84
+msgid "For"
+msgstr "Kwa"
+
+#: ../inc/base.php:2157
+msgid "Reset"
+msgstr "Rekebisha tena"
+
+#: ../inc/base.php:2159
+msgid "Actions (contact request...)"
+msgstr "Tendo (ombi la \"contact\"...)"
+
+#: ../inc/base.php:2160
+msgid "Reports"
+msgstr "Waliochongewa"
+
+#: ../inc/base.php:2163
+msgid "no mail"
+msgstr "hakuna barua pepe"
+
+#: ../inc/base.php:2169 ../templates/rencontre_portrait.php:106
+#: ../templates/rencontre_portrait.php:136
+#: ../templates/rencontre_search_result.php:72
+msgid "online"
+msgstr "yuko Mubashara"
+
+#: ../inc/base.php:2176 ../inc/rencontre_filter.php:1399
+msgid "Confirmation email"
+msgstr "Hakikisho la barua pepe"
+
+#: ../inc/base.php:2178 ../lang/rencontre-js-admin-lang.php:5
+msgid "Confirm"
+msgstr "Hakikisha"
+
+#: ../inc/base.php:2251 ../inc/rencontre_widget.php:668
+msgid "Done"
+msgstr "Tayari"
+
+#: ../inc/base.php:2277 ../rencontre.php:238 ../rencontre.php:246
+msgid "Jail"
+msgstr "Jela"
+
+#: ../inc/base.php:2278
+msgid ""
+"List of members removed by Admin. They are blacklisted. Subscription blocked"
+msgstr ""
+"Listi ya washiriki walioondolewa na Adimini. wamekwa kwenye blakilisti. "
+"Ushiriki wao umesitishwa"
+
+#: ../inc/base.php:2278
+msgid "days"
+msgstr "siku"
+
+#: ../inc/base.php:2311
+msgid "Date"
+msgstr "Tarehe"
+
+#: ../inc/base.php:2312
+msgid "Email address"
+msgstr "Barua pepe"
+
+#: ../inc/base.php:2314
+msgid "End"
+msgstr "Mwisho"
+
+#: ../inc/base.php:2315
+msgid "Banning"
+msgstr "Zuio"
+
+#: ../inc/base.php:2323
+msgid "Release"
+msgstr "Achia"
+
+#: ../inc/base.php:2324
+msgid "Only email"
+msgstr "Barua pepe tu"
+
+#: ../inc/base.php:2324
+msgid "Only IP"
+msgstr "IP tu"
+
+#: ../inc/base.php:2324
+msgid "Email and IP"
+msgstr "Barua pepe na IP"
+
+#: ../inc/base.php:2329
+msgid "Banning IP is a Premium feature."
+msgstr "IP imezuiwa hii ni kwa iliyolipiwa."
+
+#: ../inc/base.php:2391 ../rencontre.php:239
+#: ../templates/rencontre_mail_regular.php:40
+#: ../templates/rencontre_message_write.php:29
+#: ../templates/rencontre_mini_portrait.php:46
+#: ../templates/rencontre_search_result.php:102
+#: ../templates/rencontre_search_result.php:105
+msgid "Profile"
+msgstr "Profaili"
+
+#: ../inc/base.php:2394
+msgid ""
+"It does not appear to be any profile. You can load the default profile if "
+"you wish."
+msgstr ""
+"Haionekani kama ni profaili lolote. Unaweza ukaweka \"default\" profaili "
+"kama unataka."
+
+#: ../inc/base.php:2395
+msgid "Load profiles"
+msgstr "Weka profaili"
+
+#: ../inc/base.php:2403
+msgid "You can create, rename and delete items from the profile."
+msgstr ""
+"Unaweza kutengeneza, kutoajina upya na kufuta kipengele kutoka kwenye "
+"profaili yako."
+
+#: ../inc/base.php:2405
+msgid ""
+"Warning, this is not without consequences. The changes will be applied to "
+"the member profiles that can offend. Caution !"
+msgstr ""
+"Ilani, hii inaweza ikaleta matatizo. Badiriko linawezalikatokea kwa mshiriki "
+"asiyependa!"
+
+#: ../inc/base.php:2407 ../inc/base.php:2679
+msgid "Ref language"
+msgstr "Yah lugha"
+
+#: ../inc/base.php:2407 ../inc/base.php:2679
+msgid "Other"
+msgstr "Nyininezo"
+
+#: ../inc/base.php:2416 ../inc/base.php:2690
+msgid "Add Language (2 lowercase letters comply with country code)"
+msgstr "Ongeza Lugha (2 herufi ndogo ndio zinatumika kama \"country code\")"
+
+#: ../inc/base.php:2418 ../inc/base.php:2692
+msgid "Add a language"
+msgstr "Ongeza lugha"
+
+#: ../inc/base.php:2421 ../inc/base.php:2695
+msgid "Remove a language and all related content"
+msgstr "Ondoa hiyo lugha na vyote vinavyohusu lugha"
+
+#: ../inc/base.php:2425 ../inc/base.php:2699
+msgid "Remove a language"
+msgstr "Ondoa lugha"
+
+#: ../inc/base.php:2431
+msgid "Add category"
+msgstr "Ongeza kipengere"
+
+#: ../inc/base.php:2462 ../inc/base.php:2482 ../inc/base.php:2516
+#: ../inc/base.php:2544
+msgid "Move Up"
+msgstr "Juu"
+
+#: ../inc/base.php:2463 ../inc/base.php:2483 ../inc/base.php:2517
+#: ../inc/base.php:2545
+msgid "Move Down"
+msgstr "Chini"
+
+#: ../inc/base.php:2464
+msgid "Change the name"
+msgstr "Badiri jina"
+
+#: ../inc/base.php:2465
+msgid "Remove the category"
+msgstr "Ondoa kipengere"
+
+#: ../inc/base.php:2469 ../inc/base.php:2470
+msgid "Add value to this category"
+msgstr "Ongeza valiu ya kipengere hiki"
+
+#: ../inc/base.php:2484 ../inc/base.php:2724
+msgid "Change the name or type"
+msgstr "Badiri jina au aina"
+
+#: ../inc/base.php:2485 ../inc/base.php:2519 ../inc/base.php:2547
+#: ../inc/base.php:2735 ../inc/base.php:2946 ../inc/base.php:2967
+#: ../lang/rencontre-js-admin-lang.php:7
+msgid "Remove"
+msgstr "Ondoa"
+
+#: ../inc/base.php:2492
+msgid "A line of text (TEXT)"
+msgstr "Mstari wa maneno (MANENO)"
+
+#: ../inc/base.php:2496
+msgid "Large text box (TEXTAREA)"
+msgstr "Boksi kubwa la maneno (TEXTAREA)"
+
+#: ../inc/base.php:2501 ../inc/base.php:2529 ../inc/base.php:2729
+#: ../inc/base.php:2947 ../inc/base.php:2968
+msgid "Add Value"
+msgstr "Ongeza Valiu"
+
+#: ../inc/base.php:2502
+msgid "Single choice list (SELECT)"
+msgstr "Listi ya chaguo moja (CHAGUA)"
+
+#: ../inc/base.php:2518 ../inc/base.php:2546 ../inc/base.php:2562
+#: ../inc/base.php:2734 ../templates/rencontre_account.php:46
+msgid "Change"
+msgstr "Badiri"
+
+#: ../inc/base.php:2530
+msgid "Multiple choice list (CHECKBOX)"
+msgstr "Orodha ya machaguo mengi (CHECKBOX)"
+
+#: ../inc/base.php:2557
+msgid "Numeric choice list (SELECT)"
+msgstr "Orodha ya chaguzi (CHAGUA)"
+
+#: ../inc/base.php:2564 ../lang/rencontre-js-admin-lang.php:33
+msgid "Step"
+msgstr "Hatua"
+
+#: ../inc/base.php:2571
+msgid "A date (DATE)"
+msgstr "Tarehe (DATE)"
+
+#: ../inc/base.php:2598 ../inc/base.php:2671
+msgid "Countries and Regions"
+msgstr "Nchi na Mikoa / Majimbo"
+
+#: ../inc/base.php:2599
+msgid "Cleaner"
+msgstr "Safi"
+
+#: ../inc/base.php:2654
+msgid "Datas are old. You should delete all countries and load the new ones."
+msgstr "Data ni za zamani. Unapaswa kufuta nchi zote na kupakia mpya."
+
+#: ../inc/base.php:2663
+msgid ""
+"If a country is loaded in wp-geonames, the regions list of this country will "
+"come from the wp-geonames base and not from here."
+msgstr ""
+"Ikiwa nchi imefungwa katika wp-geonames, orodha ya mikoa ya nchi hii itatoka "
+"msingi wa wp-geonames na sio hapa."
+
+#: ../inc/base.php:2674
+msgid ""
+"The country table is empty. You can load the countries and regions by "
+"default if you wish."
+msgstr ""
+"Jedwali la nchi ni tupu. Unaweza kuweka nchi na mikoa kwa default ikiwa "
+"unataka."
+
+#: ../inc/base.php:2675
+msgid "Load countries"
+msgstr "Weka nchi"
+
+#: ../inc/base.php:2678
+msgid "You can create, rename and delete countries and regions."
+msgstr "Unaweza kuweka, kubadiri jina na kufuta nchi na mikoa / majimbo."
+
+#: ../inc/base.php:2705 ../inc/base.php:2706
+msgid "Add a country"
+msgstr "Ongeza nchi"
+
+#: ../inc/base.php:2708 ../inc/base.php:2709
+msgid "Delete all countries"
+msgstr "Futa nchi zote"
+
+#: ../inc/base.php:2730
+msgid "Regions"
+msgstr "Mikoa / Majimbo"
+
+#: ../inc/base.php:2749
+msgid "Cleaning missing regions in users data"
+msgstr "Kusafisha mikoa iliyopo katika data ya watumiaji"
+
+#: ../inc/base.php:2753
+msgid "Missing regions"
+msgstr "Mikoa inakosekana"
+
+#: ../inc/base.php:2773
+msgid "Existing regions"
+msgstr "Mikoa iliyopo"
+
+#: ../inc/base.php:2785
+msgid "Replace"
+msgstr "Badilisha"
+
+#: ../inc/base.php:2813
+msgid "Features"
+msgstr "Vipengele"
+
+#: ../inc/base.php:2814
+msgid "Words"
+msgstr "Maneno"
+
+#: ../inc/base.php:2816
+msgid "Templates"
+msgstr "Templates"
+
+#: ../inc/base.php:2837
+msgid "No country"
+msgstr "Usiweke nchi"
+
+#: ../inc/base.php:2841
+msgid "No region"
+msgstr "Usiweke mkoa / jimbo"
+
+#: ../inc/base.php:2845
+msgid "No localisation"
+msgstr "No localisation"
+
+#: ../inc/base.php:2849
+msgid "No birth date"
+msgstr "Usiweke Siku ya Kuzaliwa"
+
+#: ../inc/base.php:2853
+msgid "Min age"
+msgstr "Min age"
+
+#: ../inc/base.php:2865
+msgid "Max age"
+msgstr "Max age"
+
+#: ../inc/base.php:2877
+msgid "No smiles"
+msgstr "Usiweke tabasamu"
+
+#: ../inc/base.php:2881
+msgid "No contact request"
+msgstr "Hakuna ombi la kuwasiliana"
+
+#: ../inc/base.php:2885
+msgid "No weight"
+msgstr "Usiweke uzito"
+
+#: ../inc/base.php:2889
+msgid "Weight unit"
+msgstr "Kipimo cha uzito"
+
+#: ../inc/base.php:2892
+msgid "Kilograms"
+msgstr "Kilogramu"
+
+#: ../inc/base.php:2893
+msgid "Pounds"
+msgstr "Poundi"
+
+#: ../inc/base.php:2898
+msgid "No height"
+msgstr "Hakuna urefu"
+
+#: ../inc/base.php:2902
+msgid "Height unit"
+msgstr "Urefu wa kitengo"
+
+#: ../inc/base.php:2905
+msgid "Meter"
+msgstr "Mita"
+
+#: ../inc/base.php:2906
+msgid "Feet and Inches"
+msgstr "Futi na inchi"
+
+#: ../inc/base.php:2911
+msgid "No report"
+msgstr "Usichongee"
+
+#: ../inc/base.php:2915
+msgid "No emoticon"
+msgstr "Usiweke hisia"
+
+#: ../inc/base.php:2919
+msgid "No menu (I use WordPress menu)"
+msgstr "Usiweke Menyu (Nitatumia orodha ya WordPress)"
+
+#: ../inc/base.php:2923
+msgid "No sidebar (I put it with widget)"
+msgstr "Usiweke sidebar (nitaiweka kwa kutumia widget)"
+
+#: ../inc/base.php:2927
+msgid "No ads on logged out plugin homepage"
+msgstr "Usiweke maelezo binafsi kwenye homepage ambayo haijaunganishwa"
+
+#: ../inc/base.php:2931
+msgid "Only photo on logged out plugin homepage"
+msgstr "Onyesha picha tu kwenye homepage ambayo haijaunganishwa"
+
+#: ../inc/base.php:2935
+msgid "Change relation type"
+msgstr "Badirisha aina ya uhusiano"
+
+#: ../inc/base.php:2956
+msgid "Change sex values"
+msgstr "Badirisha jinsia"
+
+#: ../inc/base.php:2977
+msgid "Allow multi choice in relation and sex"
+msgstr "Ruhusu chaguzi zaidi ya moja katika mahusiano"
+
+#: ../inc/base.php:2981
+msgid "No homosexual"
+msgstr "Hakuna Ushoga"
+
+#: ../inc/base.php:2985
+msgid "Change register link on click a portrait"
+msgstr "Badirisha linki ya kujisajiri wakati mtu akibonyeza picha"
+
+#: ../inc/base.php:2985
+msgid "(empty => default WP)"
+msgstr "(tupu => default WP)"
+
+#: ../inc/base.php:2989
+msgid "No 'no email' button"
+msgstr "Hakuna kitufe cha barua pepe"
+
+#: ../inc/base.php:2993
+msgid ""
+"Be careful, already registered members will be in a category that no longer "
+"exists. They should update their account."
+msgstr ""
+"Kuwa mwangalifu, washiriki waliojiandikisha watakuwa kwenye kundi "
+"lisilokuwepo. Watapaswa kurekebisha akaunti zao."
+
+#: ../inc/base.php:3012
+msgid "Change welcome text for new user"
+msgstr "Badirisha maandiko ya kumkaribisha mtumiaji mpya"
+
+#: ../inc/base.php:3016 ../templates/rencontre_registration_part1.php:34
+msgid ""
+"You will access all the possibilities offered by the site in few minutes."
+msgstr ""
+"Sasa utaweza kupata huduma zote zinazotolewa na tovuti hii ndani ya dakika "
+"chache."
+
+#: ../inc/base.php:3017 ../templates/rencontre_registration_part1.php:35
+msgid "Before that, you need to provide some information requested below."
+msgstr ""
+"Kabla ya hapo, unatakiwa utupatie baadhi ya taarifa zako kama zilivyoombwa "
+"hapa chini."
+
+#: ../inc/base.php:3018 ../templates/rencontre_registration_part1.php:39
+msgid ""
+"We would like to inform you that we do not use your personal data outside of "
+"this site."
+msgstr ""
+"Tunapenda kukufahamisha kwamba kamwe hatutaweza kutumia taarifa zako binafsi "
+"nje ya tovuti hii."
+
+#: ../inc/base.php:3019 ../templates/rencontre_registration_part1.php:40
+msgid ""
+"Deleting your account on your part or ours, causes the deletion of all your "
+"data."
+msgstr ""
+"Kama akaunti yako tutaifuta sisi au wewe mwenyewe, hii itasababisha data "
+"zako zote zifutike nazo."
+
+#: ../inc/base.php:3020 ../templates/rencontre_registration_part1.php:41
+msgid ""
+"This also applies to messages that you have sent to other members as well as "
+"those they have sent to you."
+msgstr ""
+"Hii pia itasababisha ujumbe wako uliotuma au kutumiwa na wengine nao upotee."
+
+#: ../inc/base.php:3021 ../templates/rencontre_registration_part1.php:45
+msgid "We wish you nice encounters."
+msgstr "Tunakutakia mahusiano mema."
+
+#: ../inc/base.php:3027
+msgid "Change warning account blocked"
+msgstr "Badirisha onyo la kuzuia akaunti"
+
+#: ../inc/base.php:3031 ../inc/base.php:3033 ../inc/rencontre_widget.php:171
+msgid "Your account is blocked. You are invisible. Change your profile."
+msgstr ""
+"Akaunti yako imezuiwa. Huwezi kuonekana na washiriki wengine. Badiri "
+"profaili yako."
+
+#: ../inc/base.php:3037
+msgid "Change warning empty profile"
+msgstr "Badirisha onyo la profailii iliyotupu"
+
+#: ../inc/base.php:3041 ../inc/base.php:3043
+#: ../templates/rencontre_modal_warning.php:45
+msgid ""
+"Your profile is empty. To take advantage of the site and being more visible, "
+"thank you to complete it."
+msgstr ""
+"Profaili yako iko tupu. Ili uweze kufurahia huduma za saiti hii na washiriki "
+"wenzako wakuone."
+
+#: ../inc/base.php:3047
+msgid "Change the quarantine warning"
+msgstr "Badirisha onyo la karantini"
+
+#: ../inc/base.php:3051 ../inc/base.php:3053 ../inc/rencontre_filter.php:1337
+#: ../templates/rencontre_registration_jail.php:16
+msgid "Your email address is currently in quarantine. Sorry"
+msgstr "Barua pepe yako imewekwa karantini wakati huu. Pole"
+
+#: ../inc/base.php:3057
+msgid "Change the no-photo warning"
+msgstr "Badirisha onyo la kutokuwa na picha"
+
+#: ../inc/base.php:3061 ../inc/base.php:3063 ../inc/rencontre_widget.php:371
+#: ../inc/rencontre_widget.php:518 ../inc/rencontre_widget.php:1326
+#: ../inc/rencontre_widget.php:1989 ../inc/rencontre_widget.php:2483
+msgid ""
+"To be more visible and to view photos of other members, you should add one "
+"to your profile."
+msgstr ""
+"Ili uonekane na washiriki wenzako na uweze kuona picha za wengine, lazima na "
+"wewe uweke picha kwenye profaili yako."
+
+#: ../inc/base.php:3067
+msgid "Change the follow-up email"
+msgstr "Badirisha ufuatiliaji wa barua pepe"
+
+#: ../inc/base.php:3072 ../inc/rencontre_filter.php:271
+msgid ""
+"You registered on our website but you did not complete the procedure. You'll "
+"miss a date. That's too bad."
+msgstr ""
+"Umejisajiri kwenye tovuti yetu lakini sehem zingine hujajaza. Utamkosa "
+"mwenza wako. Na hii itakuumiza mno."
+
+#: ../inc/base.php:3073 ../inc/rencontre_filter.php:272
+msgid ""
+"Thus take two minutes to finish the registration. You should not be "
+"disappointed."
+msgstr ""
+"Hivyo basi tumia dakika mbili umalizie usajiri wako. Hutakiwi kuja kujilaumu "
+"baadae."
+
+#: ../inc/base.php:3074 ../inc/rencontre_filter.php:273
+#: ../inc/rencontre_filter.php:592 ../inc/rencontre_filter.php:1393
+#: ../templates/rencontre_mail_info.php:46
+#: ../templates/rencontre_mail_instant.php:46
+msgid "Regards,"
+msgstr "Wako,"
+
+#: ../inc/base.php:3080
+msgid "Change Smile word"
+msgstr "Badirisha neno la Tabasamu"
+
+#: ../inc/base.php:3080 ../inc/base.php:3114
+msgid "(empty => no change)"
+msgstr "(tupu => no change)"
+
+#: ../inc/base.php:3084 ../inc/base.php:3085
+#: ../templates/rencontre_mail_regular.php:30
+#: ../templates/rencontre_portrait.php:185
+#: ../templates/rencontre_portrait.php:188
+#: ../templates/rencontre_search_result.php:94
+#: ../templates/rencontre_search_result.php:97
+#: ../templates/rencontre_sidebar_top.php:51
+msgid "Smile"
+msgstr "Tabasamu"
+
+#: ../inc/base.php:3088 ../inc/base.php:3089
+#: ../templates/rencontre_sidebar_top.php:101
+msgid "Who I smiled ?"
+msgstr "Nimetabasamu kwa nani?"
+
+#: ../inc/base.php:3092 ../inc/base.php:3093 ../inc/rencontre_widget.php:1085
+msgid "I smiled at"
+msgstr "Nimetabasamu kwa"
+
+#: ../inc/base.php:3096 ../inc/base.php:3097 ../inc/rencontre_filter.php:508
+#: ../templates/rencontre_mail_info.php:29
+#: ../templates/rencontre_mail_instant.php:29
+msgid "You have received a smile from"
+msgstr "Nimepata tabasamu toka kwa"
+
+#: ../inc/base.php:3100 ../inc/base.php:3101 ../inc/rencontre_widget.php:2841
+msgid "Smile already sent"
+msgstr "Tabasamu limeshaenda"
+
+#: ../inc/base.php:3104 ../inc/base.php:3105 ../inc/rencontre_widget.php:2867
+msgid "Smile sent"
+msgstr "Tabasamu limeenda"
+
+#: ../inc/base.php:3108 ../inc/base.php:3109 ../inc/rencontre_widget.php:1116
+msgid "I got a smile from"
+msgstr "Nimepata Tabasamu kutoka kwa"
+
+#: ../inc/base.php:3114
+msgid "Change Look word"
+msgstr "Badirisha neno la kuangalia"
+
+#: ../inc/base.php:3118 ../inc/base.php:3119
+#: ../templates/rencontre_sidebar_top.php:66
+msgid "Look"
+msgstr "Look"
+
+#: ../inc/base.php:3122 ../inc/base.php:3123 ../inc/rencontre_widget.php:1203
+msgid "I was watched by"
+msgstr "Nimetazamwa na"
+
+#: ../inc/base.php:3144
+msgid "Add relation type in quick search"
+msgstr "Ongeza aina ya uhusiano kwenye utafutaji wa haraka"
+
+#: ../inc/base.php:3148
+msgid "No ad in search results"
+msgstr "Hakuna maelezo binafsi katika matokeo ya utafutaji"
+
+#: ../inc/base.php:3152 ../inc/base.php:3179
+msgid "Add a profile element in quick search"
+msgstr "Ongeza vigezo vya profaili kwenye utafutaji wa haraka"
+
+#: ../inc/base.php:3200
+msgid "Add also numerous profile elements in search ? Get the kit Premium."
+msgstr ""
+"Ongeza pia vipengele vingi vya wasifu wakati unatafuta? Chukua Premium."
+
+#: ../inc/base.php:3226
+msgid "Menu color"
+msgstr "Rangi ya menyu"
+
+#: ../inc/base.php:3241 ../inc/base.php:3256 ../inc/base.php:3271
+msgid "Menu buttons color"
+msgstr "Vifungo vya kifungo cha Menyu"
+
+#: ../inc/base.php:3256
+msgid "warning"
+msgstr "onyo"
+
+#: ../inc/base.php:3271
+msgid "hover"
+msgstr "hover"
+
+#: ../inc/base.php:3286
+msgid "Block background color"
+msgstr "Zima rangi ya background"
+
+#: ../inc/base.php:3301
+msgid "Title color"
+msgstr "Michezo ya kichwa"
+
+#: ../inc/base.php:3316
+msgid "Text color"
+msgstr "Nakala ya rangi"
+
+#: ../inc/base.php:3331
+msgid "Label color"
+msgstr "Rangi ya lebo"
+
+#: ../inc/base.php:3346
+msgid "Line and border color"
+msgstr "Mstari na rangi ya mpaka"
+
+#: ../inc/base.php:3361
+msgid "Input background color"
+msgstr "Rangi ya asili ya kuingiza"
+
+#: ../inc/base.php:3376
+msgid "Select background color"
+msgstr "Chagua rangi ya background"
+
+#: ../inc/base.php:3391
+msgid "Warning bar background color"
+msgstr "Tahadhari ya rangi ya bar"
+
+#: ../inc/base.php:3406
+msgid "Message sent background color"
+msgstr "Ujumbe umetuma rangi ya nyuma"
+
+#: ../inc/base.php:3421
+msgid "Message received background color"
+msgstr "Ujumbe umepokea rangi ya asili"
+
+#: ../inc/base.php:3436
+msgid "Fit portraits width in home page"
+msgstr "Fitraiti ya upana wa ukurasa wa nyumbani"
+
+#: ../inc/base.php:3504
+msgid "Custom templates in your theme"
+msgstr "Templeti maalumu katika \"theme\" yako"
+
+#: ../inc/base.php:3507
+msgid "Template file"
+msgstr "Faili la template"
+
+#: ../inc/base.php:3508
+msgid "Plugin version"
+msgstr "Toleo la plugin"
+
+#: ../inc/base.php:3509
+msgid "Theme version"
+msgstr "Toleo la theme"
+
+#: ../inc/base.php:3967 ../templates/rencontre_menu.php:12
+msgid "My homepage"
+msgstr "Homepage yangu"
+
+#: ../inc/base.php:3968 ../templates/rencontre_menu.php:13
+msgid "My card"
+msgstr "Kadi yangu"
+
+#: ../inc/base.php:3969 ../templates/rencontre_menu.php:16
+#: ../templates/rencontre_menu.php:19
+#: ../templates/rencontre_portrait_edit.php:30
+msgid "Edit My Profile"
+msgstr "Hariri Profaili Yangu"
+
+#: ../inc/base.php:3970 ../templates/rencontre_menu.php:23
+#: ../templates/rencontre_menu.php:26
+msgid "Messaging"
+msgstr "Ujumbe"
+
+#: ../inc/base.php:3972 ../templates/rencontre_account.php:56
+#: ../templates/rencontre_menu.php:39
+msgid "My Account"
+msgstr "Akaunti yangu"
+
+#: ../inc/base.php:3975 ../inc/rencontre_filter.php:990
+msgid "Log in"
+msgstr "Ingia"
+
+#: ../inc/base.php:3976 ../inc/rencontre_filter.php:997 ../rencontre.php:800
+#: ../rencontre.php:801 ../rencontre.php:844
+msgid "Register"
+msgstr "Jisajili"
+
+#: ../inc/rencontre_don.php:4
+msgid "About This Plugin"
+msgstr "Kuhusu Plugin hii"
+
+#: ../inc/rencontre_don.php:8
+msgid ""
+"Enjoyed this free dating plugin?  A donation or a good review will help us "
+"to spend more time to make it evolve. Thanks for your contribution."
+msgstr ""
+"Furahia hii plugin ya bure? Mchango au mapitio mazuri itatusaidia kutumia "
+"muda zaidi ili tupate kugeuka. Asante kwa kutuchangia."
+
+#: ../inc/rencontre_don.php:16
+msgid "US"
+msgstr "US"
+
+#: ../inc/rencontre_don.php:17
+msgid "Rencontre Plugin Donation"
+msgstr "Kuchangia Plugin ya Rencontre"
+
+#: ../inc/rencontre_don.php:22
+msgid "PayPal - The most secure online payment solution !"
+msgstr "PayPal - Suluhisho salama zaidi la malipo ya mtandaoni!"
+
+#: ../inc/rencontre_don.php:29
+msgid "is a recommended plugin to use with Rencontre."
+msgstr "ni Plugin iliyopendekezwa kutumiwa na Rencontre."
+
+#: ../inc/rencontre_don.php:35
+msgid ""
+"You want an integrated payment system, an easy moderation panel and a lot of "
+"features?"
+msgstr ""
+"Unataka mfumo wa malipo uliounganishwa, ni rahisi kuitumia na ina vitu vingi "
+"vyakuvutia?"
+
+#: ../inc/rencontre_don.php:35
+msgid "Add this kit PREMIUM"
+msgstr "Ongeza hii ya KULIPIA"
+
+#: ../inc/rencontre_don.php:61
+msgid "How to install this plugin ?"
+msgstr "Jinsi ya kuinstol hii plugin?"
+
+#: ../inc/rencontre_don.php:63
+msgid ""
+"In <a href=\"edit.php?post_type=page\">Pages</a>, edit or create the page of "
+"your choice. Add the shortcodes <code>[rencontre][rencontre_libre]</code> in "
+"this page content."
+msgstr ""
+"Katika<a href=\"edit.php?post_type=page\">Kurasa</a>,hariri au unda page "
+"uipendayo. Ongeza shortcodes <code>[rencontre][rencontre_libre]</code> "
+"kwenye maudhui ya huu ukurasa."
+
+#: ../inc/rencontre_don.php:64
+msgid ""
+"In <a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>, set the "
+"plugin page and save."
+msgstr ""
+"Katika<a href=\"admin.php?page=rencontre.php\">Rencontre / Jumla</a>, weka "
+"vizuri ukurasa wa plugin na uhiifadhi."
+
+#: ../inc/rencontre_don.php:65
+msgid ""
+"You need the WordPress Login / Logout / Register links. Take a look in <a "
+"href=\"nav-menus.php\">Appearance / Menus</a> if your theme has not these "
+"links."
+msgstr ""
+"Unatakiwa Uingie / Utoke / Ujisajili kwenye linki ya WordPress. angalia "
+"kwenye <a href=\"nav-menus.php\">Muonekano / Menyu</a> kama theme yako haina "
+"hizi linki."
+
+#: ../inc/rencontre_don.php:66
+msgid ""
+"Add a new subscriber member in WP. Login this member and go to the plugin "
+"page (1)."
+msgstr ""
+"Ongeza mshiriki kwenye WP. Muingize huyu mwanachama na uende kwenye ukurasa "
+"wa plugin (1)."
+
+#: ../inc/rencontre_don.php:67
+msgid ""
+"To facilitate the settings after installing, you can download and install "
+"via CSV (<a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>) "
+"20 test profiles with photo"
+msgstr ""
+"Ili kuwezesha mipangilio baada ya kufunga, unaweza kupakua na kufunga "
+"kupitia CSV (<a href=\"admin.php?page=rencontre.php\">Rencontre / Jumla</a>) "
+"maelezo mafupi ya mtihani wa 20 na picha"
+
+#: ../inc/rencontre_don.php:70
+msgid ""
+"More details in the <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
+"target=\"_blank\">F.A.Q</a>."
+msgstr ""
+"Maelezo Zaidi yako <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
+"target=\"_blank\">F.A.Q</a>."
+
+#: ../inc/rencontre_filter.php:268 ../inc/rencontre_filter.php:337
+#: ../inc/rencontre_filter.php:449 ../inc/rencontre_filter.php:1391
+#: ../templates/rencontre_mail_info.php:14
+#: ../templates/rencontre_mail_instant.php:14
+#: ../templates/rencontre_registration_part1.php:27
+#: ../templates/rencontre_registration_part2.php:19
+#: ../templates/rencontre_registration_part3.php:27
+msgid "Hello"
+msgstr "Mambo"
+
+#: ../inc/rencontre_filter.php:283
+msgid "Registration"
+msgstr "Usajili"
+
+#: ../inc/rencontre_filter.php:339 ../inc/rencontre_filter.php:347
+msgid "Happy Birthday"
+msgstr "Herry ya Siku ya Kuzaliwa"
+
+#: ../inc/rencontre_filter.php:452
+msgid "Your profile has been visited"
+msgstr "Profaili yako imetembelewa na"
+
+#: ../inc/rencontre_filter.php:452
+msgid "time"
+msgstr "muda"
+
+#: ../inc/rencontre_filter.php:490
+msgid "Here's a selection of members that may interest you"
+msgstr "Hawa ni baadhi ya washiriki unaoweza ukavutiwa nao"
+
+#: ../inc/rencontre_filter.php:548 ../templates/rencontre_mail_info.php:17
+#: ../templates/rencontre_mail_instant.php:17
+msgid "You have received a contact request from"
+msgstr "Umepokea ombi la \"contact\" kutoka kwa"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:39
+#: ../templates/rencontre_mail_instant.php:39
+msgid "You have"
+msgstr "Una"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:40
+#: ../templates/rencontre_mail_instant.php:40
+msgid "messages"
+msgstr "ujumbe"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:40
+#: ../templates/rencontre_mail_instant.php:40
+msgid "message"
+msgstr "ujumbe"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:41
+#: ../templates/rencontre_mail_instant.php:41
+msgid "in your inbox."
+msgstr "ndani ya inboksi yako."
+
+#: ../inc/rencontre_filter.php:592
+msgid "Do not hesitate to send us your comments."
+msgstr "Usisite kumjibu."
+
+#: ../inc/rencontre_filter.php:813 ../templates/rencontre_mail_info.php:11
+#: ../templates/rencontre_mail_instant.php:11
+msgid "A member contact you"
+msgstr "Mshiriki ameku-contact"
+
+#: ../inc/rencontre_filter.php:986
+msgid "Log out"
+msgstr "Toka"
+
+#: ../inc/rencontre_filter.php:1072 ../inc/rencontre_filter.php:1089
+msgid "Unimportant"
+msgstr "Si muhimu"
+
+#: ../inc/rencontre_filter.php:1306 ../templates/rencontre_imgreg.php:26
+#: ../templates/rencontre_imgreg.php:55
+msgid "Password"
+msgstr "Nywila"
+
+#: ../inc/rencontre_filter.php:1325
+msgid "<strong>ERROR</strong>: Invalid password (6 characters min)."
+msgstr ""
+"<strong>TATIZO</strong>: Nywila isiyotakiwa (angalau tumia herufi au namba "
+"zisizopungua 6)."
+
+#: ../inc/rencontre_filter.php:1381
+msgid "Confirmation email already sent"
+msgstr "Barua pepe imeshatumwa"
+
+#: ../inc/rencontre_filter.php:1391
+msgid "You should confirm your email with this link"
+msgstr "Unatakiwa uhakiki barua pepe yako kwenye hii linki"
+
+#: ../inc/rencontre_filter.php:1401
+msgid "Confirmation email sent"
+msgstr "Barua pepe imetumwa"
+
+#: ../inc/rencontre_filter.php:1515 ../inc/rencontre_filter.php:1516
+#: ../inc/rencontre_filter.php:1517 ../inc/rencontre_filter.php:1518
+#: ../inc/rencontre_filter.php:1519
+msgid "Fake"
+msgstr "Fake"
+
+#: ../inc/rencontre_filter.php:1517
+msgid "profile"
+msgstr "Profaili"
+
+#: ../inc/rencontre_filter.php:1518
+msgid "IP"
+msgstr "IP"
+
+#: ../inc/rencontre_filter.php:1519
+msgid "email"
+msgstr "Barua pepe"
+
+#: ../inc/rencontre_filter.php:1520
+msgid "Inadequate image"
+msgstr "Picha isiyofaa"
+
+#: ../inc/rencontre_filter.php:1521
+msgid "Inappropriate presentation"
+msgstr "Sifa isiyofaa"
+
+#: ../inc/rencontre_filter.php:1522
+msgid "Many reports"
+msgstr "Ripoti nyingi"
+
+#: ../inc/rencontre_filter.php:1523
+msgid "Behavior on the site"
+msgstr "Tabia kwenye tovuti"
+
+#: ../inc/rencontre_widget.php:5
+msgid "Widget to integrate the dating website"
+msgstr "Widigeti ya kuunganisha tovuti ya mahusiano"
+
+#: ../inc/rencontre_widget.php:11
+msgid "You are connected as ADMIN"
+msgstr "Umeshikamana kama ADMIN"
+
+#: ../inc/rencontre_widget.php:12
+msgid "You cannot use RENCONTRE as a user if you have ADMIN rights"
+msgstr "Huwezi kutumia RENCONTRE kama mtumiaji ikiwa una haki za ADMIN"
+
+#: ../inc/rencontre_widget.php:314 ../inc/rencontre_widget.php:1316
+#: ../inc/rencontre_widget.php:2473
+#, php-format
+msgid "%s ago"
+msgstr "%s iliyopita"
+
+#: ../inc/rencontre_widget.php:389
+msgid "(blocked)"
+msgstr "(imezuiwa)"
+
+#: ../inc/rencontre_widget.php:439
+msgid "gay"
+msgstr "shoga"
+
+#: ../inc/rencontre_widget.php:441 ../inc/rencontre_widget.php:453
+#: ../templates/rencontre_search_result.php:59
+#: ../templates/rencontre_sidebar_top.php:44
+msgid "for"
+msgstr "kwa"
+
+#: ../inc/rencontre_widget.php:456 ../templates/rencontre_libre_search.php:38
+#: ../templates/rencontre_search_result.php:54
+msgid "between"
+msgstr "kati ya"
+
+#: ../inc/rencontre_widget.php:456 ../templates/rencontre_libre_search.php:48
+#: ../templates/rencontre_search_result.php:54
+msgid "and"
+msgstr "na"
+
+#: ../inc/rencontre_widget.php:517
+msgid "You have no photo on your profile ?"
+msgstr "Huna picha kwenye profaili lako ?"
+
+#: ../inc/rencontre_widget.php:669 ../inc/rencontre_widget.php:1425
+msgid "You should complete your profile and add a photo to send messages."
+msgstr ""
+"Ili uweze kutuma ujumbe ni lazime ujaze sehemu zote na pia uweke picha."
+
+#: ../inc/rencontre_widget.php:676
+msgid "Add a photo"
+msgstr "Ongeza picha"
+
+#: ../inc/rencontre_widget.php:1145
+msgid "I asked a contact"
+msgstr "Niliemwomba contact"
+
+#: ../inc/rencontre_widget.php:1173
+msgid "I had a contact request from"
+msgstr "Nimepata ombi la \"contact\" kutoka kwa"
+
+#: ../inc/rencontre_widget.php:1231
+msgid "I locked"
+msgstr "Nimefunga"
+
+#: ../inc/rencontre_widget.php:1378 ../inc/rencontre_widget.php:2542
+msgid "Sorry, but nothing matched your search terms."
+msgstr "Pole, hatujampata unayemtafuta."
+
+#: ../inc/rencontre_widget.php:1390 ../inc/rencontre_widget.php:2550
+msgid "Next Page"
+msgstr "Ukurasa ufuatao"
+
+#: ../inc/rencontre_widget.php:1424 ../inc/rencontre_widget.php:1425
+#: ../inc/rencontre_widget.php:1426 ../inc/rencontre_widget.php:2196
+msgid "Not sent"
+msgstr "Haijaenda"
+
+#: ../inc/rencontre_widget.php:1424
+msgid "You are no longer allowed to send messages."
+msgstr "Hauwezi kutuma ujumbe tena."
+
+#: ../inc/rencontre_widget.php:1920 ../inc/rencontre_widget.php:1941
+msgid "Immaterial"
+msgstr "Yoyote / Wowote"
+
+#: ../inc/rencontre_widget.php:2193
+msgid "Message sent"
+msgstr "Ujumbe umetumwa"
+
+#: ../inc/rencontre_widget.php:2490
+msgid "Astrological affinity"
+msgstr "Uhusiano wa kinyota"
+
+#: ../inc/rencontre_widget.php:2494
+msgid "Affinity with my profile"
+msgstr "Afanane na vigezo vyangu"
+
+#: ../inc/rencontre_widget.php:2494
+msgid "points"
+msgstr "pointi"
+
+#: ../inc/rencontre_widget.php:2749
+msgid "Region field is empty or outdated !"
+msgstr "Sehemu ya mkoa/jimbo haijajazwa au imepitwa na wakati !"
+
+#: ../inc/rencontre_widget.php:2787
+msgid ""
+"You are currently hidden to other members and you can't communicate because "
+"your account is not complete. You should promptly update this page otherwise "
+"your access will be canceled."
+msgstr ""
+"Washiriki wengine hawataweza kukuona kwa sababu akaunti yako haujamaliza "
+"kujijaza. Omba kua-update ukurasa huu lasivyo ushiriki wako utafutwa."
+
+#: ../inc/rencontre_widget.php:2789
+msgid ""
+"You also need to confirm your email address by clicking the link that you "
+"received. You have 24 hours. Do not delay."
+msgstr ""
+"Unatakiwa uhakiki barua pepe yako kwa kubofya linki uliyotumia kwenye barua "
+"pepe yako. Una masaa 24. Usichelewe."
+
+#: ../inc/rencontre_widget.php:2790
+msgid "Email not received"
+msgstr "Hujapata barua pepe"
+
+#: ../inc/rencontre_widget.php:2898
+msgid "Contact already requested"
+msgstr "Ombi la \"contact\" limeshaombwa"
+
+#: ../inc/rencontre_widget.php:2922
+msgid "Contact request sent"
+msgstr "Ombi la \"contact\" limetumwa"
+
+#: ../inc/rencontre_widget.php:2934
+msgid "Reporting already done"
+msgstr "Tayari amechongewa"
+
+#: ../inc/rencontre_widget.php:2941
+msgid "Thank you for your report"
+msgstr "Asante kwa kumchongea"
+
+#: ../inc/rencontre_widget.php:3046
+msgid "from my position"
+msgstr "kutoka sehemu yangu"
+
+#: ../inc/rencontre_widget.php:3089
+msgid "Yesterday"
+msgstr "Jana"
+
+#: ../inc/rencontre_widget.php:3100
+msgid "Widget to integrate the Rencontre sidebar in your theme sidebar"
+msgstr ""
+"Widigeti ya kuunganisha upande wa pembeni wa Rencontre na wa \"theme\" yako"
+
+#: ../inc/rencontre_widget.php:3213
+msgid "Password changed !"
+msgstr "Nywila imebadirishwa !"
+
+#: ../lang/rencontre-js-admin-lang.php:3
+msgid "Change the value"
+msgstr "Badirisha valiu"
+
+#: ../lang/rencontre-js-admin-lang.php:6
+msgid "Del"
+msgstr "Futa"
+
+#: ../lang/rencontre-js-admin-lang.php:8
+msgid "Category"
+msgstr "Kipengele"
+
+#: ../lang/rencontre-js-admin-lang.php:9
+msgid "Value"
+msgstr "Valiu"
+
+#: ../lang/rencontre-js-admin-lang.php:10
+msgid "New Item"
+msgstr "Item mpya"
+
+#: ../lang/rencontre-js-admin-lang.php:11
+msgid "Add"
+msgstr "Ongeza"
+
+#: ../lang/rencontre-js-admin-lang.php:12 ../rencontre.php:240
+#: ../templates/rencontre_search.php:118
+#: ../templates/rencontre_sidebar_quick_search.php:46
+msgid "Country"
+msgstr "Nchi"
+
+#: ../lang/rencontre-js-admin-lang.php:13 ../templates/rencontre_search.php:129
+#: ../templates/rencontre_sidebar_quick_search.php:56
+msgid "Region"
+msgstr "Mkoa/Jimbo"
+
+#: ../lang/rencontre-js-admin-lang.php:14
+msgid "Code ISO"
+msgstr "Code ISO"
+
+#: ../lang/rencontre-js-admin-lang.php:15
+msgid "Image file"
+msgstr "File la picha"
+
+#: ../lang/rencontre-js-admin-lang.php:16 ../lang/rencontre-js-lang.php:5
+#: ../templates/rencontre_portrait_add_photo.php:38
+msgid "Add this photo"
+msgstr "Weka hii picha"
+
+#: ../lang/rencontre-js-admin-lang.php:17 ../lang/rencontre-js-lang.php:4
+msgid "Delete photo"
+msgstr "Futa picha"
+
+#: ../lang/rencontre-js-admin-lang.php:18 ../lang/rencontre-js-lang.php:3
+msgid "Delete this photo"
+msgstr "Futa hii picha"
+
+#: ../lang/rencontre-js-admin-lang.php:19
+msgid "Delete Account ?"
+msgstr "Ifute hii Akaunti ?"
+
+#: ../lang/rencontre-js-admin-lang.php:20
+msgid "Release this mail ?"
+msgstr "Achia hii email ?"
+
+#: ../lang/rencontre-js-admin-lang.php:21
+msgid "Number of daily registrations"
+msgstr "Idadi ya wajisajilio kila siku"
+
+#: ../lang/rencontre-js-admin-lang.php:22
+msgid "Entries already exist"
+msgstr "Wanachama waliopo"
+
+#: ../lang/rencontre-js-admin-lang.php:23
+msgid "Entries active (<3 month)"
+msgstr "Washiriki hai (chini ya miezi 3)"
+
+#: ../lang/rencontre-js-admin-lang.php:24
+msgid "Hourly traffic (local time)"
+msgstr "Trafik kwa saa (local time)"
+
+#: ../lang/rencontre-js-admin-lang.php:25
+msgid "Traffic on the week"
+msgstr "Trafiki ya wiki"
+
+#: ../lang/rencontre-js-admin-lang.php:26
+msgid "sun"
+msgstr "j2"
+
+#: ../lang/rencontre-js-admin-lang.php:27
+msgid "mon"
+msgstr "j3"
+
+#: ../lang/rencontre-js-admin-lang.php:28
+msgid "tue"
+msgstr "j4"
+
+#: ../lang/rencontre-js-admin-lang.php:29
+msgid "wed"
+msgstr "j5"
+
+#: ../lang/rencontre-js-admin-lang.php:30
+msgid "thu"
+msgstr "alhms"
+
+#: ../lang/rencontre-js-admin-lang.php:31
+msgid "fri"
+msgstr "ijm"
+
+#: ../lang/rencontre-js-admin-lang.php:32
+msgid "sat"
+msgstr "j1"
+
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Min"
+msgstr "Pungufu"
+
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Max"
+msgstr "Ziada"
+
+#: ../lang/rencontre-js-lang.php:6
+msgid "incomplete fields or error"
+msgstr "nafasi haijajazwa au kuna tatizo"
+
+#: ../lang/rencontre-js-lang.php:7
+msgid "Nickname unavailable"
+msgstr "Jina hilo la utani linamtu"
+
+#: ../lang/rencontre-js-lang.php:8
+msgid "Confirm the deletion of the account ?"
+msgstr "Thibitisha ufutaji wa akaunti yako ?"
+
+#: ../lang/rencontre-js-lang.php:9
+msgid "New Passwords are differents"
+msgstr "Nywila zako mpya zinatofautiana"
+
+#: ../lang/rencontre-js-lang.php:10
+msgid "The original password is wrong"
+msgstr "Umekosea kuweka Nywila yako"
+
+#: ../lang/rencontre-js-lang.php:11
+msgid "Write and press <Enter>"
+msgstr "Andika na ubonyeze  <Enter>"
+
+#: ../lang/rencontre-js-lang.php:12
+msgid "Chat request sent. Wait ..."
+msgstr "Ombi lako limetumwa. Tafadhali subiri ..."
+
+#: ../lang/rencontre-js-lang.php:13
+msgid "Chat request accepted. You can start..."
+msgstr "Ombi lako lakuongea naye limekubaliwa. Unawesa kuanza..."
+
+#: ../lang/rencontre-js-lang.php:14
+msgid "You have a chat request"
+msgstr "Kunamtu anataka kuzungumza na wewe"
+
+#: ../lang/rencontre-js-lang.php:15
+msgid "Your contact closed his window."
+msgstr "Unayeongea naye ametoka."
+
+#: ../rencontre.php:12
+msgid ""
+"A free powerful and exhaustive dating plugin with private messaging, webcam "
+"chat, search by profile and automatic sending of email. No third party."
+msgstr ""
+"Plugin ya Mahusiano ya bure yenye ujumbe binafsi, chat ya webcam, kutafuta "
+"kwa kiprofaili na kutuma automatiki barua pepe."
+
+#: ../rencontre.php:204
+msgid "Serious relationship"
+msgstr "Uhusiano Mkubwa"
+
+#: ../rencontre.php:205
+msgid "Open relationship"
+msgstr "Uhusiano wa wazi"
+
+#: ../rencontre.php:206
+msgid "Friendship"
+msgstr "Urafiki"
+
+#: ../rencontre.php:214
+msgid "a man"
+msgstr "mwanaume"
+
+#: ../rencontre.php:215
+msgid "a woman"
+msgstr "mwanamke"
+
+#: ../rencontre.php:236
+msgid "Rencontre - General"
+msgstr "Rencontre - Jumla"
+
+#: ../rencontre.php:237 ../rencontre.php:245
+msgid "Rencontre - Members"
+msgstr "Rencontre - Mwanachama"
+
+#: ../rencontre.php:238 ../rencontre.php:246
+msgid "Rencontre - Jail"
+msgstr "Rencontre - Jela"
+
+#: ../rencontre.php:239
+msgid "Rencontre - Profile"
+msgstr "Rencontre - Profaili"
+
+#: ../rencontre.php:240
+msgid "Rencontre - Countries"
+msgstr "Rencontre - Nchi"
+
+#: ../rencontre.php:241
+msgid "Rencontre - Custom"
+msgstr "Rencontre - Custom"
+
+#: ../rencontre.php:241
+msgid "Custom"
+msgstr "Custom"
+
+#: ../templates/rencontre_account.php:27
+msgid "Change password"
+msgstr "Badirisha Nywila"
+
+#: ../templates/rencontre_account.php:32
+msgid "Former"
+msgstr "Ya Zamani"
+
+#: ../templates/rencontre_account.php:36
+msgid "New"
+msgstr "Mpya"
+
+#: ../templates/rencontre_account.php:40
+msgid "Retype the new"
+msgstr "Andika tena"
+
+#: ../templates/rencontre_account.php:269
+msgid "No email from this site"
+msgstr "Sihitaji barua pepe toka kwenye hii tovuti"
+
+#: ../templates/rencontre_account_delete.php:19
+msgid ""
+"This action will result in the complete deletion of your account and "
+"everything about you from our server. We do not keep historical accounts."
+msgstr ""
+"Hatua hii itasababisha kufutwa kwa akaunti yako na kila kitu kuhusu wewe "
+"kutoka kwa kanzidata yetu. Hatuhifadhi akaunti."
+
+#: ../templates/rencontre_account_delete.php:20
+msgid "Please note that this action is irreversible !"
+msgstr "Kitendo hiki hufanywa maramoja tu (hutaweza kufanya tena)!"
+
+#: ../templates/rencontre_account_delete.php:23
+msgid "Delete Account"
+msgstr "Futa Akaunti"
+
+#: ../templates/rencontre_imgreg.php:16
+msgid "Username"
+msgstr "Username"
+
+#: ../templates/rencontre_imgreg.php:20
+msgid "Email"
+msgstr "Barua pepe"
+
+#: ../templates/rencontre_imgreg.php:39
+msgid "Registration confirmation will be emailed to you."
+msgstr "Uthibitisho wa usajili utatumwa kwenye barua pepe yako."
+
+#: ../templates/rencontre_imgreg.php:51
+msgid "Username or Email Address"
+msgstr "Jina la mtumiaji au Anwani ya barua pepe"
+
+#: ../templates/rencontre_mail_regular.php:24
+#: ../templates/rencontre_portrait.php:194
+#: ../templates/rencontre_portrait.php:197
+msgid "Ask for a contact"
+msgstr "Muombe \"contact\" zake"
+
+#: ../templates/rencontre_mail_regular.php:35
+#: ../templates/rencontre_portrait.php:177
+#: ../templates/rencontre_portrait.php:180
+#: ../templates/rencontre_search_result.php:86
+#: ../templates/rencontre_search_result.php:89
+msgid "Send a message"
+msgstr "Tuma ujumbe"
+
+#: ../templates/rencontre_message_conversation.php:33
+#: ../templates/rencontre_message_inbox.php:25
+#: ../templates/rencontre_message_write.php:33
+msgid "Inbox"
+msgstr "Inbox"
+
+#: ../templates/rencontre_message_conversation.php:36
+#: ../templates/rencontre_message_conversation.php:39
+msgid "Answer"
+msgstr "Jibu"
+
+#: ../templates/rencontre_message_conversation.php:44
+msgid "Delete the conversation"
+msgstr "Futa Mazungumzo"
+
+#: ../templates/rencontre_message_write.php:47
+msgid "Send a message to"
+msgstr "Tuma ujumbe kwa"
+
+#: ../templates/rencontre_mini_portrait_chat.php:41
+msgid "Accept"
+msgstr "Mkubalie"
+
+#: ../templates/rencontre_mini_portrait_chat.php:44
+msgid "Ignore"
+msgstr "Mkatalie"
+
+#: ../templates/rencontre_modal_warning.php:17
+msgid "Your email is validated"
+msgstr "Barua pepe yako imethibitishwa"
+
+#: ../templates/rencontre_modal_warning.php:31
+#, php-format
+msgid ""
+"Welcome to %s. You will stay hidden without interaction to other members as "
+"long as your account is not completed."
+msgstr ""
+"Karibu kwnye %s. Hutaweza kuwasiliana na watu kama hutamaliza kuweka maelezo "
+"yanayokuhusu kwenye akaunti yako."
+
+#: ../templates/rencontre_modal_warning.php:32
+msgid "You have 24 hours to confirm your email."
+msgstr "Una masaa 24 ya kuthibitisha barua pepe yako."
+
+#: ../templates/rencontre_my_home.php:18
+msgid "Featured profiles"
+msgstr "Wanachama utakaovutiwa nao"
+
+#: ../templates/rencontre_my_home.php:57
+msgid "New entrants"
+msgstr "Wanachama Wapya"
+
+#: ../templates/rencontre_my_home.php:67
+msgid "My favourites"
+msgstr "Ninazozipenda"
+
+#: ../templates/rencontre_portrait.php:109
+msgid "offline"
+msgstr "hayuko Mubashara"
+
+#: ../templates/rencontre_portrait.php:113
+msgid "You are blocked !"
+msgstr "Umezuiwa !"
+
+#: ../templates/rencontre_portrait.php:203
+#: ../templates/rencontre_portrait.php:206
+msgid "Chat"
+msgstr "Gumzo"
+
+#: ../templates/rencontre_portrait.php:211
+#: ../templates/rencontre_portrait.php:214
+msgid "Block"
+msgstr "Funga"
+
+#: ../templates/rencontre_portrait.php:211
+msgid "Unblock"
+msgstr "Fungua"
+
+#: ../templates/rencontre_portrait.php:218
+msgid "Report a fake profile or inappropriate content"
+msgstr "Ripoti profaili ya uongo au maudhui yasiyofaa"
+
+#: ../templates/rencontre_portrait.php:218
+#: ../templates/rencontre_portrait.php:221
+msgid "Report"
+msgstr "Ripoti"
+
+#: ../templates/rencontre_portrait.php:225
+msgid "Add to my favorites"
+msgstr "Ongeza kwenye listi ya ninazozipenda"
+
+#: ../templates/rencontre_portrait.php:225
+#: ../templates/rencontre_portrait.php:228
+msgid "Favorite"
+msgstr "Ninazopenda"
+
+#: ../templates/rencontre_portrait.php:228
+msgid "Delete from my favorites"
+msgstr "Futa kutoka kwenye listi ya ninazozipenda"
+
+#: ../templates/rencontre_portrait_add_photo.php:32
+msgid "Facebook Profile Photo"
+msgstr "Tumia picha ya profail ya facebook"
+
+#: ../templates/rencontre_portrait_edit.php:58
+msgid "You are limited"
+msgstr "Huna hadhi kubwa"
+
+#: ../templates/rencontre_portrait_edit.php:65
+msgid "Click the photo"
+msgstr "Bofya picha"
+
+#: ../templates/rencontre_registration_part1.php:27
+#: ../templates/rencontre_registration_part2.php:19
+#: ../templates/rencontre_registration_part3.php:27
+msgid "welcome to the site"
+msgstr "karibu kwenye tovuti"
+
+#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
+#: ../templates/rencontre_search.php:79
+msgid "max"
+msgstr "ziada"
+
+#: ../templates/rencontre_search.php:105
+msgid "Gender"
+msgstr "Jinsia"
+
+#: ../templates/rencontre_search.php:138
+msgid "City"
+msgstr "Jiji"
+
+#: ../templates/rencontre_search.php:145
+#: ../templates/rencontre_sidebar_quick_search.php:66
+msgid "Relation"
+msgstr "Uhusiano"
+
+#: ../templates/rencontre_search.php:156
+msgid "Word in the ad"
+msgstr "Maneno katika tangazo"
+
+#: ../templates/rencontre_search.php:165
+msgid "Only with picture"
+msgstr "Wenye picha tu"
+
+#: ../templates/rencontre_search_result.php:68
+msgid "The"
+msgstr "Ya"
+
+#: ../templates/rencontre_sidebar_quick_search.php:13
+msgid "Quick Search"
+msgstr "Utafutaji wa Haraka"
+
+#: ../templates/rencontre_sidebar_quick_search.php:27
+msgid "From"
+msgstr "Kutoka"
+
+#: ../templates/rencontre_sidebar_quick_search.php:35
+msgid "To"
+msgstr "Kwa"
+
+#: ../templates/rencontre_sidebar_quick_search.php:86
+#: ../templates/rencontre_sidebar_quick_search.php:101
+msgid "After"
+msgstr "Baada"
+
+#: ../templates/rencontre_sidebar_quick_search.php:86
+#: ../templates/rencontre_sidebar_quick_search.php:101
+msgid "Before"
+msgstr "Kabla"
+
+#: ../templates/rencontre_sidebar_top.php:81
+msgid "Contact requests"
+msgstr "Ombi la mawasiliano"
+
+#: ../templates/rencontre_sidebar_top.php:109
+msgid "Who I asked for a contact ?"
+msgstr "Nani niliemuomba tuwasiliane?"
+
+#: ../templates/rencontre_sidebar_top.php:114
+msgid "Who I've blocked ?"
+msgstr "Nani nimemzuia?"
+
+#~ msgid "Change login name (after, it will not be possible)"
+#~ msgstr "Badilisha jina login (Hutaweza kubadiri baadae)"
+
+#~ msgid "New password (6 min)"
+#~ msgstr "Nywila mpya (6 min)"
+
+#~ msgid "New password (again)"
+#~ msgstr "Nywila mpya (tena)"
+
+#~ msgid ""
+#~ "Rencontre no longer uses \"GeoIP Detect\". You can disable and delete "
+#~ "this plugin."
+#~ msgstr ""
+#~ "Recontre haitumii tena \"GeoIP Detect\". Unaweza kuizuia na kuifuta hii "
+#~ "plugin."
+
+#~ msgid "No flags on logged out plugin homepage"
+#~ msgstr "Usiweke bendera kwenye homepage ambayo haijaunganishwa"
+
+#~ msgid "Member"
+#~ msgstr "Mwanachama"
+
+#~ msgid "Message"
+#~ msgstr "Ujumbe"
+
+#~ msgid "Close"
+#~ msgstr "Funga"
+
+#~ msgid "from"
+#~ msgstr "kutoka kwa"
+
+#~ msgid "Connection"
+#~ msgstr "Muunganisho"
+
+#~ msgid "Reload unconnected homepage"
+#~ msgstr "Ipakue tena kwenye home page ambayo hakuna mshiriki aliyeingia"
+
+#~ msgid "Reload now"
+#~ msgstr "Pakia tena sasa"
+
+#~ msgid "Only my country on my home page"
+#~ msgstr "Nchi yangu tu kwenye ukurasa wangu wa nyumbani"
+
+#~ msgid "Size"
+#~ msgstr "Saizi"
+
+#~ msgid "My size"
+#~ msgstr "Saizi yangu"
+
+#~ msgid "No size"
+#~ msgstr "Usiweke saizi"
+
+#~ msgid "Size unit"
+#~ msgstr "Kipimo cha saizi"
+
+#~ msgid "Back Members"
+#~ msgstr "Nyuma kwa Washiriki"
+
+#~ msgid "Remove inactive members for one year"
+#~ msgstr "Ondoa wanachama wasio-active kwa mwaka mmoja"

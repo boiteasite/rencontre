@@ -1,0 +1,2415 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rencontre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-11 09:55+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: malgrange <jacques.malgrange@gmail.com>\n"
+"Language-Team: boiteasite.fr <contacter@boiteasite.fr>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../inc/base.php:137
+msgid "lines"
+msgstr "线"
+
+#: ../inc/base.php:350 ../inc/base.php:1286
+msgid "Done!"
+msgstr "完成！"
+
+#: ../inc/base.php:350 ../inc/rencontre_filter.php:1516
+msgid "photo"
+msgstr "照片"
+
+#: ../inc/base.php:421 ../inc/base.php:532 ../inc/base.php:535
+msgid "TO CHANGE"
+msgstr "更改"
+
+#: ../inc/base.php:443 ../inc/base.php:2565
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Unit"
+msgstr "单元"
+
+#: ../inc/base.php:1078 ../inc/base.php:2399
+msgid "Update member profile"
+msgstr "更新会员个人资料"
+
+#: ../inc/base.php:1079 ../inc/base.php:2400
+msgid "You have made changes. Remember to update when you're done."
+msgstr "您更改过您的个人资料, 请不要忘记保存"
+
+#: ../inc/base.php:1084 ../rencontre.php:236
+msgid "General"
+msgstr "配置"
+
+#: ../inc/base.php:1085 ../inc/rencontre_filter.php:275
+#: ../inc/rencontre_filter.php:597 ../inc/rencontre_filter.php:796
+msgid "Login"
+msgstr "登录"
+
+#: ../inc/base.php:1086
+msgid "Display"
+msgstr "显示"
+
+#: ../inc/base.php:1087
+msgid "E-mails"
+msgstr "电子邮件"
+
+#: ../inc/base.php:1088
+msgid "CSV"
+msgstr "CSV"
+
+#: ../inc/base.php:1093
+msgid "Premium"
+msgstr "额外费用"
+
+#: ../inc/base.php:1114
+msgid ""
+"OpenSSL doesn't seem to be working. Some features of this plugin will not be "
+"available."
+msgstr "OpenSSL似乎不工作。 此插件的某些功能将不可用。"
+
+#: ../inc/base.php:1118
+msgid "Plugin page"
+msgstr "插件页面"
+
+#: ../inc/base.php:1132
+msgid "Country selected by default"
+msgstr "默认的国家"
+
+#: ../inc/base.php:1140
+msgid "Number of days in jail (deleted account)"
+msgstr "在黑名单的天数 (删除的会员)"
+
+#: ../inc/base.php:1153
+msgid "Use member's picture as WordPress avatar"
+msgstr "使用会员的图片作为头像的WordPress"
+
+#: ../inc/base.php:1157
+msgid "Old messages deleted during maintenance (recommended)"
+msgstr "维修过程中删除旧邮件（推荐）"
+
+#: ../inc/base.php:1160 ../inc/base.php:1172 ../inc/base.php:1298
+#: ../inc/base.php:1403 ../inc/base.php:1451 ../inc/base.php:3155
+#: ../inc/base.php:3182
+msgid "No"
+msgstr "没有"
+
+#: ../inc/base.php:1161 ../inc/base.php:1452
+msgid "Monthly"
+msgstr "每月一次"
+
+#: ../inc/base.php:1162
+msgid "Quarterly"
+msgstr "每季的"
+
+#: ../inc/base.php:1163
+msgid "Biannual"
+msgstr "一年两次"
+
+#: ../inc/base.php:1164
+msgid "Annual"
+msgstr "年报"
+
+#: ../inc/base.php:1169
+msgid "Inactive users deleted during maintenance"
+msgstr "在维护期间删除了非活动用户"
+
+#: ../inc/base.php:1173
+msgid "Year"
+msgstr "年"
+
+#: ../inc/base.php:1174 ../inc/base.php:1175 ../inc/base.php:1176
+#: ../inc/base.php:1177
+msgid "Years"
+msgstr "年份"
+
+#: ../inc/base.php:1182
+msgid "Hour maintenance tasks (off peak)"
+msgstr "维修时间段 (最繁忙时段除外)"
+
+#: ../inc/base.php:1187
+msgid "hours"
+msgstr "点钟"
+
+#: ../inc/base.php:1193
+msgid "Framework for the Facebook Like button"
+msgstr "使用FACEBOOK里我爱的按钮"
+
+#: ../inc/base.php:1197
+msgid "Do not remove WP roles"
+msgstr "请不要删除WP角色。"
+
+#: ../inc/base.php:1201
+msgid "Do not remove user in WP when remove in Rencontre"
+msgstr "不要在WP删除用户的时候论战中删除"
+
+#: ../inc/base.php:1207
+msgid ""
+"Unchecked : WP roles will be destroyed. Users who are not in Rencontre will "
+"be destroyed. This is the best mode for a big and exclusive dating site."
+msgstr ""
+"未选中：WP角色将被销毁。用户谁不是在论战将被销毁。这是一个大的和独特的交友网"
+"站的最佳模式。"
+
+#: ../inc/base.php:1208
+msgid ""
+"Checked : Better choice to test this plugin or to use with other one "
+"(forum...). Over time, the site will be slower with numerous abandoned "
+"account."
+msgstr ""
+"经过：更好的选择，以测试该插件或与另一个（论坛...）来使用。随着时间的推移，该"
+"网站会比较慢，与众多被遗弃的账户。"
+
+#: ../inc/base.php:1212
+msgid "Clean-up when uninstall"
+msgstr "卸载时清理"
+
+#: ../inc/base.php:1217 ../inc/base.php:1274 ../inc/base.php:1431
+#: ../inc/base.php:1523 ../inc/base.php:2995 ../inc/base.php:3129
+#: ../inc/base.php:3207 ../inc/base.php:3442
+#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:279
+#: ../templates/rencontre_registration_part1.php:144
+#: ../templates/rencontre_registration_part2.php:58
+#: ../templates/rencontre_registration_part3.php:109
+msgid "Save"
+msgstr "保存"
+
+#: ../inc/base.php:1222
+msgid "Images names"
+msgstr "图片名称"
+
+#: ../inc/base.php:1223
+msgid "Be careful, all pictures of the members will have another name."
+msgstr "要小心，成员的所有图片都会有另外一个名字。"
+
+#: ../inc/base.php:1230
+msgid "Images names are encoded"
+msgstr "图片名称编码"
+
+#: ../inc/base.php:1231
+msgid "Images names are not encoded"
+msgstr "图片名称没有编码"
+
+#: ../inc/base.php:1232
+msgid "I don't know if it's encoded or not"
+msgstr "我不知道，如果它的编码或不"
+
+#: ../inc/base.php:1239
+msgid "Encode all images names"
+msgstr "编码所有图像的名字"
+
+#: ../inc/base.php:1240
+msgid "Decode all images names"
+msgstr "解码所有图像的名字"
+
+#: ../inc/base.php:1242
+msgid "Cleanup abandoned images"
+msgstr "清理废弃的图像"
+
+#: ../inc/base.php:1257
+msgid "AppID for Facebook login (empty if not installed)"
+msgstr "使用FACEBOOK里的AppID信息(如果没有可以留空)"
+
+#: ../inc/base.php:1261
+msgid "Enable rapid registration"
+msgstr "启用快速注册"
+
+#: ../inc/base.php:1265
+msgid "Do not request a new password after registration"
+msgstr "不要求注册后的新密码"
+
+#: ../inc/base.php:1269
+msgid "Redirect to the plugin page after login"
+msgstr "重定向到连接后插件页面"
+
+#: ../inc/base.php:1295
+msgid "Display a different name than login"
+msgstr "显示与登录不同的名称"
+
+#: ../inc/base.php:1299
+msgid "Uneditable after registration"
+msgstr "注册后不可编辑"
+
+#: ../inc/base.php:1300
+msgid "Editable in \"my account\""
+msgstr "可在“我的帐户”中修改"
+
+#: ../inc/base.php:1305
+msgid "Number of portrait on logged out plugin homepage"
+msgstr "画像无关的网页数"
+
+#: ../inc/base.php:1314
+msgid "Width of portrait on logged out plugin homepage"
+msgstr "已注销插件主页上的纵向宽度"
+
+#: ../inc/base.php:1317
+msgid "Empty"
+msgstr "空"
+
+#: ../inc/base.php:1323
+msgid "Update plugin homepage for logged out users"
+msgstr "刷新网页无关"
+
+#: ../inc/base.php:1326
+msgid "24h (recommended)"
+msgstr "24小时（推荐）"
+
+#: ../inc/base.php:1327 ../inc/base.php:1328 ../inc/base.php:1329
+#: ../inc/base.php:1330
+msgid "h"
+msgstr "小时"
+
+#: ../inc/base.php:1331 ../inc/base.php:1332 ../inc/base.php:1333
+#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
+#: ../templates/rencontre_search.php:79
+msgid "min"
+msgstr "分钟"
+
+#: ../inc/base.php:1335
+msgid "Update now"
+msgstr "现在重新加载"
+
+#: ../inc/base.php:1339
+msgid "Number of days to wait before presence homepage"
+msgstr "会员在首页显示需要等待的天数"
+
+#: ../inc/base.php:1347
+msgid "Max number of results per search"
+msgstr "每个搜寻可以的最多结果"
+
+#: ../inc/base.php:1359
+msgid "Display profiles searched in a new tab"
+msgstr "显示在新选项卡中搜索的配置文件"
+
+#: ../inc/base.php:1365
+msgid "Only members from the same country on the logged on plugin homepage"
+msgstr "只有登录插件主页上来自同一国家的会员"
+
+#: ../inc/base.php:1371 ../templates/rencontre_my_home.php:28
+msgid "Today's birthday"
+msgstr "今天庆祝生日的会员"
+
+#: ../inc/base.php:1375
+msgid "Profiles currently online"
+msgstr "目前在线的会员"
+
+#: ../inc/base.php:1379
+msgid "Enable chat"
+msgstr "开启聊天系统"
+
+#: ../inc/base.php:1383
+msgid "Geolocation"
+msgstr "地理位置"
+
+#: ../inc/base.php:1387
+msgid "Number of photos"
+msgstr "照片数量"
+
+#: ../inc/base.php:1395
+msgid "Regenerate all photos"
+msgstr "重新生成所有照片"
+
+#: ../inc/base.php:1400
+msgid "View a discrete copyright on photos"
+msgstr "在会员的图片上显示版权"
+
+#: ../inc/base.php:1404
+msgid "Upwardly inclined"
+msgstr "倾斜向上"
+
+#: ../inc/base.php:1405
+msgid "Downwardly inclined"
+msgstr "向下倾斜"
+
+#: ../inc/base.php:1410
+msgid "Copyright text on pictures. Empty => Site URL."
+msgstr "在图片版权文本。空=>网站URL。"
+
+#: ../inc/base.php:1414
+msgid "Members without photo are less visible"
+msgstr "大家没有照片都不太明显"
+
+#: ../inc/base.php:1418
+msgid "Members without photo cannot zoom other members"
+msgstr "大家没有照片不能放大其他成员"
+
+#: ../inc/base.php:1422
+msgid "Members without photo, attention-catcher and ad cannot send message"
+msgstr "大家没有照片，注意力捕手和广告无法发送消息"
+
+#: ../inc/base.php:1426
+msgid "Members without photo, attention-catcher and ad cannot make a report"
+msgstr "大家没有照片，注意力捕手和广告不能补报"
+
+#: ../inc/base.php:1444
+msgid "Send an email to the user whose account is deleted"
+msgstr "给被删除的会员发电子邮件"
+
+#: ../inc/base.php:1448
+msgid "Automatic sending a summary email to members (shared daily)"
+msgstr "自动发送一封电子邮件，总结会员（每天派发）"
+
+#: ../inc/base.php:1453
+msgid "Fortnightly"
+msgstr "半月刊"
+
+#: ../inc/base.php:1454
+msgid "Weekly"
+msgstr "周刊"
+
+#: ../inc/base.php:1458 ../inc/base.php:1509
+msgid "Up this week"
+msgstr "这周的最大数据"
+
+#: ../inc/base.php:1458 ../inc/base.php:1509
+msgid "mail/hour"
+msgstr "电子邮件/小时"
+
+#: ../inc/base.php:1458
+msgid "sent during maintenance"
+msgstr "维修时发的电子邮件"
+
+#: ../inc/base.php:1463
+msgid ""
+"Introductory text for the summary email (After hello login - Before the "
+"smiles and contact requests)"
+msgstr "给会员发每月的电子邮件里的开场白 (紧接在您好后面)"
+
+#: ../inc/base.php:1469
+msgid "Only my country in summary email"
+msgstr "只有我的国家在总结电子邮件"
+
+#: ../inc/base.php:1476
+msgid "Also send an email for a smile"
+msgstr "同时发送电子邮件的微笑"
+
+#: ../inc/base.php:1482
+msgid "Automatically sending an email happy birthday members"
+msgstr "给会员发祝贺生日的电子邮件"
+
+#: ../inc/base.php:1486
+msgid "Full text for the birthday mail (After hello pseudo)"
+msgstr "给会员发祝贺生日的电子邮件内容 (紧接在您好后面)"
+
+#: ../inc/base.php:1490
+msgid "Max number of mails sent per hour"
+msgstr "给会员发电子邮件每小时的最高数量"
+
+#: ../inc/base.php:1509
+msgid "except during maintenance"
+msgstr "维修时间段除外"
+
+#: ../inc/base.php:1514
+msgid "No members without photo in automatic mails"
+msgstr "没有照片自动邮件没有成员"
+
+#: ../inc/base.php:1518
+msgid "Force HTML mode (mail not readable)"
+msgstr "强制HTML模式（邮件不可读）"
+
+#: ../inc/base.php:1544
+msgid "Export members in CSV"
+msgstr "在CSV导出成员"
+
+#: ../inc/base.php:1548
+msgid "All members"
+msgstr "所有成员"
+
+#: ../inc/base.php:1549
+msgid "Active last month"
+msgstr "主动过去一个月"
+
+#: ../inc/base.php:1550
+msgid "Active last 2 months"
+msgstr "主动过去2个月"
+
+#: ../inc/base.php:1551
+msgid "Active last 6 months"
+msgstr "主动过去6个月"
+
+#: ../inc/base.php:1552
+msgid "Active last 12 months"
+msgstr "主动过去12个月"
+
+#: ../inc/base.php:1556
+msgid "Only members with photo"
+msgstr "只有照片会员"
+
+#: ../inc/base.php:1559
+msgid "Only members with attention-catcher and ad"
+msgstr "只有标题和广告的成员"
+
+#: ../inc/base.php:1561
+msgid "Export in CSV"
+msgstr "导出为CSV"
+
+#: ../inc/base.php:1564
+msgid "Get back photos by FTP in wp-content/uploads/tmp/"
+msgstr "取回照片通过FTP在 wp-content/uploads/tmp/"
+
+#: ../inc/base.php:1567
+msgid "Import members in CSV"
+msgstr "在CSV导入成员"
+
+#: ../inc/base.php:1569
+msgid ""
+"Put members photos in wp-content/uploads/tmp/photo_import/ by FTP before the "
+"start (right RW - no sub folder - .jpg - no zip)."
+msgstr ""
+"把会员照片中的 wp-content/uploads/tmp/photo_import/ 通过FTP开始之前（可刻录- "
+"帕斯 - 德 - 苏-档案 - .jpg - 无拉链）."
+
+#: ../inc/base.php:1570
+msgid "Select your CSV file (.csv - no zip)."
+msgstr "选择您的CSV文件（.csv - 无拉链）。"
+
+#: ../inc/base.php:1571 ../inc/base.php:1584
+msgid "Import in CSV"
+msgstr "在导入CSV"
+
+#: ../inc/base.php:1573
+msgid ""
+"Make an export and look at it to get the right format (The first line is not "
+"treated)."
+msgstr "做一个出口，看它得到正确的格式（与各列的标题的第一行不治疗）。"
+
+#: ../inc/base.php:1574
+msgid ""
+"In case of interruption during the import of photos, restart the procedure. "
+"Doubloons are killed."
+msgstr "如果照片的导入过程中中断，重新开始的过程。杜布隆被杀害。"
+
+#: ../inc/base.php:1578
+msgid "CSV File"
+msgstr "CSV文件"
+
+#: ../inc/base.php:1585
+msgid "File loaded"
+msgstr "文件加载"
+
+#: ../inc/base.php:1586
+msgid "Error !"
+msgstr "错误！"
+
+#: ../inc/base.php:1587
+msgid "Import data"
+msgstr "导入数据"
+
+#: ../inc/base.php:1588
+msgid "completed"
+msgstr "完成"
+
+#: ../inc/base.php:1590
+msgid "Photos Import"
+msgstr "照片导入"
+
+#: ../inc/base.php:1592
+msgid "Import completed"
+msgstr "导入完成"
+
+#: ../inc/base.php:1626 ../rencontre.php:237 ../rencontre.php:245
+msgid "Members"
+msgstr "会员"
+
+#: ../inc/base.php:1635
+msgid "Number of registered members"
+msgstr "注册会员数"
+
+#: ../inc/base.php:1636
+msgid "Number of members with profile and photo"
+msgstr "有照片个人介绍的注册会员数"
+
+#: ../inc/base.php:1637 ../inc/rencontre_widget.php:1259
+#: ../templates/rencontre_my_home.php:44 ../templates/rencontre_my_home.php:46
+msgid "Online now"
+msgstr "在线会员"
+
+#: ../inc/base.php:1643
+msgid "Statistic"
+msgstr "统计"
+
+#: ../inc/base.php:1668
+msgid "Add new from WordPress"
+msgstr "从WordPress的新成员"
+
+#: ../inc/base.php:1672
+msgid "Alias or email or ID"
+msgstr "别名或电子邮件或ID"
+
+#: ../inc/base.php:1674 ../templates/rencontre_search.php:168
+#: ../templates/rencontre_sidebar_quick_search.php:107
+msgid "Find"
+msgstr "搜索"
+
+#: ../inc/base.php:1693 ../inc/rencontre_filter.php:1512 ../rencontre.php:341
+#: ../templates/rencontre_account_delete.php:14
+msgid "Account deletion"
+msgstr "删除帐户"
+
+#: ../inc/base.php:1694 ../inc/rencontre_filter.php:1513 ../rencontre.php:342
+msgid "Your account has been deleted"
+msgstr "您帐户被删除"
+
+#: ../inc/base.php:1767
+msgid "Reason for this action"
+msgstr "此行动的原因"
+
+#: ../inc/base.php:1772 ../templates/rencontre_message_write.php:57
+msgid "Send"
+msgstr "保存"
+
+#: ../inc/base.php:1783 ../inc/base.php:1784 ../inc/base.php:1786
+#: ../inc/base.php:1788 ../inc/base.php:1793 ../inc/base.php:1794
+#: ../inc/base.php:1795 ../inc/base.php:1797 ../inc/base.php:2311
+#: ../inc/base.php:2312 ../inc/base.php:2313 ../inc/base.php:2315
+msgid "Sort"
+msgstr "重新排列"
+
+#: ../inc/base.php:1784
+msgid "Action"
+msgstr "行动"
+
+#: ../inc/base.php:1785
+msgid "Photo"
+msgstr "照片"
+
+#: ../inc/base.php:1786 ../templates/rencontre_search.php:160
+msgid "Alias"
+msgstr "昵称"
+
+#: ../inc/base.php:1786 ../inc/rencontre_filter.php:1310
+#: ../templates/rencontre_account.php:64
+msgid "My name"
+msgstr "我的名字"
+
+#: ../inc/base.php:1787
+msgid "Sex"
+msgstr "性别"
+
+#: ../inc/base.php:1788 ../templates/rencontre_search.php:31
+msgid "Age"
+msgstr "年龄"
+
+#: ../inc/base.php:1789 ../templates/rencontre_search.php:53
+msgid "Height"
+msgstr "身高"
+
+#: ../inc/base.php:1790 ../templates/rencontre_search.php:79
+msgid "Weight"
+msgstr "体重"
+
+#: ../inc/base.php:1791 ../inc/base.php:2815 ../inc/base.php:3971
+#: ../templates/rencontre_libre_search.php:61
+#: ../templates/rencontre_menu.php:33 ../templates/rencontre_menu.php:36
+#: ../templates/rencontre_search.php:15
+msgid "Search"
+msgstr "搜寻"
+
+#: ../inc/base.php:1792
+msgid "Hang"
+msgstr "我的内心独白"
+
+#: ../inc/base.php:1793
+msgid "Place"
+msgstr "地方"
+
+#: ../inc/base.php:1794
+msgid "Ad (change)"
+msgstr "我的个性展示 (更改)"
+
+#: ../inc/base.php:1794
+msgid "Registered"
+msgstr "注册"
+
+#: ../inc/base.php:1795 ../inc/base.php:2313
+msgid "IP address"
+msgstr "IP 地址"
+
+#: ../inc/base.php:1797
+msgid "Reporting"
+msgstr "检举"
+
+#: ../inc/base.php:1820 ../inc/base.php:1830
+msgid "See"
+msgstr "观察"
+
+#: ../inc/base.php:1823
+msgid "Unblock this member"
+msgstr "不阻止这个会员"
+
+#: ../inc/base.php:1823
+msgid "Block this member"
+msgstr "阻止这个会员"
+
+#: ../inc/base.php:1824
+msgid "Allow sending message"
+msgstr "允许发送消息"
+
+#: ../inc/base.php:1824
+msgid "Prohibit contact"
+msgstr "禁止接触"
+
+#: ../inc/base.php:1826
+msgid "New fast account not completed"
+msgstr "新的快速帐户未完成"
+
+#: ../inc/base.php:1827
+msgid "Remove - Black list email"
+msgstr "删除 - 电子邮件在黑名单"
+
+#: ../inc/base.php:1838 ../inc/base.php:2085
+#: ../templates/rencontre_account.php:159
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:112
+#: ../templates/rencontre_search.php:59 ../templates/rencontre_search.php:68
+msgid "cm"
+msgstr "厘米"
+
+#: ../inc/base.php:1838 ../inc/base.php:2086
+#: ../templates/rencontre_account.php:162
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:115
+#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
+msgid "ft"
+msgstr "FT"
+
+#: ../inc/base.php:1838 ../inc/base.php:2086
+#: ../templates/rencontre_account.php:162
+#: ../templates/rencontre_portrait.php:84
+#: ../templates/rencontre_registration_part1.php:115
+#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
+msgid "in"
+msgstr "寸"
+
+#: ../inc/base.php:1839 ../inc/base.php:2098
+#: ../templates/rencontre_account.php:178
+#: ../templates/rencontre_portrait.php:88
+#: ../templates/rencontre_registration_part1.php:130
+#: ../templates/rencontre_search.php:85 ../templates/rencontre_search.php:94
+msgid "kg"
+msgstr "公斤"
+
+#: ../inc/base.php:1839 ../inc/base.php:2099
+#: ../templates/rencontre_account.php:181
+#: ../templates/rencontre_portrait.php:88
+#: ../templates/rencontre_registration_part1.php:133
+#: ../templates/rencontre_search.php:86 ../templates/rencontre_search.php:95
+msgid "lbs"
+msgstr "磅"
+
+#: ../inc/base.php:1841
+msgid "multiple choice"
+msgstr "多项选择"
+
+#: ../inc/base.php:1843
+msgid "to"
+msgstr "至"
+
+#: ../inc/base.php:1970
+msgid "Change My Profile"
+msgstr "更新个人资料"
+
+#: ../inc/base.php:1971 ../inc/rencontre_widget.php:1385
+#: ../inc/rencontre_widget.php:2545
+msgid "Previous page"
+msgstr "前一页"
+
+#: ../inc/base.php:1978 ../templates/rencontre_portrait_edit.php:98
+#: ../templates/rencontre_portrait_edit.php:174
+msgid "Save profile"
+msgstr "保存个人资料"
+
+#: ../inc/base.php:1988 ../templates/rencontre_portrait_edit.php:47
+msgid "Click to delete"
+msgstr "删除"
+
+#: ../inc/base.php:1991 ../templates/rencontre_portrait_edit.php:54
+msgid "Click to add a photo"
+msgstr "添加个人头像"
+
+#: ../inc/base.php:1996 ../templates/rencontre_portrait_edit.php:67
+msgid "Delete all photos"
+msgstr "删除所有照片"
+
+#: ../inc/base.php:2007 ../templates/rencontre_portrait_edit.php:89
+msgid "My attention-catcher"
+msgstr "我的内心独白"
+
+#: ../inc/base.php:2009 ../templates/rencontre_portrait_edit.php:93
+msgid "My ad"
+msgstr "我的个性展示"
+
+#: ../inc/base.php:2017 ../templates/rencontre_account.php:70
+#: ../templates/rencontre_registration_part1.php:60
+msgid "I am"
+msgstr "我是"
+
+#: ../inc/base.php:2027 ../templates/rencontre_account.php:82
+#: ../templates/rencontre_registration_part1.php:72
+msgid "Born"
+msgstr "生日"
+
+#: ../inc/base.php:2049 ../templates/rencontre_account.php:122
+#: ../templates/rencontre_registration_part2.php:29
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:15
+msgid "My country"
+msgstr "现在所在国家"
+
+#: ../inc/base.php:2060 ../templates/rencontre_account.php:133
+#: ../templates/rencontre_registration_part2.php:40
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:26
+msgid "My region"
+msgstr "现在所在省份"
+
+#: ../inc/base.php:2071 ../templates/rencontre_account.php:143
+#: ../templates/rencontre_registration_part2.php:49
+#: ../templates/rencontre_wp-geonames_location_taxonomy.php:34
+msgid "My city"
+msgstr "现在所在城市"
+
+#: ../inc/base.php:2074
+msgid "Reset GPS"
+msgstr "重置GPS"
+
+#: ../inc/base.php:2081 ../templates/rencontre_account.php:154
+#: ../templates/rencontre_registration_part1.php:107
+msgid "My height"
+msgstr "我的身高"
+
+#: ../inc/base.php:2094 ../templates/rencontre_account.php:173
+#: ../templates/rencontre_registration_part1.php:125
+msgid "My weight"
+msgstr "体重"
+
+#: ../inc/base.php:2106 ../inc/rencontre_filter.php:1315
+#: ../templates/rencontre_account.php:192 ../templates/rencontre_imgreg.php:30
+#: ../templates/rencontre_libre_search.php:26
+#: ../templates/rencontre_portrait.php:132
+#: ../templates/rencontre_registration_part3.php:32
+#: ../templates/rencontre_search_result.php:49
+#: ../templates/rencontre_sidebar_top.php:41
+msgid "I'm looking for"
+msgstr "我找寻的是"
+
+#: ../inc/base.php:2122 ../templates/rencontre_account.php:219
+#: ../templates/rencontre_registration_part3.php:59
+msgid "Age min/max"
+msgstr "年纪 (最年青到最年迈)"
+
+#: ../inc/base.php:2127 ../inc/base.php:2134 ../inc/rencontre_widget.php:456
+#: ../templates/rencontre_account.php:225
+#: ../templates/rencontre_account.php:234
+#: ../templates/rencontre_libre_search.php:42
+#: ../templates/rencontre_libre_search.php:52
+#: ../templates/rencontre_mini_portrait.php:36
+#: ../templates/rencontre_mini_portrait_chat.php:30
+#: ../templates/rencontre_portrait.php:81
+#: ../templates/rencontre_registration_part3.php:65
+#: ../templates/rencontre_registration_part3.php:74
+#: ../templates/rencontre_search.php:36 ../templates/rencontre_search.php:43
+#: ../templates/rencontre_search_result.php:34
+#: ../templates/rencontre_search_result.php:54
+#: ../templates/rencontre_sidebar_quick_search.php:30
+#: ../templates/rencontre_sidebar_quick_search.php:38
+#: ../templates/rencontre_sidebar_top.php:30
+msgid "years"
+msgstr "岁"
+
+#: ../inc/base.php:2142 ../templates/rencontre_account.php:244
+#: ../templates/rencontre_registration_part3.php:84
+msgid "For"
+msgstr "目的"
+
+#: ../inc/base.php:2157
+msgid "Reset"
+msgstr "重置"
+
+#: ../inc/base.php:2159
+msgid "Actions (contact request...)"
+msgstr "操作（加好友的请求......）"
+
+#: ../inc/base.php:2160
+msgid "Reports"
+msgstr "报告"
+
+#: ../inc/base.php:2163
+msgid "no mail"
+msgstr "没有邮件"
+
+#: ../inc/base.php:2169 ../templates/rencontre_portrait.php:106
+#: ../templates/rencontre_portrait.php:136
+#: ../templates/rencontre_search_result.php:72
+msgid "online"
+msgstr "在线"
+
+#: ../inc/base.php:2176 ../inc/rencontre_filter.php:1399
+msgid "Confirmation email"
+msgstr "确认电子邮件"
+
+#: ../inc/base.php:2178 ../lang/rencontre-js-admin-lang.php:5
+msgid "Confirm"
+msgstr "确认"
+
+#: ../inc/base.php:2251 ../inc/rencontre_widget.php:668
+msgid "Done"
+msgstr "执行完毕"
+
+#: ../inc/base.php:2277 ../rencontre.php:238 ../rencontre.php:246
+msgid "Jail"
+msgstr "黑名单"
+
+#: ../inc/base.php:2278
+msgid ""
+"List of members removed by Admin. They are blacklisted. Subscription blocked"
+msgstr "成员管理员删除列表。他们列入黑名单。订阅受阻"
+
+#: ../inc/base.php:2278
+msgid "days"
+msgstr "天"
+
+#: ../inc/base.php:2311
+msgid "Date"
+msgstr "日期"
+
+#: ../inc/base.php:2312
+msgid "Email address"
+msgstr "电子邮件地址"
+
+#: ../inc/base.php:2314
+msgid "End"
+msgstr "结束"
+
+#: ../inc/base.php:2315
+msgid "Banning"
+msgstr "禁止"
+
+#: ../inc/base.php:2323
+msgid "Release"
+msgstr "放弃"
+
+#: ../inc/base.php:2324
+msgid "Only email"
+msgstr "只有电子邮件"
+
+#: ../inc/base.php:2324
+msgid "Only IP"
+msgstr "只有IP"
+
+#: ../inc/base.php:2324
+msgid "Email and IP"
+msgstr "电子邮件和IP"
+
+#: ../inc/base.php:2329
+msgid "Banning IP is a Premium feature."
+msgstr "禁止IP是高级功能。"
+
+#: ../inc/base.php:2391 ../rencontre.php:239
+#: ../templates/rencontre_mail_regular.php:40
+#: ../templates/rencontre_message_write.php:29
+#: ../templates/rencontre_mini_portrait.php:46
+#: ../templates/rencontre_search_result.php:102
+#: ../templates/rencontre_search_result.php:105
+msgid "Profile"
+msgstr "信息"
+
+#: ../inc/base.php:2394
+msgid ""
+"It does not appear to be any profile. You can load the default profile if "
+"you wish."
+msgstr "没有找到您的最新个人资料, 可以显示您的默认资料"
+
+#: ../inc/base.php:2395
+msgid "Load profiles"
+msgstr "更新资料"
+
+#: ../inc/base.php:2403
+msgid "You can create, rename and delete items from the profile."
+msgstr "您可以创建更改和删除所有档案里的资料"
+
+#: ../inc/base.php:2405
+msgid ""
+"Warning, this is not without consequences. The changes will be applied to "
+"the member profiles that can offend. Caution !"
+msgstr "请小心, 所有的更改将更新用户资料.是否继续?"
+
+#: ../inc/base.php:2407 ../inc/base.php:2679
+msgid "Ref language"
+msgstr "主要默认使用语言"
+
+#: ../inc/base.php:2407 ../inc/base.php:2679
+msgid "Other"
+msgstr "其它的"
+
+#: ../inc/base.php:2416 ../inc/base.php:2690
+msgid "Add Language (2 lowercase letters comply with country code)"
+msgstr "添加语言 (世界国家编号的头两个小写字母, 比如法语fr, 英语en, 中文cn)"
+
+#: ../inc/base.php:2418 ../inc/base.php:2692
+msgid "Add a language"
+msgstr "添加语言"
+
+#: ../inc/base.php:2421 ../inc/base.php:2695
+msgid "Remove a language and all related content"
+msgstr "删除语言和跟语言相关的信息"
+
+#: ../inc/base.php:2425 ../inc/base.php:2699
+msgid "Remove a language"
+msgstr "删除一个语言"
+
+#: ../inc/base.php:2431
+msgid "Add category"
+msgstr "添加一个分类"
+
+#: ../inc/base.php:2462 ../inc/base.php:2482 ../inc/base.php:2516
+#: ../inc/base.php:2544
+msgid "Move Up"
+msgstr "安装"
+
+#: ../inc/base.php:2463 ../inc/base.php:2483 ../inc/base.php:2517
+#: ../inc/base.php:2545
+msgid "Move Down"
+msgstr "下来"
+
+#: ../inc/base.php:2464
+msgid "Change the name"
+msgstr "更改名字"
+
+#: ../inc/base.php:2465
+msgid "Remove the category"
+msgstr "删除分类"
+
+#: ../inc/base.php:2469 ../inc/base.php:2470
+msgid "Add value to this category"
+msgstr "添加分类中的一个信息"
+
+#: ../inc/base.php:2484 ../inc/base.php:2724
+msgid "Change the name or type"
+msgstr "更改名字或种类"
+
+#: ../inc/base.php:2485 ../inc/base.php:2519 ../inc/base.php:2547
+#: ../inc/base.php:2735 ../inc/base.php:2946 ../inc/base.php:2967
+#: ../lang/rencontre-js-admin-lang.php:7
+msgid "Remove"
+msgstr "删除"
+
+#: ../inc/base.php:2492
+msgid "A line of text (TEXT)"
+msgstr "一行字(文字)"
+
+#: ../inc/base.php:2496
+msgid "Large text box (TEXTAREA)"
+msgstr "大文字空白(文字大空格)"
+
+#: ../inc/base.php:2501 ../inc/base.php:2529 ../inc/base.php:2729
+#: ../inc/base.php:2947 ../inc/base.php:2968
+msgid "Add Value"
+msgstr "减价一个信息"
+
+#: ../inc/base.php:2502
+msgid "Single choice list (SELECT)"
+msgstr "单项选自的清单"
+
+#: ../inc/base.php:2518 ../inc/base.php:2546 ../inc/base.php:2562
+#: ../inc/base.php:2734 ../templates/rencontre_account.php:46
+msgid "Change"
+msgstr "更改"
+
+#: ../inc/base.php:2530
+msgid "Multiple choice list (CHECKBOX)"
+msgstr "多项选自的清单"
+
+#: ../inc/base.php:2557
+msgid "Numeric choice list (SELECT)"
+msgstr "数字的选择列表"
+
+#: ../inc/base.php:2564 ../lang/rencontre-js-admin-lang.php:33
+msgid "Step"
+msgstr "步"
+
+#: ../inc/base.php:2571
+msgid "A date (DATE)"
+msgstr "日期（DATE）"
+
+#: ../inc/base.php:2598 ../inc/base.php:2671
+msgid "Countries and Regions"
+msgstr "国家和省份"
+
+#: ../inc/base.php:2599
+msgid "Cleaner"
+msgstr "清洁器"
+
+#: ../inc/base.php:2654
+msgid "Datas are old. You should delete all countries and load the new ones."
+msgstr "数据是旧的 您应该删除所有国家/地区并加载新的国家。"
+
+#: ../inc/base.php:2663
+msgid ""
+"If a country is loaded in wp-geonames, the regions list of this country will "
+"come from the wp-geonames base and not from here."
+msgstr ""
+"如果一个国家加载wp-geonames，这个国家的地区列表将来自wp-geonames基地，而不是"
+"从这里。"
+
+#: ../inc/base.php:2674
+msgid ""
+"The country table is empty. You can load the countries and regions by "
+"default if you wish."
+msgstr "在数据库里没找到世界国家资料, 您可以注入默认世界国家和省市资料"
+
+#: ../inc/base.php:2675
+msgid "Load countries"
+msgstr "更新世界国家"
+
+#: ../inc/base.php:2678
+msgid "You can create, rename and delete countries and regions."
+msgstr "您可以创建更改和删除所有国家省份档案里的资料"
+
+#: ../inc/base.php:2705 ../inc/base.php:2706
+msgid "Add a country"
+msgstr "创建新的国家"
+
+#: ../inc/base.php:2708 ../inc/base.php:2709
+msgid "Delete all countries"
+msgstr "删除所有国家"
+
+#: ../inc/base.php:2730
+msgid "Regions"
+msgstr "省份"
+
+#: ../inc/base.php:2749
+msgid "Cleaning missing regions in users data"
+msgstr "清理用户数据中的丢失区域"
+
+#: ../inc/base.php:2753
+msgid "Missing regions"
+msgstr "缺少地区"
+
+#: ../inc/base.php:2773
+msgid "Existing regions"
+msgstr "现有地区"
+
+#: ../inc/base.php:2785
+msgid "Replace"
+msgstr "更换"
+
+#: ../inc/base.php:2813
+msgid "Features"
+msgstr "特征"
+
+#: ../inc/base.php:2814
+msgid "Words"
+msgstr "话"
+
+#: ../inc/base.php:2816
+msgid "Templates"
+msgstr "模板"
+
+#: ../inc/base.php:2837
+msgid "No country"
+msgstr "没有一个国家"
+
+#: ../inc/base.php:2841
+msgid "No region"
+msgstr "无区域"
+
+#: ../inc/base.php:2845
+msgid "No localisation"
+msgstr "没有本地化"
+
+#: ../inc/base.php:2849
+msgid "No birth date"
+msgstr "没有出生日期"
+
+#: ../inc/base.php:2853
+msgid "Min age"
+msgstr "最低年龄"
+
+#: ../inc/base.php:2865
+msgid "Max age"
+msgstr "最大年龄"
+
+#: ../inc/base.php:2877
+msgid "No smiles"
+msgstr "无笑容"
+
+#: ../inc/base.php:2881
+msgid "No contact request"
+msgstr "没有联系请求"
+
+#: ../inc/base.php:2885
+msgid "No weight"
+msgstr "无重"
+
+#: ../inc/base.php:2889
+msgid "Weight unit"
+msgstr "重量单位"
+
+#: ../inc/base.php:2892
+msgid "Kilograms"
+msgstr "千克"
+
+#: ../inc/base.php:2893
+msgid "Pounds"
+msgstr "磅"
+
+#: ../inc/base.php:2898
+msgid "No height"
+msgstr "没有高度"
+
+#: ../inc/base.php:2902
+msgid "Height unit"
+msgstr "身高的单位"
+
+#: ../inc/base.php:2905
+msgid "Meter"
+msgstr "仪表"
+
+#: ../inc/base.php:2906
+msgid "Feet and Inches"
+msgstr "英尺和英寸"
+
+#: ../inc/base.php:2911
+msgid "No report"
+msgstr "无报告"
+
+#: ../inc/base.php:2915
+msgid "No emoticon"
+msgstr "没有笑脸"
+
+#: ../inc/base.php:2919
+msgid "No menu (I use WordPress menu)"
+msgstr "没有菜单（我用的是WordPress的菜单）"
+
+#: ../inc/base.php:2923
+msgid "No sidebar (I put it with widget)"
+msgstr "无侧边栏（我把它与小部件）"
+
+#: ../inc/base.php:2927
+msgid "No ads on logged out plugin homepage"
+msgstr "在未连接的网页没有广告"
+
+#: ../inc/base.php:2931
+msgid "Only photo on logged out plugin homepage"
+msgstr "只有照片无关主页"
+
+#: ../inc/base.php:2935
+msgid "Change relation type"
+msgstr "更改关系类型"
+
+#: ../inc/base.php:2956
+msgid "Change sex values"
+msgstr "改变性别"
+
+#: ../inc/base.php:2977
+msgid "Allow multi choice in relation and sex"
+msgstr "允许多选的关系和性"
+
+#: ../inc/base.php:2981
+msgid "No homosexual"
+msgstr "没有同性恋"
+
+#: ../inc/base.php:2985
+msgid "Change register link on click a portrait"
+msgstr "更改注册链接"
+
+#: ../inc/base.php:2985
+msgid "(empty => default WP)"
+msgstr "（空=>默认WP）"
+
+#: ../inc/base.php:2989
+msgid "No 'no email' button"
+msgstr "没有“没有电子邮件”按钮"
+
+#: ../inc/base.php:2993
+msgid ""
+"Be careful, already registered members will be in a category that no longer "
+"exists. They should update their account."
+msgstr ""
+"请注意，已注册的成员将在一个不再存在的一个类别。他们应该更新他们的帐户。"
+
+#: ../inc/base.php:3012
+msgid "Change welcome text for new user"
+msgstr "更改欢迎文字的新用户"
+
+#: ../inc/base.php:3016 ../templates/rencontre_registration_part1.php:34
+msgid ""
+"You will access all the possibilities offered by the site in few minutes."
+msgstr "您很快可以享受我们为您提供的所有优质一流服务."
+
+#: ../inc/base.php:3017 ../templates/rencontre_registration_part1.php:35
+msgid "Before that, you need to provide some information requested below."
+msgstr "请提供以下的必要信息."
+
+#: ../inc/base.php:3018 ../templates/rencontre_registration_part1.php:39
+msgid ""
+"We would like to inform you that we do not use your personal data outside of "
+"this site."
+msgstr "我们向您保证您所有个人信息的隐私和安全保密,"
+
+#: ../inc/base.php:3019 ../templates/rencontre_registration_part1.php:40
+msgid ""
+"Deleting your account on your part or ours, causes the deletion of all your "
+"data."
+msgstr "如果您以后决定自己删除帐户的话,您的所有个人信息将不被保存,"
+
+#: ../inc/base.php:3020 ../templates/rencontre_registration_part1.php:41
+msgid ""
+"This also applies to messages that you have sent to other members as well as "
+"those they have sent to you."
+msgstr "包括您跟其他会员交换的短消息."
+
+#: ../inc/base.php:3021 ../templates/rencontre_registration_part1.php:45
+msgid "We wish you nice encounters."
+msgstr "祝福您能在这里找到自己的另一半!"
+
+#: ../inc/base.php:3027
+msgid "Change warning account blocked"
+msgstr "改变警告账号被屏蔽"
+
+#: ../inc/base.php:3031 ../inc/base.php:3033 ../inc/rencontre_widget.php:171
+msgid "Your account is blocked. You are invisible. Change your profile."
+msgstr "您的帐户被阻止。你是看不见的。更改您的个人资料。"
+
+#: ../inc/base.php:3037
+msgid "Change warning empty profile"
+msgstr "改变警告空简介"
+
+#: ../inc/base.php:3041 ../inc/base.php:3043
+#: ../templates/rencontre_modal_warning.php:45
+msgid ""
+"Your profile is empty. To take advantage of the site and being more visible, "
+"thank you to complete it."
+msgstr "您的个人资料是空的。要充分利用网站及更加明显，谢谢你完成它。"
+
+#: ../inc/base.php:3047
+msgid "Change the quarantine warning"
+msgstr "更改检疫预警"
+
+#: ../inc/base.php:3051 ../inc/base.php:3053 ../inc/rencontre_filter.php:1337
+#: ../templates/rencontre_registration_jail.php:16
+msgid "Your email address is currently in quarantine. Sorry"
+msgstr "不好意思,您的电子邮件目前还没有激活"
+
+#: ../inc/base.php:3057
+msgid "Change the no-photo warning"
+msgstr "更改无照片警告"
+
+#: ../inc/base.php:3061 ../inc/base.php:3063 ../inc/rencontre_widget.php:371
+#: ../inc/rencontre_widget.php:518 ../inc/rencontre_widget.php:1326
+#: ../inc/rencontre_widget.php:1989 ../inc/rencontre_widget.php:2483
+msgid ""
+"To be more visible and to view photos of other members, you should add one "
+"to your profile."
+msgstr "要更加明显和浏览照片的其他成员，你应该添加一个到您的个人资料。"
+
+#: ../inc/base.php:3067
+msgid "Change the follow-up email"
+msgstr "更改后续电子邮件"
+
+#: ../inc/base.php:3072 ../inc/rencontre_filter.php:271
+msgid ""
+"You registered on our website but you did not complete the procedure. You'll "
+"miss a date. That's too bad."
+msgstr ""
+"您注册我们的网站上，但你没有完成的过程。你会错过任何一个日期。 这太糟糕了。"
+
+#: ../inc/base.php:3073 ../inc/rencontre_filter.php:272
+msgid ""
+"Thus take two minutes to finish the registration. You should not be "
+"disappointed."
+msgstr "因此，需要两分钟才能完成注册。你不应该感到失望。"
+
+#: ../inc/base.php:3074 ../inc/rencontre_filter.php:273
+#: ../inc/rencontre_filter.php:592 ../inc/rencontre_filter.php:1393
+#: ../templates/rencontre_mail_info.php:46
+#: ../templates/rencontre_mail_instant.php:46
+msgid "Regards,"
+msgstr "敬礼!"
+
+#: ../inc/base.php:3080
+msgid "Change Smile word"
+msgstr "更改微笑字"
+
+#: ../inc/base.php:3080 ../inc/base.php:3114
+msgid "(empty => no change)"
+msgstr "（空=>没有变化）"
+
+#: ../inc/base.php:3084 ../inc/base.php:3085
+#: ../templates/rencontre_mail_regular.php:30
+#: ../templates/rencontre_portrait.php:185
+#: ../templates/rencontre_portrait.php:188
+#: ../templates/rencontre_search_result.php:94
+#: ../templates/rencontre_search_result.php:97
+#: ../templates/rencontre_sidebar_top.php:51
+msgid "Smile"
+msgstr "收到的招呼"
+
+#: ../inc/base.php:3088 ../inc/base.php:3089
+#: ../templates/rencontre_sidebar_top.php:101
+msgid "Who I smiled ?"
+msgstr "我跟哪些会员打过招呼?"
+
+#: ../inc/base.php:3092 ../inc/base.php:3093 ../inc/rencontre_widget.php:1085
+msgid "I smiled at"
+msgstr "我加为好友的是"
+
+#: ../inc/base.php:3096 ../inc/base.php:3097 ../inc/rencontre_filter.php:508
+#: ../templates/rencontre_mail_info.php:29
+#: ../templates/rencontre_mail_instant.php:29
+msgid "You have received a smile from"
+msgstr "您收到其他会员打的招呼"
+
+#: ../inc/base.php:3100 ../inc/base.php:3101 ../inc/rencontre_widget.php:2841
+msgid "Smile already sent"
+msgstr "已经发出的加为好友请求"
+
+#: ../inc/base.php:3104 ../inc/base.php:3105 ../inc/rencontre_widget.php:2867
+msgid "Smile sent"
+msgstr "加为好友请求成功发出"
+
+#: ../inc/base.php:3108 ../inc/base.php:3109 ../inc/rencontre_widget.php:1116
+msgid "I got a smile from"
+msgstr "把我加为好友的会员如下"
+
+#: ../inc/base.php:3114
+msgid "Change Look word"
+msgstr "更改查找单词"
+
+#: ../inc/base.php:3118 ../inc/base.php:3119
+#: ../templates/rencontre_sidebar_top.php:66
+msgid "Look"
+msgstr "看过我信息的会员"
+
+#: ../inc/base.php:3122 ../inc/base.php:3123 ../inc/rencontre_widget.php:1203
+msgid "I was watched by"
+msgstr "阅览过我个人资料的会员是"
+
+#: ../inc/base.php:3144
+msgid "Add relation type in quick search"
+msgstr "添加关系型快速搜索"
+
+#: ../inc/base.php:3148
+msgid "No ad in search results"
+msgstr "在搜索结果中没有广告"
+
+#: ../inc/base.php:3152 ../inc/base.php:3179
+msgid "Add a profile element in quick search"
+msgstr "添加在快速搜索的轮廓元素"
+
+#: ../inc/base.php:3200
+msgid "Add also numerous profile elements in search ? Get the kit Premium."
+msgstr "添加搜索也很多轮廓元素呢？获取该套件高级版。"
+
+#: ../inc/base.php:3226
+msgid "Menu color"
+msgstr "菜单颜色"
+
+#: ../inc/base.php:3241 ../inc/base.php:3256 ../inc/base.php:3271
+msgid "Menu buttons color"
+msgstr "菜单按钮颜色"
+
+#: ../inc/base.php:3256
+msgid "warning"
+msgstr "警告"
+
+#: ../inc/base.php:3271
+msgid "hover"
+msgstr "徘徊"
+
+#: ../inc/base.php:3286
+msgid "Block background color"
+msgstr "阻止背景颜色"
+
+#: ../inc/base.php:3301
+msgid "Title color"
+msgstr "标题颜色"
+
+#: ../inc/base.php:3316
+msgid "Text color"
+msgstr "文字颜色"
+
+#: ../inc/base.php:3331
+msgid "Label color"
+msgstr "标签颜色"
+
+#: ../inc/base.php:3346
+msgid "Line and border color"
+msgstr "线条和边框颜色"
+
+#: ../inc/base.php:3361
+msgid "Input background color"
+msgstr "输入背景颜色"
+
+#: ../inc/base.php:3376
+msgid "Select background color"
+msgstr "选择背景颜色"
+
+#: ../inc/base.php:3391
+msgid "Warning bar background color"
+msgstr "警告栏背景颜色"
+
+#: ../inc/base.php:3406
+msgid "Message sent background color"
+msgstr "消息发送背景颜色"
+
+#: ../inc/base.php:3421
+msgid "Message received background color"
+msgstr "消息收到背景颜色"
+
+#: ../inc/base.php:3436
+msgid "Fit portraits width in home page"
+msgstr "在主页中适合人像肖像"
+
+#: ../inc/base.php:3504
+msgid "Custom templates in your theme"
+msgstr "在你的主题自定义模板"
+
+#: ../inc/base.php:3507
+msgid "Template file"
+msgstr "模板文件"
+
+#: ../inc/base.php:3508
+msgid "Plugin version"
+msgstr "插件版本"
+
+#: ../inc/base.php:3509
+msgid "Theme version"
+msgstr "主题版"
+
+#: ../inc/base.php:3967 ../templates/rencontre_menu.php:12
+msgid "My homepage"
+msgstr "主页"
+
+#: ../inc/base.php:3968 ../templates/rencontre_menu.php:13
+msgid "My card"
+msgstr "我的个人资料"
+
+#: ../inc/base.php:3969 ../templates/rencontre_menu.php:16
+#: ../templates/rencontre_menu.php:19
+#: ../templates/rencontre_portrait_edit.php:30
+msgid "Edit My Profile"
+msgstr "更新我的个人资料"
+
+#: ../inc/base.php:3970 ../templates/rencontre_menu.php:23
+#: ../templates/rencontre_menu.php:26
+msgid "Messaging"
+msgstr "站内短信"
+
+#: ../inc/base.php:3972 ../templates/rencontre_account.php:56
+#: ../templates/rencontre_menu.php:39
+msgid "My Account"
+msgstr "我的个人帐户"
+
+#: ../inc/base.php:3975 ../inc/rencontre_filter.php:990
+msgid "Log in"
+msgstr ""
+
+#: ../inc/base.php:3976 ../inc/rencontre_filter.php:997 ../rencontre.php:800
+#: ../rencontre.php:801 ../rencontre.php:844
+msgid "Register"
+msgstr "注册"
+
+#: ../inc/rencontre_don.php:4
+msgid "About This Plugin"
+msgstr "关于此插件"
+
+#: ../inc/rencontre_don.php:8
+msgid ""
+"Enjoyed this free dating plugin?  A donation or a good review will help us "
+"to spend more time to make it evolve. Thanks for your contribution."
+msgstr ""
+"喜欢这个免费约会插件？ 捐赠或良好的评论将帮助我们花更多的时间让它发展。 谢谢"
+"你的贡献。"
+
+#: ../inc/rencontre_don.php:16
+msgid "US"
+msgstr "CN"
+
+#: ../inc/rencontre_don.php:17
+msgid "Rencontre Plugin Donation"
+msgstr "唐插件会议"
+
+#: ../inc/rencontre_don.php:22
+msgid "PayPal - The most secure online payment solution !"
+msgstr "贝宝 - 在线支付解决方案"
+
+#: ../inc/rencontre_don.php:29
+msgid "is a recommended plugin to use with Rencontre."
+msgstr "是与Rencontre一起使用的推荐插件。"
+
+#: ../inc/rencontre_don.php:35
+msgid ""
+"You want an integrated payment system, an easy moderation panel and a lot of "
+"features?"
+msgstr "你想要一个集成的支付系统，一个简单的审核面板和很多功能？"
+
+#: ../inc/rencontre_don.php:35
+msgid "Add this kit PREMIUM"
+msgstr "添加该试剂盒的费用"
+
+#: ../inc/rencontre_don.php:61
+msgid "How to install this plugin ?"
+msgstr "如何安装这个插件？"
+
+#: ../inc/rencontre_don.php:63
+msgid ""
+"In <a href=\"edit.php?post_type=page\">Pages</a>, edit or create the page of "
+"your choice. Add the shortcodes <code>[rencontre][rencontre_libre]</code> in "
+"this page content."
+msgstr ""
+"在<a href=\"edit.php?post_type=page\">页面</a>中，编辑或创建您选择的页面。 在"
+"此页面内容中添加<code>[rencontre][rencontre_libre]</code>中的短码。"
+
+#: ../inc/rencontre_don.php:64
+msgid ""
+"In <a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>, set the "
+"plugin page and save."
+msgstr ""
+"在<a href=\"admin.php?page=rencontre.php\"> Rencontre / 将军 </a>中，设置插件"
+"页面并保存。"
+
+#: ../inc/rencontre_don.php:65
+msgid ""
+"You need the WordPress Login / Logout / Register links. Take a look in <a "
+"href=\"nav-menus.php\">Appearance / Menus</a> if your theme has not these "
+"links."
+msgstr ""
+"您需要WordPress登录/注销/注册链接。 如果您的主题没有这些链接，请查看<a href="
+"\"nav-menus.php\">外观/菜单</a>。"
+
+#: ../inc/rencontre_don.php:66
+msgid ""
+"Add a new subscriber member in WP. Login this member and go to the plugin "
+"page (1)."
+msgstr "在WP中添加新的用户成员。 登录该成员并转到插件页面（1）。"
+
+#: ../inc/rencontre_don.php:67
+msgid ""
+"To facilitate the settings after installing, you can download and install "
+"via CSV (<a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>) "
+"20 test profiles with photo"
+msgstr ""
+"为了便于安装后的设置，您可以通过CSV（<a href=\"admin.php?page=rencontre.php"
+"\">Rencontre/将军</a>）下载并安装20个带照片的测试配置文件"
+
+#: ../inc/rencontre_don.php:70
+msgid ""
+"More details in the <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
+"target=\"_blank\">F.A.Q</a>."
+msgstr ""
+"更多细节在<a href=\"https://wordpress.org/plugins/rencontre/#faq\" target="
+"\"_blank\">F.A.Q</a>"
+
+#: ../inc/rencontre_filter.php:268 ../inc/rencontre_filter.php:337
+#: ../inc/rencontre_filter.php:449 ../inc/rencontre_filter.php:1391
+#: ../templates/rencontre_mail_info.php:14
+#: ../templates/rencontre_mail_instant.php:14
+#: ../templates/rencontre_registration_part1.php:27
+#: ../templates/rencontre_registration_part2.php:19
+#: ../templates/rencontre_registration_part3.php:27
+msgid "Hello"
+msgstr "您好"
+
+#: ../inc/rencontre_filter.php:283
+msgid "Registration"
+msgstr "注册"
+
+#: ../inc/rencontre_filter.php:339 ../inc/rencontre_filter.php:347
+msgid "Happy Birthday"
+msgstr "生日快乐"
+
+#: ../inc/rencontre_filter.php:452
+msgid "Your profile has been visited"
+msgstr "有会员阅读过您的个人资料"
+
+#: ../inc/rencontre_filter.php:452
+msgid "time"
+msgstr "次"
+
+#: ../inc/rencontre_filter.php:490
+msgid "Here's a selection of members that may interest you"
+msgstr "这里有一个成员选择您可能会感兴趣的"
+
+#: ../inc/rencontre_filter.php:548 ../templates/rencontre_mail_info.php:17
+#: ../templates/rencontre_mail_instant.php:17
+msgid "You have received a contact request from"
+msgstr "您收到的关注"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:39
+#: ../templates/rencontre_mail_instant.php:39
+msgid "You have"
+msgstr "您收到"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:40
+#: ../templates/rencontre_mail_instant.php:40
+msgid "messages"
+msgstr "个短信"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:40
+#: ../templates/rencontre_mail_instant.php:40
+msgid "message"
+msgstr "短信"
+
+#: ../inc/rencontre_filter.php:589 ../templates/rencontre_mail_info.php:41
+#: ../templates/rencontre_mail_instant.php:41
+msgid "in your inbox."
+msgstr "在您的收信箱里"
+
+#: ../inc/rencontre_filter.php:592
+msgid "Do not hesitate to send us your comments."
+msgstr "欢迎给我们提意见"
+
+#: ../inc/rencontre_filter.php:813 ../templates/rencontre_mail_info.php:11
+#: ../templates/rencontre_mail_instant.php:11
+msgid "A member contact you"
+msgstr "有一位会员关注了您"
+
+#: ../inc/rencontre_filter.php:986
+msgid "Log out"
+msgstr ""
+
+#: ../inc/rencontre_filter.php:1072 ../inc/rencontre_filter.php:1089
+msgid "Unimportant"
+msgstr "不重要"
+
+#: ../inc/rencontre_filter.php:1306 ../templates/rencontre_imgreg.php:26
+#: ../templates/rencontre_imgreg.php:55
+msgid "Password"
+msgstr "密码"
+
+#: ../inc/rencontre_filter.php:1325
+msgid "<strong>ERROR</strong>: Invalid password (6 characters min)."
+msgstr "<strong>错误</strong>：无效的密码（6个字符分钟）。"
+
+#: ../inc/rencontre_filter.php:1381
+msgid "Confirmation email already sent"
+msgstr "确认邮件已经发出"
+
+#: ../inc/rencontre_filter.php:1391
+msgid "You should confirm your email with this link"
+msgstr "你应该确认您的电子邮件与此链接"
+
+#: ../inc/rencontre_filter.php:1401
+msgid "Confirmation email sent"
+msgstr "确认电子邮件发送"
+
+#: ../inc/rencontre_filter.php:1515 ../inc/rencontre_filter.php:1516
+#: ../inc/rencontre_filter.php:1517 ../inc/rencontre_filter.php:1518
+#: ../inc/rencontre_filter.php:1519
+msgid "Fake"
+msgstr "假"
+
+#: ../inc/rencontre_filter.php:1517
+msgid "profile"
+msgstr "信息"
+
+#: ../inc/rencontre_filter.php:1518
+msgid "IP"
+msgstr "IP"
+
+#: ../inc/rencontre_filter.php:1519
+msgid "email"
+msgstr "电子邮件"
+
+#: ../inc/rencontre_filter.php:1520
+msgid "Inadequate image"
+msgstr "形象不足"
+
+#: ../inc/rencontre_filter.php:1521
+msgid "Inappropriate presentation"
+msgstr "不适当的介绍"
+
+#: ../inc/rencontre_filter.php:1522
+msgid "Many reports"
+msgstr "许多报道"
+
+#: ../inc/rencontre_filter.php:1523
+msgid "Behavior on the site"
+msgstr "网站上的行为"
+
+#: ../inc/rencontre_widget.php:5
+msgid "Widget to integrate the dating website"
+msgstr "可以在您网站上调用的Rencontre小工具"
+
+#: ../inc/rencontre_widget.php:11
+msgid "You are connected as ADMIN"
+msgstr "您以ADMIN身份连接"
+
+#: ../inc/rencontre_widget.php:12
+msgid "You cannot use RENCONTRE as a user if you have ADMIN rights"
+msgstr "如果您具有ADMIN权限，则不能将RENCONTRE用作用户"
+
+#: ../inc/rencontre_widget.php:314 ../inc/rencontre_widget.php:1316
+#: ../inc/rencontre_widget.php:2473
+#, php-format
+msgid "%s ago"
+msgstr "%s 前"
+
+#: ../inc/rencontre_widget.php:389
+msgid "(blocked)"
+msgstr "(黑名单)"
+
+#: ../inc/rencontre_widget.php:439
+msgid "gay"
+msgstr "同性恋者"
+
+#: ../inc/rencontre_widget.php:441 ../inc/rencontre_widget.php:453
+#: ../templates/rencontre_search_result.php:59
+#: ../templates/rencontre_sidebar_top.php:44
+msgid "for"
+msgstr "为"
+
+#: ../inc/rencontre_widget.php:456 ../templates/rencontre_libre_search.php:38
+#: ../templates/rencontre_search_result.php:54
+msgid "between"
+msgstr "年纪在"
+
+#: ../inc/rencontre_widget.php:456 ../templates/rencontre_libre_search.php:48
+#: ../templates/rencontre_search_result.php:54
+msgid "and"
+msgstr "和"
+
+#: ../inc/rencontre_widget.php:517
+msgid "You have no photo on your profile ?"
+msgstr "你有你的个人资料没有照片？"
+
+#: ../inc/rencontre_widget.php:669 ../inc/rencontre_widget.php:1425
+msgid "You should complete your profile and add a photo to send messages."
+msgstr "您应该填写您的个人资料和照片添加到发送消息。"
+
+#: ../inc/rencontre_widget.php:676
+msgid "Add a photo"
+msgstr "添加照片"
+
+#: ../inc/rencontre_widget.php:1145
+msgid "I asked a contact"
+msgstr "我加为好友的会员是"
+
+#: ../inc/rencontre_widget.php:1173
+msgid "I had a contact request from"
+msgstr "把我加为好友的会员是"
+
+#: ../inc/rencontre_widget.php:1231
+msgid "I locked"
+msgstr "被我加入了黑名单的是"
+
+#: ../inc/rencontre_widget.php:1378 ../inc/rencontre_widget.php:2542
+msgid "Sorry, but nothing matched your search terms."
+msgstr "很抱歉，没有任何符合您的搜寻字词。"
+
+#: ../inc/rencontre_widget.php:1390 ../inc/rencontre_widget.php:2550
+msgid "Next Page"
+msgstr "下一页"
+
+#: ../inc/rencontre_widget.php:1424 ../inc/rencontre_widget.php:1425
+#: ../inc/rencontre_widget.php:1426 ../inc/rencontre_widget.php:2196
+msgid "Not sent"
+msgstr "未发送"
+
+#: ../inc/rencontre_widget.php:1424
+msgid "You are no longer allowed to send messages."
+msgstr "你不再允许发送邮件。"
+
+#: ../inc/rencontre_widget.php:1920 ../inc/rencontre_widget.php:1941
+msgid "Immaterial"
+msgstr "其他"
+
+#: ../inc/rencontre_widget.php:2193
+msgid "Message sent"
+msgstr "信息已发送"
+
+#: ../inc/rencontre_widget.php:2490
+msgid "Astrological affinity"
+msgstr "星座的亲和性"
+
+#: ../inc/rencontre_widget.php:2494
+msgid "Affinity with my profile"
+msgstr "跟我有缘分的"
+
+#: ../inc/rencontre_widget.php:2494
+msgid "points"
+msgstr "点"
+
+#: ../inc/rencontre_widget.php:2749
+msgid "Region field is empty or outdated !"
+msgstr "“区域”字段为空或已过时"
+
+#: ../inc/rencontre_widget.php:2787
+msgid ""
+"You are currently hidden to other members and you can't communicate because "
+"your account is not complete. You should promptly update this page otherwise "
+"your access will be canceled."
+msgstr ""
+"您目前隐藏的其他成员，你不能沟通，因为您的帐户是不完整的。你应该及时更新这个"
+"页面，否则你的访问将被取消。"
+
+#: ../inc/rencontre_widget.php:2789
+msgid ""
+"You also need to confirm your email address by clicking the link that you "
+"received. You have 24 hours. Do not delay."
+msgstr ""
+"您还需要通过点击您收到的链接，以确认您的电子邮件地址。你有24个小时。不要拖"
+"延。"
+
+#: ../inc/rencontre_widget.php:2790
+msgid "Email not received"
+msgstr "电子邮件没有收到"
+
+#: ../inc/rencontre_widget.php:2898
+msgid "Contact already requested"
+msgstr "已经打过的招呼"
+
+#: ../inc/rencontre_widget.php:2922
+msgid "Contact request sent"
+msgstr "打招呼成功发出"
+
+#: ../inc/rencontre_widget.php:2934
+msgid "Reporting already done"
+msgstr "已经汇报过管理员"
+
+#: ../inc/rencontre_widget.php:2941
+msgid "Thank you for your report"
+msgstr "谢谢您的汇报"
+
+#: ../inc/rencontre_widget.php:3046
+msgid "from my position"
+msgstr "从我的位置"
+
+#: ../inc/rencontre_widget.php:3089
+msgid "Yesterday"
+msgstr "昨天"
+
+#: ../inc/rencontre_widget.php:3100
+msgid "Widget to integrate the Rencontre sidebar in your theme sidebar"
+msgstr "窗口小部件的论战侧边栏整合在你的主题侧边栏"
+
+#: ../inc/rencontre_widget.php:3213
+msgid "Password changed !"
+msgstr "密码更改成功"
+
+#: ../lang/rencontre-js-admin-lang.php:3
+msgid "Change the value"
+msgstr "更改"
+
+#: ../lang/rencontre-js-admin-lang.php:6
+msgid "Del"
+msgstr "删除"
+
+#: ../lang/rencontre-js-admin-lang.php:8
+msgid "Category"
+msgstr "分类"
+
+#: ../lang/rencontre-js-admin-lang.php:9
+msgid "Value"
+msgstr "数据"
+
+#: ../lang/rencontre-js-admin-lang.php:10
+msgid "New Item"
+msgstr "新添信息"
+
+#: ../lang/rencontre-js-admin-lang.php:11
+msgid "Add"
+msgstr "添加"
+
+#: ../lang/rencontre-js-admin-lang.php:12 ../rencontre.php:240
+#: ../templates/rencontre_search.php:118
+#: ../templates/rencontre_sidebar_quick_search.php:46
+msgid "Country"
+msgstr "国家"
+
+#: ../lang/rencontre-js-admin-lang.php:13 ../templates/rencontre_search.php:129
+#: ../templates/rencontre_sidebar_quick_search.php:56
+msgid "Region"
+msgstr "地区"
+
+#: ../lang/rencontre-js-admin-lang.php:14
+msgid "Code ISO"
+msgstr " ISO 编码"
+
+#: ../lang/rencontre-js-admin-lang.php:15
+msgid "Image file"
+msgstr "图像"
+
+#: ../lang/rencontre-js-admin-lang.php:16 ../lang/rencontre-js-lang.php:5
+#: ../templates/rencontre_portrait_add_photo.php:38
+msgid "Add this photo"
+msgstr "添加照片"
+
+#: ../lang/rencontre-js-admin-lang.php:17 ../lang/rencontre-js-lang.php:4
+msgid "Delete photo"
+msgstr "删除照片"
+
+#: ../lang/rencontre-js-admin-lang.php:18 ../lang/rencontre-js-lang.php:3
+msgid "Delete this photo"
+msgstr "删除照片"
+
+#: ../lang/rencontre-js-admin-lang.php:19
+msgid "Delete Account ?"
+msgstr "删除帐户 ?"
+
+#: ../lang/rencontre-js-admin-lang.php:20
+msgid "Release this mail ?"
+msgstr "发出此邮件 ?"
+
+#: ../lang/rencontre-js-admin-lang.php:21
+msgid "Number of daily registrations"
+msgstr "每天注册人数"
+
+#: ../lang/rencontre-js-admin-lang.php:22
+msgid "Entries already exist"
+msgstr "项已经存在"
+
+#: ../lang/rencontre-js-admin-lang.php:23
+msgid "Entries active (<3 month)"
+msgstr "项有效（<3月）"
+
+#: ../lang/rencontre-js-admin-lang.php:24
+msgid "Hourly traffic (local time)"
+msgstr "每小时流量（当地时间）"
+
+#: ../lang/rencontre-js-admin-lang.php:25
+msgid "Traffic on the week"
+msgstr "交通上一周"
+
+#: ../lang/rencontre-js-admin-lang.php:26
+msgid "sun"
+msgstr "星期天"
+
+#: ../lang/rencontre-js-admin-lang.php:27
+msgid "mon"
+msgstr "星期一"
+
+#: ../lang/rencontre-js-admin-lang.php:28
+msgid "tue"
+msgstr "星期二"
+
+#: ../lang/rencontre-js-admin-lang.php:29
+msgid "wed"
+msgstr "星期三"
+
+#: ../lang/rencontre-js-admin-lang.php:30
+msgid "thu"
+msgstr "星期四"
+
+#: ../lang/rencontre-js-admin-lang.php:31
+msgid "fri"
+msgstr "星期五"
+
+#: ../lang/rencontre-js-admin-lang.php:32
+msgid "sat"
+msgstr "星期六"
+
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Min"
+msgstr "敏"
+
+#: ../lang/rencontre-js-admin-lang.php:33
+msgid "Max"
+msgstr "马克斯"
+
+#: ../lang/rencontre-js-lang.php:6
+msgid "incomplete fields or error"
+msgstr "信息填写有误"
+
+#: ../lang/rencontre-js-lang.php:7
+msgid "Nickname unavailable"
+msgstr "呢称已经被其他会员注册"
+
+#: ../lang/rencontre-js-lang.php:8
+msgid "Confirm the deletion of the account ?"
+msgstr "确认删除帐户 ?"
+
+#: ../lang/rencontre-js-lang.php:9
+msgid "New Passwords are differents"
+msgstr "新密码跟旧密码不符"
+
+#: ../lang/rencontre-js-lang.php:10
+msgid "The original password is wrong"
+msgstr "旧密码不正确"
+
+#: ../lang/rencontre-js-lang.php:11
+msgid "Write and press <Enter>"
+msgstr "填写并按 <Enter>键"
+
+#: ../lang/rencontre-js-lang.php:12
+msgid "Chat request sent. Wait ..."
+msgstr "聊天请求已经发出. 请稍等 ..."
+
+#: ../lang/rencontre-js-lang.php:13
+msgid "Chat request accepted. You can start..."
+msgstr "聊天请求被接受。你可以开始..."
+
+#: ../lang/rencontre-js-lang.php:14
+msgid "You have a chat request"
+msgstr "您收到一个聊天请求"
+
+#: ../lang/rencontre-js-lang.php:15
+msgid "Your contact closed his window."
+msgstr "跟您聊天的朋友关闭了聊天"
+
+#: ../rencontre.php:12
+msgid ""
+"A free powerful and exhaustive dating plugin with private messaging, webcam "
+"chat, search by profile and automatic sending of email. No third party."
+msgstr ""
+"一个免费的强大和详尽的约会插件与私人消息，网络摄像头聊天，搜索的配置文件和自"
+"动发送电子邮件。 没有第三方。"
+
+#: ../rencontre.php:204
+msgid "Serious relationship"
+msgstr "婚姻"
+
+#: ../rencontre.php:205
+msgid "Open relationship"
+msgstr "一夜情"
+
+#: ../rencontre.php:206
+msgid "Friendship"
+msgstr "交友"
+
+#: ../rencontre.php:214
+msgid "a man"
+msgstr "一位男性"
+
+#: ../rencontre.php:215
+msgid "a woman"
+msgstr "一位女性"
+
+#: ../rencontre.php:236
+msgid "Rencontre - General"
+msgstr "约会 - 配置"
+
+#: ../rencontre.php:237 ../rencontre.php:245
+msgid "Rencontre - Members"
+msgstr "约会 - 会员"
+
+#: ../rencontre.php:238 ../rencontre.php:246
+msgid "Rencontre - Jail"
+msgstr "约会 - 黑名单"
+
+#: ../rencontre.php:239
+msgid "Rencontre - Profile"
+msgstr "约会 - 信息"
+
+#: ../rencontre.php:240
+msgid "Rencontre - Countries"
+msgstr "约会 - 国家"
+
+#: ../rencontre.php:241
+msgid "Rencontre - Custom"
+msgstr "约会 - 定制"
+
+#: ../rencontre.php:241
+msgid "Custom"
+msgstr "定制"
+
+#: ../templates/rencontre_account.php:27
+msgid "Change password"
+msgstr "密码更改"
+
+#: ../templates/rencontre_account.php:32
+msgid "Former"
+msgstr "旧密码"
+
+#: ../templates/rencontre_account.php:36
+msgid "New"
+msgstr "新密码"
+
+#: ../templates/rencontre_account.php:40
+msgid "Retype the new"
+msgstr "确认密码"
+
+#: ../templates/rencontre_account.php:269
+msgid "No email from this site"
+msgstr "本网站的任何电子邮件"
+
+#: ../templates/rencontre_account_delete.php:19
+msgid ""
+"This action will result in the complete deletion of your account and "
+"everything about you from our server. We do not keep historical accounts."
+msgstr "您的帐户将被删除, 您的档案不能再恢复, "
+
+#: ../templates/rencontre_account_delete.php:20
+msgid "Please note that this action is irreversible !"
+msgstr "请好好考虑 !"
+
+#: ../templates/rencontre_account_delete.php:23
+msgid "Delete Account"
+msgstr "删除帐户"
+
+#: ../templates/rencontre_imgreg.php:16
+msgid "Username"
+msgstr "用户名"
+
+#: ../templates/rencontre_imgreg.php:20
+msgid "Email"
+msgstr "电子邮件"
+
+#: ../templates/rencontre_imgreg.php:39
+msgid "Registration confirmation will be emailed to you."
+msgstr "注册确认将通过电子邮件发送给您。"
+
+#: ../templates/rencontre_imgreg.php:51
+msgid "Username or Email Address"
+msgstr "用户名或邮箱地址"
+
+#: ../templates/rencontre_mail_regular.php:24
+#: ../templates/rencontre_portrait.php:194
+#: ../templates/rencontre_portrait.php:197
+msgid "Ask for a contact"
+msgstr "加为好友"
+
+#: ../templates/rencontre_mail_regular.php:35
+#: ../templates/rencontre_portrait.php:177
+#: ../templates/rencontre_portrait.php:180
+#: ../templates/rencontre_search_result.php:86
+#: ../templates/rencontre_search_result.php:89
+msgid "Send a message"
+msgstr "发送消息"
+
+#: ../templates/rencontre_message_conversation.php:33
+#: ../templates/rencontre_message_inbox.php:25
+#: ../templates/rencontre_message_write.php:33
+msgid "Inbox"
+msgstr "收件箱"
+
+#: ../templates/rencontre_message_conversation.php:36
+#: ../templates/rencontre_message_conversation.php:39
+msgid "Answer"
+msgstr "回复"
+
+#: ../templates/rencontre_message_conversation.php:44
+msgid "Delete the conversation"
+msgstr "删除对话"
+
+#: ../templates/rencontre_message_write.php:47
+msgid "Send a message to"
+msgstr "给会员发信息"
+
+#: ../templates/rencontre_mini_portrait_chat.php:41
+msgid "Accept"
+msgstr "接受"
+
+#: ../templates/rencontre_mini_portrait_chat.php:44
+msgid "Ignore"
+msgstr "放弃"
+
+#: ../templates/rencontre_modal_warning.php:17
+msgid "Your email is validated"
+msgstr "您的电子邮件验证"
+
+#: ../templates/rencontre_modal_warning.php:31
+#, php-format
+msgid ""
+"Welcome to %s. You will stay hidden without interaction to other members as "
+"long as your account is not completed."
+msgstr "欢迎到 %s。你会只要您的帐户没有完成，没有互动，其他成员留下隐患。"
+
+#: ../templates/rencontre_modal_warning.php:32
+msgid "You have 24 hours to confirm your email."
+msgstr "你有24小时，以确认您的电子邮件。"
+
+#: ../templates/rencontre_my_home.php:18
+msgid "Featured profiles"
+msgstr "精選配置文件"
+
+#: ../templates/rencontre_my_home.php:57
+msgid "New entrants"
+msgstr "新会员"
+
+#: ../templates/rencontre_my_home.php:67
+msgid "My favourites"
+msgstr "我最喜欢的"
+
+#: ../templates/rencontre_portrait.php:109
+msgid "offline"
+msgstr "不在线"
+
+#: ../templates/rencontre_portrait.php:113
+msgid "You are blocked !"
+msgstr "您被列如黑名单"
+
+#: ../templates/rencontre_portrait.php:203
+#: ../templates/rencontre_portrait.php:206
+msgid "Chat"
+msgstr "聊天"
+
+#: ../templates/rencontre_portrait.php:211
+#: ../templates/rencontre_portrait.php:214
+msgid "Block"
+msgstr "加入黑名单"
+
+#: ../templates/rencontre_portrait.php:211
+msgid "Unblock"
+msgstr "注销黑名单"
+
+#: ../templates/rencontre_portrait.php:218
+msgid "Report a fake profile or inappropriate content"
+msgstr "汇报管理员有不佳内容"
+
+#: ../templates/rencontre_portrait.php:218
+#: ../templates/rencontre_portrait.php:221
+msgid "Report"
+msgstr "汇报管理员"
+
+#: ../templates/rencontre_portrait.php:225
+msgid "Add to my favorites"
+msgstr "添加到我的最爱"
+
+#: ../templates/rencontre_portrait.php:225
+#: ../templates/rencontre_portrait.php:228
+msgid "Favorite"
+msgstr "喜爱"
+
+#: ../templates/rencontre_portrait.php:228
+msgid "Delete from my favorites"
+msgstr "从我的收藏中删除"
+
+#: ../templates/rencontre_portrait_add_photo.php:32
+msgid "Facebook Profile Photo"
+msgstr "Facebook的个人资料照片"
+
+#: ../templates/rencontre_portrait_edit.php:58
+msgid "You are limited"
+msgstr "您被限制"
+
+#: ../templates/rencontre_portrait_edit.php:65
+msgid "Click the photo"
+msgstr "点击图片"
+
+#: ../templates/rencontre_registration_part1.php:27
+#: ../templates/rencontre_registration_part2.php:19
+#: ../templates/rencontre_registration_part3.php:27
+msgid "welcome to the site"
+msgstr "欢迎您访问"
+
+#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
+#: ../templates/rencontre_search.php:79
+msgid "max"
+msgstr "马克斯"
+
+#: ../templates/rencontre_search.php:105
+msgid "Gender"
+msgstr "性别"
+
+#: ../templates/rencontre_search.php:138
+msgid "City"
+msgstr "城市"
+
+#: ../templates/rencontre_search.php:145
+#: ../templates/rencontre_sidebar_quick_search.php:66
+msgid "Relation"
+msgstr "关系"
+
+#: ../templates/rencontre_search.php:156
+msgid "Word in the ad"
+msgstr "个性展示里的关键词"
+
+#: ../templates/rencontre_search.php:165
+msgid "Only with picture"
+msgstr "仅有照片的会员"
+
+#: ../templates/rencontre_search_result.php:68
+msgid "The"
+msgstr "这个"
+
+#: ../templates/rencontre_sidebar_quick_search.php:13
+msgid "Quick Search"
+msgstr "搜索"
+
+#: ../templates/rencontre_sidebar_quick_search.php:27
+msgid "From"
+msgstr "从"
+
+#: ../templates/rencontre_sidebar_quick_search.php:35
+msgid "To"
+msgstr "至"
+
+#: ../templates/rencontre_sidebar_quick_search.php:86
+#: ../templates/rencontre_sidebar_quick_search.php:101
+msgid "After"
+msgstr "后"
+
+#: ../templates/rencontre_sidebar_quick_search.php:86
+#: ../templates/rencontre_sidebar_quick_search.php:101
+msgid "Before"
+msgstr "之前"
+
+#: ../templates/rencontre_sidebar_top.php:81
+msgid "Contact requests"
+msgstr "加好友的请求"
+
+#: ../templates/rencontre_sidebar_top.php:109
+msgid "Who I asked for a contact ?"
+msgstr "我跟哪些会员加为好友?"
+
+#: ../templates/rencontre_sidebar_top.php:114
+msgid "Who I've blocked ?"
+msgstr "我跟哪些会员加入黑名单?"
+
+#~ msgid "Change login name (after, it will not be possible)"
+#~ msgstr "更改登录名 (之后将不能再更改)"
+
+#~ msgid "New password (6 min)"
+#~ msgstr "填写新密码 (至少6个字母)"
+
+#~ msgid "New password (again)"
+#~ msgstr "确认新密码"
+
+#~ msgid ""
+#~ "Rencontre no longer uses \"GeoIP Detect\". You can disable and delete "
+#~ "this plugin."
+#~ msgstr "论战不再使用GEOIP DETECT。您可以禁用并删除这个插件。"
+
+#~ msgid "No flags on logged out plugin homepage"
+#~ msgstr "在未连接的网页没有标志"
+
+#~ msgid "Member"
+#~ msgstr "会员"
+
+#~ msgid "Message"
+#~ msgstr "短信"
+
+#~ msgid "Close"
+#~ msgstr "关闭"
+
+#~ msgid "from"
+#~ msgstr "从"
+
+#~ msgid "Connection"
+#~ msgstr "连接"
+
+#~ msgid "Reload unconnected homepage"
+#~ msgstr "刷新网页无关"
+
+#~ msgid "Reload now"
+#~ msgstr "现在重新加载"
+
+#~ msgid "Only my country on my home page"
+#~ msgstr "Only my country in summary email"
+
+#~ msgid "Size"
+#~ msgstr "身高"
+
+#~ msgid "My size"
+#~ msgstr "身高"
+
+#~ msgid "No size"
+#~ msgstr "没有大小"
+
+#~ msgid "Size unit"
+#~ msgstr "尺寸单位"
+
+#~ msgid "Back Members"
+#~ msgstr "回到会员名单"
+
+#~ msgid "Remove inactive members for one year"
+#~ msgstr "删除一年的非活动成员"
