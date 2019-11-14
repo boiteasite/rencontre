@@ -5,7 +5,7 @@
 function f_exportCsv() {
 	// Export CSV de la base des membres
 	// $_POST['activ'], $_POST['photo'], $_POST['ad'];
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb; global $rencDiv; global $rencOpt;
 	$sex = array('men','girl');
 	$pho = (!empty($_POST['photo'])?1:0);
@@ -125,7 +125,7 @@ function f_importCsv() {
 		// 16 : fichier photo (ou 0)
 		// 17 : titre
 		// 18 : Annonce
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencDiv; global $rencOpt;
 	$sex = array('men','girl');
 	foreach($rencOpt['iam'] as $k=>$v) if($k>1) $sex[] = $v;
@@ -362,7 +362,7 @@ function f_rencProfil() { // (submit)
 }
 function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 	// a2 : ID - a3 : colonne - a4 : valeur colonne - a5 : position (select ou check) - a6 : type - g : genre ",0,1,"
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb; global $rencCustom; global $rencOpt; global $rencDiv;
 	if(!empty($rencCustom['sex']) && strpos($g,',')!==false) {
 		$g1 = explode(',',$g); $g = ',';
@@ -513,7 +513,7 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 //
 function profil_plus($a2,$a3,$a4,$a5) {
 	// a5 : langues separees par &
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb; global $rencCustom; global $rencOpt; global $rencDiv;
 	$genreDef = '';
 	for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) {
@@ -576,7 +576,7 @@ function profil_plus($a2,$a3,$a4,$a5) {
 //
 function profil_langplus($loc,$a4) {
 	// a4 : langue
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb;
 	$q = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$a4."' LIMIT 1");
 	if(!$q) {
@@ -594,14 +594,14 @@ function profil_langplus($loc,$a4) {
 //
 function profil_langsupp($a4) {
 	// a4 : langue
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb;
 	$wpdb->query("DELETE FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$a4."'");
 }
 //
 function f_rencUpDown() {
 	// Ajax
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb; global $rencDiv;
 	$n = 0; $max = 0;
 	$lang = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil LIMIT 1"); // au pif
@@ -834,7 +834,7 @@ function f_rencUpDown() {
 //
 function profil_defaut() {
 	// chargement des profils par defaut
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	$f = file_get_contents(plugin_dir_path( __FILE__ ).'rencontre_profil_defaut.txt');
 	global $wpdb;
 	$wpdb->query('INSERT INTO '.$wpdb->prefix.'rencontre_profil (id, i_categ, i_label, c_categ, c_label, t_valeur, i_type, i_poids, c_lang) VALUES '.$f);
@@ -844,7 +844,7 @@ function profil_defaut() {
 //
 function liste_defaut() {
 	// chargement des pays et regions par defaut
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	$f = file_get_contents(plugin_dir_path( __FILE__ ).'rencontre_liste_defaut.txt');
 	global $wpdb;
 	$wpdb->query("ALTER TABLE ".$wpdb->prefix."rencontre_liste AUTO_INCREMENT = 1");
@@ -853,7 +853,7 @@ function liste_defaut() {
 //
 function rencSynchronise() {
 	// Sur le compte de chaque utilisateur (rencontre_users_profil) : supprime les ID inexistants dans la colonne t_profil et reorganise les valeurs
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb; global $rencDiv;
 	if(file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) {
 		$a = 0; $typ = array();
@@ -920,7 +920,7 @@ function rencSynchronise() {
 // *****************************************
 function liste_edit($a2,$a3,$a4,$a5,$a6) {
 	// a2 : iso/id - a3 : colonne - a4 : valeur colonne - a5 : position (select ou check) - a6 : type
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb;
 	if($a3=="p") {
 		$a4 = urldecode($a4); // stripslashes() a ajouter : fr=Un pays où j\'aimerais vivre&en=A country where I want to live&
@@ -935,7 +935,7 @@ function liste_edit($a2,$a3,$a4,$a5,$a6) {
 //
 function liste_supp($a2,$a3,$a4) {
 	// a2 : ID - a3 : colonne - a4 :
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb;
 	if($a2=='suppAll') $wpdb->query("TRUNCATE TABLE ".$wpdb->prefix."rencontre_liste");
 	else if($a3=="p") $wpdb->query("DELETE FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_iso='".$a2."' ");
@@ -944,7 +944,7 @@ function liste_supp($a2,$a3,$a4) {
 //
 function liste_plus($a2,$a3,$a4,$a5,$a6) {
 	// a5 : langues separees par &
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb;
 	if($a3=="p" && strlen($a5)==2) {
 		$a4 = urldecode($a4); // stripslashes() a ajouter : fr=Un pays où j\'aimerais vivre&en=A country where I want to live&
@@ -960,7 +960,7 @@ function liste_plus($a2,$a3,$a4,$a5,$a6) {
 //
 function liste_langplus($loc,$a4) {
 	// a4 : langue
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb;
 	$q = $wpdb->get_var("SELECT c_liste_lang FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".$a4."' LIMIT 1");
 	if(!$q) {
@@ -974,7 +974,7 @@ function liste_langplus($loc,$a4) {
 //
 function liste_langsupp($a4) {
 	// a4 : langue
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb;
 	$wpdb->query("DELETE FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".$a4."'");
 }
@@ -982,7 +982,7 @@ function liste_langsupp($a4) {
 // **** TAB ADMIN
 // *****************************************
 function update_rencontre_options($f) {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt; global $rencDiv;
 	if(empty($_GET['renctab'])) {
 		if(isset($f['rol'])) $rencOpt['rol'] = $f['rol']; else unset($rencOpt['rol']);
@@ -1056,7 +1056,7 @@ function update_rencontre_options($f) {
 	}
 //
 function rencMenuGeneral() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	if(!empty($_POST) && !isset($_POST['rencCode'])) update_rencontre_options($_POST);
 	global $rencOpt; global $rencDiv; global $rencVersion; global $wpdb;
 	wp_enqueue_script('rencontre', plugins_url('rencontre/js/rencontre-adm.js'));
@@ -1245,7 +1245,7 @@ function rencMenuGeneral() {
 	<?php
 }
 function rencTabLog() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt;
 	?>
 	
@@ -1275,7 +1275,7 @@ function rencTabLog() {
 	<?php
 }
 function rencTabDis() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt; global $rencCustom;
 	require(dirname (__FILE__) . '/../lang/rencontre-js-admin-lang.php');
 	wp_localize_script('rencontre', 'rencobjet', $lang);
@@ -1432,7 +1432,7 @@ function rencTabDis() {
 	<?php
 }
 function rencTabMel() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt; global $rencDiv; global $rencCustom;
 	?>
 	
@@ -1524,7 +1524,7 @@ function rencTabMel() {
 	<?php
 }
 function rencTabCsv() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt; global $rencDiv;
 	$a = array();
 	if(!is_dir($rencDiv['basedir'].'/tmp/')) mkdir($rencDiv['basedir'].'/tmp/');
@@ -1595,7 +1595,7 @@ function rencTabCsv() {
 	<?php
 }
 function rencTabPre() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	$hoPre = false;
 	if(has_filter('rencPremiumOptP', 'f_rencPremiumOptP')) $hoPre = apply_filters('rencPremiumOptP', $hoPre);
 	if($hoPre) echo $hoPre;
@@ -2331,7 +2331,7 @@ function rencMenuPrison() {
 }
 //
 function rencMenuProfil() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	wp_enqueue_script('rencontre', plugins_url('rencontre/js/rencontre-adm.js'));
 	wp_enqueue_style('rencontre', plugins_url('rencontre/css/rencontre-adm.css'));
 	require(dirname(__FILE__).'/../lang/rencontre-js-admin-lang.php');
@@ -2582,7 +2582,7 @@ function rencMenuProfil() {
 }
 //
 function rencMenuPays() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	wp_enqueue_script('rencontre', plugins_url('rencontre/js/rencontre-adm.js'));
 	wp_enqueue_style( 'rencontre', plugins_url('rencontre/css/rencontre-adm.css'));
 	require(dirname (__FILE__) . '/../lang/rencontre-js-admin-lang.php');
@@ -2742,7 +2742,7 @@ function rencMenuPays() {
 }
 //
 function rencTabCle() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb; ?>
 	
 	<h2><?php _e('Cleaning missing regions in users data', 'rencontre'); ?></h2>
@@ -2800,7 +2800,7 @@ function rencCountryCleaner() {
 }
 //
 function rencMenuCustom() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	wp_enqueue_script('rencontre', plugins_url('rencontre/js/rencontre-adm.js'));
 	wp_enqueue_style( 'rencontre', plugins_url('rencontre/css/rencontre-adm.css'));
 	global $rencOpt; global $rencDiv; global $rencCustom;
@@ -3000,7 +3000,7 @@ function rencMenuCustom() {
 }
 //
 function rencTabWor() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencCustom; ?>
 	
 	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=wor">
@@ -3132,7 +3132,7 @@ function rencTabWor() {
 }
 //
 function rencTabSea() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencCustom; global $rencDiv; global $wpdb; ?>
 	
 	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=sea">
@@ -3210,7 +3210,7 @@ function rencTabSea() {
 <?php
 }
 function rencTabTem() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	include(dirname(__FILE__).'/rencontre_color.php');
 	global $rencCustom;
 	rencAddCustomW3css(1);
@@ -3579,7 +3579,7 @@ function rencTabTem() {
 // **** AUTRES
 // *****************************************
 function f_update_custom($f) {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt; global $rencCustom;
 	$a = $rencCustom; $relationL = 0; $sexL = 0;
 	if(empty($_GET['renctab'])) {
@@ -3693,7 +3693,7 @@ function sauvProfilAdm($in,$id) {
 	// Copie de la fonction dans rencontre_widget avec POST au lieu de GET
 	// entree : Sauvegarde du profil
 	// sortie bdd : [{"i":10,"v":"Sur une ile deserte avec mon amoureux."},{"i":35,"v":0},{"i":53,"v":[0,4,6]}]
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	$u = "";
 	if($in) foreach($in as $r=>$r1) {
 		switch($r1[0]) {
@@ -3807,7 +3807,7 @@ function sauvProfilAdm($in,$id) {
 function renc_encodeImg($f=1) {
 	// Encode or Decode all img
 	// $f = 1 => encode ; $f = 0 => decode
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencDiv; global $rencOpt;
 	$size = array("","-mini","-grande","-libre");
 	$nocode = array(); // exclusion
@@ -3854,7 +3854,7 @@ function renc_encodeImg($f=1) {
 	update_rencontre_options($rencOpt);
 }
 function rencImEncoded() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $wpdb; global $rencDiv;
 	$i = $wpdb->get_var("SELECT user_id FROM ".$wpdb->prefix."rencontre_users WHERE i_photo>0 LIMIT 1");
 	if($i!==null && file_exists($rencDiv['basedir'].'/portrait/'.floor($i/1000).'/'.Rencontre::f_img(($i*10),1).'.jpg')) return 1;
@@ -3862,7 +3862,7 @@ function rencImEncoded() {
 	else return false; // no image, no member ?
 }
 function renc_list_files($dir) {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	$root = scandir($dir);
 	$result = array();
 	foreach($root as $value) {
@@ -3927,7 +3927,7 @@ function f_newMember() {
 }
 function rencMetaMenu() {
 	// Menu rencontre - Rencontre.php with add_action('admin_init','rencMetaMenu');
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt;
 	if(empty($rencOpt['home'])) return;
 	add_meta_box(
@@ -3955,7 +3955,7 @@ function rencMetaMenu() {
 	}
 }
 function rencMetaMenuContent() {
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt;
 	$o = '<div id="posttype-rencontre" class="posttypediv">';
 	$o .= '<div id="tabs-panel-rencontre" class="tabs-panel tabs-panel-active">';
@@ -4002,7 +4002,7 @@ function rencMetaMenuContent() {
 }
 function rencSaveCollation() {
 	// Check and save the Collation of the tables users and rencontre_msg
-	if(!is_admin()) die;
+	if(!current_user_can("administrator")) die;
 	global $rencOpt; global $wpdb;
 	$s = $wpdb->get_results("SHOW TABLE STATUS LIKE '".$wpdb->prefix."rencontre_msg'");
 	if(isset($s[0]->Collation)) {
