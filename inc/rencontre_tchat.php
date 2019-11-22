@@ -1,15 +1,18 @@
 <?php
 // ******************************************************************************************************************
 // Fichier d'appel AJAX en boucle courte pour le tchat. Beaucoup plus rapide que le passage par admin-ajax.php
+// Pilote : rencontre.js
 // ******************************************************************************************************************
 //
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])!='xmlhttprequest') {die;} // ajax request
 if(isset($_POST['tchat'])) {
+	session_start();
+	if(empty($_POST['rencTok']) || empty($_SESSION['rencTok']) || empty($_SESSION['rencTokt']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-86400) die; // 24 hours
 	$tc = preg_replace("/[^a-z]+/i", "", $_POST['tchat']);
 	if(isset($_POST['fm'])) $fm = intval($_POST['fm']);
 	if(isset($_POST['to'])) $to = intval($_POST['to']);
-	if(isset($_POST['msg'])) $ms = strip_tags($_POST['msg']);
-	if(isset($_POST['d'])) $base = strip_tags($_POST['d']).'/';
+	if(isset($_POST['msg'])) $ms = strip_tags(trim($_POST['msg']));
+	if(isset($_POST['d'])) $base = filter_var(strip_tags($_POST['d']),FILTER_SANITIZE_URL).'/';
 	else $base = '../../../uploads/';
 	$d = $base.'tchat/';
 	switch($tc) {
@@ -20,7 +23,6 @@ if(isset($_POST['tchat'])) {
 			echo null;
 		}
 		else if(filesize($d.$fm.'.txt')==0) {
-			session_start();
 			if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
 			$t = fopen($base.'session/'.$fm.'.txt', 'w'); fclose($t); // Refresh session
 			echo null;
@@ -42,7 +44,6 @@ if(isset($_POST['tchat'])) {
 		// ********************************************************************************************
 		case 'tchatDebut': // mon ID dans les deux txt
 		if(filesize($d.$fm.'.txt')===0 && filesize($d.$to.'.txt')===0) {
-			session_start();  // active session cote demandeur
 			$_SESSION["tchat"] = $to;
 			$t = fopen($d.$fm.'.txt', 'wb'); fwrite($t,'['.$fm.']',15); fclose($t);
 			$t = fopen($d.$to.'.txt', 'wb'); fwrite($t,'['.$fm.']',15); fclose($t);
@@ -52,7 +53,6 @@ if(isset($_POST['tchat'])) {
 		// ********************************************************************************************
 		case 'tchatFin':  // vide les deux txt
 		if(filesize($d.$fm.'.txt')>0) {
-			session_start();
 			if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
 			$t = fopen($d.$to.'.txt', 'w'); fclose($t);
 			$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
@@ -61,7 +61,6 @@ if(isset($_POST['tchat'])) {
 		break;
 		// ********************************************************************************************
 		case 'tchatOk': // accepte le tchat - mon ID dans txt du demandeur
-		session_start(); // active session cote invite
 		$_SESSION["tchat"] = $to;
 		$t = fopen($base.'session/'.$fm.'.txt', 'w'); fclose($t);
 		$t = fopen($d.$to.'.txt', 'wb'); fwrite($t,'['.$fm.']-',15); fclose($t); // '-' pour > size (scrute)

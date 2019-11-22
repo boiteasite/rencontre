@@ -26,15 +26,14 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 //add_filter ('retrieve_password_message', 'retrieve_password_message2', 10, 2);
 // AJAX
 add_action('wp_ajax_regionBDD', 'f_regionBDD'); // AJAX - retour des regions dans le select
-add_action('wp_ajax_sourire', 'f_sourire'); function f_sourire() {}
-add_action('wp_ajax_voirMsg', 'f_voirMsg'); function f_voirMsg() {RencontreWidget::f_voirMsg($_POST['msg'],$_POST['alias'],(isset($_POST['ho'])?$_POST['ho']:false));}
+add_action('wp_ajax_voirMsg', 'f_voirMsg'); function f_voirMsg() {RencontreWidget::f_voirMsg(rencSanit($_POST['idmsg'],'int'),rencSanit($_POST['alias'],'words'),(isset($_POST['ho'])?rencSanit($_POST['ho'],'int'):false));}
 add_action('wp_ajax_testPass', 'rencTestPass'); // changement du mot de passe
 add_action('wp_ajax_fbok', 'rencFbok'); add_action('wp_ajax_nopriv_fbok', 'rencFbok'); // connexion via FB
-add_action('wp_ajax_miniPortrait2', 'f_miniPortrait2'); function f_miniPortrait2() {RencontreWidget::f_miniPortrait2(intval($_POST['id']));}
-add_action('wp_ajax_fastregMail', 'f_fastregMail'); function f_fastregMail() {$u = wp_get_current_user(); rencFastreg_email($u,1);}
+add_action('wp_ajax_miniPortrait2', 'f_miniPortrait2'); function f_miniPortrait2() {RencontreWidget::f_miniPortrait2(rencSanit($_POST['id'],'int'));}
+add_action('wp_ajax_fastregMail', 'f_fastregMail'); function f_fastregMail() {if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return; $u = wp_get_current_user(); rencFastreg_email($u,1);}
 //add_action('wp_ajax_addCountSearch', 'f_addCountSearch'); // +1 dans action search si meme jour
 add_action('wp_ajax_gpsnavigator', 'rencGpsNavigator');
-if(is_admin()) {
+if(is_admin()) { // Check for an administrative interface page
 	add_action('wp_ajax_iso', 'rencontreIso'); // Test si le code ISO est libre (Partie ADMIN)
 	add_action('wp_ajax_drap', 'rencontreDrap'); // SELECT avec la liste des fichiers drapeaux (Partie ADMIN)
 	add_action('wp_ajax_exportCsv', 'f_exportCsv'); // Export CSV (Partie ADMIN)
@@ -876,6 +875,79 @@ function rencMailBox($u,$rencDrap,$oo,$ii) {
 	$o = preg_replace('/^\s+|\n|\r|\s+$/m', '', $o); // remove line break
 	return $o;
 }
+function rencSanit($f,$g) {
+	// Sanitize / Validate POST && GET datas
+	$a = '';
+	switch($g) {
+		case 'int': // AGE, YEAR, MONTH, DAY, SIZE, SEX, RELATION...
+			$a = intval($f);
+			break;
+
+		case 'num': // GPS, ROTATE
+			$a = trim($f);
+			$a = filter_var($a, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+			break;
+			
+		case 'numplus': // ZSEX
+			$a = trim($f);
+			$a = preg_replace("/[^0-9,.: ()-]/","", $a); // (1,87.5,108,2018-04-01 17:06:31,45)
+			break;
+			
+		case 'date': // DATE
+			$a = trim($f);
+			$a = substr(preg_replace("/[^0-9: -]/","", $a),0,19); // date or datetime 2018-04-01 17:06:31
+			break;
+			
+		case 'AZ': // COUNTRY
+			$a = trim($f);
+			$a = preg_replace("/[^A-Z]/","", $a);
+			break;
+			
+		case 'alphanum': // RENC, RENCIDFM, ID, PROFILQS, NOUVEAU, A1, OBJ, REGION (search)
+			$a = trim($f);
+			$a = preg_replace("/[^a-zA-Z0-9]/","", $a); // AZaz09 allowed only
+			break;
+			
+		case 'words': // DISPLAY_NAME, CITY, REGION (set)
+			$n = array('"','(',')','{','}','[',']','<','>','|','+','=','?',';','`','*','@');
+			$a = str_replace($n,"",$f);
+			$a = sanitize_text_field($a);
+			break;
+			
+		case 'text': // 
+			$a = sanitize_text_field($f);
+			$a = preg_replace("/\s+/", " ",$a); // multiple spaces & lines break
+			break;
+			
+		case 'para': // CONTENU, MSG, ANNONCE, PROFIL (area),
+			$a = sanitize_textarea_field($f);
+			$a = preg_replace("/[\r\n]+/","\n", $a); // multiples lines break
+			$a = preg_replace("/[[:blank:]]+/"," ", $a); // multiple spaces
+			break;
+			
+		case 'b64': // RENCOO, RENCII
+			$a = preg_match("%^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$%", $f);
+			if($a) $a = $f;
+			break;
+			
+		case 'pipe': // pipe separation text && url && location
+			$a = sanitize_text_field($f);
+			break;
+			
+		case 'img': // pipe separation with img stream (Facebook) or int
+			if(preg_match("/^[1-9][0-9]*$/", $f) && strlen($f)<12) $a = intval($f);
+			else if(strpos($f,'|')!==false) $a = $f; // IMG Stream => sanit after
+			else $a = '';
+			break;
+			
+		case 'mel':
+			$a = filter_var($f,FILTER_VALIDATE_EMAIL);
+			if($a) $a = sanitize_email($f);
+			if($a!=$f) $a = '';
+			break;
+	}
+	return $a;
+}
 //
 function rencCssJs() {
 	global $post;
@@ -982,7 +1054,7 @@ function rencLogRedir($to,$req,$u) {
 }
 //
 function rencMetaMenuItem($menu) {
-	if(is_admin()) return $menu;
+	if(current_user_can("administrator")) return $menu;
 	if($menu->url=='#rencloginout#') { // URL in metaMenu Rencontre : base.php
 		if(is_user_logged_in()) {
 			$menu->url = wp_logout_url(get_permalink());
@@ -1055,9 +1127,11 @@ function rencPreventAdminAccess() {
 function rencAdminBar($content) {
 	return(current_user_can("edit_posts") || current_user_can("bbp_moderator"))?$content:false;
 }
-function f_regionBDD() { 
+function f_regionBDD() {
+	// AJAX fields update
+	if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return;
 	global $wpdb; 
-	$iso = substr($_POST['pays'],0,2);
+	$iso = rencSanit($_POST['pays'],'AZ');
 	$b = 0;
 	if(function_exists('wpGeonames_shortcode')) {
 		$q = $wpdb->get_results("SELECT
@@ -1097,10 +1171,11 @@ function f_regionBDD() {
 }
 //
 function rencTestPass() { // modif compte uniquement
+	if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return;
 	global $wpdb;
-	$id = intval($_POST['id']);
-	$nouv = filter_var($_POST['nouv'],FILTER_SANITIZE_STRING);
-	$pass = filter_var($_POST['pass'],FILTER_SANITIZE_STRING);
+	$id = rencSanit($_POST['id'],'int');
+	$nouv = rencSanit($_POST['nouv'],'text');
+	$pass = rencSanit($_POST['pass'],'text');
 	$q = $wpdb->get_var("SELECT user_pass FROM ".$wpdb->base_prefix."users WHERE ID='".$id."' LIMIT 1");
 	if(wp_check_password($pass,$q,$id)) {
 		wp_set_password($nouv,$id); // changement MdP
@@ -1111,17 +1186,18 @@ function rencTestPass() { // modif compte uniquement
 }
 //
 function rencFbok() { // Facebook connect
+	if(empty($_POST['rencTokfb']) || $_SESSION['rencTokfb']!=$_POST['rencTokfb'] || $_SESSION['rencTokfbt']<time()-1800) return;
 	if(!is_user_logged_in()) {
 		$_SESSION['rencFB']="1";
 		$m = $_POST['fb'];
-		if(isset($m['first_name']) && isset($m['email']) && filter_var($m['email'],FILTER_VALIDATE_EMAIL) && isset($m['id'])) {
+		if(isset($m['first_name']) && isset($m['email']) && rencSanit($m['email'],'mel') && isset($m['id'])) {
 			global $wpdb;
 			$u = $wpdb->get_var("SELECT
 					user_login
 				FROM
 					".$wpdb->base_prefix."users
 				WHERE
-					user_email='".filter_var($m['email'],FILTER_VALIDATE_EMAIL)."'
+					user_email='".rencSanit($m['email'],'mel')."'
 				LIMIT 1");
 			if(!$u) { // unknow email => create user
 				$u = rencFbokName($m['first_name'],substr($m['id'],5,4)); // get available login
@@ -1159,16 +1235,17 @@ function f_addCountSearch() {
 }
 //
 function rencontreIso() {
-	if($_POST && isset($_POST['iso'])) {
+	if(isset($_POST['iso'])) {
+		$Piso = rencSanit($_POST['iso'],'AZ');
 		global $wpdb;
-		$q = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_iso='".substr($_POST['iso'],0,2)."' and c_liste_categ='p' LIMIT 1");
+		$q = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_iso='".substr($Piso,0,2)."' and c_liste_categ='p' LIMIT 1");
 		if(!$q) echo true;
 		else echo false;
 	}
 }
 //
 function rencontreDrap() {
-	if($_POST && isset($_POST['action']) && $_POST['action']=='drap') {
+	if(isset($_POST['action']) && $_POST['action']==='drap') {
 		if($dh=opendir(dirname(__FILE__).'/../images/drapeaux/')) {
 			$tab = array();
 			while(($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[]=$file; }
@@ -1182,7 +1259,7 @@ function rencontreDrap() {
 function f_userSupp($f,$a,$b) { // rencontre.php - in action 'widget_init' - base.php
 	// return ID
 	f_suppImgAll($f);
-	if(!is_admin()) wp_logout();
+	if(!current_user_can("administrator")) wp_logout();
 	global $wpdb; global $rencOpt;
 	$ip = 0;
 	if($b) { // prison
@@ -1211,7 +1288,7 @@ function f_userSupp($f,$a,$b) { // rencontre.php - in action 'widget_init' - bas
 		wp_delete_user($f);
 	}
 	if(has_filter('rencUserDel')) apply_filters('rencUserDel', $f);
-	if(!is_admin()) { wp_redirect(home_url()); exit; }
+	if(!current_user_can("administrator")) { wp_redirect(home_url()); exit; }
 	if(!empty($q->user_email)) return $q->user_email; // Admin deletion
 }
 //
@@ -1291,25 +1368,26 @@ function rencAvatar($avatar, $id_or_email, $size, $default, $alt) {
 }
 //
 function rencGpsNavigator() {
+	if(!session_id()) session_start(); // not needed but ...
+	if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return;
 	global $wpdb; global $current_user;
 	if(!empty($_POST['lat']) && !empty($current_user->ID)) {
-		$lat = round(floatval(filter_var($_POST['lat'], FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION)),5);
-		$lon = round(floatval(filter_var($_POST['lon'], FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION)),5);
-		$acc = intval($_POST['acc']);
-		$opt = intval($_POST['opt']);
+		$lat = round(floatval(rencSanit($_POST['lat'],'num')),5);
+		$lon = round(floatval(rencSanit($_POST['lon'],'num')),5);
+		$acc = rencSanit($_POST['acc'],'int');
+		$opt = rencSanit($_POST['opt'],'int');
 		if($opt==1 || $opt>$acc) $wpdb->update($wpdb->prefix.'rencontre_users', array('e_lat'=>$lat,'e_lon'=>$lon), array('user_id'=>$current_user->ID));
-		if(!session_id()) session_start(); // not needed but ...
 		$_SESSION['gps'] = 1;
 	}
 }
 //
 function rencFastreg_form() {
 	global $rencCustom; global $rencOpt;
-	$zsex = (!empty($_POST['zsex']))?esc_attr(wp_unslash(trim($_POST['zsex']))):'';
-	$pssw = (!empty($_POST['pssw']))?esc_attr(wp_unslash(trim($_POST['pssw']))):'';
+	$Pzsex = (!empty($_POST['zsex']))?rencSanit($_POST['zsex'],'int'):'';
+	$Ppssw = (!empty($_POST['pssw']))?rencSanit($_POST['pssw'],'text'):'';
 	$o = '<p>';
 	$o .= '<label for="pssw">'.__('Password').'<br />';
-	$o .= '<input type="password" name="pssw" id="pssw" class="input" value="'.$pssw.'" size="25" /></label>';
+	$o .= '<input type="password" name="pssw" id="pssw" class="input" value="'.$Ppssw.'" size="25" /></label>';
 	$o .= '</p>';
 	if(!empty($rencOpt['disnam'])) {
 		$o .= '<p><label for="dname">'.__('My name','rencontre').'<br />';
@@ -1319,14 +1397,15 @@ function rencFastreg_form() {
 	$o .= '<p class="pzsex>';
 	$o .= '<label for="zsex">'.__('I\'m looking for','rencontre').'<br />';
 	$o .= '<select name="zsex">';
-	for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) $o .= '<option value="'.$v.'" '.($v==$zsex?'selected':'').'>'.$rencOpt['iam'][$v].'</option>';
+	for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) $o .= '<option value="'.$v.'" '.($v==$Pzsex?'selected':'').'>'.$rencOpt['iam'][$v].'</option>';
 	$o .= '</select>';
 	$o .= '</p><br />';
 	echo $o;
 }
 function rencFastreg_errors($errors, $sanitized_user_login, $user_email) {
 	global $wpdb;
-	if(empty($_POST['pssw']) || strlen(trim($_POST['pssw']))<6) {
+	$Ppssw = (!empty($_POST['pssw']))?rencSanit($_POST['pssw'],'text'):'';
+	if(strlen($Ppssw)<6) {
 		$errors->add('pssw_error', __('<strong>ERROR</strong>: Invalid password (6 characters min).', 'rencontre'));
 	}
 	$q1 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_prison WHERE c_mail='".$user_email."' LIMIT 1"); // email in jail ?
@@ -1346,14 +1425,17 @@ function rencFastreg_errors($errors, $sanitized_user_login, $user_email) {
 function rencFastreg($user_id) {
 	global $wpdb; global $rencOpt; global $rencDiv;
 	// 1. Prepare element for connection
+	$Ppssw = (!empty($_POST['pssw']))?rencSanit($_POST['pssw'],'text'):'';
+	$Pzsex = (!empty($_POST['zsex']))?rencSanit($_POST['zsex'],'int'):'';
+	$Pdname = (!empty($_POST['dname']))?rencSanit($_POST['dname'],'words'):'';
 	$u = get_user_by('id', $user_id);
 	$oo = ''; $ii = '';
 	if(function_exists('openssl_encrypt')) {
 		$iv = openssl_random_pseudo_bytes(16);
 		$ii = base64_encode($iv);
-		$oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|z'.$_POST['pssw'].'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
+		$oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|z'.$Ppssw.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
 	}
-	if(!empty($_POST['dname']) && strip_tags($_POST['dname'])!=$u->user_login && strlen(strip_tags($_POST['dname']))>2) wp_update_user(array('ID'=>$user_id, 'display_name'=>substr(filter_var($_POST['dname'],FILTER_SANITIZE_STRING),0,30)));
+	if($Pdname!=$u->user_login && strlen($Pdname)>2) wp_update_user(array('ID'=>$user_id, 'display_name'=>substr($Pdname,0,30)));
 	// 2. Creation in Rencontre
 	$wpdb->delete($wpdb->prefix.'rencontre_users', array('user_id'=>$user_id)); // suppression si existe deja
 	$wpdb->delete($wpdb->prefix.'rencontre_users_profil', array('user_id'=>$user_id)); // suppression si existe deja
@@ -1362,7 +1444,7 @@ function rencFastreg($user_id) {
 		'c_ip'=>($_SERVER['REMOTE_ADDR']?$_SERVER['REMOTE_ADDR']:'127.0.0.1'),
 		'c_pays'=>(isset($rencOpt['pays'])?$rencOpt['pays']:'FR'), // default - custom no localisation
 		'i_sex'=>98, // code for this case
-		'i_zsex'=>intval($_POST['zsex']),
+		'i_zsex'=>$Pzsex,
 		'c_zsex'=>',',
 		'd_session'=>current_time("mysql"),
 		'i_photo'=>0,
@@ -1410,7 +1492,7 @@ function rencFastreg_email($u,$other=0) {
 }
 function rencistatus($f,$g) {
 	// $f : i_status value
-	// $g : capability - 0=>blocked (1, 3, 5, 7...) , 1=>mail blocked (2, 3, 6, 7...) , 2=>fastreg not completed (4, 5, 6, 7) , 3=> ...
+	// $g : capability - 0=>blocked , 1=>mail blocked , 2=>fastreg not completed , 3=> ... - Like RW on linux (3 = 1+2)
 	$a = "00000000".decbin($f);
 	if(strlen($a)<$g+1 || $g>7) return false;
 	else if(substr($a,(-1-$g),1)=='1') return 1;
@@ -1432,7 +1514,7 @@ function renc_wpGeonames_tpl() {
 }
 function renc_ajax_geoDataRegionHook() {
 	global $wpdb;
-	$iso = substr(strip_tags($_POST['country']),0,2);
+	$iso = substr(rencSanit($_POST['country'],'AZ'),0,2);
 	$result = array();
 	if($iso) {
 		$a = "admin1_code"; $b = "ADM1";
@@ -1476,9 +1558,9 @@ function renc_ajax_geoDataRegionHook() {
 }
 function renc_ajax_rencGeoDataCity() {
 	global $wpdb;
-	$iso = substr(strip_tags($_POST['country']),0,2);
-	$reg = str_replace('"','',filter_var($_POST['region'],FILTER_SANITIZE_STRING));
-	$cit = str_replace('"','',filter_var($_POST['city'],FILTER_SANITIZE_STRING));
+	$iso = substr(rencSanit($_POST['country'],'AZ'),0,2);
+	$reg = rencSanit($_POST['region'],'words'); // STRING NAME IN GEONAME DB
+	$cit = rencSanit($_POST['city'],'words'); // STRING NAME IN GEONAME DB
 	$result = array();
 	if($iso) {
 		$idreg = $wpdb->get_var("SELECT admin1_code FROM ".$wpdb->base_prefix."geonames WHERE name LIKE '".$reg."' and feature_class='A' and feature_code='ADM1' LIMIT 1");

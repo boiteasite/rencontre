@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.1.1
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
  * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert
  * Filter : do_action('rencontre_account', $f, $g) - see below
@@ -70,8 +70,10 @@
 								<label><?php _e('I am','rencontre');?></label>
 								<select name="sex" class="w3-select w3-border w3-renc-sebg">
 								<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
+									<?php if(empty($rencCustom['blksex']) || $blksex==$v || $blksex===false) { ?>
 								
 									<option value="<?php echo $v; ?>"<?php if($u0->i_sex==$v) echo ' selected'; ?>><?php echo $rencOpt['iam'][$v]; ?></option>
+									<?php } ?>
 								<?php } ?>
 								
 								</select>
@@ -205,8 +207,10 @@
 							
 								<div>
 								<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
+									<?php if(empty($rencCustom['hetero']) || $hetero!=$v) { ?>
 
 									<input type="checkbox" class="rencLabelauty" name="zsex[]" value="<?php echo $v; ?>" <?php if(strpos($u0->c_zsex,','.$v.',')!==false) echo 'checked'; ?> data-labelauty="<?php echo $rencOpt['iam'][$v]; ?>" />
+									<?php } ?>
 								<?php } ?>
 								</div>
 								

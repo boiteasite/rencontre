@@ -1191,6 +1191,7 @@ function rencMenuGeneral() {
 						</select>
 					</td>
 				</tr>
+				<?php $oldzz = __('Framework for the Facebook Like button', 'rencontre'); ?>
 				<tr valign="top">
 					<th scope="row"><label><?php _e('Do not remove WP roles', 'rencontre'); ?><strong style="color:#500"> *</strong></label></th>
 					<td><input type="checkbox" name="rol" value="1" <?php if(!empty($rencOpt['rol'])) echo 'checked'; ?> onClick="document.getElementById('blocRolu').style.display=((this.checked==true)?'table-row':'none')"></td>
@@ -2981,6 +2982,10 @@ function rencMenuCustom() {
 					<td><input type="checkbox" name="hetero" value="1" <?php if(isset($rencCustom['hetero']))echo 'checked'; ?>></td>
 				</tr>
 				<tr valign="top">
+					<th scope="row"><label><?php _e('No sex change', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="blksex" value="1" <?php if(isset($rencCustom['blksex']))echo 'checked'; ?>></td>
+				</tr>
+				<tr valign="top">
 					<th scope="row"><label><?php echo __('Change register link on click a portrait', 'rencontre').'<br /><i>'.__('(empty => default WP)', 'rencontre').'</i>'; ?></label></th>
 					<td><input type="text" name="reglink" style="width:400px;" value="<?php if(isset($rencCustom['reglink']) && $rencCustom['reglink']) echo $rencCustom['reglink']; else echo $rencDiv['siteurl'].'/wp-login.php?action=register'; ?>" /></td>
 				</tr>
@@ -3606,6 +3611,7 @@ function f_update_custom($f) {
 		if(isset($f['sex'])) $a['sex'] = $f['sex']; else unset($a['sex']);
 		if(isset($f['multiSR'])) $a['multiSR'] = $f['multiSR']; else unset($a['multiSR']);
 		if(isset($f['hetero'])) $a['hetero'] = $f['hetero']; else unset($a['hetero']);
+		if(isset($f['blksex'])) $a['blksex'] = $f['blksex']; else unset($a['blksex']);
 		if(isset($f['reglink'])) $a['reglink'] = $f['reglink']; else unset($a['reglink']);
 		if(isset($f['unmail'])) $a['unmail'] = $f['unmail']; else unset($a['unmail']);
 		foreach($f as $k=>$v) {

@@ -1,9 +1,11 @@
 <?php
-	if(isset($_POST['d'])) $d = strip_tags($_POST['d']);
+	if(isset($_POST['d'])) $d = filter_var(strip_tags($_POST['d']),FILTER_SANITIZE_URL);
 	else $d = '../../../uploads/tmp/';
+	$n = preg_replace("/[^a-z0-9_\.]/", "", strtolower($_FILES['fileCsv']['name']));
+	$t = preg_replace("/[^-+*.a-z0-9\/]/", "", strtolower($_FILES['fileCsv']['type']));
 	$s = 0;
-	$ext = substr(basename($_FILES['fileCsv']['name']), strrpos(basename($_FILES['fileCsv']['name']),'.')+1);
-	if(($ext=='csv' || $ext=='CSV') && strpos($_FILES['fileCsv']['type'],'php')==false && strpos($_FILES['fileCsv']['type'],'PHP')===false && @move_uploaded_file($_FILES['fileCsv']['tmp_name'],$d.'import_rencontre.csv')) {
+	$ext = substr(basename($n), strrpos(basename($n),'.')+1);
+	if($ext=='csv' && strpos($t,'php')===false && @move_uploaded_file($_FILES['fileCsv']['tmp_name'],$d.'import_rencontre.csv')) {
 		$s = 1;
 		chmod($d.'import_rencontre.csv',0644);
 	}

@@ -293,7 +293,7 @@ function f_renc_menu(f,i,c){
 function f_gpsNavigator(g,h){
 	if(navigator.geolocation){
 		navigator.geolocation.getCurrentPosition(function(f){
-			jQuery.post(g,{'action':'gpsnavigator','lat':f.coords.latitude,'lon':f.coords.longitude,'acc':f.coords.accuracy,'opt':h});
+			jQuery.post(g,{'action':'gpsnavigator','lat':f.coords.latitude,'lon':f.coords.longitude,'acc':f.coords.accuracy,'opt':h,'rencTok':rencTok});
 			if(document.getElementById('gps')!==null)document.getElementById('gps').value=f.coords.latitude+'|'+f.coords.longitude;
 		},function error(err){});
 	}
@@ -301,27 +301,47 @@ function f_gpsNavigator(g,h){
 function f_region_select(f,g,x){
 	jQuery(document).ready(function(){
 		jQuery('#'+x).empty();
-		jQuery.post(g,{'action':'regionBDD','pays':f},function(r){
+		jQuery.post(g,{'action':'regionBDD','pays':f,'rencTok':rencTok},function(r){
 			jQuery('#'+x).append(r);
-		});
-	});
-}
-function f_ajax_sourire(f,g){
-	jQuery(document).ready(function(){
-		jQuery.post(g,{'action':'sourire','to':f},function(r){
-			jQuery('#infoChange').append(r);
-			window.setTimeout('document.getElementById("infoChange").innerHTML=""',((typeof rencInfochange!=='undefined')?rencInfochange:3000));
 		});
 	});
 }
 function f_voir_msg(f,g,h,ho){
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'action':'voirMsg','msg':f,'alias':h,'ho':ho},function(r){
+		jQuery.post(g,{'action':'voirMsg','idmsg':f,'alias':h,'ho':ho,'rencTok':rencTok},function(r){
 			jQuery('#rencMsg').empty();
 			jQuery('#rencMsg').append(r.substring(0,r.length-1));
 		});
 	});
 }
+function f_password(f0,f1,f2,f,g){
+	if(f1.length<6)return;
+	if(f1!=f2)jQuery('#rencAlertPass').html(rencobjet.nouv_pass_diff).show(0).delay(5000).hide(0);
+	else{
+		if(document.getElementById('buttonPass')!==null)document.getElementById('buttonPass').style.visibility="hidden";
+		jQuery.post(g,{'action':'testPass','id':f,'pass':f0,'nouv':f1,'rencTok':rencTok},function(r){
+			if(r!=0){
+				d=document.forms['formPass'];
+				d.elements['renc'].value='paswd';
+				d.elements['id'].value=f;
+				d.submit();
+			}
+			else{
+				jQuery('#rencAlertPass').html(rencobjet.pass_init_faux+r.substring(0,r.length-1)).show(0).delay(5000).hide(0);
+				if(document.getElementById('buttonPass')!==null)document.getElementById('buttonPass').style.visibility="visible";
+			}
+		});
+	}
+}
+function f_fastregMail(g){
+	jQuery.post(g,{'action':'fastregMail','rencTok':rencTok},function(r){
+		if(r){
+			document.cookie="rencfastregMail=oui";
+			jQuery('#rencAlertEmail').html(r.substring(0,r.length-1)).show(0).delay(5000).hide(0);
+		}
+	});
+}
+//
 function f_nouveau(f,g,e){
 	var a=0,d=0,c=document.forms['formNouveau'],b=c.elements,v;
 	if(e==0){
@@ -368,32 +388,6 @@ function f_nouveau(f,g,e){
 	}
 	else jQuery('#rencAlert').html(a+' '+rencobjet.champs_incomplets).show(0).delay(5000).hide(0);
 }
-function f_password(f0,f1,f2,f,g){
-	if(f1.length<6)return;
-	if(f1!=f2)jQuery('#rencAlertPass').html(rencobjet.nouv_pass_diff).show(0).delay(5000).hide(0);
-	else{
-		if(document.getElementById('buttonPass')!==null)document.getElementById('buttonPass').style.visibility="hidden";
-		jQuery.post(g,{'action':'testPass','id':f,'pass':f0,'nouv':f1},function(r){
-			if(r!=0){
-				d=document.forms['formPass'];
-				d.elements['renc'].value='paswd';
-				d.elements['id'].value=f;
-				d.submit();
-			}
-			else{
-				jQuery('#rencAlertPass').html(rencobjet.pass_init_faux+r.substring(0,r.length-1)).show(0).delay(5000).hide(0);
-				if(document.getElementById('buttonPass')!==null)document.getElementById('buttonPass').style.visibility="visible";
-			}
-		});
-	}
-}
-//
-function f_fastregMail(g){
-	jQuery.post(g,{'action':'fastregMail'},function(r){
-		document.cookie="rencfastregMail=oui";
-		jQuery('#rencAlertEmail').html(r.substring(0,r.length-1)).show(0).delay(5000).hide(0);
-	});
-}
 /* Tchat */
 function f_bip(){
 	at={
@@ -431,13 +425,13 @@ function f_emot(f){
 	return f;
 }
 function f_tchat_off_session(){
-	jQuery.post(rencobjet.ajaxchat,{'tchat':'session','fm':rencobjet.mid,'d':rencBasedir});
+	jQuery.post(rencobjet.ajaxchat,{'tchat':'session','fm':rencobjet.mid,'d':rencBasedir,'rencTok':rencTok});
 }
 function f_tchat_veille(s,p){
 	if(!s)s='';
 	if(p)rencName=p;
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatVeille','fm':rencobjet.mid,'d':rencBasedir},function(r){
+		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatVeille','fm':rencobjet.mid,'d':rencBasedir,'rencTok':rencTok},function(r){
 			if(r){
 				clearInterval(rencVeil);
 				if(r==s)f_tchat_ok(rencobjet.mid,r,rencobjet.ajaxchat);
@@ -467,7 +461,9 @@ function f_tchat(f,t,g,p,s){
 	});
 	jQuery("#rcInput").keypress(function(e){
 		if(e.which==13&&jQuery(this).val()){
-			f_tchat_envoi(f,t,jQuery(this).val(),g);
+			var h=jQuery(this).val();
+			h=jQuery('<p>'+h+'</p>').text();
+			f_tchat_envoi(f,t,h,g);
 			jQuery(this).val('');
 		}
 	});
@@ -496,7 +492,7 @@ function f_tchat(f,t,g,p,s){
 }
 function f_tchat_debut(f,t,g){
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatDebut','fm':f,'to':t,'d':rencBasedir},function(r){
+		jQuery.post(g,{'tchat':'tchatDebut','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
 			rencScrut=setInterval(function(){
 				f_tchat_scrute(f,t,g);
 			},2023);
@@ -506,7 +502,7 @@ function f_tchat_debut(f,t,g){
 function f_tchat_scrute(f,t,g){
 	jQuery(document).ready(function(){
 		if(!jQuery("#rcInput").hasClass('w3-hide')){
-			jQuery.post(g,{'tchat':'tchatScrute','fm':f,'to':t,'d':rencBasedir},function(r){
+			jQuery.post(g,{'tchat':'tchatScrute','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
 				if(r=='::'+f+'::')f_tchat_off();
 				else if(r){
 					if(jQuery("#rcInput").prop('disabled'))f_tchat_on();
@@ -520,7 +516,7 @@ function f_tchat_dem(f,t){
 	jQuery("#rcClose").click(function(){f_tchat_fin(f,t,rencobjet.ajaxchat);});
 	jQuery("#rcContent").empty().append('<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+rencobjet.demande_tchat+'&nbsp;:&nbsp;</div><div class="w3-col s2 m3">&nbsp;</div></div>');
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.wpajax,{'action':'miniPortrait2','id':t},function(r){
+		jQuery.post(rencobjet.wpajax,{'action':'miniPortrait2','id':t,'rencTok':rencTok},function(r){
 			r=r.split('|');
 			rencName=r[0];
 			jQuery("#rcContent").append(r[1].substring(0,r[1].length-1));
@@ -539,7 +535,7 @@ function f_tchat_dem_veille(s,p){
 	if(!s)s='';
 	if(p)rencName=p;
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatDemVeille','fm':rencobjet.mid,'d':rencBasedir},function(r){
+		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatDemVeille','fm':rencobjet.mid,'d':rencBasedir,'rencTok':rencTok},function(r){
 			if(r==1){
 				clearInterval(rencDVeil);
 				jQuery("#rcContent").empty();
@@ -551,7 +547,7 @@ function f_tchat_dem_veille(s,p){
 function f_tchat_ok(f,t,g){
 	clearInterval(rencDVeil);
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatOk','fm':f,'to':t,'d':rencBasedir},function(r){
+		jQuery.post(g,{'tchat':'tchatOk','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
 			f_tchat(f,t,g,0,rencName);
 			jQuery("#rcContent").empty();
 			jQuery("#rcInput").prop("disabled",false);
@@ -575,7 +571,7 @@ function f_tchat_off(){
 }
 function f_tchat_envoi(f,t,h,g){
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatEnvoi','fm':f,'to':t,'msg':h,'d':rencBasedir},function(r){
+		jQuery.post(g,{'tchat':'tchatEnvoi','fm':f,'to':t,'msg':h,'d':rencBasedir,'rencTok':rencTok},function(r){
 			f_tchat_actualise(h,r,f,t);
 		});
 	});
@@ -598,17 +594,7 @@ function f_tchat_actualise(h,r,f,t){
 								}
 								else webcam(f,t);
 							});
-					/*		if(document.getElementById('rencCam')===null){
-								var a=document.getElementById('rencChat'),b=document.createElement("div");
-								b.id="rencCam2";
-								b.className="rencCam2";
-								a.parentNode.insertBefore(b,a.nextSibling);
-								b=document.createElement("div");
-								b.id="rencCam";
-								b.className="rencCam";
-								a.parentNode.insertBefore(b,a.nextSibling);
-							}
-					*/	}
+						}
 					}
 					var fbip=f_bip();
 					a='<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+'<b>'+rencName+'</b><br />'+r1[v]+'</div><div class="w3-col s2 m3">&nbsp;</div></div>';
@@ -629,7 +615,7 @@ function f_tchat_actualise(h,r,f,t){
 function f_tchat_fin(f,t,g){
 	jQuery(document).ready(function(){
 		clearInterval(rencScrut);clearInterval(rencDVeil);
-		jQuery.post(g,{'tchat':'tchatFin','fm':f,'to':t,'d':rencBasedir},function(r){
+		jQuery.post(g,{'tchat':'tchatFin','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
 			rencVeil=setInterval(f_tchat_veille,5111);
 		});
 		jQuery("#rencChat").addClass('w3-hide');
@@ -696,7 +682,7 @@ function saveCam(){
 		x.setRequestHeader('Content-Type',"application/x-www-form-urlencoded; charset=UTF-8");
 		x.setRequestHeader("X-Requested-With","XMLHttpRequest");
 		x.onreadystatechange=function(){if(x.readyState==4)rencSave=1;};
-		x.send("tchat=cam&id="+rencMoi+"&image="+i+"&d="+rencBasedir);
+		x.send("tchat=cam&id="+rencMoi+"&image="+i+"&d="+rencBasedir+"&rencTok="+rencTok);
 	}
 }
 function stream_cam(){

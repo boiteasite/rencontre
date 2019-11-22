@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
 Requires at least: 4.3
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 5.5
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -370,6 +370,12 @@ It's better to limit the data size.
 * Fix SQL injection & XSS vulnerability - Thanks to Sathish Kumar
 * Add imgQuality value in rencNumber hook : user images JPG quality. Default 75.
 * Fix message deletion issue.
+
+22/11/2019 : 3.2.3
+
+* Improve security in front-office part.
+* Add 'no sex change' option.
+* Remove ajax_sourire.
 
 = 3.1 =
 15/03/2019
