@@ -661,4 +661,4 @@ TEMPLATE NEW : rencontre_modal_warning
 == Upgrade Notice ==
 
 = 3.0 =
-This new version is not compatible with the old templates. If you use custom templates in your theme folder, you will need to delete them or not migrate to this new version 3.0. After update, you should regenerate photos (Rencontre > General > Display)
+This new version is not compatible with the old templates. If you use custom templates in your theme folder, you will need to delete them or not migrate to this new V3. After update, you should regenerate photos (Rencontre > General > Display)
