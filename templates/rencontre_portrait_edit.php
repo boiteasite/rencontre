@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.2
+ * Last Change : Rencontre 3.2.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
 */
@@ -124,7 +124,7 @@
 									<div class="w3-threequarter">
 									<?php if($v->type==1) { ?>
 										
-										<input type="text" class="w3-input w3-renc-inbg" name="text<?php echo $v->id; ?>" value="<?php echo $v->active; ?>" />
+										<input type="text" class="w3-input w3-renc-inbg" name="text<?php echo $v->id; ?>" onkeydown="return event.key!='Enter'" value="<?php echo $v->active; ?>" />
 									<?php } else if($v->type==2) { ?>
 									
 										<textarea name="area<?php echo $v->id; ?>" class="w3-input w3-renc-inbg" rows="4" cols="50"><?php echo $v->active; ?></textarea>
@@ -158,7 +158,7 @@
 										</select>
 									<?php } else if($v->type==6) { ?>
 										
-										<input type="date" class="w3-input w3-renc-inbg" name="date<?php echo $v->id; ?>" value="<?php echo $v->active; ?>" />
+										<input type="date" class="w3-input w3-renc-inbg" name="date<?php echo $v->id; ?>" onkeydown="return event.key!='Enter';" value="<?php echo $v->active; ?>" />
 									<?php } ?>
 								
 									</div>

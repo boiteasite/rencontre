@@ -46,9 +46,10 @@
 			
 		<a id="rencMenuC2" class="rencMenuC2 w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)"><i class="far fa-hand-peace"></i></a>
 			<?php } ?>
-			<?php if(0) { ?>			
+			<?php if(!empty($rencOpt['facebook'])) { ?>
+				
 		<span class="rencMenuFB w3-bar-item w3-button w3-padding-large w3-right">
-			<!-- Add you FACEBOOK LIKE BUTTON CODE here and remove  PHP if(0) { and }-->
+			<!-- Add you FACEBOOK LIKE BUTTON CODE here -->
 		</span>
 			<?php } ?>
 			

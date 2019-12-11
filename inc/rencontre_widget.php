@@ -1534,7 +1534,7 @@ class RencontreWidget extends WP_widget {
 			// 9. Ecrire message
 			if(strstr($_SESSION['rencontre'],'write') && !$rencBlock && (empty($rencOpt['fastreg']) || $rencOpt['fastreg']<2)) { ?>
 				<div <?php if(empty($rencCustom['side'])) echo 'class="w3-twothird w3-left"'; ?>>
-				<?php if(!empty($rencidfm)) $id = substr($rencidfm,1);
+				<?php if(!empty($rencidfm) && substr($rencidfm,1)!='0') $id = substr($rencidfm,1); // Instant email $hrefinbox : ?rencidfm=r0&rencoo=...&rencii=...
 				else if($Pmsg!==false && !empty($Pid)) $id = $Pid;
 				else if(!empty($Gid) && $Gid!=$mid) $id = $Gid;
 				else $id = 0;
@@ -1787,9 +1787,13 @@ class RencontreWidget extends WP_widget {
 					if(!empty($_POST['text'.$k])) $u .= '{"i":'.$k.',"v":"'.str_replace('"','',rencSanit($_POST['text'.$k],'text')).'"},';
 				break;
 				case 2:
-					$a = rencSanit($_POST['area'.$k],'para');
-					$a = preg_replace('/\r|\n/','\n',trim($a));
-					if(!empty($_POST['area'.$k])) $u .= '{"i":'.$k.',"v":"'.str_replace('"','',$a).'"},';
+					if(!empty($_POST['area'.$k])) {
+						$a = rencSanit($_POST['area'.$k],'para');
+						$a = preg_replace('/\r|\n/','\n',trim($a));
+						$a = str_replace('\"','',$a);
+						$a = str_replace("\'","'",$a);
+						$u .= '{"i":'.$k.',"v":"'.$a.'"},';
+					}
 				break;
 				case 3:
 					if(!empty($_POST['select'.$k])) $u .= '{"i":'.$k.',"v":'.(intval(rencSanit($_POST['select'.$k],'int'))-1).'},';
@@ -2381,7 +2385,7 @@ class RencontreWidget extends WP_widget {
 		</form>
 		<?php
 		$hoprofil = false; $hoastro = false;
-		// Selection par le sex
+		// Selection par le sex - zsex:my setting in DB - z2sex:search select (only custom sex)
 		$sexQuery = '';
 		if(strpos($Gzsex,')')===false) {
 			if($Gz2sex===false) $sexQuery .= " and R.i_zsex".($Ghomo?'='.$Gzsex:'!='.$Gzsex)." ";

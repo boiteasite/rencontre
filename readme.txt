@@ -365,17 +365,17 @@ It's better to limit the data size.
 * Remove disable search menu notification (OFF).
 * Add delNotConfirmed value in rencNumber hook : time before new account deletion.
 
-05/11/2019 : 3.2.2
+02/12/2019 : 3.2.2
 
-* Fix SQL injection & XSS vulnerability - Thanks to Sathish Kumar
+* Fix SQL injection & XSS vulnerability - Thanks to Sathish Kumar.
 * Add imgQuality value in rencNumber hook : user images JPG quality. Default 75.
 * Fix message deletion issue.
 
-22/11/2019 : 3.2.3
+11/12/2019 : 3.2.3
 
-* Improve security in front-office part.
-* Add 'no sex change' option.
-* Remove ajax_sourire.
+* Improve CSRF security.
+* Fix instant email link issue.
+* Fix member search issue in ADMIN part.
 
 = 3.1 =
 15/03/2019
@@ -661,4 +661,4 @@ TEMPLATE NEW : rencontre_modal_warning
 == Upgrade Notice ==
 
 = 3.0 =
-This new version is not compatible with the old templates. If you use custom templates in your theme folder, you will need to delete them or not migrate to this new V3. After update, you should regenerate photos (Rencontre > General > Display)
+This new version is not compatible with the old templates. If you use custom templates in your theme folder, you will need to delete them or not migrate to this new version 3.0. After update, you should regenerate photos (Rencontre > General > Display)

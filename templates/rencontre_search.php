@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search
- * Last Change : Rencontre 3.0
+ * Last Change : Rencontre 3.2.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search.php
  * $u0 : ID, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, e_lat, e_lon, zsex, homo, c_pays, country, age, agemin, agemax
 */

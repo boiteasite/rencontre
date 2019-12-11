@@ -1,5 +1,6 @@
 <?php
 $rencOpt = get_option('rencontre_options');
+if(empty($rencOpt) || !is_array($rencOpt)) $rencOpt = array();
 // Filtres / Action : General
 add_filter('show_admin_bar' , 'rencAdminBar'); // Visualisation barre admin
 add_action('init', 'rencPreventAdminAccess', 0); // bloque acces au tableau de bord
@@ -38,7 +39,7 @@ if(is_admin()) { // Check for an administrative interface page
 	add_action('wp_ajax_drap', 'rencontreDrap'); // SELECT avec la liste des fichiers drapeaux (Partie ADMIN)
 	add_action('wp_ajax_exportCsv', 'f_exportCsv'); // Export CSV (Partie ADMIN)
 	add_action('wp_ajax_importCsv', 'f_importCsv'); // Import CSV (Partie ADMIN)
-	add_action('wp_ajax_updown', 'f_rencUpDown'); // Modif Profil : move Up / Down
+	add_action('wp_ajax_updown', 'f_rencUpDown'); // Modif Profil : move Up / Down / Supp
 	add_action('wp_ajax_profilA', 'f_rencProfil'); // Modif Profil : plus & edit
 	add_action('wp_ajax_stat', 'f_rencStat'); // Members - Registration statistics
 	add_action('wp_ajax_newMember', 'f_newMember'); // Add new Rencontre Members from WP Users - Members Tab
@@ -880,7 +881,7 @@ function rencSanit($f,$g) {
 	$a = '';
 	switch($g) {
 		case 'int': // AGE, YEAR, MONTH, DAY, SIZE, SEX, RELATION...
-			$a = intval($f);
+			$a = abs(intval($f)); // 09 allowed only
 			break;
 
 		case 'num': // GPS, ROTATE
@@ -905,13 +906,14 @@ function rencSanit($f,$g) {
 			
 		case 'alphanum': // RENC, RENCIDFM, ID, PROFILQS, NOUVEAU, A1, OBJ, REGION (search)
 			$a = trim($f);
-			$a = preg_replace("/[^a-zA-Z0-9]/","", $a); // AZaz09 allowed only
+			$a = preg_replace("/[^a-zA-Z0-9_,-]/","", $a); // AZaz09_-, allowed only
 			break;
 			
 		case 'words': // DISPLAY_NAME, CITY, REGION (set)
+			$a = sanitize_text_field($f);
+			$a = preg_replace("/\s+/", " ",$a); // multiple spaces & lines break
 			$n = array('"','(',')','{','}','[',']','<','>','|','+','=','?',';','`','*','@');
-			$a = str_replace($n,"",$f);
-			$a = sanitize_text_field($a);
+			$a = str_replace($n,"",$a);
 			break;
 			
 		case 'text': // 
@@ -925,13 +927,17 @@ function rencSanit($f,$g) {
 			$a = preg_replace("/[[:blank:]]+/"," ", $a); // multiple spaces
 			break;
 			
+		case 'url':
+			$a = strip_tags(stripslashes(filter_var($f, FILTER_SANITIZE_URL)));
+			break;
+			
 		case 'b64': // RENCOO, RENCII
 			$a = preg_match("%^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$%", $f);
 			if($a) $a = $f;
 			break;
 			
 		case 'pipe': // pipe separation text && url && location
-			$a = sanitize_text_field($f);
+			$a = rencSanit($f,'text');
 			break;
 			
 		case 'img': // pipe separation with img stream (Facebook) or int
@@ -945,7 +951,16 @@ function rencSanit($f,$g) {
 			if($a) $a = sanitize_email($f);
 			if($a!=$f) $a = '';
 			break;
+
+		case 'array':
+			if(is_array($f)) {
+				$a = array();
+				foreach($f as $r) $a[] = rencSanit($r,'alphanum');
+			}
+			else $a = rencSanit($f,'alphanum');
+			break;
 	}
+	if(!is_int($a) && !is_string($a) && !is_array($a)) $a = (string)$a;
 	return $a;
 }
 //
@@ -1232,28 +1247,6 @@ function f_addCountSearch() {
 	else $action['search']=array('d'=>date("z"),'n'=>1);
 	$p = json_encode($action);
 	$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$p), array('user_id'=>$current_user->ID));
-}
-//
-function rencontreIso() {
-	if(isset($_POST['iso'])) {
-		$Piso = rencSanit($_POST['iso'],'AZ');
-		global $wpdb;
-		$q = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_iso='".substr($Piso,0,2)."' and c_liste_categ='p' LIMIT 1");
-		if(!$q) echo true;
-		else echo false;
-	}
-}
-//
-function rencontreDrap() {
-	if(isset($_POST['action']) && $_POST['action']==='drap') {
-		if($dh=opendir(dirname(__FILE__).'/../images/drapeaux/')) {
-			$tab = array();
-			while(($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[]=$file; }
-			closedir($dh);
-			sort($tab);
-			foreach($tab as $r) { echo "<option value='".$r."'>".$r."</option>"; }
-		}
-	}
 }
 //
 function f_userSupp($f,$a,$b) { // rencontre.php - in action 'widget_init' - base.php

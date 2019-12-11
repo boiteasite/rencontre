@@ -6,11 +6,12 @@ function f_exportCsv() {
 	// Export CSV de la base des membres
 	// $_POST['activ'], $_POST['photo'], $_POST['ad'];
 	if(!current_user_can("administrator")) die;
+	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $wpdb; global $rencDiv; global $rencOpt;
 	$sex = array('men','girl');
-	$pho = (!empty($_POST['photo'])?1:0);
-	$ad = (!empty($_POST['ad'])?1:0);
-	$act = (!empty($_POST['activ'])?intval($_POST['activ']):0);
+	$Pphoto = (!empty($_POST['photo'])?1:0);
+	$Pad = (!empty($_POST['ad'])?1:0);
+	$Pactiv = (!empty($_POST['activ'])?rencSanit($_POST['activ'],'int'):0);
 	foreach($rencOpt['iam'] as $k=>$v) if($k>1) $sex[] = $v;
 	$q = $wpdb->get_results("SELECT
 			U.ID,
@@ -42,9 +43,9 @@ function f_exportCsv() {
 			ON P.user_id=U.ID
 		WHERE 
 			R.i_status=0
-			".($pho?" and R.i_photo!=0 ":"")."
-			".($ad?" and CHAR_LENGTH(P.t_titre)>4 and CHAR_LENGTH(P.t_annonce)>30 ":"")."
-			".($act?" and R.d_session>'".date("Y-m-d H:i:s",mktime()-2628000*$act)."'":"")."
+			".($Pphoto?" and R.i_photo!=0 ":"")."
+			".($Pad?" and CHAR_LENGTH(P.t_titre)>4 and CHAR_LENGTH(P.t_annonce)>30 ":"")."
+			".($Pactiv?" and R.d_session>'".date("Y-m-d H:i:s",mktime()-2628000*$Pactiv)."'":"")."
 		");
 	$rd = mt_rand();
 	$d = $rencDiv['basedir'].'/tmp/';
@@ -126,11 +127,13 @@ function f_importCsv() {
 		// 17 : titre
 		// 18 : Annonce
 	if(!current_user_can("administrator")) die;
+	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $rencDiv; global $rencOpt;
 	$sex = array('men','girl');
 	foreach($rencOpt['iam'] as $k=>$v) if($k>1) $sex[] = $v;
 	$d = $rencDiv['basedir'].'/tmp/import_rencontre.csv';
-	if(isset($_POST['cas'])) switch($_POST['cas']) {
+	$Pcas = (isset($_POST['cas'])?rencSanit($_POST['cas'],'int'):0);
+	switch($Pcas) {
 		// First opening : count
 		case 3:
 			$c =0;
@@ -274,6 +277,7 @@ function f_importCsv() {
 	return;
 }
 function rencRegeneratePhotos() {
+	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $rencDiv; global $rencOpt; global $wpdb;
 	// 1. GET DATAS
 	$a = array(); $num = 0;
@@ -355,10 +359,18 @@ function rencCleanupPhotos() {
 // *****************************************
 // **** ONGLET PROFIL
 // *****************************************
-function f_rencProfil() { // (submit)
+function f_rencProfil() {
 	// Ajax - plus & edit profil
-	if($_POST["a1"]=="edit") profil_edit($_POST["a2"],$_POST["a3"],$_POST["a4"],$_POST["a5"],$_POST["a6"],$_POST["g"]);
-	else if($_POST["a1"]=="plus") profil_plus($_POST["a2"],$_POST["a3"],$_POST["a4"],$_POST["a5"]);
+	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
+	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'int'):'');
+	$Pa3 = (isset($_POST['a3'])?rencSanit($_POST['a3'],'alphanum'):'');
+	$Pa4 = (isset($_POST['a4'])?rencSanit($_POST['a4'],'url'):'');
+	$Pa5 = (isset($_POST['a5'])?rencSanit($_POST['a5'],'words'):'');
+	$Pa6 = (isset($_POST['a6'])?rencSanit($_POST['a6'],'int'):'');
+	$Pg = (isset($_POST['g'])?rencSanit($_POST['g'],'numplus'):'');
+	if($Pa1=='edit') profil_edit($Pa2,$Pa3,$Pa4,$Pa5,$Pa6,$Pg);
+	else if($Pa1=='plus') profil_plus($Pa2,$Pa3,$Pa4,$Pa5);
 }
 function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 	// a2 : ID - a3 : colonne - a4 : valeur colonne - a5 : position (select ou check) - a6 : type - g : genre ",0,1,"
@@ -602,15 +614,16 @@ function profil_langsupp($a4) {
 function f_rencUpDown() {
 	// Ajax
 	if(!current_user_can("administrator")) die;
+	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $wpdb; global $rencDiv;
 	$n = 0; $max = 0;
 	$lang = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil LIMIT 1"); // au pif
-	$move = strip_tags($_POST['move']);
-	$id = strip_tags($_POST['id']);
-	$typ = strip_tags($_POST['typ']);
-	$id2 = strip_tags($_POST['id2']); // position a partir de 1 !
-	if($typ=='c_categ' && $move=='up') {
-		$n = $wpdb->get_var("SELECT i_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$id."' LIMIT 1");
+	$Pmove = (!empty($_POST['move'])?rencSanit($_POST['move'],'alphanum'):'');
+	$Ptyp = (!empty($_POST['typ'])?rencSanit($_POST['typ'],'alphanum'):'');
+	$Pid = (!empty($_POST['id'])?rencSanit($_POST['id'],'int'):'');
+	$Pid2 = (!empty($_POST['id2'])?rencSanit($_POST['id2'],'int'):''); // position a partir de 1
+	if($Ptyp=='c_categ' && $Pmove=='up') {
+		$n = $wpdb->get_var("SELECT i_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$Pid."' LIMIT 1");
 		if($n && $n>1) {
 			$q = $wpdb->get_results("SELECT id, i_categ FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$lang."' ");
 			if($q) {
@@ -622,10 +635,10 @@ function f_rencUpDown() {
 			}
 		}
 	}
-	else if($typ=='c_categ' && $move=='down') {
+	else if($Ptyp=='c_categ' && $Pmove=='down') {
 		$q = $wpdb->get_results("SELECT id, i_categ FROM ".$wpdb->prefix."rencontre_profil ");
 		if($q) foreach($q as $r) {
-			if($r->id==$id) $n = $r->i_categ;
+			if($r->id==$Pid) $n = $r->i_categ;
 			if($r->i_categ>$max) $max = $r->i_categ;
 		}
 		if($n && $n<$max) {
@@ -639,14 +652,14 @@ function f_rencUpDown() {
 			}
 		}
 	}
-	else if($typ=='c_label' && $move=='up') {
+	else if($Ptyp=='c_label' && $Pmove=='up') {
 		$q = $wpdb->get_row("SELECT
 				i_categ,
 				i_label
 			FROM
 				".$wpdb->prefix."rencontre_profil
 			WHERE
-				id='".$id."'
+				id='".$Pid."'
 			LIMIT 1
 			");
 		if($q) {
@@ -664,14 +677,14 @@ function f_rencUpDown() {
 			}
 		}
 	}
-	else if($typ=='c_label' && $move=='down') {
+	else if($Ptyp=='c_label' && $Pmove=='down') {
 		$q = $wpdb->get_row("SELECT
 				i_categ,
 				i_label
 			FROM
 				".$wpdb->prefix."rencontre_profil
 			WHERE
-				id='".$id."'
+				id='".$Pid."'
 			LIMIT 1
 			");
 		if($q) {
@@ -691,21 +704,21 @@ function f_rencUpDown() {
 			}
 		}
 	}
-	else if($typ=='t_valeur' && $move=='up' && $id2>1) {
-		$q = $wpdb->get_results("SELECT t_valeur, c_lang, i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$id."'");
+	else if($Ptyp=='t_valeur' && $Pmove=='up' && $Pid2>1) {
+		$q = $wpdb->get_results("SELECT t_valeur, c_lang, i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$Pid."'");
 		if($q) {
 			foreach($q as $r) {
 				$j =  json_decode($r->t_valeur);
 				$le = count($j);
-				$a = $j[$id2-1];
-				$b = $j[$id2-2];
-				$j[$id2-1] = $b;
-				$j[$id2-2] = $a;
+				$a = $j[$Pid2-1];
+				$b = $j[$Pid2-2];
+				$j[$Pid2-1] = $b;
+				$j[$Pid2-2] = $a;
 				$s = '[';
 				foreach($j as $rr) { $s .= '"'. $rr . '",'; }
 				$s = substr($s,0,-1) . "]";
 				$s = str_replace("'", "&#39;", $s);
-				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($r->i_poids<5)?($r->i_poids+5):($r->i_poids))), array('id'=>$id, 'c_lang'=>$r->c_lang) );
+				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($r->i_poids<5)?($r->i_poids+5):($r->i_poids))), array('id'=>$Pid, 'c_lang'=>$r->c_lang));
 			}
 			if(!file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) $a = array();
 			else {
@@ -713,41 +726,41 @@ function f_rencUpDown() {
 				$a = json_decode($q,true);
 			}
 			$t = array();
-			if(!isset($a[$id])) {
+			if(!isset($a[$Pid])) {
 				for($v=0;$v<$le;++$v) {
-					if($v==$id2-2) $t[] = intval($id2-1); // 3 en 2
-					else if($v==$id2-1) $t[] = intval($id2-2); // 2 en 3
+					if($v==$Pid2-2) $t[] = intval($Pid2-1); // 3 en 2
+					else if($v==$Pid2-1) $t[] = intval($Pid2-2); // 2 en 3
 					else $t[] = $v;
 				}
 			}
 			else {
-				foreach($a[$id] as $k=>$v) {
-					if($k==$id2-2) $t[] = intval($a[$id][$k+1]); // 3 en 2
-					else if($k==$id2-1) $t[] = intval($a[$id][$k-1]); // 2 en 3
+				foreach($a[$Pid] as $k=>$v) {
+					if($k==$Pid2-2) $t[] = intval($a[$Pid][$k+1]); // 3 en 2
+					else if($k==$Pid2-1) $t[] = intval($a[$Pid][$k-1]); // 2 en 3
 					else $t[] = $v;
 				}
 			}
-			$a[$id] = $t; // [0,1,3,2,4,5,6,7,8,9] // 3 up
+			$a[$Pid] = $t; // [0,1,3,2,4,5,6,7,8,9] // 3 up
 			file_put_contents($rencDiv['basedir'].'/portrait/rencontre_synchronise.json', json_encode($a));  // info modif
 			echo 'OK';
 		}
 	}
-	else if($typ=='t_valeur' && $move=='down') {
-		$q = $wpdb->get_results("SELECT t_valeur, c_lang, i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$id."'");
+	else if($Ptyp=='t_valeur' && $Pmove=='down') {
+		$q = $wpdb->get_results("SELECT t_valeur, c_lang, i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$Pid."'");
 		if($q) {
 			foreach($q as $r) {
 				$j =  json_decode($r->t_valeur);
 				$le = count($j);
-				if(!isset($j[$id2])) return;
-				$a = $j[$id2-1];
-				$b = $j[$id2];
-				$j[$id2-1] = $b;
-				$j[$id2] = $a;
+				if(!isset($j[$Pid2])) return;
+				$a = $j[$Pid2-1];
+				$b = $j[$Pid2];
+				$j[$Pid2-1] = $b;
+				$j[$Pid2] = $a;
 				$s = '[';
 				foreach($j as $rr) { $s .= '"'. $rr . '",'; }
 				$s = substr($s,0,-1) . "]";
 				$s = str_replace("'", "&#39;", $s);
-				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($r->i_poids<5)?($r->i_poids+5):($r->i_poids))), array('id'=>$id, 'c_lang'=>$r->c_lang) );
+				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($r->i_poids<5)?($r->i_poids+5):($r->i_poids))), array('id'=>$Pid, 'c_lang'=>$r->c_lang) );
 			}
 			if(!file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) $a = array();
 			else {
@@ -755,27 +768,27 @@ function f_rencUpDown() {
 				$a = json_decode($q,true);
 			}
 			$t = array();
-			if(!isset($a[$id])) {
+			if(!isset($a[$Pid])) {
 				for($v=0;$v<$le;++$v) {
-					if($v==$id2) $t[] = intval($id2-1); // 3 en 2
-					else if($v==$id2-1) $t[] = intval($id2); // 2 en 3
+					if($v==$Pid2) $t[] = intval($Pid2-1); // 3 en 2
+					else if($v==$Pid2-1) $t[] = intval($Pid2); // 2 en 3
 					else $t[] = $v;
 				}
 			}
 			else {
-				foreach($a[$id] as $k=>$v) {
-					if($k==$id2-1) $t[] = intval($a[$id][$k+1]); // 3 en 2
-					else if($k==$id2) $t[] = intval($a[$id][$k-1]); // 2 en 3
+				foreach($a[$Pid] as $k=>$v) {
+					if($k==$Pid2-1) $t[] = intval($a[$Pid][$k+1]); // 3 en 2
+					else if($k==$Pid2) $t[] = intval($a[$Pid][$k-1]); // 2 en 3
 					else $t[] = $v;
 				}
 			}
-			$a[$id] = $t; // [0,1,3,2,4,5,6,7,8,9] // 3 up
+			$a[$Pid] = $t; // [0,1,3,2,4,5,6,7,8,9] // 3 up
 			file_put_contents($rencDiv['basedir'].'/portrait/rencontre_synchronise.json', json_encode($a));  // info modif
 			echo 'OK';
 		}
 	}
-	if($typ=='c_categ' && $move=='supp') {
-		$q = $wpdb->get_var("SELECT i_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$id."' LIMIT 1");
+	else if($Ptyp=='c_categ' && $Pmove=='supp') {
+		$q = $wpdb->get_var("SELECT i_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$Pid."' LIMIT 1");
 		if($q) {
 			$wpdb->delete($wpdb->prefix.'rencontre_profil', array('i_categ'=>$q));
 			$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil SET i_categ=i_categ-1 WHERE i_categ>".$q);
@@ -786,17 +799,17 @@ function f_rencUpDown() {
 			echo 'OK';
 		}
 	}
-	if($typ=='c_label' && $move=='supp') {
+	else if($Ptyp=='c_label' && $Pmove=='supp') {
 		$q = $wpdb->get_row("SELECT
 				i_categ,
 				i_label
 			FROM
 				".$wpdb->prefix."rencontre_profil
 			WHERE
-				id='".$id."'
+				id='".$Pid."'
 			LIMIT 1
 			");
-		$wpdb->delete($wpdb->prefix.'rencontre_profil', array('id'=>$id));
+		$wpdb->delete($wpdb->prefix.'rencontre_profil', array('id'=>$Pid));
 		$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil SET i_label=i_label-1 WHERE i_categ=".$q->i_categ." and i_label>".$q->i_label);
 		if(!file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) {
 			$a = array();
@@ -804,18 +817,18 @@ function f_rencUpDown() {
 		}
 		echo 'OK';
 	}
-	if($typ=='t_valeur' && $move=='supp') {
-		$q = $wpdb->get_results("SELECT t_valeur, c_lang, i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$id."'");
+	else if($Ptyp=='t_valeur' && $Pmove=='supp') {
+		$q = $wpdb->get_results("SELECT t_valeur, c_lang, i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$Pid."'");
 		if($q) {
 			foreach($q as $qr) {
 				$r =  json_decode($qr->t_valeur);
 				$le = count($r);
-				unset($r[$id2-1]);
+				unset($r[$Pid2-1]);
 				$s = '[';
 				foreach($r as $rr) { $s .= '"' . $rr . '",'; }
 				$s = substr($s,0,-1) . "]";
 				$s = str_replace("'", "&#39;", $s);
-				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($qr->i_poids<5)?($qr->i_poids+5):($qr->i_poids))), array('id'=>$id, 'c_lang'=>$qr->c_lang) );
+				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($qr->i_poids<5)?($qr->i_poids+5):($qr->i_poids))), array('id'=>$Pid, 'c_lang'=>$qr->c_lang) );
 			}
 			if(!file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) $a = array();
 			else {
@@ -823,9 +836,9 @@ function f_rencUpDown() {
 				$a = json_decode($q,true);
 			}
 			$t = array();
-			if(!isset($a[$id])) for($v=0;$v<$le;++$v) if($v!=$id2-1) $t[] = $v;
-			else foreach($a[$id] as $k=>$v) if($k!=$id2-1) $t[] = $v;
-			$a[$id] = $t; // [0,1,2,3,4,6,7,8,9] avec n°5 supp
+			if(!isset($a[$Pid])) for($v=0;$v<$le;++$v) if($v!=$Pid2-1) $t[] = $v;
+			else foreach($a[$Pid] as $k=>$v) if($k!=$Pid2-1) $t[] = $v;
+			$a[$Pid] = $t; // [0,1,2,3,4,6,7,8,9] avec n°5 supp
 			file_put_contents($rencDiv['basedir'].'/portrait/rencontre_synchronise.json', json_encode($a));  // info modif
 			echo 'OK';
 		}
@@ -981,73 +994,69 @@ function liste_langsupp($a4) {
 // *****************************************
 // **** TAB ADMIN
 // *****************************************
-function update_rencontre_options($f) {
+function update_rencontre_options($P) {
 	if(!current_user_can("administrator")) die;
+	if(empty($_GET['tok']) || $_SESSION['rencToka']!==$_GET['tok'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $rencOpt; global $rencDiv;
-	if(empty($_GET['renctab'])) {
-		if(isset($f['rol'])) $rencOpt['rol'] = $f['rol']; else unset($rencOpt['rol']);
-		if(isset($f['rolu'])) $rencOpt['rolu'] = $f['rolu']; else unset($rencOpt['rolu']);
-		if(isset($f['home'])) $rencOpt['home'] = $f['home']; else unset($rencOpt['home']);
-		if(isset($f['pays'])) $rencOpt['pays'] = $f['pays']; else unset($rencOpt['pays']);
-		if(isset($f['prison'])) $rencOpt['prison'] = $f['prison']; else unset($rencOpt['prison']);
-		if(isset($f['avatar'])) $rencOpt['avatar'] = 1; else unset($rencOpt['avatar']);
-		if(isset($f['msgdel'])) $rencOpt['msgdel'] =  $f['msgdel']; else unset($rencOpt['msgdel']);
-		if(isset($f['dead'])) $rencOpt['dead'] = $f['dead']; else unset($rencOpt['dead']);
-		if(isset($f['hcron'])) {
-			if(!isset($rencOpt['hcron']) || $rencOpt['hcron']!=$f['hcron']) file_put_contents($rencDiv['basedir'].'/portrait/cache/rencontre_cron.txt', ''); // RESET (12h)
-			$rencOpt['hcron'] = $f['hcron'];
+	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
+	if(empty($Grenctab)) {
+		if(!empty($P['home'])) $rencOpt['home'] = rencSanit($P['home'],'url'); else unset($rencOpt['home']);
+		if(!empty($P['pays'])) $rencOpt['pays'] = rencSanit($P['pays'],'AZ'); else unset($rencOpt['pays']);
+		if(!empty($P['prison'])) $rencOpt['prison'] = rencSanit($P['prison'],'int'); else unset($rencOpt['prison']);
+		if(!empty($P['avatar'])) $rencOpt['avatar'] = 1; else unset($rencOpt['avatar']);
+		if(!empty($P['msgdel'])) $rencOpt['msgdel'] =  rencSanit($P['msgdel'],'int'); else unset($rencOpt['msgdel']);
+		if(!empty($P['dead'])) $rencOpt['dead'] = rencSanit($P['dead'],'int'); else unset($rencOpt['dead']);
+		if(!empty($P['hcron'])) {
+			if(!isset($rencOpt['hcron']) || $rencOpt['hcron']!=$P['hcron']) file_put_contents($rencDiv['basedir'].'/portrait/cache/rencontre_cron.txt', ''); // RESET (12h)
+			$rencOpt['hcron'] = rencSanit($P['hcron'],'int');
 		}
 		else unset($rencOpt['hcron']);
-		if(isset($f['uni'])) $rencOpt['uni'] = 1; else unset($rencOpt['uni']);
-		if(isset($f['imcode'])) $rencOpt['imcode'] = $f['imcode']; else unset($rencOpt['imcode']);
+		if(!empty($P['rol'])) $rencOpt['rol'] = 1; else unset($rencOpt['rol']);
+		if(!empty($P['rolu'])) $rencOpt['rolu'] = 1; else unset($rencOpt['rolu']);
+		if(!empty($P['uni'])) $rencOpt['uni'] = 1; else unset($rencOpt['uni']);
+		if(!empty($P['imcode'])) $rencOpt['imcode'] = 1; else unset($rencOpt['imcode']); // Not a POST value
 	}
-	else if($_GET['renctab']=='log') {
-		if(!empty($f['fblog'])) $rencOpt['fblog'] = $f['fblog']; else unset($rencOpt['fblog']);
-		if(isset($f['fastreg'])) $rencOpt['fastreg'] = $f['fastreg']; else unset($rencOpt['fastreg']);
-		if(isset($f['passw'])) $rencOpt['passw'] = $f['passw']; else unset($rencOpt['passw']);
-		if(isset($f['logredir'])) $rencOpt['logredir'] = $f['logredir']; else unset($rencOpt['logredir']);
+	else if($Grenctab=='log') {
+		if(!empty($P['fblog'])) $rencOpt['fblog'] = rencSanit($P['fblog'],'alphanum'); else unset($rencOpt['fblog']);
+		if(!empty($P['fastreg'])) $rencOpt['fastreg'] = 1; else unset($rencOpt['fastreg']);
+		if(!empty($P['passw'])) $rencOpt['passw'] = 1; else unset($rencOpt['passw']);
+		if(!empty($P['logredir'])) $rencOpt['logredir'] = 1; else unset($rencOpt['logredir']);
 	}
-	else if($_GET['renctab']=='dis') {
-		if(isset($f['disnam'])) $rencOpt['disnam'] =  $f['disnam']; else unset($rencOpt['disnam']);
-		if(isset($f['npa'])) $rencOpt['npa'] = $f['npa']; else unset($rencOpt['npa']);
-		if(isset($f['rlibre'])) $rencOpt['rlibre'] = $f['rlibre']; else unset($rencOpt['rlibre']);
-		if(isset($f['wlibre'])) $rencOpt['wlibre'] = intval($f['wlibre']); else unset($rencOpt['wlibre']);
-		if(isset($f['jlibre'])) $rencOpt['jlibre'] = $f['jlibre']; else unset($rencOpt['jlibre']);
-		if(isset($f['limit'])) $rencOpt['limit'] = $f['limit']; else unset($rencOpt['limit']);
-		if(isset($f['newtab'])) $rencOpt['newtab'] = 1; else unset($rencOpt['newtab']);
-		if(isset($f['myctry'])) $rencOpt['myctry'] = 1; else unset($rencOpt['myctry']);
-		if(isset($f['anniv'])) $rencOpt['anniv'] = 1; else unset($rencOpt['anniv']);
-		if(isset($f['ligne'])) $rencOpt['ligne'] = 1; else unset($rencOpt['ligne']);
-		if(isset($f['tchat'])) $rencOpt['tchat'] = 1; else unset($rencOpt['tchat']);
-		if(isset($f['map'])) $rencOpt['map'] = 1; else unset($rencOpt['map']); // Removed
-		if(!empty($f['mapapi'])) $rencOpt['mapapi'] = stripslashes($f['mapapi']); else unset($rencOpt['mapapi']); // Removed
-		if(isset($f['gps'])) $rencOpt['gps'] = 1; else unset($rencOpt['gps']);
-		if(isset($f['imnb'])) $rencOpt['imnb'] = $f['imnb']; else unset($rencOpt['imnb']);
-		if(isset($f['imcopyright'])) $rencOpt['imcopyright'] = $f['imcopyright']; else unset($rencOpt['imcopyright']);
-		if(!empty($f['txtcopyright'])) $rencOpt['txtcopyright'] = stripslashes($f['txtcopyright']); else unset($rencOpt['txtcopyright']);
-		if(isset($f['onlyphoto'])) $rencOpt['onlyphoto'] = 1; else unset($rencOpt['onlyphoto']);
-		if(isset($f['photoz'])) $rencOpt['photoz'] = 1; else unset($rencOpt['photoz']);
-		if(isset($f['pacamsg'])) $rencOpt['pacamsg'] = 1; else unset($rencOpt['pacamsg']);
-		if(isset($f['pacasig'])) $rencOpt['pacasig'] = 1; else unset($rencOpt['pacasig']);
+	else if($Grenctab=='dis') {
+		if(!empty($P['disnam'])) $rencOpt['disnam'] =  rencSanit($P['disnam'],'int'); else unset($rencOpt['disnam']);
+		if(isset($P['npa'])) $rencOpt['npa'] = rencSanit($P['npa'],'int'); else unset($rencOpt['npa']);
+		if(!empty($P['wlibre'])) $rencOpt['wlibre'] = rencSanit($P['wlibre'],'int'); else unset($rencOpt['wlibre']);
+		if(!empty($P['rlibre'])) $rencOpt['rlibre'] = rencSanit($P['rlibre'],'int'); else unset($rencOpt['rlibre']);
+		if(!empty($P['jlibre'])) $rencOpt['jlibre'] = rencSanit($P['jlibre'],'int'); else unset($rencOpt['jlibre']);
+		if(!empty($P['limit'])) $rencOpt['limit'] = rencSanit($P['limit'],'int'); else unset($rencOpt['limit']);
+		if(!empty($P['newtab'])) $rencOpt['newtab'] = 1; else unset($rencOpt['newtab']);
+		if(!empty($P['myctry'])) $rencOpt['myctry'] = 1; else unset($rencOpt['myctry']);
+		if(!empty($P['anniv'])) $rencOpt['anniv'] = 1; else unset($rencOpt['anniv']);
+		if(!empty($P['ligne'])) $rencOpt['ligne'] = 1; else unset($rencOpt['ligne']);
+		if(!empty($P['tchat'])) $rencOpt['tchat'] = 1; else unset($rencOpt['tchat']);
+		if(!empty($P['gps'])) $rencOpt['gps'] = 1; else unset($rencOpt['gps']);
+		if(!empty($P['imnb'])) $rencOpt['imnb'] = rencSanit($P['imnb'],'int'); else unset($rencOpt['imnb']);
+		if(!empty($P['imcopyright'])) $rencOpt['imcopyright'] = rencSanit($P['imcopyright'],'int'); else unset($rencOpt['imcopyright']);
+		if(!empty($P['txtcopyright'])) $rencOpt['txtcopyright'] = rencSanit($P['txtcopyright'],'text'); else unset($rencOpt['txtcopyright']);
+		if(!empty($P['onlyphoto'])) $rencOpt['onlyphoto'] = 1; else unset($rencOpt['onlyphoto']);
+		if(!empty($P['photoz'])) $rencOpt['photoz'] = 1; else unset($rencOpt['photoz']);
+		if(!empty($P['pacamsg'])) $rencOpt['pacamsg'] = 1; else unset($rencOpt['pacamsg']);
+		if(!empty($P['pacasig'])) $rencOpt['pacasig'] = 1; else unset($rencOpt['pacasig']);
 	}
-	else if($_GET['renctab']=='mel') {
-		if(isset($f['mailsupp'])) $rencOpt['mailsupp'] = 1; else unset($rencOpt['mailsupp']);
-		if(isset($f['mailmois'])) $rencOpt['mailmois'] =  $f['mailmois']; else unset($rencOpt['mailmois']);
-		if(!empty($f['textmail'])) $rencOpt['textmail'] = strip_tags($f['textmail']); else unset($rencOpt['textmail']);
-		if(isset($f['melctry'])) $rencOpt['melctry'] = 1; else unset($rencOpt['melctry']);
-		if(isset($f['mailsmile'])) $rencOpt['mailsmile'] = 1; else unset($rencOpt['mailsmile']);
-		if(isset($f['mailanniv'])) $rencOpt['mailanniv'] = 1; else unset($rencOpt['mailanniv']);
-		if(!empty($f['textanniv'])) $rencOpt['textanniv'] = strip_tags($f['textanniv']); else unset($rencOpt['textanniv']);
-		if(isset($f['qmail'])) $rencOpt['qmail'] = $f['qmail']; else unset($rencOpt['qmail']);
-		if(isset($f['mailph'])) $rencOpt['mailph'] = 1; else unset($rencOpt['mailph']);
-		if(isset($f['mailfo'])) $rencOpt['mailfo'] = 1; else unset($rencOpt['mailfo']);
+	else if($Grenctab=='mel') {
+		if(!empty($P['mailsupp'])) $rencOpt['mailsupp'] = 1; else unset($rencOpt['mailsupp']);
+		if(!empty($P['mailmois'])) $rencOpt['mailmois'] = rencSanit($P['mailmois'],'int'); else unset($rencOpt['mailmois']);
+		if(!empty($P['textmail'])) $rencOpt['textmail'] = rencSanit($P['textmail'],'para'); else unset($rencOpt['textmail']);
+		if(!empty($P['melctry'])) $rencOpt['melctry'] = 1; else unset($rencOpt['melctry']);
+		if(!empty($P['mailsmile'])) $rencOpt['mailsmile'] = 1; else unset($rencOpt['mailsmile']);
+		if(!empty($P['mailanniv'])) $rencOpt['mailanniv'] = 1; else unset($rencOpt['mailanniv']);
+		if(!empty($P['textanniv'])) $rencOpt['textanniv'] = rencSanit($P['textanniv'],'para'); else unset($rencOpt['textanniv']);
+		if(!empty($P['qmail'])) $rencOpt['qmail'] = rencSanit($P['qmail'],'int'); else unset($rencOpt['qmail']);
+		if(!empty($P['mailph'])) $rencOpt['mailph'] = 1; else unset($rencOpt['mailph']);
+		if(!empty($P['mailfo'])) $rencOpt['mailfo'] = 1; else unset($rencOpt['mailfo']);
 	}
-	else if($_GET['renctab']=='pre') {
-		$v = 0; // Premium
-		while(isset($f['premium'.$v])) {
-			$rencOpt['premium'.$v] = $f['premium'.$v];
-			++$v;
-		}
+	else if($Grenctab=='pre') {
+		if(has_filter('rencSaveOptP', 'f_rencSaveOptP')) $rencOpt = apply_filters('rencSaveOptP', $rencOpt, $P);
 	}
 	if(isset($rencOpt['page_id'])) unset($rencOpt['page_id']);
 	if(isset($rencOpt['for'])) unset($rencOpt['for']);
@@ -1057,20 +1066,30 @@ function update_rencontre_options($f) {
 //
 function rencMenuGeneral() {
 	if(!current_user_can("administrator")) die;
-	if(!empty($_POST) && !isset($_POST['rencCode'])) update_rencontre_options($_POST);
+	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
+	$Gbottom = (isset($_GET['bottom'])?rencSanit($_GET['bottom'],'int'):'');
+	$Prenccode = (isset($_POST['rencCode'])?rencSanit($_POST['rencCode'],'alphanum'):false);
+	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
+	if(!empty($_POST) && $Prenccode===false) update_rencontre_options($_POST);
 	global $rencOpt; global $rencDiv; global $rencVersion; global $wpdb;
 	wp_enqueue_script('rencontre', plugins_url('rencontre/js/rencontre-adm.js'));
 	wp_enqueue_style( 'rencontre', plugins_url('rencontre/css/rencontre-adm.css'));
-	if(empty($_GET['renctab']) && file_exists(dirname(__FILE__).'/rencontre_don.php')) {
+	if(empty($Grenctab) && file_exists(dirname(__FILE__).'/rencontre_don.php')) {
 		include(dirname(__FILE__).'/rencontre_don.php');
 		$nm = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_users");
 		if(!$nm && function_exists('rencontre_install_help')) rencontre_install_help();
 	}
-	if(isset($_POST["a1"]) && $_POST["a1"]=="synchro") rencSynchronise();
+	if($Pa1=='synchro') rencSynchronise();
 	if(empty($rencOpt['collat'])) rencSaveCollation();
+	if(empty($_SESSION['rencTokat']) || time()-$_SESSION['rencTokat']>5) { // issue with iframe
+		$rencToka = bin2hex(random_bytes(6));
+		$_SESSION['rencToka'] = $rencToka;
+		$_SESSION['rencTokat'] = time();
+	}
 	?>
 
-	<div id="rencGen" class='wrap' style="max-width:620px;<?php if(empty($_GET['renctab'])) echo 'float:left;'; ?>">
+	<div id="rencGen" class='wrap' style="max-width:620px;<?php if(empty($Grenctab)) echo 'float:left;'; ?>">
+		<div id="rencToka" data-toka="<?php echo $_SESSION['rencToka']; ?>"></div>
 		<?php if(file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) { ?>
 		
 		<form name='menu_profil' method='post' action=''>
@@ -1083,38 +1102,38 @@ function rencMenuGeneral() {
 		<?php } ?>
 		
 		<h2 class="nav-tab-wrapper">
-			<a href="admin.php?page=rencontre.php" class="nav-tab<?php if(empty($_GET['renctab'])) echo ' nav-tab-active'; ?>"><?php _e('General', 'rencontre'); ?></a>
-			<a href="admin.php?page=rencontre.php&renctab=log" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='log') echo ' nav-tab-active'; ?>"><?php _e('Login', 'rencontre'); ?></a>
-			<a href="admin.php?page=rencontre.php&renctab=dis" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='dis') echo ' nav-tab-active'; ?>"><?php _e('Display', 'rencontre'); ?></a>
-			<a href="admin.php?page=rencontre.php&renctab=mel" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='mel') echo ' nav-tab-active'; ?>"><?php _e('E-mails', 'rencontre'); ?></a>
-			<a href="admin.php?page=rencontre.php&renctab=csv" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='csv') echo ' nav-tab-active'; ?>"><?php _e('CSV', 'rencontre'); ?></a>
+			<a href="admin.php?page=rencontre.php" class="nav-tab<?php if(empty($Grenctab)) echo ' nav-tab-active'; ?>"><?php _e('General', 'rencontre'); ?></a>
+			<a href="admin.php?page=rencontre.php&renctab=log" class="nav-tab<?php if($Grenctab=='log') echo ' nav-tab-active'; ?>"><?php _e('Login', 'rencontre'); ?></a>
+			<a href="admin.php?page=rencontre.php&renctab=dis" class="nav-tab<?php if($Grenctab=='dis') echo ' nav-tab-active'; ?>"><?php _e('Display', 'rencontre'); ?></a>
+			<a href="admin.php?page=rencontre.php&renctab=mel" class="nav-tab<?php if($Grenctab=='mel') echo ' nav-tab-active'; ?>"><?php _e('E-mails', 'rencontre'); ?></a>
+			<a href="admin.php?page=rencontre.php&renctab=csv" class="nav-tab<?php if($Grenctab=='csv') echo ' nav-tab-active'; ?>"><?php _e('CSV', 'rencontre'); ?></a>
 		<?php $hoPre = false;
 		if(has_filter('rencPremiumOptP', 'f_rencPremiumOptP')) $hoPre = apply_filters('rencPremiumOptP', 1);
 		if($hoPre) { ?>
 			
-			<a href="admin.php?page=rencontre.php&renctab=pre" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='pre') echo ' nav-tab-active'; ?>"><?php _e('Premium', 'rencontre'); ?></a>
+			<a href="admin.php?page=rencontre.php&renctab=pre" class="nav-tab<?php if($Grenctab=='pre') echo ' nav-tab-active'; ?>"><?php _e('Premium', 'rencontre'); ?></a>
 		<?php } ?>
 		</h2>
-	<?php if(!empty($_GET['renctab'])) {
-		if($_GET['renctab']=='log') rencTabLog();
-		else if($_GET['renctab']=='dis') rencTabDis();
-		else if($_GET['renctab']=='mel') rencTabMel();
-		else if($_GET['renctab']=='csv') rencTabCsv();
-		else if($hoPre && $_GET['renctab']=='pre') rencTabPre();
+	<?php if(!empty($Grenctab)) {
+		if($Grenctab=='log') rencTabLog();
+		else if($Grenctab=='dis') rencTabDis();
+		else if($Grenctab=='mel') rencTabMel();
+		else if($Grenctab=='csv') rencTabCsv();
+		else if($hoPre && $Grenctab=='pre') rencTabPre();
 		?>
 		
 	</div>
 	<div style="clear:both;"></div>
 	<?php return;
 	}
-	if(isset($_POST['rencCode']) && $_POST['rencCode']=='cleanup') {
+	if($Prenccode=='cleanup') {
 		echo '<div class="notice notice-success is-dismissible"><p>'.rencCleanupPhotos().'</p></div>';
 	}
 	?>
 	
 		<h2>Rencontre&nbsp;<span style='font-size:80%;'><?php echo $rencVersion; ?></span></h2>
 		<?php if(!function_exists('openssl_encrypt')) echo '<p style="color:#d54e21;">'.__('OpenSSL doesn\'t seem to be working. Some features of this plugin will not be available.', 'rencontre').'</p>'; ?>
-		<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php">
+		<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&tok=<?php echo $_SESSION['rencToka']; ?>">
 			<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 				<tr valign="top">
 					<th scope="row"><label><?php _e('Plugin page', 'rencontre'); ?></label></th>
@@ -1217,14 +1236,14 @@ function rencMenuGeneral() {
 			</p>
 		</form>
 		<hr />
-		<?php if(isset($_GET['bottom'])) echo '<script>jQuery("html,body").animate({scrollTop:jQuery(document).height()},1000);</script>'."\r\n"; ?>
+		<?php if(!empty($Gbottom)) echo '<script>jQuery("html,body").animate({scrollTop:jQuery(document).height()},1000);</script>'."\r\n"; ?>
 		<h2><?php _e('Images names','rencontre') ?></h2>
 		<p><?php _e('Be careful, all pictures of the members will have another name.','rencontre') ?>
-		<form method="post" name="rencontre_code" action="admin.php?page=rencontre.php">
+		<form method="post" name="rencontre_code" action="admin.php?page=rencontre.php&tok=<?php echo $_SESSION['rencToka']; ?>">
 			<input id="rencCode" type="hidden" name="rencCode" value="" />
 			<?php
-			if(isset($_POST['rencCode']) && $_POST['rencCode']=='code') renc_encodeImg('1');
-			else if(isset($_POST['rencCode']) && $_POST['rencCode']=='back') renc_encodeImg('0');
+			if($Prenccode=='code') renc_encodeImg('1');
+			else if($Prenccode=='back') renc_encodeImg('0');
 			$cod = rencImEncoded();
 			if($cod===1) echo '<p style="color:green;">'. __('Images names are encoded','rencontre');
 			else if($cod===0) echo '<p style="color:#D54E21;">'. __('Images names are not encoded','rencontre');
@@ -1250,7 +1269,7 @@ function rencTabLog() {
 	global $rencOpt;
 	?>
 	
-	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=log">
+	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=log&tok=<?php echo $_SESSION['rencToka']; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
 				<th scope="row"><label><?php _e('AppID for Facebook login (empty if not installed)', 'rencontre'); ?></label></th>
@@ -1280,7 +1299,8 @@ function rencTabDis() {
 	global $rencOpt; global $rencCustom;
 	require(dirname (__FILE__) . '/../lang/rencontre-js-admin-lang.php');
 	wp_localize_script('rencontre', 'rencobjet', $lang);
-	if(!empty($_GET['reloadhomepage'])) {
+	$Greloadhomepage = (isset($_GET['reloadhomepage'])?rencSanit($_GET['reloadhomepage'],'int'):'');
+	if(!empty($Greloadhomepage)) {
 		renc_clear_cache_portrait(1);
 		echo '<div class="notice notice-success is-dismissible"><p>'.__('Done!', 'rencontre').'</p></div>';
 	}
@@ -1288,7 +1308,7 @@ function rencTabDis() {
 	foreach($size as $s) if($s['label']=='-libre') $wlibre = $s['width'];
 	?>
 	
-	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=dis">
+	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=dis&tok=<?php echo $_SESSION['rencToka']; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Display a different name than login', 'rencontre'); ?></label></th>
@@ -1437,7 +1457,7 @@ function rencTabMel() {
 	global $rencOpt; global $rencDiv; global $rencCustom;
 	?>
 	
-	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel">
+	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel&tok=<?php echo $_SESSION['rencToka']; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Send an email to the user whose account is deleted', 'rencontre'); ?></label></th>
@@ -1617,8 +1637,22 @@ function rencMenuMembres() {
 	}
 	$rencModerType = rencModerType(); // rencontre_filter.php
 	if(!empty($rencModerType['case'])) $moderTyp = $rencModerType['case'];
+	$Gid = (isset($_GET['id'])?rencSanit($_GET['id'],'int'):'');
+	$Gtri = (isset($_GET['tri'])?rencSanit($_GET['tri'],'alphanum'):'');
+	$Gpagenum = (isset($_GET['pagenum'])?rencSanit($_GET['pagenum'],'int'):'');
+	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
+	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'alphanum'):'');
+	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
+	$Pmoder = (isset($_POST['moder'])?rencSanit($_POST['moder'],'int'):'');
+	$Ppseu = (isset($_POST['pseu'])?rencSanit($_POST['pseu'],'text'):'');
+	$rencToka = bin2hex(random_bytes(6));
+	$tok = (!empty($_SESSION['rencToka'])?$_SESSION['rencToka']:''); // previous
+	$tokt = (!empty($_SESSION['rencTokat'])?$_SESSION['rencTokat']:''); // previous
+	$_SESSION['rencToka'] = $rencToka;
+	$_SESSION['rencTokat'] = time();
 	?>
 	<div class='wrap' style="font-size:13px;line-height:1.4em;">
+		<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
 		<div id="bulle"></div>
 		<div class='icon32' id='icon-options-general'><br/></div>
 		<h2>Rencontre&nbsp;<span style='font-size:60%;'><?php echo $rencVersion; ?></span></h2>
@@ -1641,7 +1675,7 @@ function rencMenuMembres() {
 		$hostat = ''; if(has_filter('rencStatP', 'f_rencStatP')) $hostat = apply_filters('rencStatP', $hostat);
 		echo '<div class="button-primary" onClick="rencStat()">'.__('Statistic','rencontre').'</div><div id="rencStat" style="display:none;"><div id="rencStat1" style="float:left;height:300px;width:600px;"></div><div id="rencStat2" style="float:left;height:300px;width:400px;"></div>'.$hostat.'</div><div style="clear:left;"></div>';
 		// 1. ALL MEMBERS
-		if(!isset($_GET["id"])) { ?>
+		if(empty($Gid)) { ?>
 		
 			<?php 
 			$q = $wpdb->get_results("SELECT
@@ -1671,27 +1705,28 @@ function rencMenuMembres() {
 			<label><?php _e('Alias or email or ID', 'rencontre'); ?> : </label>
 			<input type="text" name="pseu" />
 			<input type="submit" class="button-primary" value="<?php _e('Find', 'rencontre'); ?>" />
+			<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
 		</form>
 			<?php
 			$ho = false; if(has_filter('rencMurP', 'f_rencMurP')) $ho = apply_filters('rencMurP', $ho); if($ho) echo $ho;
-			if(!empty($_POST["a1"]) && !empty($_POST["a2"])) {
-				if($_POST["a2"]=='b0' || $_POST["a2"]=='b1' || $_POST["a2"]=='m0' || $_POST["a2"]=='m1') {
+			if($Pa1 && $Pa2 && $tok===$Ptok && $tokt>time()-1800) {
+				if($Pa2=='b0' || $Pa2=='b1' || $Pa2=='m0' || $Pa2=='m1') {
 					// Status : blocked = +1 ; no message = +2 ; (both : 3) ; fastreg : 4
-					$st = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$_POST["a1"]."' LIMIT 1");
+					$st = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$Pa1."' LIMIT 1");
 					if(!rencistatus($st,2)) {
-						if($_POST["a2"]=='b1') $st = rencistatusSet($st,0,0); // ($st>1?2:0);
-						else if($_POST["a2"]=='b0') $st = rencistatusSet($st,0,1); // ($st>1?3:1);
-						else if($_POST["a2"]=='m1') $st = rencistatusSet($st,1,0); // (($st==1||$st==3)?1:0);
-						else if($_POST["a2"]=='m0') $st = rencistatusSet($st,1,1); // (($st==1||$st==3)?3:2);
-						$wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>$st), array('user_id'=>$_POST["a1"]));
+						if($Pa2=='b1') $st = rencistatusSet($st,0,0); // ($st>1?2:0);
+						else if($Pa2=='b0') $st = rencistatusSet($st,0,1); // ($st>1?3:1);
+						else if($Pa2=='m1') $st = rencistatusSet($st,1,0); // (($st==1||$st==3)?1:0);
+						else if($Pa2=='m0') $st = rencistatusSet($st,1,1); // (($st==1||$st==3)?3:2);
+						$wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>$st), array('user_id'=>$Pa1));
 					}
 				}
 				else {
-					$email = f_userSupp($_POST["a1"],$_POST["a2"],1);
+					$email = f_userSupp($Pa1,$Pa2,1);
 					if(!empty($rencOpt['mailsupp']) && $email) {
 						$objet = (!empty($rencModerType['title'])?$rencModerType['title']:wp_specialchars_decode($rencDiv['blogname'], ENT_QUOTES).' - '.__('Account deletion','rencontre'));
 						$message  = (!empty($rencModerType['content'])?$rencModerType['content']:__('Your account has been deleted','rencontre').'<br>');
-						if(!empty($_POST['moder']) && !empty($rencModerType['case'][$_POST['moder']])) $message .= $rencModerType['case'][$_POST['moder']];
+						if($Pmoder && !empty($rencModerType['case'][($Pmoder-1)])) $message .= $rencModerType['case'][($Pmoder-1)];
 						@wp_mail($email, $objet, $message);
 					}
 				}
@@ -1699,33 +1734,33 @@ function rencMenuMembres() {
 			$tri = "";
 			$ho = false; if(has_filter('rencMemP', 'f_rencMemP')) $ho = apply_filters('rencMemP', $ho); // ouput : array()
 			$hoip = false; if(has_filter('rencMemipP', 'f_rencMemipP')) $hoip = apply_filters('rencMemipP', 0); // 0 : title
-			if(isset($_GET['tri'])) {
+			if(!empty($Gtri)) {
 				$p = 'c_pays';
 				if(isset($rencCustom['pays']) && isset($rencCustom['region'])) $p = 'c_ville';
 				else if(isset($rencCustom['pays'])) $p = 'c_region';
-				if($_GET['tri']=='id') $tri='ORDER BY R.user_id ASC';
-				else if($_GET['tri']=='Rid') $tri='ORDER BY R.user_id DESC';
-				else if($_GET['tri']=='pseudo') $tri='ORDER BY U.user_login ASC';
-				else if($_GET['tri']=='Rpseudo') $tri='ORDER BY U.user_login DESC';
-				else if($_GET['tri']=='age') $tri='ORDER BY R.d_naissance DESC';
-				else if($_GET['tri']=='Rage') $tri='ORDER BY R.d_naissance ASC';
-				else if($_GET['tri']=='pays') $tri='ORDER BY R.'.$p.' ASC, P.d_modif DESC';
-				else if($_GET['tri']=='Rpays') $tri='ORDER BY R.'.$p.' DESC, P.d_modif DESC';
-				else if($_GET['tri']=='modif') $tri='ORDER BY P.d_modif ASC';
-				else if($_GET['tri']=='Rmodif') $tri='ORDER BY P.d_modif DESC';
-				else if($_GET['tri']=='ip') $tri='ORDER BY R.c_ip ASC';
-				else if($_GET['tri']=='Rip') $tri='ORDER BY R.c_ip DESC';
-				else if($_GET['tri']=='signal') $tri='ORDER BY length(P.t_signal) DESC, P.d_modif DESC';
-				else if($_GET['tri']=='action') $tri='ORDER BY R.i_status DESC, P.d_modif DESC';
-				else if($ho!==false && isset($ho[5]) && isset($ho[6]) && $_GET['tri']==$ho[5]) $tri=$ho[6];
+				if($Gtri=='id') $tri='ORDER BY R.user_id ASC';
+				else if($Gtri=='Rid') $tri='ORDER BY R.user_id DESC';
+				else if($Gtri=='pseudo') $tri='ORDER BY U.user_login ASC';
+				else if($Gtri=='Rpseudo') $tri='ORDER BY U.user_login DESC';
+				else if($Gtri=='age') $tri='ORDER BY R.d_naissance DESC';
+				else if($Gtri=='Rage') $tri='ORDER BY R.d_naissance ASC';
+				else if($Gtri=='pays') $tri='ORDER BY R.'.$p.' ASC, P.d_modif DESC';
+				else if($Gtri=='Rpays') $tri='ORDER BY R.'.$p.' DESC, P.d_modif DESC';
+				else if($Gtri=='modif') $tri='ORDER BY P.d_modif ASC';
+				else if($Gtri=='Rmodif') $tri='ORDER BY P.d_modif DESC';
+				else if($Gtri=='ip') $tri='ORDER BY R.c_ip ASC';
+				else if($Gtri=='Rip') $tri='ORDER BY R.c_ip DESC';
+				else if($Gtri=='signal') $tri='ORDER BY length(P.t_signal) DESC, P.d_modif DESC';
+				else if($Gtri=='action') $tri='ORDER BY R.i_status DESC, P.d_modif DESC';
+				else if($ho!==false && isset($ho[5]) && isset($ho[6]) && $Gtri==$ho[5]) $tri=$ho[6];
 			}
 			else $tri='ORDER BY P.d_modif DESC';
-			if(isset($_POST['pseu']) && $_POST['pseu']!="") {
-				$tri = "and (U.user_login='".$_POST['pseu']."' or U.user_email='".$_POST['pseu']."' or U.ID='".$_POST['pseu']."') ".$tri;
+			if($Ppseu) {
+				$tri = "and (U.user_login='".$Ppseu."' or U.user_email='".$Ppseu."' or U.ID='".$Ppseu."') ".$tri;
 				$pagenum = 1;
 				$page_links= 1;
 			}
-			else $pagenum = isset($_GET['pagenum'])?absint($_GET['pagenum']):1;
+			else $pagenum = !empty($Gpagenum)?$Gpagenum:1;
 			$limit = ($hoip?50:100);
 			$q = $wpdb->get_results("SELECT 
 					U.ID, 
@@ -1765,33 +1800,35 @@ function rencMenuMembres() {
 					<?php if(!empty($rencOpt['mailsupp'])) {
 						echo '<header class="w3-container w3-orange"><h2 class="w3-center">'.__('Reason for this action','rencontre').'</h2></header>';
 						echo '<div class="w3-container"><form name="popModer"><div class="w3-section">';
+						echo '<input type="hidden" name="tok" value="'.$_SESSION['rencToka'].'" />';
 						foreach($moderTyp as $k=>$v) {
 							echo '<input type="radio" name="modertyp" class="w3-input" value="'.$k.'" /> : <label>'.$v.'</label><br />';
 						}
-						echo '</div><div class="w3-section w3-right-align"><input type="button" class="button-primary" onClick="document.forms[\'listUser\'].elements[\'moder\'].value=document.forms[\'popModer\'].elements[\'modertyp\'].value;document.forms[\'listUser\'].submit();" value="'.__('Send','rencontre').'" /></div></form></div>';
+						echo '</div><div class="w3-section w3-right-align"><input type="button" class="button-primary" onClick="document.forms[\'listUser\'].elements[\'moder\'].value=document.forms[\'popModer\'].elements[\'modertyp\'].value+1;document.forms[\'listUser\'].submit();" value="'.__('Send','rencontre').'" /></div></form></div>';
 					} ?>
 				</div>
 			</div>
-			<form name='listUser' method='post' action=''>
-			<input type='hidden' name='a1' value='' />
-			<input type='hidden' name='a2' value='' />
-			<input type='hidden' name='moder' value='' />
+			<form name="listUser" method="post" action="">
+			<input type="hidden" name="a1" value="" />
+			<input type="hidden" name="a2" value="" />
+			<input type="hidden" name="moder" value="" />
+			<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
 			<script>var rencVarModer=<?php echo (empty($rencOpt['mailsupp'])?0:1); ?>;</script>
 			<table class="membre">
 				<tr>
-					<td><a href="admin.php?page=rencmembers&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='id') echo 'R'; ?>id" title="<?php _e('Sort','rencontre'); ?>">ID</a></td>
+					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='id') echo 'R'; ?>id" title="<?php _e('Sort','rencontre'); ?>">ID</a></td>
 					<td><a href="admin.php?page=rencmembers&tri=action" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Action','rencontre');?></a></td>
 					<td><?php _e('Photo','rencontre');?></td>
-					<td><a href="admin.php?page=rencmembers&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='pseudo') echo 'R'; ?>pseudo" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Alias','rencontre');?></a><br /><i><?php _e('My name','rencontre'); ?></i></td>
+					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='pseudo') echo 'R'; ?>pseudo" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Alias','rencontre');?></a><br /><i><?php _e('My name','rencontre'); ?></i></td>
 					<td><?php _e('Sex','rencontre');?></td>
-					<td><a href="admin.php?page=rencmembers&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='age') echo 'R'; ?>age" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Age','rencontre');?><a></td>
+					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='age') echo 'R'; ?>age" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Age','rencontre');?><a></td>
 					<?php if(!isset($rencCustom['size'])) echo '<td>'.__('Height','rencontre').'</td>'; ?>
 					<?php if(!isset($rencCustom['weight'])) echo '<td>'.__('Weight','rencontre').'</td>'; ?>
 					<td><?php _e('Search','rencontre');?></td>
 					<td><?php _e('Hang','rencontre');?></td>
-					<?php if(!isset($rencCustom['place'])) echo '<td><a href="admin.php?page=rencmembers&tri='.((isset($_GET['tri']) && $_GET['tri']=='pays')?'R':'').'pays" title="'.__('Sort','rencontre').'">'.__('Place','rencontre').'</a></td>'; ?>
-					<td><a href="admin.php?page=rencmembers&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='modif') echo 'R'; ?>modif" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Ad (change)','rencontre');?></a><br /><em style="font-size:.9em;color:#777;"><?php _e('Registered','rencontre');?></em></td>
-					<td><a href="admin.php?page=rencmembers&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='ip') echo 'R'; ?>ip" title="<?php _e('Sort','rencontre'); ?>"><?php _e('IP address','rencontre');?></a></td>
+					<?php if(!isset($rencCustom['place'])) echo '<td><a href="admin.php?page=rencmembers&tri='.(($Gtri=='pays')?'R':'').'pays" title="'.__('Sort','rencontre').'">'.__('Place','rencontre').'</a></td>'; ?>
+					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='modif') echo 'R'; ?>modif" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Ad (change)','rencontre');?></a><br /><em style="font-size:.9em;color:#777;"><?php _e('Registered','rencontre');?></em></td>
+					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='ip') echo 'R'; ?>ip" title="<?php _e('Sort','rencontre'); ?>"><?php _e('IP address','rencontre');?></a></td>
 					<?php if($hoip) echo '<td>'.$hoip.'</td>'; ?>
 					<td><a href="admin.php?page=rencmembers&tri=signal" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Reporting','rencontre');?></a></td>
 					<?php if($ho) echo '<td>'.$ho[2].'</td>'; ?>
@@ -1897,7 +1934,7 @@ function rencMenuMembres() {
 		}
 		// 2. MEMBER PROFIL
 		else {
-			$id = $_GET["id"];
+			$id = $Gid;
 			$q = $wpdb->get_results("SELECT
 					P.id,
 					P.c_categ,
@@ -1923,12 +1960,12 @@ function rencMenuMembres() {
 					$in[$r->id][3] = $r->t_valeur;
 				}
 			}
-			if(isset($_POST["a1"]) &&  isset($_POST["rnd"]) && isset($_SESSION["rnd"]) && $_POST["rnd"]==$_SESSION["rnd"]) {
-				if($_POST["a1"]=="suppImg") RencontreWidget::suppImg($_POST["a2"],$id);
-				if($_POST["a1"]=="plusImg") RencontreWidget::plusImg($_POST["a2"],$id);
-				if($_POST["a1"]=="suppImgAll") RencontreWidget::suppImgAll($id);
+			if($Pa1 && $tok===$Ptok && $tokt>time()-1800) {
+				if($Pa1=='suppImg') RencontreWidget::suppImg($Pa2,$id);
+				else if($Pa1=='plusImg') RencontreWidget::plusImg($Pa2,$id);
+				else if($Pa1=='suppImgAll') RencontreWidget::suppImgAll($id);
+				else if($Pa1=='sauvProfil') sauvProfilAdm($in,$id);
 			}
-			if(isset($_POST["a1"]) && $_POST["a1"]=="sauvProfil") sauvProfilAdm($in,$id);
 			$s = $wpdb->get_row("SELECT 
 					U.ID, 
 					U.display_name, 
@@ -1963,7 +2000,6 @@ function rencMenuMembres() {
 					R.user_id=".$id." 
 				LIMIT 1
 				");
-			$_SESSION['rnd'] = md5(rand(0,10000000));
 			?>
 			
 			<h3><?php _e('Change My Profile','rencontre');?></h3>
@@ -1973,7 +2009,7 @@ function rencMenuMembres() {
 					<input type="hidden" name="a1" value="" />
 					<input type="hidden" name="a2" value="" />
 					<input type="hidden" name="page" value="" />
-					<input type="hidden" name="rnd" value="<?php echo $_SESSION['rnd']; ?>" />
+					<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
 					<div id="portraitSauv"><span onClick="f_sauv_profil(<?php echo $id; ?>)"><?php _e('Save profile','rencontre');?></span></div>
 					<div class="petiteBox portraitPhoto left">
 						<div class="rencBox">
@@ -2240,6 +2276,9 @@ function rencMenuMembres() {
 									}
 									$out2 .= '</select></td></tr>'."\n";
 								break;
+								case 6:
+									$out2 .= '<tr><td>'.$r1[2].'</td><td><input type="date" name="date'.$r.'" value="'.(isset($out[$r])?$out[$r]:'').'" /></td></tr>'."\n";
+								break;
 							}
 							$d = $r1[1];
 						}
@@ -2247,7 +2286,7 @@ function rencMenuMembres() {
 						echo $out1.$out2;
 						?>
 						
-							<em id="infoChange"><?php if(isset($_POST["a1"]) && $_POST["a1"]=="sauvProfil") _e('Done','rencontre'); ?>&nbsp;</em>
+							<em id="infoChange"><?php if($Pa1=='sauvProfil') _e('Done','rencontre'); ?>&nbsp;</em>
 						</div>
 					</div>
 					<?php
@@ -2269,26 +2308,33 @@ function rencMenuPrison() {
 	require(dirname (__FILE__) . '/../lang/rencontre-js-admin-lang.php');
 	wp_localize_script('rencontre', 'rencobjet', $lang);
 	global $wpdb; global $rencOpt; global $rencDiv; global $rencVersion;
+	$Gtri = (isset($_GET['tri'])?rencSanit($_GET['tri'],'alphanum'):'');
+	$Gpagenum = (isset($_GET['pagenum'])?rencSanit($_GET['pagenum'],'int'):'');
+	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'int'):'');
+	if($Pa1) f_userPrison($Pa1);
+	$rencToka = bin2hex(random_bytes(6));
+	$_SESSION['rencToka'] = $rencToka;
+	$_SESSION['rencTokat'] = time();
 	?>
 	<div class='wrap'>
+		<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
 		<div class='icon32' id='icon-options-general'><br/></div>
 		<h2>Rencontre&nbsp;<span style='font-size:60%;'><?php echo $rencVersion; ?></span></h2>
 		<h2><?php _e('Jail', 'rencontre'); ?></h2>
 		<p><?php _e('List of members removed by Admin. They are blacklisted. Subscription blocked', 'rencontre'); ?>&nbsp;<span style='color:#111;font-weight:700;'><?php echo (empty($rencOpt['prison'])?7:$rencOpt['prison']); ?></span>&nbsp;<?php _e('days', 'rencontre'); ?>.</p>
 		<?php 
-		if(isset($_POST["a1"])) f_userPrison($_POST["a1"]);
 		$tri='ORDER BY Q.d_prison DESC';
-		if(isset($_GET['tri'])) {
-			if($_GET['tri']=='date') $tri='ORDER BY Q.d_prison ASC';
-			else if($_GET['tri']=='Rdate') $tri='ORDER BY Q.d_prison DESC';
-			else if($_GET['tri']=='mail') $tri='ORDER BY Q.c_mail ASC';
-			else if($_GET['tri']=='Rmail') $tri='ORDER BY Q.c_mail DESC';
-			else if($_GET['tri']=='ip') $tri='ORDER BY Q.c_ip ASC';
-			else if($_GET['tri']=='Rip') $tri='ORDER BY Q.c_ip DESC';
-			else if($_GET['tri']=='typ') $tri='ORDER BY Q.i_type ASC';
-			else if($_GET['tri']=='Rtyp') $tri='ORDER BY Q.i_type DESC';
+		if(!empty($Gtri)) {
+			if($Gtri=='date') $tri='ORDER BY Q.d_prison ASC';
+			else if($Gtri=='Rdate') $tri='ORDER BY Q.d_prison DESC';
+			else if($Gtri=='mail') $tri='ORDER BY Q.c_mail ASC';
+			else if($Gtri=='Rmail') $tri='ORDER BY Q.c_mail DESC';
+			else if($Gtri=='ip') $tri='ORDER BY Q.c_ip ASC';
+			else if($Gtri=='Rip') $tri='ORDER BY Q.c_ip DESC';
+			else if($Gtri=='typ') $tri='ORDER BY Q.i_type ASC';
+			else if($Gtri=='Rtyp') $tri='ORDER BY Q.i_type DESC';
 		}
-		$pagenum = isset($_GET['pagenum'])?absint($_GET['pagenum']):1;
+		$pagenum = !empty($Gpagenum)?$Gpagenum:1;
 		$limit = 100;
 		$q = $wpdb->get_results("SELECT
 				Q.id,
@@ -2304,14 +2350,16 @@ function rencMenuPrison() {
 		$page_links = paginate_links(array('base'=>add_query_arg('pagenum','%#%'),'format'=>'','prev_text'=>'&laquo;','next_text'=>'&raquo;','total'=>ceil($total/$limit),'current'=>$pagenum,'mid_size'=>5));
 		if($page_links) echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">'.$page_links.'</div></div>';
 		?>
-		<form name='listPrison' method='post' action=''><input type='hidden' name='a1' value='' />
+		<form name="listPrison" method="post" action="">
+		<input type="hidden" name="a1" value="" />
+		<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
 		<table class="prison">
 			<tr>
-				<td><a href="admin.php?page=rencjail&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='date') echo 'R'; ?>date" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Date','rencontre');?></a></td>
-				<td><a href="admin.php?page=rencjail&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='mail') echo 'R'; ?>mail" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Email address','rencontre');?></a></td>
-				<td><a href="admin.php?page=rencjail&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='ip') echo 'R'; ?>ip" title="<?php _e('Sort','rencontre'); ?>"><?php _e('IP address','rencontre');?><a></td>
+				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='date') echo 'R'; ?>date" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Date','rencontre');?></a></td>
+				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='mail') echo 'R'; ?>mail" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Email address','rencontre');?></a></td>
+				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='ip') echo 'R'; ?>ip" title="<?php _e('Sort','rencontre'); ?>"><?php _e('IP address','rencontre');?><a></td>
 				<td><?php _e('End','rencontre');?></td>
-				<td><a href="admin.php?page=rencjail&tri=<?php if(isset($_GET['tri']) && $_GET['tri']=='typ') echo 'R'; ?>typ" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Banning','rencontre');?><a></td>
+				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='typ') echo 'R'; ?>typ" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Banning','rencontre');?><a></td>
 			</tr>
 		<?php
 		foreach($q as $s) {
@@ -2338,7 +2386,16 @@ function rencMenuProfil() {
 	require(dirname(__FILE__).'/../lang/rencontre-js-admin-lang.php');
 	wp_localize_script('rencontre', 'rencobjet', $lang);
 	global $wpdb; global $rencVersion; global $rencCustom; global $rencOpt; global $rencDiv;
+	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
+	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'int'):'');
+	$Pa4 = (isset($_POST['a4'])?rencSanit($_POST['a4'],'words'):'');
+	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
 	$loc = substr(get_locale(),0,2); $loc2 = $loc."&";
+	$rencToka = bin2hex(random_bytes(6));
+	$tok = (!empty($_SESSION['rencToka'])?$_SESSION['rencToka']:''); // previous
+	$tokt = (!empty($_SESSION['rencTokat'])?$_SESSION['rencTokat']:''); // previous
+	$_SESSION['rencToka'] = $rencToka;
+	$_SESSION['rencTokat'] = time();
 	$q2 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$loc."' LIMIT 1");
 	if(!$q2) {
 		$loc = 'en'; $loc2 = 'en&';
@@ -2357,20 +2414,16 @@ function rencMenuProfil() {
 		if(isset($a['iam'])) unset($a['iam']);
 		update_option('rencontre_options',$a);
 	}
-	if(!isset($_SESSION["a2"])) $_SESSION["a2"] = "off";
-	if(!isset($_SESSION["a4"])) $_SESSION["a4"] = "off";
-	if(isset($_POST["a1"]) && isset($_POST["a2"]) && isset($_POST["a4"]) && !($_SESSION['a2']==$_POST["a2"] && $_SESSION['a4']==$_POST["a4"]) || (isset($_POST["a6"]) && $_POST["a6"]!='')) {
-		if($_POST["a1"]=="edit") profil_edit($_POST["a2"],$_POST["a3"],$_POST["a4"],$_POST["a5"],$_POST["a6"]);
-		else if($_POST["a1"]=="plus") profil_plus($_POST["a2"],$_POST["a3"],$_POST["a4"],$_POST["a5"]);
-		else if($_POST["a1"]=="langplus") profil_langplus($loc,$_POST["a4"]);
-		else if($_POST["a1"]=="langsupp") profil_langsupp($_POST["a4"]);
-		else if($_POST["a1"]=="synchro") rencSynchronise();
-		else if($_POST["a1"]=="profil") profil_defaut();
-		else if($_POST["a1"]=="pays") liste_defaut();
-	}
-	if(isset($_POST["a1"])) {
-		$_SESSION['a2'] = $_POST["a2"];
-		$_SESSION['a4'] = $_POST["a4"];
+	if(!isset($_SESSION['a2'])) $_SESSION['a2'] = 'off';
+	if(!isset($_SESSION['a4'])) $_SESSION['a4'] = 'off';
+	if($Pa1 && ($_SESSION['a2']!=$Pa2 || $_SESSION['a4']!=$Pa4) && $tok===$Ptok && $tokt>time()-1800) {
+		if($Pa1=='langplus') profil_langplus($loc,$Pa4); // JS f_langplus()
+		else if($Pa1=='langsupp') profil_langsupp($Pa4); // JS f_langsupp()
+		else if($Pa1=='synchro') rencSynchronise(); // JS f_synchronise()
+		else if($Pa1=='profil') profil_defaut(); // this
+		else if($Pa1=='pays') liste_defaut();
+		$_SESSION['a2'] = $Pa2;
+		$_SESSION['a4'] = $Pa4;
 	}
 	$q2 = $wpdb->get_results("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang!='".$loc."' GROUP BY c_lang ");
 	if($q2!=null) foreach($q2 as $r2) { $loc2 .= $r2->c_lang."&"; }
@@ -2381,9 +2434,11 @@ function rencMenuProfil() {
 	}
 	?>
 <div class='wrap'>
+	<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
 	<form name='menu_profil' method='post' action=''>
 		<input type='hidden' name='a1' value='' /><input type='hidden' name='a2' value='' /><input type='hidden' name='a3' value='' />
 		<input type='hidden' name='a4' value='' /><input type='hidden' name='a5' value='' /><input type='hidden' name='a6' value='' />
+		<input type='hidden' name='tok' value='<?php echo $_SESSION['rencToka']; ?>' />
 	</form>
 	<div class='icon32' id='icon-options-general'><br/></div>
 	<h2>Rencontre&nbsp;<span style='font-size:60%;'><?php echo $rencVersion; ?></span></h2>
@@ -2589,17 +2644,30 @@ function rencMenuPays() {
 	require(dirname (__FILE__) . '/../lang/rencontre-js-admin-lang.php');
 	wp_localize_script('rencontre', 'rencobjet', $lang);
 	global $wpdb; global $rencDiv; global $rencVersion; global $rencOpt;
-	if(isset($_POST["a1"]) && $_POST["a1"]=="cleaner") rencCountryCleaner();
+	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
+	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
+	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'alphanum'):'');
+	$Pa3 = (isset($_POST['a3'])?rencSanit($_POST['a3'],'alphanum'):'');
+	$Pa4 = urldecode((isset($_POST['a4'])?rencSanit($_POST['a4'],'url'):''));
+	$Pa5 = (isset($_POST['a5'])?rencSanit($_POST['a5'],'words'):'');
+	$Pa6 = (isset($_POST['a6'])?rencSanit($_POST['a6'],'text'):'');
+	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
+	if($Pa1=='cleaner') rencCountryCleaner();
+	$rencToka = bin2hex(random_bytes(6));
+	$tok = (!empty($_SESSION['rencToka'])?$_SESSION['rencToka']:''); // previous
+	$tokt = (!empty($_SESSION['rencTokat'])?$_SESSION['rencTokat']:''); // previous
+	$_SESSION['rencToka'] = $rencToka;
+	$_SESSION['rencTokat'] = time();
 	?>
 	
 	<div id="rencCon" class='wrap' style="max-width:620px;">
+		<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
 		<h2 class="nav-tab-wrapper">
-			<a href="admin.php?page=renccountry" class="nav-tab<?php if(empty($_GET['renctab'])) echo ' nav-tab-active'; ?>"><?php _e('Countries and Regions', 'rencontre'); ?></a>
-			<a href="admin.php?page=renccountry&renctab=cle" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='cle') echo ' nav-tab-active'; ?>"><?php _e('Cleaner', 'rencontre'); ?></a>
+			<a href="admin.php?page=renccountry" class="nav-tab<?php if(empty($Grenctab)) echo ' nav-tab-active'; ?>"><?php _e('Countries and Regions', 'rencontre'); ?></a>
+			<a href="admin.php?page=renccountry&renctab=cle" class="nav-tab<?php if($Grenctab=='cle') echo ' nav-tab-active'; ?>"><?php _e('Cleaner', 'rencontre'); ?></a>
 		</h2>
-	<?php if(!empty($_GET['renctab'])) {
-		if($_GET['renctab']=='cle') rencTabCle();
-	?>
+	<?php if(!empty($Grenctab)) {
+		if($Grenctab=='cle') rencTabCle(); ?>
 		
 	</div>
 	<div style="clear:both;"></div>
@@ -2630,17 +2698,19 @@ function rencMenuPays() {
 		if(isset($a['iam'])) unset($a['iam']);
 		update_option('rencontre_options',$a);
 	}
-	if(isset($_POST["a1"]) && (!isset($_SESSION['a2']) || !($_SESSION['a2']==$_POST["a2"] && $_SESSION['a4']==$_POST["a4"])) || (isset($_POST["a6"]) && $_POST["a6"]!='')) {
-		if($_POST["a1"]=="supp") liste_supp($_POST["a2"],$_POST["a3"],$_POST["a4"]);
-		else if($_POST["a1"]=="edit") liste_edit($_POST["a2"],$_POST["a3"],$_POST["a4"],$_POST["a5"],$_POST["a6"]);
-		else if($_POST["a1"]=="plus") liste_plus($_POST["a2"],$_POST["a3"],$_POST["a4"],$_POST["a5"],$_POST["a6"]);
-		else if($_POST["a1"]=="langplus") liste_langplus($loc,$_POST["a4"]);
-		else if($_POST["a1"]=="langsupp") liste_langsupp($_POST["a4"]);
-		else if($_POST["a1"]=="pays") liste_defaut();
+	if(!isset($_SESSION['a2']) || $_SESSION['a2']!=$Pa2 || $_SESSION['a4']!=$Pa4 || $Pa6) {
+		if($tok===$Ptok && $tokt>time()-1800) {
+			if($Pa1=='supp') liste_supp($Pa2,$Pa3,$Pa4);
+			else if($Pa1=='edit') liste_edit($Pa2,$Pa3,$Pa4,$Pa5,$Pa6);
+			else if($Pa1=='plus') liste_plus($Pa2,$Pa3,$Pa4,$Pa5,$Pa6);
+			else if($Pa1=='langplus') liste_langplus($loc,$Pa4);
+			else if($Pa1=='langsupp') liste_langsupp($Pa4);
+			else if($Pa1=='pays') liste_defaut();
+		}
 	}
-	if(isset($_POST["a1"])) {
-		$_SESSION['a2'] = $_POST["a2"];
-		$_SESSION['a4'] = $_POST["a4"];
+	if($Pa1) {
+		$_SESSION['a2'] = $Pa2;
+		$_SESSION['a4'] = $Pa4;
 	}
 	$q2 = $wpdb->get_results("SELECT c_liste_lang FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang!='".$loc."' and c_liste_lang!='' GROUP BY c_liste_lang ");
 	if($q2!=null) foreach($q2 as $r2) { $loc2 .= $r2->c_liste_lang."&"; }
@@ -2663,9 +2733,10 @@ function rencMenuPays() {
 	</div>
 	<?php } ?>
 	
-	<form name='menu_liste' method='post' action=''>
-		<input type='hidden' name='a1' value='' /><input type='hidden' name='a2' value='' /><input type='hidden' name='a3' value='' />
-		<input type='hidden' name='a4' value='' /><input type='hidden' name='a5' value='' /><input type='hidden' name='a6' value='' />
+	<form name="menu_liste" method="post" action="">
+		<input type="hidden" name="a1" value="" /><input type="hidden" name="a2" value="" /><input type="hidden" name="a3" value="" />
+		<input type="hidden" name="a4" value="" /><input type="hidden" name="a5" value="" /><input type="hidden" name="a6" value="" />
+		<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
 	</form>
 	<h2><?php _e('Countries and Regions', 'rencontre'); ?></h2>
 	<?php $n = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_liste");
@@ -2747,7 +2818,7 @@ function rencTabCle() {
 	global $wpdb; ?>
 	
 	<h2><?php _e('Cleaning missing regions in users data', 'rencontre'); ?></h2>
-	<form method="post" name="customForm" action="admin.php?page=renccountry&renctab=cle">
+	<form method="post" name="customForm" action="admin.php?page=renccountry&renctab=cle&tok=<?php echo $_SESSION['rencToka']; ?>">
 		<input type="hidden" name="a1" value="cleaner" />
 		<input type="hidden" name="a2" value="" />
 		<label><?php _e('Missing regions', 'rencontre'); ?> :</label><br />
@@ -2791,9 +2862,12 @@ function rencTabCle() {
 //
 function rencCountryCleaner() {
 	global $wpdb;
-	if(empty($_POST["misreg"]) || empty($_POST["curreg"])) return;
-	$a = explode('|',strip_tags($_POST["curreg"]));
-	$b = explode('|',strip_tags($_POST["misreg"]));
+	if(empty($_GET['tok']) || $_SESSION['rencToka']!==$_GET['tok'] || $_SESSION['rencTokat']<time()-1800) return;
+	$Pmisreg = (isset($_POST['misreg'])?rencSanit($_POST['misreg'],'text'):'');
+	$Pcurreg = (isset($_POST['curreg'])?rencSanit($_POST['curreg'],'text'):'');
+	if(!$Pmisreg || !$Pcurreg) return;
+	$a = explode('|',$Pcurreg);
+	$b = explode('|',$Pmisreg);
 	if(empty($a[1]) || empty($b[1])) return;
 	$q = $wpdb->query('UPDATE '.$wpdb->prefix.'rencontre_users
 		SET c_region="'.stripslashes($a[0]).'",c_pays="'.$a[1].'"
@@ -2805,21 +2879,27 @@ function rencMenuCustom() {
 	wp_enqueue_script('rencontre', plugins_url('rencontre/js/rencontre-adm.js'));
 	wp_enqueue_style( 'rencontre', plugins_url('rencontre/css/rencontre-adm.css'));
 	global $rencOpt; global $rencDiv; global $rencCustom;
-	if((isset($_POST['a1']) && $_POST['a1']=='custom')) f_update_custom($_POST); 
+	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
+	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
+	if($Pa1=='custom') f_update_custom($_POST); 
+	$rencToka = bin2hex(random_bytes(6));
+	$_SESSION['rencToka'] = $rencToka;
+	$_SESSION['rencTokat'] = time();
 	?>
 	
 	<div id="rencFea" class='wrap' style="max-width:620px;">
+		<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
 		<h2 class="nav-tab-wrapper">
-			<a href="admin.php?page=renccustom" class="nav-tab<?php if(empty($_GET['renctab'])) echo ' nav-tab-active'; ?>"><?php _e('Features', 'rencontre'); ?></a>
-			<a href="admin.php?page=renccustom&renctab=wor" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='wor') echo ' nav-tab-active'; ?>"><?php _e('Words', 'rencontre'); ?></a>
-			<a href="admin.php?page=renccustom&renctab=sea" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='sea') echo ' nav-tab-active'; ?>"><?php _e('Search', 'rencontre'); ?></a>
-			<a href="admin.php?page=renccustom&renctab=tem" class="nav-tab<?php if(isset($_GET['renctab']) && $_GET['renctab']=='tem') echo ' nav-tab-active'; ?>"><?php _e('Templates', 'rencontre'); ?></a>
+			<a href="admin.php?page=renccustom" class="nav-tab<?php if(empty($Grenctab)) echo ' nav-tab-active'; ?>"><?php _e('Features', 'rencontre'); ?></a>
+			<a href="admin.php?page=renccustom&renctab=wor" class="nav-tab<?php if($Grenctab=='wor') echo ' nav-tab-active'; ?>"><?php _e('Words', 'rencontre'); ?></a>
+			<a href="admin.php?page=renccustom&renctab=sea" class="nav-tab<?php if($Grenctab=='sea') echo ' nav-tab-active'; ?>"><?php _e('Search', 'rencontre'); ?></a>
+			<a href="admin.php?page=renccustom&renctab=tem" class="nav-tab<?php if($Grenctab=='tem') echo ' nav-tab-active'; ?>"><?php _e('Templates', 'rencontre'); ?></a>
 		</h2>
-	<?php if(!empty($_GET['renctab'])) {
-		if($_GET['renctab']=='wor') rencTabWor();
-		else if($_GET['renctab']=='sea') rencTabSea();
-		else if($_GET['renctab']=='tem') rencTabTem();
-		?>
+	<?php if(!empty($Grenctab)) {
+		if($Grenctab=='wor') rencTabWor();
+		else if($Grenctab=='sea') rencTabSea();
+		else if($Grenctab=='tem') rencTabTem();
+	?>
 		
 	</div>
 	<div style="clear:both;"></div>
@@ -2829,7 +2909,7 @@ function rencMenuCustom() {
 
 	<div class="wrap">
 		<div class="icon32" id="icon-options-general"><br/></div>
-		<form id="customForm" name="customForm" method="post" action="?page=renccustom">
+		<form id="customForm" name="customForm" method="post" action="?page=renccustom&tok=<?php echo $_SESSION['rencToka']; ?>">
 			<input type="hidden" name="a1" value="custom" />
 			<input type="hidden" name="a2" value="" />
 			<table class="form-table" style="max-width:600px;clear:none;">
@@ -3008,7 +3088,7 @@ function rencTabWor() {
 	if(!current_user_can("administrator")) die;
 	global $rencCustom; ?>
 	
-	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=wor">
+	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=wor&tok=<?php echo $_SESSION['rencToka']; ?>">
 		<input type="hidden" name="a1" value="custom" />
 		<input type="hidden" name="a2" value="" />
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
@@ -3140,7 +3220,7 @@ function rencTabSea() {
 	if(!current_user_can("administrator")) die;
 	global $rencCustom; global $rencDiv; global $wpdb; ?>
 	
-	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=sea">
+	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=sea&tok=<?php echo $_SESSION['rencToka']; ?>">
 		<input type="hidden" name="a1" value="custom" />
 		<input type="hidden" name="a2" value="" />
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
@@ -3221,7 +3301,7 @@ function rencTabTem() {
 	rencAddCustomW3css(1);
 	?>
 	
-	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=tem">
+	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=tem&tok=<?php echo $_SESSION['rencToka']; ?>">
 		<input type="hidden" name="a1" value="custom" />
 		<input type="hidden" name="a2" value="" />
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
@@ -3583,104 +3663,105 @@ function rencTabTem() {
 // *****************************************
 // **** AUTRES
 // *****************************************
-function f_update_custom($f) {
+function f_update_custom($P) {
 	if(!current_user_can("administrator")) die;
+	if(empty($_GET['tok']) || $_SESSION['rencToka']!==$_GET['tok'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $rencOpt; global $rencCustom;
+	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
 	$a = $rencCustom; $relationL = 0; $sexL = 0;
-	if(empty($_GET['renctab'])) {
-		if(isset($f['country'])) $a['country'] = $f['country']; else unset($a['country']);
-		if(isset($f['region'])) $a['region'] = $f['region']; else unset($a['region']);
-		if(isset($f['place'])) $a['place'] = $f['place']; else unset($a['place']);
-		if(isset($f['born'])) $a['born'] = $f['born']; else unset($a['born']);
-		if(isset($f['agemin'])) $a['agemin'] = $f['agemin']; else unset($a['agemin']);
-		if(isset($f['agemax'])) $a['agemax'] = $f['agemax']; else unset($a['agemax']);
-		if(isset($f['smile'])) $a['smile'] = $f['smile']; else unset($a['smile']);
-		if(isset($f['creq'])) $a['creq'] = $f['creq']; else unset($a['creq']);
-		if(isset($f['weight'])) $a['weight'] = $f['weight']; else unset($a['weight']);
-		if(isset($f['weightu'])) $a['weightu'] = $f['weightu']; else unset($a['weightu']);
-		if(isset($f['size'])) $a['size'] = $f['size']; else unset($a['size']);
-		if(isset($f['sizeu'])) $a['sizeu'] = $f['sizeu']; else unset($a['sizeu']);
-		if(isset($f['report'])) $a['report'] = $f['report']; else unset($a['report']);
-		if(isset($f['emot'])) $a['emot'] = $f['emot']; else unset($a['emot']);
-		if(isset($f['menu'])) $a['menu'] = $f['menu']; else unset($a['menu']);
-		if(isset($f['side'])) $a['side'] = $f['side']; else unset($a['side']);
-		if(isset($f['libreAd'])) $a['libreAd'] = $f['libreAd']; else unset($a['libreAd']);
-		if(isset($a['libreFlag'])) unset($a['libreFlag']); // removed 3.0
-		if(isset($f['librePhoto'])) $a['librePhoto'] = $f['librePhoto']; else unset($a['librePhoto']);
-		if(isset($f['relation'])) $a['relation'] = $f['relation']; else unset($a['relation']);
-		if(isset($f['sex'])) $a['sex'] = $f['sex']; else unset($a['sex']);
-		if(isset($f['multiSR'])) $a['multiSR'] = $f['multiSR']; else unset($a['multiSR']);
-		if(isset($f['hetero'])) $a['hetero'] = $f['hetero']; else unset($a['hetero']);
-		if(isset($f['blksex'])) $a['blksex'] = $f['blksex']; else unset($a['blksex']);
-		if(isset($f['reglink'])) $a['reglink'] = $f['reglink']; else unset($a['reglink']);
-		if(isset($f['unmail'])) $a['unmail'] = $f['unmail']; else unset($a['unmail']);
-		foreach($f as $k=>$v) {
+	if(empty($Grenctab)) {
+		if(!empty($P['country'])) $a['country'] = 1; else unset($a['country']);
+		if(!empty($P['region'])) $a['region'] = 1; else unset($a['region']);
+		if(!empty($P['place'])) $a['place'] = 1; else unset($a['place']);
+		if(!empty($P['born'])) $a['born'] = 1; else unset($a['born']);
+		if(isset($P['agemin'])) $a['agemin'] = rencSanit($P['agemin'],'int'); else unset($a['agemin']);
+		if(!empty($P['agemax'])) $a['agemax'] = rencSanit($P['agemax'],'int'); else unset($a['agemax']);
+		if(!empty($P['smile'])) $a['smile'] = 1; else unset($a['smile']);
+		if(!empty($P['creq'])) $a['creq'] = 1; else unset($a['creq']);
+		if(!empty($P['weight'])) $a['weight'] = 1; else unset($a['weight']);
+		if(!empty($P['weightu'])) $a['weightu'] = rencSanit($P['weightu'],'int'); else unset($a['weightu']);
+		if(!empty($P['size'])) $a['size'] = 1; else unset($a['size']);
+		if(!empty($P['sizeu'])) $a['sizeu'] = rencSanit($P['sizeu'],'int'); else unset($a['sizeu']);
+		if(!empty($P['report'])) $a['report'] = 1; else unset($a['report']);
+		if(!empty($P['emot'])) $a['emot'] = 1; else unset($a['emot']);
+		if(!empty($P['menu'])) $a['menu'] = 1; else unset($a['menu']);
+		if(!empty($P['side'])) $a['side'] = 1; else unset($a['side']);
+		if(!empty($P['libreAd'])) $a['libreAd'] = 1; else unset($a['libreAd']);
+		if(!empty($P['librePhoto'])) $a['librePhoto'] = 1; else unset($a['librePhoto']);
+		if(!empty($P['relation'])) $a['relation'] = 1; else unset($a['relation']);
+		if(!empty($P['sex'])) $a['sex'] = 1; else unset($a['sex']);
+		if(!empty($P['multiSR'])) $a['multiSR'] = 1; else unset($a['multiSR']);
+		if(!empty($P['hetero'])) $a['hetero'] = 1; else unset($a['hetero']);
+		if(!empty($P['blksex'])) $a['blksex'] = 1; else unset($a['blksex']);
+		if(!empty($P['reglink'])) $a['reglink'] = rencSanit($P['reglink'],'url'); else unset($a['reglink']);
+		if(!empty($P['unmail'])) $a['unmail'] = 1; else unset($a['unmail']);
+		foreach($P as $k=>$v) {
 			if(strpos($k,'relationL')!==false) {
-				if(!(substr($f['a2'],0,9)=='relationS' && $k=='relationL'.substr($f['a2'],9))) {
-					$a['relationL'.$relationL] = $v; ++$relationL;  // MOVE
+				if(!(substr($P['a2'],0,9)=='relationS' && $k=='relationL'.substr($P['a2'],9))) {
+					$a['relationL'.$relationL] = rencSanit($v,'words'); ++$relationL;  // MOVE
 				}
 			}
 			else if(strpos($k,'sexL')!==false) {
-				if(!(substr($f['a2'],0,4)=='sexS' && $k=='sexL'.substr($f['a2'],4))) {
-					$a['sexL'.$sexL] = $v; ++$sexL;  // MOVE
+				if(!(substr($P['a2'],0,4)=='sexS' && $k=='sexL'.substr($P['a2'],4))) {
+					$a['sexL'.$sexL] = rencSanit($v,'words'); ++$sexL;  // MOVE
 				}
 			}
 		}
-		if($f['a2']=='relationP') $a['relationL'.$relationL] = ''; // ADD
-		if(substr($f['a2'],0,9)=='relationS') unset($a['relationL'.$relationL]); // DEL
-		if($f['a2']=='sexP') $a['sexL'.$sexL] = ''; // ADD
-		if(substr($f['a2'],0,4)=='sexS') unset($a['sexL'.$sexL]); // DEL
+		if($P['a2']=='relationP') $a['relationL'.$relationL] = ''; // ADD
+		if(substr($P['a2'],0,9)=='relationS') unset($a['relationL'.$relationL]); // DEL
+		if($P['a2']=='sexP') $a['sexL'.$sexL] = ''; // ADD
+		if(substr($P['a2'],0,4)=='sexS') unset($a['sexL'.$sexL]); // DEL
 		if(!isset($a['relationL0'])) unset($a['relation']);
 		if(!isset($a['sexL0'])) unset($a['sex']);
 	}
-	else if($_GET['renctab']=='wor') {
-		if(isset($f['new'])) $a['new'] = $f['new']; else unset($a['new']);
-		if(isset($f['newText'])) $a['newText'] = $f['newText']; else unset($a['newText']);
-		if(isset($f['blocked'])) $a['blocked'] = $f['blocked']; else unset($a['blocked']);
-		if(isset($f['blockedText'])) $a['blockedText'] = $f['blockedText']; else unset($a['blockedText']);
-		if(isset($f['empty'])) $a['empty'] = $f['empty']; else unset($a['empty']);
-		if(isset($f['emptyText'])) $a['emptyText'] = $f['emptyText']; else unset($a['emptyText']);
-		if(isset($f['jail'])) $a['jail'] = $f['jail']; else unset($a['jail']);
-		if(isset($f['jailText'])) $a['jailText'] = $f['jailText']; else unset($a['jailText']);
-		if(isset($f['noph'])) $a['noph'] = $f['noph']; else unset($a['noph']);
-		if(isset($f['nophText'])) $a['nophText'] = $f['nophText']; else unset($a['nophText']);
-		if(isset($f['relanc'])) $a['relanc'] = $f['relanc']; else unset($a['relanc']);
-		if(isset($f['relancText'])) $a['relancText'] = $f['relancText']; else unset($a['relancText']);
-		if(isset($f['smiw'])) $a['smiw'] = $f['smiw']; else unset($a['smiw']);
-		if(isset($f['smiw1'])) $a['smiw1'] = $f['smiw1']; else unset($a['smiw1']);
-		if(isset($f['smiw2'])) $a['smiw2'] = $f['smiw2']; else unset($a['smiw2']);
-		if(isset($f['smiw3'])) $a['smiw3'] = $f['smiw3']; else unset($a['smiw3']);
-		if(isset($f['smiw4'])) $a['smiw4'] = $f['smiw4']; else unset($a['smiw4']);
-		if(isset($f['smiw5'])) $a['smiw5'] = $f['smiw5']; else unset($a['smiw5']);
-		if(isset($f['smiw6'])) $a['smiw6'] = $f['smiw6']; else unset($a['smiw6']);
-		if(isset($f['smiw7'])) $a['smiw7'] = $f['smiw7']; else unset($a['smiw7']);
-		if(isset($f['loow'])) $a['loow'] = $f['loow']; else unset($a['loow']);
-		if(isset($f['loow1'])) $a['loow1'] = $f['loow1']; else unset($a['loow1']);
-		if(isset($f['loow2'])) $a['loow2'] = $f['loow2']; else unset($a['loow2']);
+	else if($Grenctab=='wor') {
+		if(!empty($P['new'])) $a['new'] = 1; else unset($a['new']);
+		if(!empty($P['newText'])) $a['newText'] = rencSanit($P['newText'],'para'); else unset($a['newText']);
+		if(!empty($P['blocked'])) $a['blocked'] = 1; else unset($a['blocked']);
+		if(!empty($P['blockedText'])) $a['blockedText'] = rencSanit($P['blockedText'],'text'); else unset($a['blockedText']);
+		if(!empty($P['empty'])) $a['empty'] = 1; else unset($a['empty']);
+		if(!empty($P['emptyText'])) $a['emptyText'] = rencSanit($P['emptyText'],'text'); else unset($a['emptyText']);
+		if(!empty($P['jail'])) $a['jail'] = 1; else unset($a['jail']);
+		if(!empty($P['jailText'])) $a['jailText'] = rencSanit($P['jailText'],'text'); else unset($a['jailText']);
+		if(!empty($P['noph'])) $a['noph'] = 1; else unset($a['noph']);
+		if(!empty($P['nophText'])) $a['nophText'] = rencSanit($P['nophText'],'text'); else unset($a['nophText']);
+		if(!empty($P['relanc'])) $a['relanc'] = 1; else unset($a['relanc']);
+		if(!empty($P['relancText'])) $a['relancText'] = rencSanit($P['relancText'],'para'); else unset($a['relancText']);
+		if(!empty($P['smiw'])) $a['smiw'] = 1; else unset($a['smiw']);
+		if(!empty($P['smiw1'])) $a['smiw1'] = rencSanit($P['smiw1'],'text'); else unset($a['smiw1']);
+		if(!empty($P['smiw2'])) $a['smiw2'] = rencSanit($P['smiw2'],'text'); else unset($a['smiw2']);
+		if(!empty($P['smiw3'])) $a['smiw3'] = rencSanit($P['smiw3'],'text'); else unset($a['smiw3']);
+		if(!empty($P['smiw4'])) $a['smiw4'] = rencSanit($P['smiw4'],'text'); else unset($a['smiw4']);
+		if(!empty($P['smiw5'])) $a['smiw5'] = rencSanit($P['smiw5'],'text'); else unset($a['smiw5']);
+		if(!empty($P['smiw6'])) $a['smiw6'] = rencSanit($P['smiw6'],'text'); else unset($a['smiw6']);
+		if(!empty($P['smiw7'])) $a['smiw7'] = rencSanit($P['smiw7'],'text'); else unset($a['smiw7']);
+		if(!empty($P['loow'])) $a['loow'] = 1; else unset($a['loow']);
+		if(!empty($P['loow1'])) $a['loow1'] = rencSanit($P['loow1'],'text'); else unset($a['loow1']);
+		if(!empty($P['loow2'])) $a['loow2'] = rencSanit($P['loow2'],'text'); else unset($a['loow2']);
 	}
-	else if($_GET['renctab']=='sea') {
-		if(isset($f['relationQ'])) $a['relationQ'] = $f['relationQ']; else unset($a['relationQ']);
-		if(isset($f['searchAd'])) $a['searchAd'] = $f['searchAd']; else unset($a['searchAd']);
-		if(isset($f['profilQS1'])) $a['profilQS1'] = $f['profilQS1']; else unset($a['profilQS1']);
-		if(isset($f['profilQS2'])) $a['profilQS2'] = $f['profilQS2']; else unset($a['profilQS2']);
-		if(has_filter('rencProfilS2aP', 'f_rencProfilS2aP')) $a = apply_filters('rencProfilS2aP', $f, $a);
+	else if($Grenctab=='sea') {
+		if(!empty($P['relationQ'])) $a['relationQ'] = 1; else unset($a['relationQ']);
+		if(!empty($P['searchAd'])) $a['searchAd'] = 1; else unset($a['searchAd']);
+		if(!empty($P['profilQS1'])) $a['profilQS1'] = rencSanit($P['profilQS1'],'alphanum'); else unset($a['profilQS1']);
+		if(!empty($P['profilQS2'])) $a['profilQS2'] = rencSanit($P['profilQS2'],'alphanum'); else unset($a['profilQS2']);
+		if(has_filter('rencProfilS2aP', 'f_rencProfilS2aP')) $a = apply_filters('rencProfilS2aP', $P, $a);
 	}
-	else if($_GET['renctab']=='tem') {
-		if(isset($f['mebg'])) $a['mebg'] = $f['mebg']; else unset($a['mebg']);
-		if(isset($f['mebt'])) $a['mebt'] = $f['mebt']; else unset($a['mebt']);
-		if(isset($f['mebw'])) $a['mebw'] = $f['mebw']; else unset($a['mebw']);
-		if(isset($f['mebo'])) $a['mebo'] = $f['mebo']; else unset($a['mebo']);
-		if(isset($f['blbg'])) $a['blbg'] = $f['blbg']; else unset($a['blbg']);
-		if(isset($f['titc'])) $a['titc'] = $f['titc']; else unset($a['titc']);
-		if(isset($f['txtc'])) $a['txtc'] = $f['txtc']; else unset($a['txtc']);
-		if(isset($f['lblc'])) $a['lblc'] = $f['lblc']; else unset($a['lblc']);
-		if(isset($f['line'])) $a['line'] = $f['line']; else unset($a['line']);
-		if(isset($f['inbg'])) $a['inbg'] = $f['inbg']; else unset($a['inbg']);
-		if(isset($f['sebg'])) $a['sebg'] = $f['sebg']; else unset($a['sebg']);
-		if(isset($f['wabg'])) $a['wabg'] = $f['wabg']; else unset($a['wabg']);
-		if(isset($f['msbs'])) $a['msbs'] = $f['msbs']; else unset($a['msbs']);
-		if(isset($f['msbr'])) $a['msbr'] = $f['msbr']; else unset($a['msbr']);
-		if(isset($f['fitw'])) $a['fitw'] = $f['fitw']; else unset($a['fitw']);
+	else if($Grenctab=='tem') {
+		if(!empty($P['mebg'])) $a['mebg'] = rencSanit($P['mebg'],'alphanum'); else unset($a['mebg']);
+		if(!empty($P['mebt'])) $a['mebt'] = rencSanit($P['mebt'],'alphanum'); else unset($a['mebt']);
+		if(!empty($P['mebw'])) $a['mebw'] = rencSanit($P['mebw'],'alphanum'); else unset($a['mebw']);
+		if(!empty($P['mebo'])) $a['mebo'] = rencSanit($P['mebo'],'alphanum'); else unset($a['mebo']);
+		if(!empty($P['blbg'])) $a['blbg'] = rencSanit($P['blbg'],'alphanum'); else unset($a['blbg']);
+		if(!empty($P['titc'])) $a['titc'] = rencSanit($P['titc'],'alphanum'); else unset($a['titc']);
+		if(!empty($P['txtc'])) $a['txtc'] = rencSanit($P['txtc'],'alphanum'); else unset($a['txtc']);
+		if(!empty($P['lblc'])) $a['lblc'] = rencSanit($P['lblc'],'alphanum'); else unset($a['lblc']);
+		if(!empty($P['line'])) $a['line'] = rencSanit($P['line'],'alphanum'); else unset($a['line']);
+		if(!empty($P['inbg'])) $a['inbg'] = rencSanit($P['inbg'],'alphanum'); else unset($a['inbg']);
+		if(!empty($P['sebg'])) $a['sebg'] = rencSanit($P['sebg'],'alphanum'); else unset($a['sebg']);
+		if(!empty($P['wabg'])) $a['wabg'] = rencSanit($P['wabg'],'alphanum'); else unset($a['wabg']);
+		if(!empty($P['msbs'])) $a['msbs'] = rencSanit($P['msbs'],'alphanum'); else unset($a['msbs']);
+		if(!empty($P['msbr'])) $a['msbr'] = rencSanit($P['msbr'],'alphanum'); else unset($a['msbr']);
+		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
 	}
 	$rencOpt['custom'] = json_encode($a);
 	$for = $rencOpt['for']; $iam = $rencOpt['iam'];
@@ -3692,93 +3773,122 @@ function f_update_custom($f) {
 function f_userPrison($f) {
 	// $f : id table rencontre_prison
 	if(!current_user_can("manage_options") && !current_user_can("bbp_moderator")) die;
+	if(empty($_POST['tok']) || $_SESSION['rencToka']!==$_POST['tok'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $wpdb;
 	$wpdb->delete($wpdb->prefix.'rencontre_prison', array('id'=>$f));
 }
 function sauvProfilAdm($in,$id) {
-	// Copie de la fonction dans rencontre_widget avec POST au lieu de GET
+	// Copie de la fonction dans rencontre_widget
 	// entree : Sauvegarde du profil
 	// sortie bdd : [{"i":10,"v":"Sur une ile deserte avec mon amoureux."},{"i":35,"v":0},{"i":53,"v":[0,4,6]}]
 	if(!current_user_can("administrator")) die;
+	if(empty($_POST['tok']) || $_SESSION['rencToka']!==$_POST['tok'] || $_SESSION['rencTokat']<time()-1800) return;
 	$u = "";
-	if($in) foreach($in as $r=>$r1) {
-		switch($r1[0]) {
+	if($in) foreach($in as $k=>$v) {
+		switch($v[0]) {
 			case 1:
-				if($_POST['text'.$r]!="") $u .= '{"i":'.$r.',"v":"'.str_replace('"','',strip_tags(stripslashes($_POST['text'.$r]))).'"},';
+				if(!empty($_POST['text'.$k])) $u .= '{"i":'.$k.',"v":"'.str_replace('"','',rencSanit($_POST['text'.$k],'text')).'"},';
 			break;
 			case 2:
-				if($_POST['area'.$r]!="") $u .= '{"i":'.$r.',"v":"'.str_replace('"','',strip_tags(stripslashes($_POST['area'.$r]))).'"},';
+				if(!empty($_POST['area'.$k])) {
+					$a = rencSanit($_POST['area'.$k],'para');
+					$a = preg_replace('/\r|\n/','\n',trim($a));
+					$a = str_replace('\"','',$a);
+					$a = str_replace("\'","'",$a);
+					$u .= '{"i":'.$k.',"v":"'.$a.'"},';
+				}
 			break;
 			case 3:
-				if($_POST['select'.$r]>0) $u .= '{"i":'.$r.',"v":'.(strip_tags($_POST['select'.$r]-1)).'},';
+				if(!empty($_POST['select'.$k])) $u .= '{"i":'.$k.',"v":'.(intval(rencSanit($_POST['select'.$k],'int'))-1).'},';
 			break;
 			case 4:
-				if(!empty($_POST['check'.$r])) {
-					$u .= '{"i":'.$r.',"v":[';
-					foreach($_POST['check'.$r] as $r2) $u .= $r2.',';
+				if(!empty($_POST['check'.$k])) {
+					$u .= '{"i":'.$k.',"v":[';
+					foreach($_POST['check'.$k] as $r) $u .= rencSanit($r,'int').',';
 					$u = substr($u, 0, -1).']},';
 				}
 			break;
 			case 5:
-				if($_POST['ns'.$r]>0) $u .= '{"i":'.$r.',"v":'.(strip_tags($_POST['ns'.$r]-1)).'},';
+				if(!empty($_POST['ns'.$k])) $u .= '{"i":'.$k.',"v":'.(intval(rencSanit($_POST['ns'.$k],'int'))-1).'},';
+			break;
+			case 6:
+				if(!empty($_POST['date'.$k])) $u .= '{"i":'.$k.',"v":"'.rencSanit($_POST['date'.$k],'date').'"},';
 			break;
 		}
 	}
 	global $wpdb; global $rencCustom;
 	// Rencontre_users_profil
 	$a = array();
-	if(isset($_POST['titre'])) $a['t_titre'] = strip_tags(stripslashes($_POST['titre']));
-	if(isset($_POST['annonce'])) $a['t_annonce'] = strip_tags(stripslashes($_POST['annonce']));
+	$Ptitre = (isset($_POST['titre'])?rencSanit($_POST['titre'],'text'):'');
+	$Pannonce = (isset($_POST['annonce'])?rencSanit($_POST['annonce'],'para'):'');
+	$Presetact = (isset($_POST['resetact'])?rencSanit($_POST['resetact'],'int'):'');
+	$Presetsig = (isset($_POST['resetsig'])?rencSanit($_POST['resetsig'],'int'):'');
+	$Presetgps = (isset($_POST['resetgps'])?rencSanit($_POST['resetgps'],'int'):'');
+	$Ppays = (isset($_POST['pays'])?rencSanit($_POST['pays'],'AZ'):'');
+	$Pregion = (isset($_POST['region'])?rencSanit($_POST['region'],'words'):'');
+	$Pville = (isset($_POST['ville'])?rencSanit($_POST['ville'],'words'):'');
+	$Psex = (isset($_POST['sex'])?rencSanit($_POST['sex'],'int'):'');
+
+	$Pannee = (isset($_POST['annee'])?rencSanit($_POST['annee'],'int'):0);
+	$Pmois = (isset($_POST['mois'])?rencSanit($_POST['mois'],'int'):0);
+	$Pjour = (isset($_POST['jour'])?rencSanit($_POST['jour'],'int'):0);
+	$Ptaille = (isset($_POST['taille'])?rencSanit($_POST['taille'],'int'):'');
+	$Ppoids = (isset($_POST['poids'])?rencSanit($_POST['poids'],'int'):'');
+	$Pzagemin = (isset($_POST['zageMin'])?rencSanit($_POST['zageMin'],'int'):'');
+	$Pzagemax = (isset($_POST['zageMax'])?rencSanit($_POST['zageMax'],'int'):'');
+	$Pconfmail = (isset($_POST['confmail'])?rencSanit($_POST['confmail'],'int'):'');
+	if($Ptitre) $a['t_titre'] = $Ptitre;
+	if($Pannonce) $a['t_annonce'] = $Pannonce;
 	$a['t_profil'] = '['.substr($u, 0, -1).']';
 	$a['t_action'] = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id=".$id." LIMIT 1");
 	if(has_filter('rencCertifiedP', 'f_rencCertifiedP')) $a['t_action'] = apply_filters('rencCertifiedP', array($id, 1, $a['t_action']));
-	if(isset($_POST['resetact'])) {
+	if($Presetact) {
 		$action = json_decode($a['t_action'],true);
 		$b = array("sourireIn","sourireOut","contactIn","contactOut","visite","bloque","favori");
 		foreach($b as $r) if(isset($action[$r])) unset($action[$r]);
 		$a['t_action'] = json_encode($action);
 	}
-	if(isset($_POST['resetsig'])) $a['t_signal'] = '[]';
+	if($Presetsig) $a['t_signal'] = '[]';
 	$wpdb->update($wpdb->prefix.'rencontre_users_profil', $a, array('user_id'=>$id));
 	// Rencontre_users
 	$a = array();
-	if(isset($_POST['pays'])) $a['c_pays'] = strip_tags($_POST['pays']);
-	if(isset($_POST['region'])) {
-		$region = $wpdb->get_var("SELECT c_liste_valeur FROM ".$wpdb->prefix."rencontre_liste WHERE id='".strip_tags($_POST['region'])."'");
+	if($Ppays) $a['c_pays'] = $Ppays;
+	if($Pregion) {
+		$region = $wpdb->get_var("SELECT c_liste_valeur FROM ".$wpdb->prefix."rencontre_liste WHERE id='".$Pregion."'");
 		$a['c_region'] = $region;
 	}
-	if(isset($_POST['ville'])) $a['c_ville'] = strip_tags($_POST['ville']);
-	if(isset($_POST['resetgps'])) {
+	if($Pville) $a['c_ville'] = $Pville;
+	if($Presetgps) {
 		$a['e_lat'] = 0;
 		$a['e_lon'] = 0;
 	}
-	if(isset($_POST['sex'])) $a['i_sex'] = strip_tags($_POST['sex']);
+	if($Psex!=='') $a['i_sex'] = $Psex;
 	else $a['i_sex'] = 0;
-	if(isset($_POST['annee']) && isset($_POST['mois']) && isset($_POST['jour'])) $a['d_naissance'] = strip_tags($_POST['annee']).'-'.strip_tags($_POST['mois']).'-'.strip_tags($_POST['jour']);
-	if(isset($_POST['taille'])) $a['i_taille'] = strip_tags($_POST['taille']);
-	if(isset($_POST['poids'])) $a['i_poids'] = strip_tags($_POST['poids']);
-	if(isset($_POST['zageMin'])) $a['i_zage_min'] = strip_tags($_POST['zageMin']);
-	if(isset($_POST['zageMax'])) $a['i_zage_max'] = strip_tags($_POST['zageMax']);
+	if($Pannee && $Pmois && $Pjour) $a['d_naissance'] = $Pannee.'-'.((strlen($Pmois)<2)?'0'.$Pmois:$Pmois).'-'.((strlen($Pjour)<2)?'0'.$Pjour:$Pjour);
+	if($Ptaille) $a['i_taille'] = $Ptaille;
+	if($Ppoids) $a['i_poids'] = $Ppoids;
+	if($Pzagemin!=='') $a['i_zage_min'] = $Pzagemin;
+	if($Pzagemax) $a['i_zage_max'] = $Pzagemax;
 	if(!isset($rencCustom['multiSR'])) {
 		if(isset($_POST['zsex'])) {
-			$a['i_zsex'] = strip_tags($_POST['zsex']);
+			$a['i_zsex'] = rencSanit($_POST['zsex'],'int');
 			$a['c_zsex'] = ',';
 		}
 		if(isset($_POST['zrelation'])) {
-			$a['i_zrelation'] = strip_tags($_POST['zrelation']);
+			$a['i_zrelation'] = rencSanit($_POST['zrelation'],'int');
 			$a['c_zrelation'] = ',';
 		}
 	}
 	else {
 		$czs = ','; $czr = ',';
-		if(isset($_POST['zsex'])) foreach($_POST['zsex'] as $r) $czs .= $r . ',';
+		if(isset($_POST['zsex'])) foreach($_POST['zsex'] as $r) $czs .= rencSanit($r,'int') . ',';
 		$a['i_zsex'] = '99';
 		$a['c_zsex'] = $czs;
-		if(isset($_POST['zrelation'])) foreach($_POST['zrelation'] as $r) $czr .= $r . ',';
+		if(isset($_POST['zrelation'])) foreach($_POST['zrelation'] as $r) $czr .= rencSanit($r,'int') . ',';
 		$a['i_zrelation'] = '99';
 		$a['c_zrelation'] = $czr;
 	}
-	if(!empty($_POST['confmail'])) {
+	if($Pconfmail) {
 		$a['i_status'] = 0;
 		$wpdb->delete($wpdb->base_prefix.'usermeta', array('user_id'=>$id, 'meta_key'=>'rencontre_confirm_email'));
 	}
@@ -3879,7 +3989,9 @@ function renc_list_files($dir) {
 	return $result;
 }
 function f_rencStat() {
+	// Ajax
 	if(!current_user_can("manage_options") && !current_user_can("bbp_moderator")) die;
+	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $wpdb;
 	$an=date('Y-m-d H:i:s', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")-1));
 	$q = $wpdb->get_results("SELECT U.ID, U.user_registered, R.d_session
@@ -3911,25 +4023,28 @@ function f_rencStat() {
 	echo json_encode($o);
 }
 function f_newMember() {
+	// Ajax
 	// New member from wordpress
 	if(!current_user_can("manage_options") && !current_user_can("bbp_moderator")) die;
+	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
 	global $wpdb; global $rencOpt;
-	$i = strip_tags($_POST['id']);
-	$wpdb->delete($wpdb->prefix.'rencontre_users', array('user_id'=>$i)); // suppression si existe deja
-	$wpdb->delete($wpdb->prefix.'rencontre_users_profil', array('user_id'=>$i)); // suppression si existe deja
+	$Pid = (isset($_POST['id'])?rencSanit($_POST['id'],'int'):'');
+	if(empty($Pid)) return;
+	$wpdb->delete($wpdb->prefix.'rencontre_users', array('user_id'=>$Pid)); // suppression si existe deja
+	$wpdb->delete($wpdb->prefix.'rencontre_users_profil', array('user_id'=>$Pid)); // suppression si existe deja
 	$wpdb->insert($wpdb->prefix.'rencontre_users', array(
-		'user_id'=>$i,
+		'user_id'=>$Pid,
 		'c_ip'=>'127.0.0.90',
 		'c_pays'=>(empty($rencOpt['pays'])?'FR':$rencOpt['pays']), // default - custom no localisation
 		'd_session'=>current_time("mysql"),
 		'i_photo'=>0));
 	$wpdb->insert($wpdb->prefix.'rencontre_users_profil', array(
-		'user_id'=>$i,
+		'user_id'=>$Pid,
 		'd_modif'=>current_time("mysql"),
 		't_titre'=>'',
 		't_annonce'=>'',
 		't_profil'=>'[]'));
-	if(empty($rencOpt['rol'])) $wpdb->delete($wpdb->base_prefix.'usermeta', array('user_id'=>$i)); // suppression des roles WP
+	if(empty($rencOpt['rol'])) $wpdb->delete($wpdb->base_prefix.'usermeta', array('user_id'=>$Pid)); // suppression des roles WP
 }
 function rencMetaMenu() {
 	// Menu rencontre - Rencontre.php with add_action('admin_init','rencMetaMenu');
@@ -4091,4 +4206,33 @@ function rencGDPRExportimg($archive_pathname, $archive_url, $html_report_pathnam
 		$zip->close();
 	}
 }
+//
+function rencontreIso() {
+	// Ajax
+	if(isset($_POST['iso'])) {
+		if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+		$Piso = (isset($_POST['iso'])?rencSanit($_POST['iso'],'AZ'):'');
+		global $wpdb;
+		$q = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_iso='".substr($Piso,0,2)."' and c_liste_categ='p' LIMIT 1");
+		if(!$q && $Piso) echo true;
+		else echo false;
+	}
+}
+//
+function rencontreDrap() {
+	// Ajax
+	if(isset($_POST['action']) && $_POST['action']==='drap') {
+		if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+		if($dh=opendir(dirname(__FILE__).'/../images/drapeaux/')) {
+			$tab = array();
+			while(($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[]=$file; }
+			closedir($dh);
+			sort($tab);
+			$o = "";
+			foreach($tab as $r) $o .= "<option value='".$r."'>".$r."</option>";
+			echo $o;
+		}
+	}
+}
+//
 ?>

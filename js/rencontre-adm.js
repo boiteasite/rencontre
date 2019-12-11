@@ -1,7 +1,10 @@
 /*
 * Rencontre
 */
-var b6=0,b0='',csv=0,csv1=0;
+var b6=0,b0='',csv=0,csv1=0,rencToka;
+jQuery(document).ready(function(){
+	rencToka=(document.getElementById("rencToka")?document.getElementById("rencToka").dataset.toka:'');
+});
 // ****************************************
 // ONGLETS GENERAL
 // ****************************************
@@ -12,7 +15,8 @@ function f_exportCsv(){
 				'action':'exportCsv',
 				'activ':document.getElementById("selectCsv").options[document.getElementById("selectCsv").selectedIndex].value,
 				'photo':(document.getElementById("csvPhoto").checked?1:0),
-				'ad':(document.getElementById("csvAd").checked?1:0)
+				'ad':(document.getElementById("csvAd").checked?1:0),
+				'rencToka':rencToka
 			},function(r){
 			a=document.getElementById("rencCsv");
 			document.getElementById("waitCsv").style.display="none";
@@ -40,7 +44,7 @@ function f_importCsv(f){
 	if(f){
 		jQuery(document).ready(function(){
 			document.getElementById('loadingCsv').style.display='inline';
-			jQuery.post('admin-ajax.php',{'action':'importCsv','cas':f},function(r){
+			jQuery.post('admin-ajax.php',{'action':'importCsv','cas':f,'rencToka':rencToka},function(r){
 				if(f==3){
 					if(r!=0){
 						document.getElementById('impCsv1').innerHTML+=r.substring(0,r.length-1);
@@ -79,7 +83,7 @@ function f_importCsv(f){
 }
 function f_regeneratePhotos(f){
 	if(f==1||confirm(rencobjet.confirmer)){
-		jQuery.post('admin-ajax.php',{'action':'regeneratePhotos',cas:f},function(r){
+		jQuery.post('admin-ajax.php',{'action':'regeneratePhotos','cas':f,'rencToka':rencToka},function(r){
 			if(r.substring(0,1)=='!')jQuery("#infoePhotos").html(r.substring(1,r.length-1));
 			else if(r.substring(0,1)=='>'){
 				jQuery("#infoPhotos").html(r.substring(1,r.length-1))
@@ -91,7 +95,7 @@ function f_regeneratePhotos(f){
 }
 function f_cleanupPhotos(f){
 	if(f!=0||confirm(rencobjet.confirmer)){
-		jQuery.post('admin-ajax.php',{'action':'cleanupPhotos',nb:f},function(r){
+		jQuery.post('admin-ajax.php',{'action':'cleanupPhotos','nb':f},function(r){
 			if(r.substring(0,1)=='!')jQuery("#infoePhotos").html(r.substring(1,r.length-1));
 			else if(r.substring(0,1)=='>'){
 				jQuery("#infoPhotos").html(r.substring(1,r.length-1))
@@ -214,7 +218,7 @@ function f_edit(f,a2,a3,a4,a5,g){
 	n0=document.createElement("input");
 	n0.setAttribute('type','button');
 	n0.setAttribute('value',rencobjet.sauvegarde);
-	n0.setAttribute('onClick','f_Submit("edit","'+a2+'","'+a3+'","'+a5+'")');
+	n0.setAttribute('onClick','f_Submit("edit","'+a2+'","'+a3+'","'+a5+'");return false;');
 	n.appendChild(n0);
 	m.appendChild(n);
 	e.appendChild(m);
@@ -278,7 +282,7 @@ function f_plus(f,a2,a3,a4,a5){
 	n0=document.createElement("input");
 	n0.setAttribute('type','button');
 	n0.setAttribute('value',rencobjet.ajoute);
-	n0.setAttribute('onClick','f_Submit("plus","'+a2+'","'+a3+'","'+a5+'")');
+	n0.setAttribute('onClick','f_Submit("plus","'+a2+'","'+a3+'","'+a5+'");return false;');
 	n.appendChild(n0);
 	m.appendChild(n);
 	e.appendChild(m);
@@ -326,12 +330,12 @@ function f_Submit(a1,a2,a3,a5){
 	a=a.replace(/"/g,'');
 	a4=encodeURIComponent(a);
 	if(b6==1)a6=document.getElementById('profilSelect').value; // (edit c_label)
-	jQuery.post('admin-ajax.php',{'action':'profilA','a1':a1,'a2':a2,'a3':a3,'a4':a4,'a5':a5,'a6':a6,'g':g},function(r){
+	jQuery.post('admin-ajax.php',{'action':'profilA','a1':a1,'a2':a2,'a3':a3,'a4':a4,'a5':a5,'a6':a6,'g':g,'rencToka':rencToka},function(r){
 		if(a3=='c_categ'||r.substr(0,6)=='reload')location.reload(true);
 		else{
 			document.getElementById('editProfil').remove();
 			if(a1=='edit'&&a3=='c_label'){
-				jQuery('#rencLabel'+a2).children('span').each(function(){
+				jQuery('#rencLabel'+a2).find('span').each(function(){;
 					this.innerHTML=(c!=0?this.className.substring(9)+' : ':'')+t[this.className.substring(9)];
 					++c;
 				});
@@ -401,10 +405,13 @@ function f_supp(a2,a3,t){
 		var a,b=0;
 		if(a3=='t_valeur'){
 			a=t.parentNode.parentNode.getElementsByTagName('DIV');
-			for(v=0;v<a.length;++v){if(a[v].className=='valeur')++b;if(a[v]==t.parentNode)v=a.length+1;}
+			for(v=0;v<a.length;++v){
+				if(a[v].className=='valeur')++b;
+				if(a[v]==t.parentNode)v=a.length+1;
+			}
 		}
 		jQuery(document).ready(function(){
-			jQuery.post('admin-ajax.php',{'action':'updown','move':'supp','id':a2,'typ':a3,'id2':b},function(r){
+			jQuery.post('admin-ajax.php',{'action':'updown','move':'supp','id':a2,'typ':a3,'id2':b,'rencToka':rencToka},function(r){
 				if(r.substring(0,2)=='OK'){
 					if(a3=='t_valeur')jQuery(t.parentNode).remove();
 					else jQuery(t.parentNode.parentNode).remove();
@@ -417,10 +424,13 @@ function f_rencUp(a2,a3,t){var a,b=0;
 	t.style.display='none';
 	if(a3=='t_valeur'){
 		a=t.parentNode.parentNode.getElementsByTagName('DIV');
-		for(v=0;v<a.length;++v){if(a[v].className=='valeur')++b;if(a[v]==t.parentNode)v=a.length+1;}
+		for(v=0;v<a.length;++v){
+			if(a[v].className=='valeur')++b;
+			if(a[v]==t.parentNode)v=a.length+1;
+		}
 	}
 	jQuery(document).ready(function(){
-		jQuery.post('admin-ajax.php',{'action':'updown','move':'up','id':a2,'typ':a3,'id2':b},function(r){
+		jQuery.post('admin-ajax.php',{'action':'updown','move':'up','id':a2,'typ':a3,'id2':b,'rencToka':rencToka},function(r){
 			if(r.substring(0,2)=='OK'){
 				if(a3=='c_categ'){a=t.parentNode.parentNode;jQuery(a).insertBefore(jQuery(a).prev(".categ"));}
 				else if(a3=='c_label'){a=t.parentNode.parentNode;jQuery(a).insertBefore(jQuery(a).prev(".label"));}
@@ -437,7 +447,7 @@ function f_rencDown(a2,a3,t){var a,b=0;
 		for(v=0;v<a.length;++v){if(a[v].className=='valeur')++b;if(a[v]==t.parentNode)v=a.length+1;}
 	}
 	jQuery(document).ready(function(){
-		jQuery.post('admin-ajax.php',{'action':'updown','move':'down','id':a2,'typ':a3,'id2':b},function(r){
+		jQuery.post('admin-ajax.php',{'action':'updown','move':'down','id':a2,'typ':a3,'id2':b,'rencToka':rencToka},function(r){
 			if(r.substring(0,2)=='OK'){
 				if(a3=='c_categ'){a=t.parentNode.parentNode;jQuery(a).insertAfter(jQuery(a).next(".categ"));}
 				else if(a3=='c_label'){a=t.parentNode.parentNode;jQuery(a).insertAfter(jQuery(a).next(".label"));}
@@ -494,7 +504,7 @@ function f_liste_edit(a2,a3,a4){
 			a6=a6.substring(a6.search("&")+1);
 			d0=document.createElement("label");d0.style.color="#222";d0.style.fontSize="14px";d0.style.marginRight="5px";d0.style.marginLeft="10px";d0.innerHTML=a6.substring(0,a6.search("="))+ ' :';
 			d1=document.createElement("input");d1.setAttribute('type','text');d1.setAttribute('name',a6.substring(0,a6.search("=")));d1.setAttribute('size','25');d1.setAttribute('value',a6.substring(a6.search("=")+1,a6.search("&")));d1.style.marginRight="15px";
-			d.appendChild(d0);d.appendChild(d1);
+			d.appendChild(d0);d.appendChild(d1);d.appendChild(document.createElement("br"));
 		}
 	}
 	else if(a3=='r')i.value=a4;
@@ -527,7 +537,7 @@ function f_liste_plus(a2,a3,a4,a5){
 		m=document.createElement("label");m.style.color="#000";m.style.fontSize="18px";m.style.marginRight="5px";m.innerHTML=rencobjet.fichier_im+" : ";m.style.marginLeft="15px";
 		n=document.createElement("select");n.id='sdrap';
 		jQuery(document).ready(function(){
-			jQuery.post('admin-ajax.php',{'action':'drap'},function(r){
+			jQuery.post('admin-ajax.php',{'action':'drap','rencToka':rencToka},function(r){
 				r=r.substring(0,r.length-1);
 				n.innerHTML=r;
 			});
@@ -543,7 +553,7 @@ function f_liste_plus(a2,a3,a4,a5){
 			a6=a6.substring(a6.search("&")+1);
 			d0=document.createElement("label");d0.style.color="#222";d0.style.fontSize="14px";d0.style.marginRight="5px";d0.style.marginLeft="10px";d0.innerHTML=a6.substr(0,2)+ ' :';
 			d1=document.createElement("input");d1.setAttribute('type','text');d1.setAttribute('name',a6.substr(0,2));d1.setAttribute('size','20');d1.setAttribute('value','');d1.style.marginRight="15px";
-			d.appendChild(d0);d.appendChild(d1);
+			d.appendChild(d0);d.appendChild(d1);d.appendChild(document.createElement("br"));
 		}
 	}
 	e.appendChild(d);
@@ -580,7 +590,7 @@ function f_iso(){
 	f=g.value.toUpperCase();
 	if(f.length>1){
 		jQuery(document).ready(function(){
-			jQuery.post('admin-ajax.php',{'action':'iso','iso':f},function(r){
+			jQuery.post('admin-ajax.php',{'action':'iso','iso':f,'rencToka':rencToka},function(r){
 				r=r.substring(0,r.length-1);
 				if(r){g.style.backgroundColor="#ffffff";h.style.visibility="visible";}
 				else{g.style.backgroundColor="red";h.style.visibility="hidden";}
@@ -666,7 +676,7 @@ function f_liberte(f){
 function rencStat(){
 	if(document.getElementById("rencStat").style.display=='none'){
 		jQuery('#rencStat').slideDown(800,function(){
-			jQuery.post('admin-ajax.php',{'action':'stat'},function(r){
+			jQuery.post('admin-ajax.php',{'action':'stat','rencToka':rencToka},function(r){
 				now=(new Date()).getTime();
 				var d=[],d1=[],e=[],e1=[],a=[],a1=[],h=[],h1=[],k=[],k1=[],data=jQuery.parseJSON(r.substr(0,r.length-1)),j=365,n=0,c=0;
 				for(w=0;w<366;++w){e1[w]=0;e[w]=[];d[w]=[];a1[w]=0;a[w]=[];}
@@ -799,7 +809,7 @@ function f_region_select_adm(f,g,x){
 }
 function f_newMember(f){
 	var a=f.options[f.selectedIndex].value;
-	jQuery.post('admin-ajax.php',{'action':'newMember','id':a},function(r){
+	jQuery.post('admin-ajax.php',{'action':'newMember','id':a,'rencToka':rencToka},function(r){
 		location.reload(); 
 	});
 }

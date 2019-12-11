@@ -201,6 +201,7 @@ class Rencontre {
 		if(empty($q)) $rencDiv['lang'] = "en_US";
 		if(!empty($rencOpt['home']) && strpos($rencOpt['home'],'page_id')!==false) $rencOpt['page_id'] = substr($rencOpt['home'],strpos($rencOpt['home'],'page_id')+8);
 		$rencCustom = (isset($rencOpt['custom'])?json_decode($rencOpt['custom'],true):array());
+		if(!isset($rencOpt['for'])) $rencOpt['for'] = array();
 		$rencOpt['for'][0] = __('Serious relationship','rencontre');
 		$rencOpt['for'][1] = __('Open relationship','rencontre');
 		$rencOpt['for'][2] = __('Friendship','rencontre');
@@ -227,6 +228,7 @@ class Rencontre {
 			if(file_exists(dirname(__FILE__).'/inc/patch.php') && $wpdb->get_var("SHOW TABLES LIKE '".$wpdb->prefix."rencontre_users' ")==$wpdb->prefix."rencontre_users") include(dirname(__FILE__).'/inc/patch.php'); // VERSIONS PATCH - ONLY ONCE - NOT DURING ACTIVATION
 			global $pagenow;
 			if('nav-menus.php'===$pagenow) add_action('admin_init','rencMetaMenu'); // Rencontre menu items in admin menu tab - base.php
+			if(file_exists(dirname(__FILE__).'/rencontre_github.php')) include(dirname(__FILE__).'/rencontre_github.php');
 		}
 	}
 	//
