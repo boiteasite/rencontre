@@ -47,7 +47,7 @@ The features are as follows :
 
 * Sophisticated **payment system** for members with numerous settings, restrictions and promotions - Compatible with WooCommerce gateways ;
 * Settings & access defined by gender ;
-* Photos and Videos **Private Gallery** ;
+* Photos and/or Videos **Private Gallery** ;
 * Proximity search on **map** by geolocation ;
 * Search by profile elements ;
 * Search by **Astrological** affinity - Very powerful ;

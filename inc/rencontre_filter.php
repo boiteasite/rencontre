@@ -31,7 +31,7 @@ add_action('wp_ajax_voirMsg', 'f_voirMsg'); function f_voirMsg() {RencontreWidge
 add_action('wp_ajax_testPass', 'rencTestPass'); // changement du mot de passe
 add_action('wp_ajax_fbok', 'rencFbok'); add_action('wp_ajax_nopriv_fbok', 'rencFbok'); // connexion via FB
 add_action('wp_ajax_miniPortrait2', 'f_miniPortrait2'); function f_miniPortrait2() {RencontreWidget::f_miniPortrait2(rencSanit($_POST['id'],'int'));}
-add_action('wp_ajax_fastregMail', 'f_fastregMail'); function f_fastregMail() {if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return; $u = wp_get_current_user(); rencFastreg_email($u,1);}
+add_action('wp_ajax_fastregMail', 'f_fastregMail'); function f_fastregMail() {if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return; $u = wp_get_current_user(); rencFastreg_email($u,1);}
 //add_action('wp_ajax_addCountSearch', 'f_addCountSearch'); // +1 dans action search si meme jour
 add_action('wp_ajax_gpsnavigator', 'rencGpsNavigator');
 if(is_admin()) { // Check for an administrative interface page
@@ -1144,7 +1144,7 @@ function rencAdminBar($content) {
 }
 function f_regionBDD() {
 	// AJAX fields update
-	if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return;
+	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 	global $wpdb; 
 	$iso = rencSanit($_POST['pays'],'AZ');
 	$b = 0;
@@ -1186,7 +1186,7 @@ function f_regionBDD() {
 }
 //
 function rencTestPass() { // modif compte uniquement
-	if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return;
+	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 	global $wpdb;
 	$id = rencSanit($_POST['id'],'int');
 	$nouv = rencSanit($_POST['nouv'],'text');
@@ -1201,7 +1201,7 @@ function rencTestPass() { // modif compte uniquement
 }
 //
 function rencFbok() { // Facebook connect
-	if(empty($_POST['rencTokfb']) || $_SESSION['rencTokfb']!=$_POST['rencTokfb'] || $_SESSION['rencTokfbt']<time()-1800) return;
+	if(empty($_REQUEST['rencTokfb']) || !wp_verify_nonce($_REQUEST['rencTokfb'],'rencTokfb')) return;
 	if(!is_user_logged_in()) {
 		$_SESSION['rencFB']="1";
 		$m = $_POST['fb'];
@@ -1362,7 +1362,7 @@ function rencAvatar($avatar, $id_or_email, $size, $default, $alt) {
 //
 function rencGpsNavigator() {
 	if(!session_id()) session_start(); // not needed but ...
-	if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return;
+	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 	global $wpdb; global $current_user;
 	if(!empty($_POST['lat']) && !empty($current_user->ID)) {
 		$lat = round(floatval(rencSanit($_POST['lat'],'num')),5);

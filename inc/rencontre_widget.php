@@ -49,9 +49,9 @@ class RencontreWidget extends WP_widget {
 		$Pmsg = (isset($_POST['msg'])?rencSanit($_POST['msg'],'alphanum'):false);
 		$Pcontenu = (!empty($_POST['contenu'])?rencsanit($_POST['contenu'],'para'):'');
 		$Pid = (isset($_POST['id'])?rencSanit($_POST['id'],'int'):'');
-		$rencTok = bin2hex(random_bytes(6));
-		$_SESSION['rencTok'] = $rencTok;
-		$_SESSION['rencTokt'] = time();
+		$rencTok = wp_create_nonce('rencTok');
+		$rencTokc = wp_create_nonce('rencTokc'); // Chat
+		$_SESSION['rencTokc'] = $rencTokc; // Only for Chat (AJAX outside WP)
 		// ******************************
 		$ho = false; if(strpos($_SESSION['rencontre'],'nouveau')===false && has_filter('rencGateP', 'f_rencGateP')) $ho = apply_filters('rencGateP', $ho);
 		if($ho) $_SESSION['rencontre'] = 'gate';
@@ -128,6 +128,7 @@ class RencontreWidget extends WP_widget {
 				echo "rencBaseurl='".$rencDiv['baseurl']."',";
 				echo "rencBasedir='".$rencDiv['basedir']."',";
 				echo "rencTok='".$rencTok."',";
+				echo "rencTokc='".$rencTokc."',";
 				echo "rencInfochange='".(!empty($rencOpt['nbr']['infochange'])?$rencOpt['nbr']['infochange']:5000)."',";
 				echo "noEmot=".(empty($rencCustom['emot'])?0:1).";";
 				$blockSearch = false; if(has_filter('rencSearchP', 'f_rencSearchP')) $blockSearch = apply_filters('rencSearchP', $blockSearch);
@@ -2039,10 +2040,11 @@ class RencontreWidget extends WP_widget {
 	}
 	//
 	static function f_miniPortrait2($user_id) {
+		// AJAX
 		// miniPortrait2 : pour la fenetre du TCHAT
 		// entree : user_id
 		// sortie : code HTML avec le mini portrait
-		if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) return;
+		if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 		global $wpdb; global $rencDiv; global $rencCustom;
 		$u = $wpdb->get_row("SELECT
 				U.display_name,
@@ -2096,7 +2098,7 @@ class RencontreWidget extends WP_widget {
 		// entree : $f = id message - $a = mon alias
 		// read = 1 => lu
 		// read = 2 => repondu
-		if(empty($_POST['rencTok']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-1800) { echo 'Token error'; return; }
+		if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 		global $wpdb; global $rencOpt;
 		// $u : other than me (sender or recipient)
 		$u = $wpdb->get_row("SELECT
@@ -3409,3 +3411,4 @@ class RencontreSidebarWidget extends WP_widget {
 	//
 } // CLASSE RencontreSidebarWidget
 //
+?>

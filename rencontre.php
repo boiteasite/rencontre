@@ -829,9 +829,7 @@ class Rencontre {
 			global $rencOpt; global $rencDiv;
 			if(isset($rencOpt['fblog']) && strlen($rencOpt['fblog'])>2)
 				{
-				$rencTokfb = bin2hex(random_bytes(6));
-				$_SESSION['rencTokfb'] = $rencTokfb;
-				$_SESSION['rencTokfbt'] = time();
+				$rencTokfb = wp_create_nonce('rencTokfb');
 				$o = '<form action="" name="reload"></form>'."\r\n";
 				$o .= '<script>'."\r\n";
 				$o .= 'function checkLoginState(){FB.getLoginStatus(function(r){logfb(r);});};'."\r\n";

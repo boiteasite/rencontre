@@ -3,10 +3,11 @@
 // **** ONGLET GENERAL
 // *****************************************
 function f_exportCsv() {
+	// AJAX
 	// Export CSV de la base des membres
 	// $_POST['activ'], $_POST['photo'], $_POST['ad'];
 	if(!current_user_can("administrator")) die;
-	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	global $wpdb; global $rencDiv; global $rencOpt;
 	$sex = array('men','girl');
 	$Pphoto = (!empty($_POST['photo'])?1:0);
@@ -106,6 +107,7 @@ function f_exportCsv() {
 	echo $rd;
 }
 function f_importCsv() {
+	// AJAX
 	// Import CSV de la base des membres
 		// 0 : login
 		// 1 : pass MD5
@@ -127,7 +129,7 @@ function f_importCsv() {
 		// 17 : titre
 		// 18 : Annonce
 	if(!current_user_can("administrator")) die;
-	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	global $rencDiv; global $rencOpt;
 	$sex = array('men','girl');
 	foreach($rencOpt['iam'] as $k=>$v) if($k>1) $sex[] = $v;
@@ -277,7 +279,7 @@ function f_importCsv() {
 	return;
 }
 function rencRegeneratePhotos() {
-	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	global $rencDiv; global $rencOpt; global $wpdb;
 	// 1. GET DATAS
 	$a = array(); $num = 0;
@@ -361,7 +363,7 @@ function rencCleanupPhotos() {
 // *****************************************
 function f_rencProfil() {
 	// Ajax - plus & edit profil
-	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
 	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'int'):'');
 	$Pa3 = (isset($_POST['a3'])?rencSanit($_POST['a3'],'alphanum'):'');
@@ -614,7 +616,7 @@ function profil_langsupp($a4) {
 function f_rencUpDown() {
 	// Ajax
 	if(!current_user_can("administrator")) die;
-	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	global $wpdb; global $rencDiv;
 	$n = 0; $max = 0;
 	$lang = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil LIMIT 1"); // au pif
@@ -996,7 +998,7 @@ function liste_langsupp($a4) {
 // *****************************************
 function update_rencontre_options($P) {
 	if(!current_user_can("administrator")) die;
-	if(empty($_GET['tok']) || $_SESSION['rencToka']!==$_GET['tok'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['tok']) || !wp_verify_nonce($_REQUEST['tok'],'rencToka')) return;
 	global $rencOpt; global $rencDiv;
 	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
 	if(empty($Grenctab)) {
@@ -1081,15 +1083,11 @@ function rencMenuGeneral() {
 	}
 	if($Pa1=='synchro') rencSynchronise();
 	if(empty($rencOpt['collat'])) rencSaveCollation();
-	if(empty($_SESSION['rencTokat']) || time()-$_SESSION['rencTokat']>5) { // issue with iframe
-		$rencToka = bin2hex(random_bytes(6));
-		$_SESSION['rencToka'] = $rencToka;
-		$_SESSION['rencTokat'] = time();
-	}
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 
 	<div id="rencGen" class='wrap' style="max-width:620px;<?php if(empty($Grenctab)) echo 'float:left;'; ?>">
-		<div id="rencToka" data-toka="<?php echo $_SESSION['rencToka']; ?>"></div>
+		<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
 		<?php if(file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) { ?>
 		
 		<form name='menu_profil' method='post' action=''>
@@ -1133,7 +1131,7 @@ function rencMenuGeneral() {
 	
 		<h2>Rencontre&nbsp;<span style='font-size:80%;'><?php echo $rencVersion; ?></span></h2>
 		<?php if(!function_exists('openssl_encrypt')) echo '<p style="color:#d54e21;">'.__('OpenSSL doesn\'t seem to be working. Some features of this plugin will not be available.', 'rencontre').'</p>'; ?>
-		<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&tok=<?php echo $_SESSION['rencToka']; ?>">
+		<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&tok=<?php echo $rencToka; ?>">
 			<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 				<tr valign="top">
 					<th scope="row"><label><?php _e('Plugin page', 'rencontre'); ?></label></th>
@@ -1239,7 +1237,7 @@ function rencMenuGeneral() {
 		<?php if(!empty($Gbottom)) echo '<script>jQuery("html,body").animate({scrollTop:jQuery(document).height()},1000);</script>'."\r\n"; ?>
 		<h2><?php _e('Images names','rencontre') ?></h2>
 		<p><?php _e('Be careful, all pictures of the members will have another name.','rencontre') ?>
-		<form method="post" name="rencontre_code" action="admin.php?page=rencontre.php&tok=<?php echo $_SESSION['rencToka']; ?>">
+		<form method="post" name="rencontre_code" action="admin.php?page=rencontre.php&tok=<?php echo $rencToka; ?>">
 			<input id="rencCode" type="hidden" name="rencCode" value="" />
 			<?php
 			if($Prenccode=='code') renc_encodeImg('1');
@@ -1267,9 +1265,10 @@ function rencMenuGeneral() {
 function rencTabLog() {
 	if(!current_user_can("administrator")) die;
 	global $rencOpt;
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	
-	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=log&tok=<?php echo $_SESSION['rencToka']; ?>">
+	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=log&tok=<?php echo $rencToka; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
 				<th scope="row"><label><?php _e('AppID for Facebook login (empty if not installed)', 'rencontre'); ?></label></th>
@@ -1306,9 +1305,10 @@ function rencTabDis() {
 	}
 	$size = rencPhotoSize(); $wlibre = '';
 	foreach($size as $s) if($s['label']=='-libre') $wlibre = $s['width'];
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	
-	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=dis&tok=<?php echo $_SESSION['rencToka']; ?>">
+	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=dis&tok=<?php echo $rencToka; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Display a different name than login', 'rencontre'); ?></label></th>
@@ -1455,9 +1455,10 @@ function rencTabDis() {
 function rencTabMel() {
 	if(!current_user_can("administrator")) die;
 	global $rencOpt; global $rencDiv; global $rencCustom;
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	
-	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel&tok=<?php echo $_SESSION['rencToka']; ?>">
+	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel&tok=<?php echo $rencToka; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Send an email to the user whose account is deleted', 'rencontre'); ?></label></th>
@@ -1642,14 +1643,9 @@ function rencMenuMembres() {
 	$Gpagenum = (isset($_GET['pagenum'])?rencSanit($_GET['pagenum'],'int'):'');
 	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
 	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'alphanum'):'');
-	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
 	$Pmoder = (isset($_POST['moder'])?rencSanit($_POST['moder'],'int'):'');
 	$Ppseu = (isset($_POST['pseu'])?rencSanit($_POST['pseu'],'text'):'');
-	$rencToka = bin2hex(random_bytes(6));
-	$tok = (!empty($_SESSION['rencToka'])?$_SESSION['rencToka']:''); // previous
-	$tokt = (!empty($_SESSION['rencTokat'])?$_SESSION['rencTokat']:''); // previous
-	$_SESSION['rencToka'] = $rencToka;
-	$_SESSION['rencTokat'] = time();
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	<div class='wrap' style="font-size:13px;line-height:1.4em;">
 		<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
@@ -1705,7 +1701,7 @@ function rencMenuMembres() {
 			<label><?php _e('Alias or email or ID', 'rencontre'); ?> : </label>
 			<input type="text" name="pseu" />
 			<input type="submit" class="button-primary" value="<?php _e('Find', 'rencontre'); ?>" />
-			<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
+			<input type="hidden" name="tok" value="<?php echo $rencToka; ?>" />
 		</form>
 			<?php
 			$ho = false; if(has_filter('rencMurP', 'f_rencMurP')) $ho = apply_filters('rencMurP', $ho); if($ho) echo $ho;
@@ -1800,7 +1796,7 @@ function rencMenuMembres() {
 					<?php if(!empty($rencOpt['mailsupp'])) {
 						echo '<header class="w3-container w3-orange"><h2 class="w3-center">'.__('Reason for this action','rencontre').'</h2></header>';
 						echo '<div class="w3-container"><form name="popModer"><div class="w3-section">';
-						echo '<input type="hidden" name="tok" value="'.$_SESSION['rencToka'].'" />';
+						echo '<input type="hidden" name="tok" value="'.$rencToka.'" />';
 						foreach($moderTyp as $k=>$v) {
 							echo '<input type="radio" name="modertyp" class="w3-input" value="'.$k.'" /> : <label>'.$v.'</label><br />';
 						}
@@ -1812,7 +1808,7 @@ function rencMenuMembres() {
 			<input type="hidden" name="a1" value="" />
 			<input type="hidden" name="a2" value="" />
 			<input type="hidden" name="moder" value="" />
-			<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
+			<input type="hidden" name="tok" value="<?php echo $rencToka; ?>" />
 			<script>var rencVarModer=<?php echo (empty($rencOpt['mailsupp'])?0:1); ?>;</script>
 			<table class="membre">
 				<tr>
@@ -1960,7 +1956,7 @@ function rencMenuMembres() {
 					$in[$r->id][3] = $r->t_valeur;
 				}
 			}
-			if($Pa1 && $tok===$Ptok && $tokt>time()-1800) {
+			if($Pa1 && !empty($_REQUEST['tok']) && wp_verify_nonce($_REQUEST['tok'],'rencToka')) {
 				if($Pa1=='suppImg') RencontreWidget::suppImg($Pa2,$id);
 				else if($Pa1=='plusImg') RencontreWidget::plusImg($Pa2,$id);
 				else if($Pa1=='suppImgAll') RencontreWidget::suppImgAll($id);
@@ -2009,7 +2005,7 @@ function rencMenuMembres() {
 					<input type="hidden" name="a1" value="" />
 					<input type="hidden" name="a2" value="" />
 					<input type="hidden" name="page" value="" />
-					<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
+					<input type="hidden" name="tok" value="<?php echo $rencToka; ?>" />
 					<div id="portraitSauv"><span onClick="f_sauv_profil(<?php echo $id; ?>)"><?php _e('Save profile','rencontre');?></span></div>
 					<div class="petiteBox portraitPhoto left">
 						<div class="rencBox">
@@ -2312,9 +2308,7 @@ function rencMenuPrison() {
 	$Gpagenum = (isset($_GET['pagenum'])?rencSanit($_GET['pagenum'],'int'):'');
 	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'int'):'');
 	if($Pa1) f_userPrison($Pa1);
-	$rencToka = bin2hex(random_bytes(6));
-	$_SESSION['rencToka'] = $rencToka;
-	$_SESSION['rencTokat'] = time();
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	<div class='wrap'>
 		<div id="rencToka" data-toka="<?php echo $rencToka; ?>"></div>
@@ -2352,7 +2346,7 @@ function rencMenuPrison() {
 		?>
 		<form name="listPrison" method="post" action="">
 		<input type="hidden" name="a1" value="" />
-		<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
+		<input type="hidden" name="tok" value="<?php echo $rencToka; ?>" />
 		<table class="prison">
 			<tr>
 				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='date') echo 'R'; ?>date" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Date','rencontre');?></a></td>
@@ -2391,11 +2385,7 @@ function rencMenuProfil() {
 	$Pa4 = (isset($_POST['a4'])?rencSanit($_POST['a4'],'words'):'');
 	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
 	$loc = substr(get_locale(),0,2); $loc2 = $loc."&";
-	$rencToka = bin2hex(random_bytes(6));
-	$tok = (!empty($_SESSION['rencToka'])?$_SESSION['rencToka']:''); // previous
-	$tokt = (!empty($_SESSION['rencTokat'])?$_SESSION['rencTokat']:''); // previous
-	$_SESSION['rencToka'] = $rencToka;
-	$_SESSION['rencTokat'] = time();
+	$rencToka = wp_create_nonce('rencToka');
 	$q2 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$loc."' LIMIT 1");
 	if(!$q2) {
 		$loc = 'en'; $loc2 = 'en&';
@@ -2438,7 +2428,7 @@ function rencMenuProfil() {
 	<form name='menu_profil' method='post' action=''>
 		<input type='hidden' name='a1' value='' /><input type='hidden' name='a2' value='' /><input type='hidden' name='a3' value='' />
 		<input type='hidden' name='a4' value='' /><input type='hidden' name='a5' value='' /><input type='hidden' name='a6' value='' />
-		<input type='hidden' name='tok' value='<?php echo $_SESSION['rencToka']; ?>' />
+		<input type='hidden' name='tok' value='<?php echo $rencToka; ?>' />
 	</form>
 	<div class='icon32' id='icon-options-general'><br/></div>
 	<h2>Rencontre&nbsp;<span style='font-size:60%;'><?php echo $rencVersion; ?></span></h2>
@@ -2651,13 +2641,8 @@ function rencMenuPays() {
 	$Pa4 = urldecode((isset($_POST['a4'])?rencSanit($_POST['a4'],'url'):''));
 	$Pa5 = (isset($_POST['a5'])?rencSanit($_POST['a5'],'words'):'');
 	$Pa6 = (isset($_POST['a6'])?rencSanit($_POST['a6'],'text'):'');
-	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
 	if($Pa1=='cleaner') rencCountryCleaner();
-	$rencToka = bin2hex(random_bytes(6));
-	$tok = (!empty($_SESSION['rencToka'])?$_SESSION['rencToka']:''); // previous
-	$tokt = (!empty($_SESSION['rencTokat'])?$_SESSION['rencTokat']:''); // previous
-	$_SESSION['rencToka'] = $rencToka;
-	$_SESSION['rencTokat'] = time();
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	
 	<div id="rencCon" class='wrap' style="max-width:620px;">
@@ -2699,7 +2684,7 @@ function rencMenuPays() {
 		update_option('rencontre_options',$a);
 	}
 	if(!isset($_SESSION['a2']) || $_SESSION['a2']!=$Pa2 || $_SESSION['a4']!=$Pa4 || $Pa6) {
-		if($tok===$Ptok && $tokt>time()-1800) {
+		if(!empty($_REQUEST['tok']) && wp_verify_nonce($_REQUEST['tok'],'rencToka')) {
 			if($Pa1=='supp') liste_supp($Pa2,$Pa3,$Pa4);
 			else if($Pa1=='edit') liste_edit($Pa2,$Pa3,$Pa4,$Pa5,$Pa6);
 			else if($Pa1=='plus') liste_plus($Pa2,$Pa3,$Pa4,$Pa5,$Pa6);
@@ -2736,7 +2721,7 @@ function rencMenuPays() {
 	<form name="menu_liste" method="post" action="">
 		<input type="hidden" name="a1" value="" /><input type="hidden" name="a2" value="" /><input type="hidden" name="a3" value="" />
 		<input type="hidden" name="a4" value="" /><input type="hidden" name="a5" value="" /><input type="hidden" name="a6" value="" />
-		<input type="hidden" name="tok" value="<?php echo $_SESSION['rencToka']; ?>" />
+		<input type="hidden" name="tok" value="<?php echo $rencToka; ?>" />
 	</form>
 	<h2><?php _e('Countries and Regions', 'rencontre'); ?></h2>
 	<?php $n = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_liste");
@@ -2815,10 +2800,12 @@ function rencMenuPays() {
 //
 function rencTabCle() {
 	if(!current_user_can("administrator")) die;
-	global $wpdb; ?>
+	global $wpdb;
+	$rencToka = wp_create_nonce('rencToka');
+	?>
 	
 	<h2><?php _e('Cleaning missing regions in users data', 'rencontre'); ?></h2>
-	<form method="post" name="customForm" action="admin.php?page=renccountry&renctab=cle&tok=<?php echo $_SESSION['rencToka']; ?>">
+	<form method="post" name="customForm" action="admin.php?page=renccountry&renctab=cle&tok=<?php echo $rencToka; ?>">
 		<input type="hidden" name="a1" value="cleaner" />
 		<input type="hidden" name="a2" value="" />
 		<label><?php _e('Missing regions', 'rencontre'); ?> :</label><br />
@@ -2862,7 +2849,7 @@ function rencTabCle() {
 //
 function rencCountryCleaner() {
 	global $wpdb;
-	if(empty($_GET['tok']) || $_SESSION['rencToka']!==$_GET['tok'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['tok']) || !wp_verify_nonce($_REQUEST['tok'],'rencToka')) return;
 	$Pmisreg = (isset($_POST['misreg'])?rencSanit($_POST['misreg'],'text'):'');
 	$Pcurreg = (isset($_POST['curreg'])?rencSanit($_POST['curreg'],'text'):'');
 	if(!$Pmisreg || !$Pcurreg) return;
@@ -2882,9 +2869,7 @@ function rencMenuCustom() {
 	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
 	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
 	if($Pa1=='custom') f_update_custom($_POST); 
-	$rencToka = bin2hex(random_bytes(6));
-	$_SESSION['rencToka'] = $rencToka;
-	$_SESSION['rencTokat'] = time();
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	
 	<div id="rencFea" class='wrap' style="max-width:620px;">
@@ -2909,7 +2894,7 @@ function rencMenuCustom() {
 
 	<div class="wrap">
 		<div class="icon32" id="icon-options-general"><br/></div>
-		<form id="customForm" name="customForm" method="post" action="?page=renccustom&tok=<?php echo $_SESSION['rencToka']; ?>">
+		<form id="customForm" name="customForm" method="post" action="?page=renccustom&tok=<?php echo $rencToka; ?>">
 			<input type="hidden" name="a1" value="custom" />
 			<input type="hidden" name="a2" value="" />
 			<table class="form-table" style="max-width:600px;clear:none;">
@@ -3086,9 +3071,11 @@ function rencMenuCustom() {
 //
 function rencTabWor() {
 	if(!current_user_can("administrator")) die;
-	global $rencCustom; ?>
+	global $rencCustom;
+	$rencToka = wp_create_nonce('rencToka');
+	?>
 	
-	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=wor&tok=<?php echo $_SESSION['rencToka']; ?>">
+	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=wor&tok=<?php echo $rencToka; ?>">
 		<input type="hidden" name="a1" value="custom" />
 		<input type="hidden" name="a2" value="" />
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
@@ -3218,9 +3205,11 @@ function rencTabWor() {
 //
 function rencTabSea() {
 	if(!current_user_can("administrator")) die;
-	global $rencCustom; global $rencDiv; global $wpdb; ?>
+	global $rencCustom; global $rencDiv; global $wpdb;
+	$rencToka = wp_create_nonce('rencToka');
+	?>
 	
-	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=sea&tok=<?php echo $_SESSION['rencToka']; ?>">
+	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=sea&tok=<?php echo $rencToka; ?>">
 		<input type="hidden" name="a1" value="custom" />
 		<input type="hidden" name="a2" value="" />
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
@@ -3299,9 +3288,10 @@ function rencTabTem() {
 	include(dirname(__FILE__).'/rencontre_color.php');
 	global $rencCustom;
 	rencAddCustomW3css(1);
+	$rencToka = wp_create_nonce('rencToka');
 	?>
 	
-	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=tem&tok=<?php echo $_SESSION['rencToka']; ?>">
+	<form method="post" name="customForm" action="admin.php?page=renccustom&renctab=tem&tok=<?php echo $rencToka; ?>">
 		<input type="hidden" name="a1" value="custom" />
 		<input type="hidden" name="a2" value="" />
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
@@ -3665,7 +3655,7 @@ function rencTabTem() {
 // *****************************************
 function f_update_custom($P) {
 	if(!current_user_can("administrator")) die;
-	if(empty($_GET['tok']) || $_SESSION['rencToka']!==$_GET['tok'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['tok']) || !wp_verify_nonce($_REQUEST['tok'],'rencToka')) return;
 	global $rencOpt; global $rencCustom;
 	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
 	$a = $rencCustom; $relationL = 0; $sexL = 0;
@@ -3773,7 +3763,7 @@ function f_update_custom($P) {
 function f_userPrison($f) {
 	// $f : id table rencontre_prison
 	if(!current_user_can("manage_options") && !current_user_can("bbp_moderator")) die;
-	if(empty($_POST['tok']) || $_SESSION['rencToka']!==$_POST['tok'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['tok']) || !wp_verify_nonce($_REQUEST['tok'],'rencToka')) return;
 	global $wpdb;
 	$wpdb->delete($wpdb->prefix.'rencontre_prison', array('id'=>$f));
 }
@@ -3782,7 +3772,7 @@ function sauvProfilAdm($in,$id) {
 	// entree : Sauvegarde du profil
 	// sortie bdd : [{"i":10,"v":"Sur une ile deserte avec mon amoureux."},{"i":35,"v":0},{"i":53,"v":[0,4,6]}]
 	if(!current_user_can("administrator")) die;
-	if(empty($_POST['tok']) || $_SESSION['rencToka']!==$_POST['tok'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['tok']) || !wp_verify_nonce($_REQUEST['tok'],'rencToka')) return;
 	$u = "";
 	if($in) foreach($in as $k=>$v) {
 		switch($v[0]) {
@@ -3991,7 +3981,7 @@ function renc_list_files($dir) {
 function f_rencStat() {
 	// Ajax
 	if(!current_user_can("manage_options") && !current_user_can("bbp_moderator")) die;
-	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	global $wpdb;
 	$an=date('Y-m-d H:i:s', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")-1));
 	$q = $wpdb->get_results("SELECT U.ID, U.user_registered, R.d_session
@@ -4026,7 +4016,7 @@ function f_newMember() {
 	// Ajax
 	// New member from wordpress
 	if(!current_user_can("manage_options") && !current_user_can("bbp_moderator")) die;
-	if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	global $wpdb; global $rencOpt;
 	$Pid = (isset($_POST['id'])?rencSanit($_POST['id'],'int'):'');
 	if(empty($Pid)) return;
@@ -4210,7 +4200,7 @@ function rencGDPRExportimg($archive_pathname, $archive_url, $html_report_pathnam
 function rencontreIso() {
 	// Ajax
 	if(isset($_POST['iso'])) {
-		if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+		if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 		$Piso = (isset($_POST['iso'])?rencSanit($_POST['iso'],'AZ'):'');
 		global $wpdb;
 		$q = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_iso='".substr($Piso,0,2)."' and c_liste_categ='p' LIMIT 1");
@@ -4222,7 +4212,7 @@ function rencontreIso() {
 function rencontreDrap() {
 	// Ajax
 	if(isset($_POST['action']) && $_POST['action']==='drap') {
-		if(empty($_POST['rencToka']) || $_SESSION['rencToka']!==$_POST['rencToka'] || $_SESSION['rencTokat']<time()-1800) return;
+		if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 		if($dh=opendir(dirname(__FILE__).'/../images/drapeaux/')) {
 			$tab = array();
 			while(($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[]=$file; }

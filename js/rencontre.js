@@ -425,13 +425,13 @@ function f_emot(f){
 	return f;
 }
 function f_tchat_off_session(){
-	jQuery.post(rencobjet.ajaxchat,{'tchat':'session','fm':rencobjet.mid,'d':rencBasedir,'rencTok':rencTok});
+	jQuery.post(rencobjet.ajaxchat,{'tchat':'session','fm':rencobjet.mid,'d':rencBasedir,'c':rencTokc});
 }
 function f_tchat_veille(s,p){
 	if(!s)s='';
 	if(p)rencName=p;
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatVeille','fm':rencobjet.mid,'d':rencBasedir,'rencTok':rencTok},function(r){
+		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatVeille','fm':rencobjet.mid,'d':rencBasedir,'c':rencTokc},function(r){
 			if(r){
 				clearInterval(rencVeil);
 				if(r==s)f_tchat_ok(rencobjet.mid,r,rencobjet.ajaxchat);
@@ -492,7 +492,7 @@ function f_tchat(f,t,g,p,s){
 }
 function f_tchat_debut(f,t,g){
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatDebut','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
+		jQuery.post(g,{'tchat':'tchatDebut','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
 			rencScrut=setInterval(function(){
 				f_tchat_scrute(f,t,g);
 			},2023);
@@ -502,7 +502,7 @@ function f_tchat_debut(f,t,g){
 function f_tchat_scrute(f,t,g){
 	jQuery(document).ready(function(){
 		if(!jQuery("#rcInput").hasClass('w3-hide')){
-			jQuery.post(g,{'tchat':'tchatScrute','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
+			jQuery.post(g,{'tchat':'tchatScrute','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
 				if(r=='::'+f+'::')f_tchat_off();
 				else if(r){
 					if(jQuery("#rcInput").prop('disabled'))f_tchat_on();
@@ -535,7 +535,7 @@ function f_tchat_dem_veille(s,p){
 	if(!s)s='';
 	if(p)rencName=p;
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatDemVeille','fm':rencobjet.mid,'d':rencBasedir,'rencTok':rencTok},function(r){
+		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatDemVeille','fm':rencobjet.mid,'d':rencBasedir,'c':rencTokc},function(r){
 			if(r==1){
 				clearInterval(rencDVeil);
 				jQuery("#rcContent").empty();
@@ -547,7 +547,7 @@ function f_tchat_dem_veille(s,p){
 function f_tchat_ok(f,t,g){
 	clearInterval(rencDVeil);
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatOk','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
+		jQuery.post(g,{'tchat':'tchatOk','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
 			f_tchat(f,t,g,0,rencName);
 			jQuery("#rcContent").empty();
 			jQuery("#rcInput").prop("disabled",false);
@@ -571,7 +571,7 @@ function f_tchat_off(){
 }
 function f_tchat_envoi(f,t,h,g){
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatEnvoi','fm':f,'to':t,'msg':h,'d':rencBasedir,'rencTok':rencTok},function(r){
+		jQuery.post(g,{'tchat':'tchatEnvoi','fm':f,'to':t,'msg':h,'d':rencBasedir,'c':rencTokc},function(r){
 			f_tchat_actualise(h,r,f,t);
 		});
 	});
@@ -615,7 +615,7 @@ function f_tchat_actualise(h,r,f,t){
 function f_tchat_fin(f,t,g){
 	jQuery(document).ready(function(){
 		clearInterval(rencScrut);clearInterval(rencDVeil);
-		jQuery.post(g,{'tchat':'tchatFin','fm':f,'to':t,'d':rencBasedir,'rencTok':rencTok},function(r){
+		jQuery.post(g,{'tchat':'tchatFin','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
 			rencVeil=setInterval(f_tchat_veille,5111);
 		});
 		jQuery("#rencChat").addClass('w3-hide');
@@ -682,7 +682,7 @@ function saveCam(){
 		x.setRequestHeader('Content-Type',"application/x-www-form-urlencoded; charset=UTF-8");
 		x.setRequestHeader("X-Requested-With","XMLHttpRequest");
 		x.onreadystatechange=function(){if(x.readyState==4)rencSave=1;};
-		x.send("tchat=cam&id="+rencMoi+"&image="+i+"&d="+rencBasedir+"&rencTok="+rencTok);
+		x.send("tchat=cam&id="+rencMoi+"&image="+i+"&d="+rencBasedir+"&c="+rencTokc);
 	}
 }
 function stream_cam(){

@@ -6,8 +6,8 @@
 //
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])!='xmlhttprequest') {die;} // ajax request
 if(isset($_POST['tchat'])) {
-	session_start();
-	if(empty($_POST['rencTok']) || empty($_SESSION['rencTok']) || empty($_SESSION['rencTokt']) || $_SESSION['rencTok']!==$_POST['rencTok'] || $_SESSION['rencTokt']<time()-86400) die; // 24 hours
+	if(!session_id()) session_start();
+	if(empty($_POST['c']) || empty($_SESSION['rencTokc']) || $_SESSION['rencTokc']!==$_POST['c']) die;
 	$tc = preg_replace("/[^a-z]+/i", "", $_POST['tchat']);
 	if(isset($_POST['fm'])) $fm = intval($_POST['fm']);
 	if(isset($_POST['to'])) $to = intval($_POST['to']);
@@ -31,7 +31,6 @@ if(isset($_POST['tchat'])) {
 			$t = fopen($d.$fm.'.txt', 'r'); $r = fread($t, 15); fclose($t);
 			$to = substr($r,1,(strpos($r,']')-1));
 			if(!file_exists($d.$to.'.txt') || filesize($d.$to.'.txt')==0) { // old tchat
-				session_start();
 				if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
 				$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
 				echo null;
@@ -79,7 +78,6 @@ if(isset($_POST['tchat'])) {
 			$t = fopen($base.'session/'.$fm.'.txt', 'w'); fclose($t); // raffraichissement de ma session 5 sec
 		}
 		if(!file_exists($d.$fm.'.txt') || filesize($d.$fm.'.txt')===0) {
-			session_start();
 			if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
 			echo "::".$fm."::"; // fin du chat =>JS f_tchat_off()
 		}
@@ -87,7 +85,6 @@ if(isset($_POST['tchat'])) {
 			$t = fopen($d.$fm.'.txt', 'r'); $r=fread($t, 15); fclose($t);
 			$r = substr($r,1,(strpos($r,']')-1));
 			if($r!=$fm || time()-filemtime($base.'session/'.$to.'.txt')>60) { // fin si session to > 60 (voir f_en_ligne() rencontre_widget.php)
-				session_start();
 				if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
 				echo "::".$fm."::"; // fin du chat sauf si demande en cours (fm dans mon fichier fm)
 				$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
