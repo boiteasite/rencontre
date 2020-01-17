@@ -1705,7 +1705,7 @@ function rencMenuMembres() {
 		</form>
 			<?php
 			$ho = false; if(has_filter('rencMurP', 'f_rencMurP')) $ho = apply_filters('rencMurP', $ho); if($ho) echo $ho;
-			if($Pa1 && $Pa2 && $tok===$Ptok && $tokt>time()-1800) {
+			if($Pa1 && !empty($_REQUEST['tok']) && wp_verify_nonce($_REQUEST['tok'],'rencToka')) {
 				if($Pa2=='b0' || $Pa2=='b1' || $Pa2=='m0' || $Pa2=='m1') {
 					// Status : blocked = +1 ; no message = +2 ; (both : 3) ; fastreg : 4
 					$st = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$Pa1."' LIMIT 1");
@@ -1873,7 +1873,7 @@ function rencMenuMembres() {
 				else if($s->i_zrelation==99) echo '<td>'.__('multiple choice','rencontre');
 				else echo '<td>'.$s->i_zrelation;
 				if($s->i_zage_min) echo '<br />'.$s->i_zage_min.' '. __('to','rencontre').' '.$s->i_zage_max.'</td>'; else echo '</td>';
-				echo '<td>'.$s->t_titre.'</td>';
+				echo '<td>'.stripslashes($s->t_titre).'</td>';
 				if(!isset($rencCustom['place'])) {
 					echo '<td>';
 					if(!isset($rencCustom['country']) && isset($rencDrapNom[$s->c_pays]) && $s->c_pays!="") echo '<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$s->c_pays].'" alt="'.$rencDrapNom[$s->c_pays].'" title="'.$rencDrapNom[$s->c_pays].'" /><br />';
@@ -2036,9 +2036,9 @@ function rencMenuMembres() {
 								<h3><?php echo $s->display_name; ?></h3>
 								<div class="ville"><?php echo $s->c_ville; ?></div>
 								<label><?php _e('My attention-catcher','rencontre');?></label><br />
-								<input type="text" name="titre" value="<?php echo $s->t_titre; ?>" /><br /><br />
+								<input type="text" name="titre" value="<?php echo stripslashes($s->t_titre); ?>" /><br /><br />
 								<label><?php _e('My ad','rencontre');?></label><br />
-								<textarea name="annonce" rows="10" style="width:95%;"><?php echo $s->t_annonce; ?></textarea>
+								<textarea name="annonce" rows="10" style="width:95%;"><?php echo stripslashes($s->t_annonce); ?></textarea>
 							</div>
 						</div>
 					</div>
@@ -2406,14 +2406,16 @@ function rencMenuProfil() {
 	}
 	if(!isset($_SESSION['a2'])) $_SESSION['a2'] = 'off';
 	if(!isset($_SESSION['a4'])) $_SESSION['a4'] = 'off';
-	if($Pa1 && ($_SESSION['a2']!=$Pa2 || $_SESSION['a4']!=$Pa4) && $tok===$Ptok && $tokt>time()-1800) {
-		if($Pa1=='langplus') profil_langplus($loc,$Pa4); // JS f_langplus()
-		else if($Pa1=='langsupp') profil_langsupp($Pa4); // JS f_langsupp()
-		else if($Pa1=='synchro') rencSynchronise(); // JS f_synchronise()
-		else if($Pa1=='profil') profil_defaut(); // this
-		else if($Pa1=='pays') liste_defaut();
-		$_SESSION['a2'] = $Pa2;
-		$_SESSION['a4'] = $Pa4;
+	if($_SESSION['a2']!=$Pa2 || $_SESSION['a4']!=$Pa4) { 
+		if(!empty($_REQUEST['tok']) && wp_verify_nonce($_REQUEST['tok'],'rencToka')) {
+			if($Pa1=='langplus') profil_langplus($loc,$Pa4); // JS f_langplus()
+			else if($Pa1=='langsupp') profil_langsupp($Pa4); // JS f_langsupp()
+			else if($Pa1=='synchro') rencSynchronise(); // JS f_synchronise()
+			else if($Pa1=='profil') profil_defaut(); // this
+			else if($Pa1=='pays') liste_defaut();
+			$_SESSION['a2'] = $Pa2;
+			$_SESSION['a4'] = $Pa4;
+		}
 	}
 	$q2 = $wpdb->get_results("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang!='".$loc."' GROUP BY c_lang ");
 	if($q2!=null) foreach($q2 as $r2) { $loc2 .= $r2->c_lang."&"; }
@@ -2434,10 +2436,12 @@ function rencMenuProfil() {
 	<h2>Rencontre&nbsp;<span style='font-size:60%;'><?php echo $rencVersion; ?></span></h2>
 	<h2><?php _e('Profile', 'rencontre'); ?></h2>
 	<?php $n = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_profil");
-	if($n==0) {
-		echo "<p>".__('It does not appear to be any profile. You can load the default profile if you wish.', 'rencontre')."</p>";
-		echo "<a href='javascript:void(0)' class='button-primary' onClick='document.forms[\"menu_profil\"].elements[\"a1\"].value=\"profil\";document.forms[\"menu_profil\"].elements[\"a2\"].value=\"profil\";document.forms[\"menu_profil\"].submit();'>". __('Load profiles', 'rencontre')."</a>";
-	}
+	if($n==0) { ?>
+		<p><?php _e('It does not appear to be any profile. You can load the default profile if you wish.', 'rencontre'); ?></p>
+		<a href='javascript:void(0)' class='button-primary' onClick='document.forms["menu_profil"].elements["a1"].value="profil";document.forms["menu_profil"].elements["a2"].value="profil";document.forms["menu_profil"].submit();'>
+			<?php _e('Load profiles', 'rencontre'); ?>
+		</a>
+	<?php }
 	if(file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) { ?>
 	<p>
 		<a href='javascript:void(0)' class='button-primary' onClick='f_synchronise();'><?php _e('Update member profile', 'rencontre'); ?></a>

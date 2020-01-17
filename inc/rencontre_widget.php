@@ -127,8 +127,7 @@ class RencontreWidget extends WP_widget {
 				echo "var rencUrl='".$rencDiv['siteurl']."',";
 				echo "rencBaseurl='".$rencDiv['baseurl']."',";
 				echo "rencBasedir='".$rencDiv['basedir']."',";
-				echo "rencTok='".$rencTok."',";
-				echo "rencTokc='".$rencTokc."',";
+				echo "rencTok='".$rencTok."',rencTokc='".$rencTokc."',";
 				echo "rencInfochange='".(!empty($rencOpt['nbr']['infochange'])?$rencOpt['nbr']['infochange']:5000)."',";
 				echo "noEmot=".(empty($rencCustom['emot'])?0:1).";";
 				$blockSearch = false; if(has_filter('rencSearchP', 'f_rencSearchP')) $blockSearch = apply_filters('rencSearchP', $blockSearch);
@@ -151,7 +150,7 @@ class RencontreWidget extends WP_widget {
 				if($Grenc && $Gid && $Grenc=='card' && $Gid!=$mid) $d = 0;
 				echo 'jQuery(document).ready(function(){f_renc_menu('.$m.','.$mid.',"'.$d.'");';
 			//	echo 'document.addEventListener("DOMContentLoaded",function(event){f_renc_menu('.$m.','.$mid.',"'.$d.'");';
-				if(isset($tchatName)) echo 'f_tchat_veille('.$_SESSION["tchat"].',\''.$tchatName.'\');';
+				if(isset($tchatName)) echo 'f_tchat_veille('.$_SESSION['tchat'].',\''.$tchatName.'\');';
 				if(!empty($rencOpt['gps']) && empty($_SESSION['gps']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=='off' && isset($_SESSION['rencontre']) && ($_SESSION['rencontre']=='nouveau1' || strstr($_SESSION['rencontre'],'account'))) {
 					echo 'f_gpsNavigator(\''.admin_url('admin-ajax.php').'\',0);'; // geolocalisation only with HTTPS
 				}
@@ -977,13 +976,13 @@ class RencontreWidget extends WP_widget {
 					<input type="hidden" name="zsex" value="<?php echo $Gzsex; ?>" />
 					<input type="hidden" name="homo" value="<?php echo $Ghomo; ?>" />
 					<input type="hidden" name="pagine" value="<?php echo $Gpagine; ?>" />
-					<input type="hidden" name="ageMin" value="<?php echo $GageMin; ?>" />
-					<input type="hidden" name="ageMax" value="<?php echo $GageMax; ?>" />
+					<input type="hidden" name="ageMin" value="<?php echo $Gagemin; ?>" />
+					<input type="hidden" name="ageMax" value="<?php echo $Gagemax; ?>" />
 					<input type="hidden" name="pays" value="<?php echo $Gpays; ?>" />
 					<input type="hidden" name="region" value="<?php echo $Gregion; ?>" />
 					<input type="hidden" name="line" value="<?php echo $Gline; ?>" />
-					<input type="hidden" name="profilQS1" value="<?php echo $profilQS1; ?>" />
-					<input type="hidden" name="profilQS2" value="<?php echo $GprofilQS2; ?>" />
+					<input type="hidden" name="profilQS1" value="<?php echo $Gprofilqs1; ?>" />
+					<input type="hidden" name="profilQS2" value="<?php echo $Gprofilqs2; ?>" />
 					<input type="hidden" name="relation" value="<?php echo $Grelation; ?>" />
 				</form>
 				<div <?php if(empty($rencCustom['side'])) echo 'class="w3-twothird w3-left"'; ?>>
@@ -1102,8 +1101,8 @@ class RencontreWidget extends WP_widget {
 						if($i) $s .= " and R.user_id IN (".substr($i,0,-1).")";
 					}
 					//
-					if(!empty($rencOpt['onlyphoto'])) $s.=" and CHAR_LENGTH(P.t_titre)>4 and CHAR_LENGTH(P.t_annonce)>30 and R.i_photo>0";
-					$s.=" ORDER BY R.d_session DESC, P.d_modif DESC LIMIT ".($Gpagine*(isset($rencOpt['limit'])?$rencOpt['limit']:10)).", ".((isset($rencOpt['limit'])?$rencOpt['limit']:10)+1); // LIMIT indice du premier, nombre de resultat
+					if(!empty($rencOpt['onlyphoto'])) $s .= " and CHAR_LENGTH(P.t_titre)>4 and CHAR_LENGTH(P.t_annonce)>30 and R.i_photo>0";
+					$s .= " ORDER BY R.d_session DESC, P.d_modif DESC LIMIT ".($Gpagine*(isset($rencOpt['limit'])?$rencOpt['limit']:10)).", ".((isset($rencOpt['limit'])?$rencOpt['limit']:10)+1); // LIMIT indice du premier, nombre de resultat
 					$q = $wpdb->get_results($s);
 					if($wpdb->num_rows<=(isset($rencOpt['limit'])?$rencOpt['limit']:10)) $suiv=0;
 					else array_pop($q); // supp le dernier ($rencOpt['limit']+1) qui sert a savoir si page suivante

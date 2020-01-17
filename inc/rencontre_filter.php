@@ -912,7 +912,7 @@ function rencSanit($f,$g) {
 		case 'words': // DISPLAY_NAME, CITY, REGION (set)
 			$a = sanitize_text_field($f);
 			$a = preg_replace("/\s+/", " ",$a); // multiple spaces & lines break
-			$n = array('"','(',')','{','}','[',']','<','>','|','+','=','?',';','`','*','@');
+			$n = array('"','(',')','{','}','[',']','<','>','|','+','=','?',';','`','*');
 			$a = str_replace($n,"",$a);
 			break;
 			

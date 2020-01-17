@@ -24,7 +24,7 @@ $w3renc = array(
 	'white' => '#fff', 'whiteT' => '#000',
 	'black' => '#000', 'blackT' => '#fff',
 	'grey' => '#9e9e9e', 'greyT' => '#000',
-	'light-grey' => '#f1f1f-1', 'light-greyT' => '#000',
+	'light-grey' => '#f1f1f1', 'light-greyT' => '#000',
 	'dark-grey' => '#616159', 'dark-greyT' => '#fff',
 	'pale-red' => '#ffdddd', 'pale-redT' => '#000',
 	'pale-green' => '#ddffdd', 'pale-greenT' => '#000',
