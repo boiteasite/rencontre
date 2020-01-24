@@ -3781,7 +3781,12 @@ function sauvProfilAdm($in,$id) {
 	if($in) foreach($in as $k=>$v) {
 		switch($v[0]) {
 			case 1:
-				if(!empty($_POST['text'.$k])) $u .= '{"i":'.$k.',"v":"'.str_replace('"','',rencSanit($_POST['text'.$k],'text')).'"},';
+				if(!empty($_POST['text'.$k])) {
+					$a = rencSanit($_POST['text'.$k],'text');
+					$a = str_replace('\"','',$a);
+					$a = str_replace("\'","'",$a);
+					$u .= '{"i":'.$k.',"v":"'.$a.'"},';
+				}
 			break;
 			case 2:
 				if(!empty($_POST['area'.$k])) {
