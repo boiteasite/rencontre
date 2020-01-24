@@ -5,7 +5,7 @@ Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social,
 Requires at least: 4.3
 Tested up to: 5.3
 Requires PHP: 5.5
-Stable tag: 3.2.6
+Stable tag: 3.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -382,6 +382,8 @@ It's better to limit the data size.
 01/01/2020 : 3.2.5 -  Fix profiles issues in dashboard.
 
 10/01/2020 : 3.2.6 -  Fix issue when email used as login.
+
+24/01/2020 : 3.2.7 -  Fix issue with single & double quotes in users profile.
 
 = 3.1 =
 15/03/2019
