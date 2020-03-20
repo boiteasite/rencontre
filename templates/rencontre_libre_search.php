@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Libre Search
- * Last Change : Rencontre 3.0
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_search.php
 */
 ?>
@@ -16,7 +16,7 @@
 			<div class="w3-container">
 				<div class="w3-section w3-renc-lblc">
 					<form name="rencSearch" method="get" action="">
-						<input type="hidden" name="renc" value="searchLibre" />
+						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="searchLibre" />
 						<?php if(!empty($rencOpt['page_id'])) { ?>
 						
 						<input type="hidden" name="page_id" value="<?php echo $rencOpt['page_id']; ?>" />
@@ -24,7 +24,7 @@
 						<div class="w3-row-padding">
 							<div class="rencSearchBloc<?php echo (empty($rencCustom['born'])?' w3-third':''); ?>">
 								<label><?php _e('I\'m looking for','rencontre'); ?>&nbsp;</label>
-								<select name="zsex" class="w3-select w3-border w3-renc-sebg">
+								<select name="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>" class="w3-select w3-border w3-renc-sebg">
 								<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
 
 									<option value="<?php echo $v; ?>"><?php echo $rencOpt['iam'][$v]; ?></option>
@@ -36,7 +36,7 @@
 
 							<div class="rencSearchBloc w3-third">
 								<label><?php _e('between','rencontre'); ?>&nbsp;</label>
-								<select name="zageMin" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['zagemin']; ?>">
+								<select name="<?php echo (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemin']; ?>">
 								<?php for($v=20;$v<91;$v+=5) { ?>
 								
 									<option value="<?php echo $v; ?>"<?php if($v==20) echo ' selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
@@ -46,7 +46,7 @@
 							</div>
 							<div class="rencSearchBloc w3-third">
 								<label>&nbsp;<?php _e('and','rencontre'); ?>&nbsp;</label>
-								<select name="zageMax" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['zagemax']; ?>">
+								<select name="<?php echo (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemax']; ?>">
 								<?php for($v=25;$v<96;$v+=5) { ?>
 								
 									<option value="<?php echo $v; ?>"<?php if($v==95) echo ' selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>

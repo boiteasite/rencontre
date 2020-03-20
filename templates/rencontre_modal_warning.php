@@ -2,12 +2,12 @@
 /*
  * Plugin : Rencontre
  * Template : Modal Warning
- * Last Change : Rencontre 3.0
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_modal_warning.php
 */
 ?>
 
-	<?php if(isset($_GET['rencidfm']) && $_GET['rencidfm']=='rencfastreg') { ?>
+	<?php if(isset($_GET[$Lidf]) && $_GET[$Lidf]=='rencfastreg') { ?>
 	
 		<div id="rencFantome" class="w3-modal w3-show w3-animate-opacity">
 			<div class="w3-modal-content w3-card-4" style="max-width:600px;">

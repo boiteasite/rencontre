@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait add photo
- * Last Change : Rencontre 3.0
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_add_photo.php
  * $u0 : i_photo
 */
@@ -21,7 +21,7 @@
 					<?php } ?>
 						<input type="hidden" name="a1" value="" />
 						<input type="hidden" name="a2" value="" />
-						<input type="hidden" name="renc" value="" />
+						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
 						<input type="hidden" name="rotate" value="" />
 						<input type="hidden" name="rnd" value="<?php echo $_SESSION['rnd']; ?>" />
 						<div style="margin:0 auto;text-align:center"></div>

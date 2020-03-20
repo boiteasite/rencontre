@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.2.2
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
  * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert
  * Filter : do_action('rencontre_account', $f, $g) - see below
@@ -26,8 +26,8 @@
 					<div class="w3-section">
 						<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Change password','rencontre');?></div>
 						<form name="formPass" method="post" action="">
-							<input type="hidden" name="renc" value="" />
-							<input type="hidden" name="id" value="" />
+							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
+							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
 							<div>
 								<label><?php _e('Former','rencontre');?></label>
 								<input name="pass0" type="password" class="w3-input w3-renc-inbg" />

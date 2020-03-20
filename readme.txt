@@ -5,7 +5,7 @@ Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social,
 Requires at least: 4.3
 Tested up to: 5.3
 Requires PHP: 5.5
-Stable tag: 3.2.7
+Stable tag: 3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -327,10 +327,12 @@ It's better to limit the data size.
 * rencUserDel - arg : $id : Executed when user is deleted (himself or admin)
 * rencUserDelMailContent - args array() - return args array() : title, content (user and admin deletion) and moderation item (admin deletion only) for the user deletion email
 * rencNumbers - args array() - return args array() : change default numbers (number of portrait in featured box, in online box, in new entrant, in summary email, number of letter in search result Ad ...). var_dump args in your filter to get the right format.
+* rencLabels - args array() - return args array() : change the name of URL variables such as "renc", "account". Available name : 'renc','rencfastreg','rencoo','rencii','rencidfm','id','card','edit','msg','account','gsearch','liste','qsearch','write','sourire','demcont','signale','bloque','favoriAdd','favoriDel','sex','zsex','z2sex','homo','ageMin','ageMax','tailleMin','tailleMax','poidsMin','poidsMax','mot','pseudo','pagine','pays','region','ville','relation','profilQS','line','photo','profil','astro','gps','km','fin','paswd'.
 * rencTemplateDir - args array() - return args array() : change templates directory.
 * rencFicheLibre - shortcode args array(), HTML output - return HTML output : Add content to the Rencontre unconnected home page (fiche libre). Ex : css file...
 * rencColor - args array() - return args array() : Add colors to $w3renc list - See "inc/rencontre_color.php"
 * rencNoFontawesome - remove Font Awesome css file if filter exists (no need function, only filter).
+* rencJsLang - args $lang array() - return $lang - Add or change values in rencontre/lang/rencontre-js-lang.php.
 
 [Howto](https://www.boiteasite.fr/site_rencontre_wordpress.html#Developpeurs)
 
@@ -346,6 +348,21 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+= 3.3 =
+20/03/2020
+
+* Add rencLabels filter to customize URL param name (example : www.mysite.com/?renc=liste&id=981&sex=0 can become www.mysite.com/?abcd=search&zz=981&gender=0). See Available Filters FAQ.
+* Add rencJsLang filter.
+* ID in URL is now crypted. Set 1 to 'urlNoCryptId' value in rencNumbers() filter to keep ID readable. Template 'rencontre_search.php' is concerned.
+* Add 'mailUserPerLine' value in rencNumbers() filter to change number of portrait per line in regular email (default : 2). Add also 'urlNoCryptId'.
+* Unread msg is now removed from DB if deleted by sender (previous : marked as deleted in DB and really removed if deleted by recipient).
+* User can hide sidebar on mobile.
+* Fix message count issue with deleted account.
+* Fix search issue and registration issue when "No birth date" checked in Custom tab.
+* Fix redirect issue after registration in fast registration with some custom login plugins.
+* Fix sidebar my photo size issue.
+* DataBase dbip updated
 
 = 3.2 =
 11/09/2019

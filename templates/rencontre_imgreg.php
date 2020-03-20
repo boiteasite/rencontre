@@ -2,9 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : ImgReg shortcode
- * Last Change : Rencontre 3.0.2
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_imgreg.php
- * $arg : 'title', 'selector', 'left', 'top', 'login',
+ * $arg : 'title', 'selector', 'left', 'top', 'login'
 */
 ?>
 
@@ -26,8 +26,18 @@
 				<label for="pssw"><?php _e('Password'); ?><br /><input type="password" name="pssw" id="pssw" class="input" value="" size="25" />
 				</label>
 			</p>
+			<?php if(!empty($rencOpt['disnam'])) { ?>
+			
 			<p>
-				<label for="zsex"><?php _e('I\'m looking for','rencontre'); ?><br /><select name="zsex">
+				<label for="dname"><?php _e('My name','rencontre'); ?><br /><input type="text" name="dname" id="dname" class="input" value="" size="30" />
+				</label>
+			</p>
+			<?php } ?>
+			
+			<p>
+				<label for="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>"><?php _e('I\'m looking for','rencontre'); ?>
+				<br />
+				<select name="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>">
 				<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
 					<option value="<?php echo $v; ?>"><?php echo $rencOpt['iam'][$v]; ?></option>
 				<?php } ?>

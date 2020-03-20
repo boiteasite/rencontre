@@ -50,7 +50,7 @@ function f_vignette_change(f,img){
 	document.getElementById('changePhoto').innerHTML='';
 }
 function f_supp_photo(f){
-	document.getElementById('changePhoto').innerHTML='<a href="javascript:void(0)" class="rencSupp" onClick="document.forms[\'portraitPhoto\'].elements[\'a1\'].value=\'suppImg\';document.forms[\'portraitPhoto\'].elements[\'a2\'].value=\''+f+'\';document.forms[\'portraitPhoto\'].elements[\'renc\'].value=\'edit\';document.forms[\'portraitPhoto\'].submit();" title="'+rencobjet.supp_la_photo+'">'+rencobjet.supp_photo+'</a>';
+	document.getElementById('changePhoto').innerHTML='<a href="javascript:void(0)" class="rencSupp" onClick="document.forms[\'portraitPhoto\'].elements[\'a1\'].value=\'suppImg\';document.forms[\'portraitPhoto\'].elements[\'a2\'].value=\''+f+'\';document.forms[\'portraitPhoto\'].elements[\''+(typeof lbl.renc!="undefined"?lbl.renc:'renc')+'\'].value=\''+(typeof lbl.edit!="undefined"?lbl.edit:'edit')+'\';document.forms[\'portraitPhoto\'].submit();" title="'+rencobjet.supp_la_photo+'">'+rencobjet.supp_photo+'</a>';
 }
 function f_photoPop_display(f){
 	if(f.files&&f.files[0]){
@@ -114,30 +114,36 @@ function f_exifOrientation(f,g){
 	r.readAsArrayBuffer(f);
 }
 function f_plus_photoPop_submit(f){
-	var a=document.forms['portraitPhotoPop'];
+	var a=document.forms['portraitPhotoPop'],
+		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	if(a.elements['plusPhoto'].value=='')return;
 	a.elements['a1'].value='plusImg';
 	a.elements['a2'].value=f;
 	a.elements['rotate'].value=jQuery('#popPhoto img').getRotateAngle();
-	a.elements['renc'].value='edit';
+	a.elements[jrenc].value=jedit;
 	a.submit();
 }
 function f_suppAll_photo(){
-	var a=document.forms['portraitPhoto'];
+	var a=document.forms['portraitPhoto'],
+		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.elements['a1'].value='suppImgAll';
-	a.elements['renc'].value='edit';
+	a.elements[jrenc].value=jedit;
 	a.submit();
 }
 function f_sauv_profil(f){
-	var a=document.forms['portraitChange'];
+	var a=document.forms['portraitChange'],
+		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.elements['a1'].value='sauvProfil';
 	a.elements['a2'].value=f;
-	a.elements['renc'].value='edit';
+	a.elements[jrenc].value=jedit;
 	a.submit();
 }
 function f_fantome(){
 	jQuery('#rencFantome').remove();
-	document.cookie="rencfantome=oui";
+	document.cookie="rencfantome=yes";
 }
 function f_mod_nouveau(f){
 	var a=0,c=document.forms['formNouveau'],b=c.elements,d,e,g;
@@ -184,28 +190,37 @@ function f_mod_nouveau(f){
 }
 function f_fin(f){
 	if(confirm(rencobjet.conf_supp_compte)){
-	var a=document.forms['formFin'];
-		a.elements['renc'].value='fin';
-		a.elements['id'].value=f;
+		var a=document.forms['formFin'],
+			jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+			jid=(typeof lbl.id!="undefined"?lbl.id:'id'),
+			jfin=(typeof lbl.fin!="undefined"?lbl.fin:'fin');
+		a.elements[jrenc].value=jfin;
+		a.elements[jid].value=f;
 		a.submit();
 	}
 }
 function f_trouve(){
-	var a=document.forms['formTrouve'];
-	a.elements['renc'].value='liste';
+	var a=document.forms['formTrouve'],
+		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jliste=(typeof lbl.liste!="undefined"?lbl.liste:'liste');
+	a.elements[jrenc].value=jliste;
 	a.submit();
 }
 function f_quickTrouve(){
-	var a=document.forms['formMonAccueil'];
-	a.elements['renc'].value='qsearch';
+	var a=document.forms['formMonAccueil'],
+		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jqsearch=(typeof lbl.qsearch!="undefined"?lbl.qsearch:'qsearch');
+	a.elements[jrenc].value=jqsearch;
 	a.submit();
 }
 /* Popup avec photo FB */
 function f_plus_photoFB_submit(f,g){
-	var a=document.forms['portraitPhotoPop'];
+	var a=document.forms['portraitPhotoPop'],
+		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.elements['a1'].value='plusImg';
 	a.elements['a2'].value=f+'|'+g;
-	a.elements['renc'].value='edit';
+	a.elements[jrenc].value=jedit;
 	a.submit();
 }
 function f_FBLogin(f){
@@ -253,41 +268,52 @@ function f_msgEmotContent(f){
 }
 /* Menu via WP */
 function f_renc_menu(f,i,c){
+	var jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jcard=(typeof lbl.card!="undefined"?lbl.card:'card'),
+		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit'),
+		jmsg=(typeof lbl.msg!="undefined"?lbl.msg:'msg'),
+		jgsearch=(typeof lbl.gsearch!="undefined"?lbl.gsearch:'gsearch'),
+		jaccount=(typeof lbl.account!="undefined"?lbl.account:'account');
 	if(c){
 		jQuery("."+c).parent().children().removeClass("w3-renc-mebt");
 		jQuery("."+c).addClass("w3-renc-mebt");
 	}
 	jQuery(".rencMenuCard").click(function(){
-		document.forms['rencMenu'].elements['renc'].value='card';
+		document.forms['rencMenu'].elements[jrenc].value=jcard;
 		document.forms['rencMenu'].submit();
 	});
 	if(f.edit)jQuery(".rencMenuEdit").click(function(){
-		document.forms['rencMenu'].elements['renc'].value='edit';
+		document.forms['rencMenu'].elements[jrenc].value=jedit;
 		document.forms['rencMenu'].submit();
 	});
 	else jQuery(".rencMenuEdit").addClass("menu-item-off");
 	if(f.msg)jQuery(".rencMenuMsg").click(function(){
-		document.forms['rencMenu'].elements['renc'].value='msg';
+		document.forms['rencMenu'].elements[jrenc].value=jmsg;
 		document.forms['rencMenu'].submit();
 	});
 	else jQuery(".rencMenuMsg").addClass("menu-item-off");
 	if(f.search)jQuery(".rencMenuSearch").click(function(){
-		document.forms['rencMenu'].elements['renc'].value='gsearch';
+		document.forms['rencMenu'].elements[jrenc].value=jgsearch;
 		document.forms['rencMenu'].submit();
 	});
 	else jQuery(".rencMenuSearch").addClass("menu-item-off");
 	jQuery(".rencMenuAccount").click(function(){
-		document.forms['rencMenu'].elements['renc'].value='account';
+		document.forms['rencMenu'].elements[jrenc].value=jaccount;
 		document.forms['rencMenu'].submit();
 	});
 	jQuery(".rencMenuC1").click(function(){
-		document.forms['rencMenu'].elements['renc'].value='c1';
+		document.forms['rencMenu'].elements[jrenc].value='c1';
 		document.forms['rencMenu'].submit();
 	});
 	jQuery(".rencMenuC2").click(function(){
-		document.forms['rencMenu'].elements['renc'].value='c2';
+		document.forms['rencMenu'].elements[jrenc].value='c2';
 		document.forms['rencMenu'].submit();
 	});
+}
+function f_hideSideMobile(){
+	if(document.cookie.indexOf('rencNoSideMobile=')==-1)document.cookie="rencNoSideMobile=yes";
+	else document.cookie="rencNoSideMobile=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+	window.location.reload();
 }
 /* fonctions avec appel Ajax */
 function f_gpsNavigator(g,h){
@@ -319,11 +345,16 @@ function f_password(f0,f1,f2,f,g){
 	if(f1!=f2)jQuery('#rencAlertPass').html(rencobjet.nouv_pass_diff).show(0).delay(5000).hide(0);
 	else{
 		if(document.getElementById('buttonPass')!==null)document.getElementById('buttonPass').style.visibility="hidden";
-		jQuery.post(g,{'action':'testPass','id':f,'pass':f0,'nouv':f1,'rencTok':rencTok},function(r){
+		var jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+			jid=(typeof lbl.id!="undefined"?lbl.id:'id'),
+			jpaswd=(typeof lbl.paswd!="undefined"?lbl.paswd:'paswd'),
+			p={'action':'testPass','pass':f0,'nouv':f1,'rencTok':rencTok};
+			p[jid]=f;
+		jQuery.post(g,p,function(r){
 			if(r!=0){
 				d=document.forms['formPass'];
-				d.elements['renc'].value='paswd';
-				d.elements['id'].value=f;
+				d.elements[jrenc].value=jpaswd;
+				d.elements[jid].value=f;
 				d.submit();
 			}
 			else{
@@ -336,7 +367,7 @@ function f_password(f0,f1,f2,f,g){
 function f_fastregMail(g){
 	jQuery.post(g,{'action':'fastregMail','rencTok':rencTok},function(r){
 		if(r){
-			document.cookie="rencfastregMail=oui";
+			document.cookie="rencfastregMail=yes";
 			jQuery('#rencAlertEmail').html(r.substring(0,r.length-1)).show(0).delay(5000).hide(0);
 		}
 	});
@@ -516,7 +547,10 @@ function f_tchat_dem(f,t){
 	jQuery("#rcClose").click(function(){f_tchat_fin(f,t,rencobjet.ajaxchat);});
 	jQuery("#rcContent").empty().append('<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+rencobjet.demande_tchat+'&nbsp;:&nbsp;</div><div class="w3-col s2 m3">&nbsp;</div></div>');
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.wpajax,{'action':'miniPortrait2','id':t,'rencTok':rencTok},function(r){
+		var jid=(typeof lbl.id!="undefined"?lbl.id:'id'),
+		p={'action':'miniPortrait2','rencTok':rencTok};
+		p[jid]=t;
+		jQuery.post(rencobjet.wpajax,p,function(r){
 			r=r.split('|');
 			rencName=r[0];
 			jQuery("#rcContent").append(r[1].substring(0,r[1].length-1));

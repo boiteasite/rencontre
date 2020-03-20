@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : WpGeonames Location taxonomy
- * Last Change : Rencontre 3.2
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_wp-geonames_location_taxonomy.php
  * $data : 0=>country, 1=>region, 2=>city, 3=>lat, 4=>lon
 */

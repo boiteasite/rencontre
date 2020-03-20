@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.2.2
+ * Last Change : Rencontre 3.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
 */
@@ -11,7 +11,7 @@
 	<div class="rencPortraitEdit w3-section">
 		<?php if($infochange) { ?>
 		
-		<div id="infoChange" class="w3-panel">
+		<div id="infoChange" class="w3-panel w3-renc-wabg">
 			<div>
 				<?php echo $infochange; ?>
 			</div>
@@ -19,7 +19,7 @@
 		<?php } ?>
 		
 		<form name="portraitPhoto" method="post" enctype="multipart/form-data" action="">
-			<input type="hidden" name="renc" value="" />
+			<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
 			<input type="hidden" name="a1" value="" />
 			<input type="hidden" name="a2" value="" />
 			<input type="hidden" name="rnd" value="<?php echo $_SESSION['rnd']; ?>" />
@@ -74,9 +74,9 @@
 				<input type="hidden" name="page_id" value="<?php echo $rencOpt['page_id']; ?>" />
 				<?php } ?>
 				
-				<input type='hidden' name='renc' value='' />
-				<input type='hidden' name='a1' value='' />
-				<input type='hidden' name='a2' value='' />
+				<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
+				<input type="hidden" name="a1" value="" />
+				<input type="hidden" name="a2" value="" />
 				<div class="w3-rest w3-mobile w3-card w3-renc-blbg">
 					<div class="w3-container w3-renc-lblc">
 						<div class="w3-section w3-cell-row">
