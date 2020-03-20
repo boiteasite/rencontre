@@ -32,7 +32,6 @@ add_action('wp_ajax_testPass', 'rencTestPass'); // changement du mot de passe
 add_action('wp_ajax_fbok', 'rencFbok'); add_action('wp_ajax_nopriv_fbok', 'rencFbok'); // connexion via FB
 add_action('wp_ajax_miniPortrait2', 'f_miniPortrait2');
 add_action('wp_ajax_fastregMail', 'f_fastregMail');
-//add_action('wp_ajax_addCountSearch', 'f_addCountSearch'); // +1 dans action search si meme jour
 add_action('wp_ajax_gpsnavigator', 'rencGpsNavigator');
 function f_voirMsg() {
 	$Pho = (isset($_POST['ho'])?rencSanit($_POST['ho'],'int'):false);
