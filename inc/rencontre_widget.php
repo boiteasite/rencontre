@@ -55,7 +55,7 @@ class RencontreWidget extends WP_widget {
 		$Lprofilqs = (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS');
 		$Lline = (!empty($rencOpt['lbl']['line'])?$rencOpt['lbl']['line']:'line');
 		//
-		$Grencidfm = (isset($_GET[$Lidf])?rencSanit($_GET[$Lidf],'alphanum'):'');
+		$Grencidfm = (isset($_GET[$Lidf])?rencSanit(rencGetId($_GET[$Lidf],1),'alphanum'):'');
 		$Grenc = (isset($_GET[$Lrenc])?rencSanit($_GET[$Lrenc],'alphanum'):'');
 		$Gid = (isset($_GET[$Lid])?rencSanit(rencGetId($_GET[$Lid],1),'alphanum'):''); // ID or action (sourireIn...
 		$Gpagine = (isset($_GET[$Lpagine])?rencSanit($_GET[$Lpagine],'int'):0);
