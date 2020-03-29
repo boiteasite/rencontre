@@ -18,7 +18,17 @@ if(!empty($rencOpt['fastreg'])) {
 function f_shortcode_rencontre_libre($a) {if(!is_user_logged_in()) return Rencontre::f_ficheLibre($a,1);} // shortcode : [rencontre_libre gen=mix/girl/men]
 function f_shortcode_rencontre_nbmembre($a) {return Rencontre::f_nbMembre($a);} // shortcode : [rencontre_nbmembre gen=girl/men ph=1]
 function f_shortcode_rencontre_search($a) {if(!is_user_logged_in()) return Rencontre::f_rencontreSearch(1,$a);} // shortcode : [rencontre_search nb=8] - nb:number of result
-function f_shortcode_rencontre() {if(is_user_logged_in()) {$renc=new RencontreWidget; ob_start(); $renc->widget(0,0); $a = ob_get_contents(); ob_end_clean(); return $a;}} // shortcode : [rencontre]
+function f_shortcode_rencontre() { // shortcode : [rencontre]
+	if(is_user_logged_in()) {
+		if(!class_exists('RencontreWidget')) return '';
+		$renc = new RencontreWidget;
+		ob_start();
+		$renc->widget(0,0);
+		$a = ob_get_contents();
+		ob_end_clean();
+		return $a;
+	}
+}
 function f_shortcode_rencontre_login() {return Rencontre::f_login(0,1);} // shortcode : [rencontre_login]
 function f_shortcode_rencontre_loginFB() {return Rencontre::f_loginFB(1);} // shortcode : [rencontre_loginFB]
 function f_shortcode_rencontre_imreg($a) {if(!is_user_logged_in()) return Rencontre::f_rencontreImgReg($a);} // shortcode : [rencontre_imgreg title= selector='.site-header .wp-custom-header img' left=20 top=20] - left & top in purcent
@@ -32,6 +42,7 @@ add_action('wp_ajax_testPass', 'rencTestPass'); // changement du mot de passe
 add_action('wp_ajax_fbok', 'rencFbok'); add_action('wp_ajax_nopriv_fbok', 'rencFbok'); // connexion via FB
 add_action('wp_ajax_miniPortrait2', 'f_miniPortrait2');
 add_action('wp_ajax_fastregMail', 'f_fastregMail');
+//add_action('wp_ajax_addCountSearch', 'f_addCountSearch'); // +1 dans action search si meme jour
 add_action('wp_ajax_gpsnavigator', 'rencGpsNavigator');
 function f_voirMsg() {
 	$Pho = (isset($_POST['ho'])?rencSanit($_POST['ho'],'int'):false);
