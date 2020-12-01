@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.1.1
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
  * $u0 (myself) : ID
@@ -18,7 +18,7 @@
 			</div>
 		</div><!-- .infoChange -->
 		<?php } ?>
-		
+
 		<div class="w3-row w3-margin-bottom">
 			<div class="w3-col w3-mobile" style="width:<?php echo $photoWidth;?>px">
 				<div class="w3-card w3-renc-blbg">
@@ -35,12 +35,15 @@
 					<div class="rencBlocimg w3-center" style="font-size:0;">
 					<?php for($v=0;$v<$u->maxPhoto;++$v) { ?>
 						<?php if(($u->ID)*10+$v <= $u->i_photo) { ?>
-							<?php if(!$disable['thumb']) { ?>
+							<?php if($disable['thumb']) { ?>
+								
+							<a href="javascript:void(0)" <?php echo $onClick['thumb']; ?>>
+							<?php } else if(empty($rencOpt['lightbox'])) { ?>
 								
 							<a href="javascript:void(0)" class="rencZoombox" title="<?php echo $title['zoombox']; ?>" onClick="document.getElementById('rencPhoto<?php echo $v; ?>').style.display='block'">
 							<?php } else { ?>
 								
-							<a href="javascript:void(0)" <?php echo $onClick['thumb']; ?>>
+							<a href="javascript:void(0)" class="rencZoombox" title="<?php echo $title['zoombox']; ?>" onClick="f_lightbox(<?php echo $v; ?>)">
 							<?php } ?>
 
 								<img class="w3-show-inline-block" onMouseOver="<?php echo $u->photo->over[$v]; ?>" src="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" alt="" title="<?php echo $title['thumb']; ?>" />
@@ -78,14 +81,18 @@
 							<?php } ?>
 							</div>
 							<div>
-							<?php if(empty($rencCustom['born']) && strpos($u->d_naissance,'0000')===false) echo Rencontre::f_age($u->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?>
+							<?php if(empty($rencCustom['born']) && strpos($u->d_naissance,'0000')===false) echo '<span id="userAge">'.Rencontre::f_age($u->d_naissance).'&nbsp;'.__('years','rencontre').'</span>'; ?>
 							<?php if(!isset($rencCustom['size'])) { ?>
 							
-							&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo (empty($rencCustom['sizeu'])?$u->i_taille.' '.__('cm','rencontre'):floor($u->i_taille/24-1.708).' '.__('ft','rencontre').' '.round(((($u->i_taille/24-1.708)-floor($u->i_taille/24-1.708))*12),1).' '.__('in','rencontre')); ?>
+							<span id="userSize">&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo (empty($rencCustom['sizeu'])?$u->i_taille.' '.__('cm','rencontre'):floor($u->i_taille/24-1.708).' '.__('ft','rencontre').' '.round(((($u->i_taille/24-1.708)-floor($u->i_taille/24-1.708))*12),1).' '.__('in','rencontre')); ?></span>
 							<?php } ?>
 							<?php if(!isset($rencCustom['weight'])) { ?>
 							
-							&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo (empty($rencCustom['weightu'])?$u->i_poids.' '.__('kg','rencontre'):($u->i_poids*2+10).' '.__('lbs','rencontre')) ?>
+							<span id="userWeight">&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo (empty($rencCustom['weightu'])?$u->i_poids.' '.__('kg','rencontre'):($u->i_poids*2+10).' '.__('lbs','rencontre')) ?></span>
+							<?php } ?>
+							<?php if(!empty($rencCustom['sex'])) { ?>
+							
+							<span id="userGender" style="text-transform:capitalize">&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rencOpt['iam'][$u->i_sex]; ?></span>
 							<?php } ?>
 							
 							</div>
@@ -154,7 +161,7 @@
 							<?php foreach($value as $k=>$v) { ?>
 							
 							<div class="w3-row">
-								<div class="w3-third"><?php echo $k; ?></div>
+								<div class="w3-third w3-renc-underline-s"><?php echo $k; ?></div>
 								<div class="w3-twothird"><?php echo $v; ?></div>
 							</div>
 							<?php } ?>
@@ -170,6 +177,7 @@
 		<?php if($u0->ID!=$u->ID) { ?>
 		<div class="w3-card w3-renc-blbg w3-margin-bottom">
 			<div class="w3-container">
+				<div id="rencAlert" class="w3-panel w3-renc-wabg" style="display:none"></div>
 				<div class="w3-section">
 
 				<?php if(!$disable['send']) { ?>
@@ -235,5 +243,6 @@
 		<?php } ?>
 		<?php if(!empty($portraitPlus)) echo $portraitPlus; ?>
 
+		<?php if(!empty($rencOpt['lightbox']) && $tpl=rencTpl('rencontre_lightbox.php',0)) include($tpl); ?>
 		
 	</div><!-- .rencPortrait -->

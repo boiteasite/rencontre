@@ -1,6 +1,7 @@
 <?php
 $lang = array(
 	'supp_photo'=>__('Delete this photo','rencontre'),
+	'main_photo'=>__('Main photo','rencontre'),
 	'supp_la_photo'=>__('Delete photo','rencontre'),
 	'ajouter_photo'=>__('Add this photo','rencontre'),
 	'champs_incomplets'=>__('incomplete fields or error','rencontre'),
@@ -11,6 +12,7 @@ $lang = array(
 	'ecrire_appuyer'=>__('Write and press <Enter>','rencontre'),
 	'tchat_attendre'=>__('Chat request sent. Wait ...','rencontre'),
 	'tchat_dem_ok'=>__('Chat request accepted. You can start...','rencontre'),
+	'tchat_indispo'=>__('This chat is not currently available','rencontre'),
 	'demande_tchat'=>__('You have a chat request','rencontre'),
 	'ferme_fenetre'=>__('Your contact closed his window.','rencontre')
 	);

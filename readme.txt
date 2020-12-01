@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
 Requires at least: 4.3
-Tested up to: 5.3
+Tested up to: 5.5
 Requires PHP: 5.5
-Stable tag: 3.3
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,8 +69,10 @@ Rencontre is currently translated in :
 * Dutch - thanks to Martin Zaagman
 * Hungarian - thanks to FunnelXpert
 * Italian - thanks to Gaelle Dozzi
+* Japanese - thanks to Rorylouis
 * Norvegian - thanks to Steffen Madsen
 * Portuguese - thanks to Patricio Fernandes
+* Russian - thanks to Vetal Soft
 * Spanish - thanks to Sanjay Gandhi
 * Swahili - thanks to [Kenneth Longo Mlelwa](http://afrodate.africa/)
 * Swedish - thanks to WP Translation Team
@@ -193,7 +195,7 @@ Example with Google font :
 
 = Chat and Webcam =
 
-* Chat has no memory. If the user refresh the page, he lose the historic. You cannot display the content of a conversation in the Admin side.
+* Chat has only local memory (session). You cannot display the content of a conversation in the Admin side.
 * Webcam is not a real streaming but an emulation. The display is refreshed a bit more than every second.
 * There's no sound with the webcam. Streaming is not possible on a simple shared hosting without third party.
 * HTTPS is mandatory in most case to use the webcam.
@@ -326,7 +328,7 @@ It's better to limit the data size.
 * rencImgFullSize - args array(w,h) - return Width and Height for the big img (img src on server, displayed in popup) - default : array(1280,960)
 * rencUserDel - arg : $id : Executed when user is deleted (himself or admin)
 * rencUserDelMailContent - args array() - return args array() : title, content (user and admin deletion) and moderation item (admin deletion only) for the user deletion email
-* rencNumbers - args array() - return args array() : change default numbers (number of portrait in featured box, in online box, in new entrant, in summary email, number of letter in search result Ad ...). var_dump args in your filter to get the right format.
+* rencNumbers - args array() - return args array() : change default numbers (number of portrait in featured box, in online box, in new entrant, in summary email, number of letter in search result Ad ...) and options. var_dump args in your filter to get the right format.
 * rencLabels - args array() - return args array() : change the name of URL variables such as "renc", "account". Available name : 'renc','rencfastreg','rencoo','rencii','rencidfm','id','card','edit','msg','account','gsearch','liste','qsearch','write','sourire','demcont','signale','bloque','favoriAdd','favoriDel','sex','zsex','z2sex','homo','ageMin','ageMax','tailleMin','tailleMax','poidsMin','poidsMax','mot','pseudo','pagine','pays','region','ville','relation','profilQS','line','photo','profil','astro','gps','km','fin','paswd'.
 * rencTemplateDir - args array() - return args array() : change templates directory.
 * rencFicheLibre - shortcode args array(), HTML output - return HTML output : Add content to the Rencontre unconnected home page (fiche libre). Ex : css file...
@@ -349,6 +351,39 @@ It's better to limit the data size.
 
 == Changelog ==
 
+01/12/2020 : 3.5.1
+
+* Fix chat issue (my message not displayed in my window).
+* Fix unconnected search issue.
+* Fix template mini-portrait no photo width issue.
+
+= 3.5 =
+19/11/2020
+
+* Display optimization on Smartphones / Small screen.
+* Chat improvement. Chat has now memory when user change or reload a page.
+* Webcam API Update.
+* Dynamic loading of search result when scrolling page (no more pagination). Option in Rencontre > General > Display.
+* Option for user to disable the beep of the Chat.
+* Add Japanese translation, thanks to Rorylouis.
+
+09/09/2020 : 3.4.3 - Fix chat issue.
+
+08/09/2020 : 3.4.2 - Fix photo issue.
+
+28/08/2020 : 3.4.1
+
+* Fix session not write-closed warning. WP 5.5.
+* Fix imagettfbbox issue : PHP without freetype.
+
+= 3.4 =
+04/08/2020
+
+* Fix template name issue. Thanks to Tolumba.
+* Display gender in profile if custom gender set.
+* Main picture permutation.
+* Option to display pictures in lightbox : General > Display : Lightbox. New template rencontre_lightbox.php
+
 = 3.3 =
 20/03/2020
 
@@ -363,6 +398,13 @@ It's better to limit the data size.
 * Fix redirect issue after registration in fast registration with some custom login plugins.
 * Fix sidebar my photo size issue.
 * DataBase dbip updated
+
+19/04/2020 : 3.3.1 -  Fix locale issue in profile and contry selection.
+
+03/06/2020 : 3.3.2
+
+* Fix country deletion issue.
+* Add Russian translation, thanks to Vetal Soft.
 
 = 3.2 =
 11/09/2019

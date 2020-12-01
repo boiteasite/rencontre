@@ -1,5 +1,5 @@
 /* Rencontre */
-var rencEmot=["",":-)",":-(",":-d",":-D",";;)","8-)",":-/",":-3",":-r",":-p",":-*",":-K",":-O",":-S","B-)"],rencVeil,rencDVeil,rencSetiCam1=false,rencSetiCam2=false,rencStream=false,rencScrut,rencMoi='',rencToi='',rencSave=1,rencName='',rencWidg=1,rencLast=0;
+var rencEmot=["",":-)",":-(",":-d",":-D",";;)","8-)",":-/",":-3",":-r",":-p",":-*",":-K",":-O",":-S","B-)"],rencVeil=false,rencDVeil=false,rencSetiCam1=false,rencSetiCam2=false,rencStream=false,rencScrut=false,rencMoi='',rencToi='',rencSave=1,rencName='',rencWidg=1,rencLast=0;
 if(typeof noEmot==='undefined')var noEmot=0;
 if(typeof rencUrl==='undefined'){
 	rencUrl=window.location.protocol+'//'+window.location.hostname;
@@ -48,9 +48,26 @@ function f_vignette(f,img){
 function f_vignette_change(f,img){
 	f_vignette(f,img);
 	document.getElementById('changePhoto').innerHTML='';
+	document.getElementById('clickPhoto').style.display='block';
+}
+function f_change_photo(f,g){
+	document.getElementById('changePhoto').innerHTML='<div><a href="javascript:void(0)" class="rencSupp" onClick="f_supp_photo('+f+')" title="'+rencobjet.supp_la_photo+'">'+rencobjet.supp_photo+'</a></div>';
+	if(g)document.getElementById('changePhoto').innerHTML+='<div><a href="javascript:void(0)" class="rencMain" onClick="f_main_photo('+f+')" title="'+rencobjet.main_photo+'">'+rencobjet.main_photo+'</a></div>';
+	document.getElementById('clickPhoto').style.display='none';
 }
 function f_supp_photo(f){
-	document.getElementById('changePhoto').innerHTML='<a href="javascript:void(0)" class="rencSupp" onClick="document.forms[\'portraitPhoto\'].elements[\'a1\'].value=\'suppImg\';document.forms[\'portraitPhoto\'].elements[\'a2\'].value=\''+f+'\';document.forms[\'portraitPhoto\'].elements[\''+(typeof lbl.renc!="undefined"?lbl.renc:'renc')+'\'].value=\''+(typeof lbl.edit!="undefined"?lbl.edit:'edit')+'\';document.forms[\'portraitPhoto\'].submit();" title="'+rencobjet.supp_la_photo+'">'+rencobjet.supp_photo+'</a>';
+	var a=document.forms['portraitPhoto'];
+	a.elements['a1'].value='suppImg';
+	a.elements['a2'].value=f;
+	a.elements[(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
+	a.submit();
+}
+function f_main_photo(f){
+	var a=document.forms['portraitPhoto'];
+	a.elements['a1'].value='mainImg';
+	a.elements['a2'].value=f;
+	a.elements[(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
+	a.submit();
 }
 function f_photoPop_display(f){
 	if(f.files&&f.files[0]){
@@ -315,7 +332,7 @@ function f_hideSideMobile(){
 	else document.cookie="rencNoSideMobile=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 	window.location.reload();
 }
-/* fonctions avec appel Ajax */
+/* Ajax */
 function f_gpsNavigator(g,h){
 	if(navigator.geolocation){
 		navigator.geolocation.getCurrentPosition(function(f){
@@ -372,6 +389,28 @@ function f_fastregMail(g){
 		}
 	});
 }
+function f_dyn_search(f,g,q){
+	var m=document.getElementById("dynMemory");
+	jQuery.post(g,{'action':'dynSearch','rencTok':rencTok,'var':f,'dyn':dynPag,'quick':q},function(r){
+		if(r.length>10){
+			jQuery("#dynSearch").before(r);
+			var s=sessionStorage.getItem("dynsearch");
+			sessionStorage.setItem("dynsearch",(s?s:'')+r);
+			dynSearch=1;
+			dynPag++;
+			if(m)m.value=dynPag;
+		}
+	});
+}
+function f_dyn_reload(){ // (NOT AJAX)
+	var m=document.getElementById("dynMemory"),s="";
+	if(m&&m.value!="0"){
+		s=sessionStorage.getItem("dynsearch");
+		if(s)jQuery("#dynSearch").before(s);
+		dynPag=m.value;
+	}
+	else sessionStorage.removeItem("dynsearch");
+}
 //
 function f_nouveau(f,g,e){
 	var a=0,d=0,c=document.forms['formNouveau'],b=c.elements,v;
@@ -421,6 +460,7 @@ function f_nouveau(f,g,e){
 }
 /* Tchat */
 function f_bip(){
+	if(typeof noBip!=='undefined'&&noBip==1)return false;
 	at={
 		"mp3":"audio/mpeg",
 		"mp4":"audio/mp4",
@@ -444,14 +484,14 @@ function f_bip(){
 		};
 		return bip;
 	}
-	else return;
+	else return false;
 };
 function f_emot(f){
 	if(noEmot==1)return f;
 	if(typeof f!=='undefined')for(var v=1;v<16;v++){
 		var r=rencEmot[v].replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 		var re=new RegExp(r,'g');
-		f=f.replace(re,"<img src='"+rencUrl+"/wp-content/plugins/rencontre/images/"+v+".gif' alt='' />");
+		f=f.replace(re,"<img src='"+rencUrl+"/wp-content/plugins/rencontre/images/"+v+".gif' alt='' style='display:inline' />");
 	};
 	return f;
 }
@@ -462,29 +502,32 @@ function f_tchat_veille(s,p){
 	if(!s)s='';
 	if(p)rencName=p;
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatVeille','fm':rencobjet.mid,'d':rencBasedir,'c':rencTokc},function(r){
+		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatveille','fm':rencobjet.mid,'d':rencBasedir,'c':rencTokc},function(r){
 			if(r){
-				clearInterval(rencVeil);
+				f_tchat_interval('veil',0,[]);
 				if(r==s)f_tchat_ok(rencobjet.mid,r,rencobjet.ajaxchat);
-				else if(r!=rencobjet.mid)f_tchat_dem(rencobjet.mid,r);
-				else f_tchat(r,s,rencobjet.ajaxchat,1,rencobjet.tchatname);
+				else if(r!=rencobjet.mid&&rencDVeil===false)f_tchat_dem(rencobjet.mid,r);
+				else f_tchat(r,s,rencobjet.ajaxchat,2,rencobjet.tchatname);
 			}
 		});
 	});
 }
-function f_tchat(f,t,g,p,s){
-	clearInterval(rencDVeil);
+function f_tchat_btn(f,t,g,s){
+	jQuery(document).ready(function(){
+	if(jQuery("#rencChat").is(":visible"))return;
+		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatbutton','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
+			if(r)f_tchat(f,t,g,1,s);
+			else if(jQuery("#rencAlert").length!=0)jQuery("#rencAlert").html(rencobjet.tchat_indispo).show(0).delay(5000).hide(0);
+		});
+	});
+}
+function f_tchat(f,t,g,p,s){ // p=0:chat accepted-1:chatBtn-2:veil
+	if(p&&jQuery("#rencChat").is(":visible"))return;
+	f_tchat_interval('dveil',0,[]);
 	rencName=s;
 	jQuery("#rcName").html('('+rencName+')');
-	if(document.getElementById('rencCam')!==null){
-		jQuery("#rcBcam").removeClass('w3-hide').click(function(){
-			if(rencMoi!=''){
-				rencMoi='';f_camOff();
-			}
-			else webcam(f,t);
-		});
-	}
 	jQuery("#rcClose").click(function(){f_tchat_fin(f,t,g);});
+	jQuery("#rcOnOff").click(f_chatOnOff);
 	jQuery("#rcInput").removeClass('w3-hide').val(rencobjet.ecrire_appuyer).prop("disabled",true).focus(function(){
 		if(!jQuery(this).hasClass('actif')){
 			jQuery(this).addClass('actif').val('').css('color','#222');
@@ -510,33 +553,41 @@ function f_tchat(f,t,g,p,s){
 		});
 	}
 	jQuery("#rencChat").removeClass('w3-hide');
-	clearInterval(rencVeil);
-	if(p==1){
+	f_tchat_interval('veil',0,[]);
+	if(p){
 		jQuery("#rcContent").empty().append('<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+rencobjet.tchat_attendre+'</div><div class="w3-col s2 m3">&nbsp;</div></div>');
 		f_tchat_debut(f,t,g);
 	}
-	else if(p==0){
-		rencScrut=setInterval(function(){
-			f_tchat_scrute(f,t,g);
-		},2023);
-	};
+	else f_tchat_interval('scrut',1,[f,t,g]);
+}
+function f_chatOnOff(){
+	if(jQuery("#rcContent").is(":visible")){
+		jQuery("#rcOnOff").css("background-position","0px 0px");
+		jQuery("#rcContent").hide();
+		jQuery("#rencCam").addClass("contOff");
+	}
+	else{
+		jQuery("#rcOnOff").css("background-position","0px -24px");
+		jQuery("#rcContent").show();
+		jQuery("#rencCam").removeClass("contOff");
+	}
 }
 function f_tchat_debut(f,t,g){
+	if(rencScrut!==false)return;
+	sessionStorage.setItem("chatF"+f+"T"+t,"");
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatDebut','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
-			rencScrut=setInterval(function(){
-				f_tchat_scrute(f,t,g);
-			},2023);
+		jQuery.post(g,{'tchat':'tchatdebut','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
+			f_tchat_interval('scrut',1,[f,t,g]);
 		});
 	});
 }
 function f_tchat_scrute(f,t,g){
 	jQuery(document).ready(function(){
 		if(!jQuery("#rcInput").hasClass('w3-hide')){
-			jQuery.post(g,{'tchat':'tchatScrute','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
+			jQuery.post(g,{'tchat':'tchatscrute','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
 				if(r=='::'+f+'::')f_tchat_off();
 				else if(r){
-					if(jQuery("#rcInput").prop('disabled'))f_tchat_on();
+					if(jQuery("#rcInput").prop('disabled'))f_tchat_on(f,t);
 					f_tchat_actualise("",r,f,t);
 				}
 			});
@@ -545,7 +596,8 @@ function f_tchat_scrute(f,t,g){
 }
 function f_tchat_dem(f,t){
 	jQuery("#rcClose").click(function(){f_tchat_fin(f,t,rencobjet.ajaxchat);});
-	jQuery("#rcContent").empty().append('<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+rencobjet.demande_tchat+'&nbsp;:&nbsp;</div><div class="w3-col s2 m3">&nbsp;</div></div>');
+	jQuery("#rcContent").empty().append('<div id="rcDem" class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+rencobjet.demande_tchat+'&nbsp;:&nbsp;</div><div class="w3-col s2 m3">&nbsp;</div></div>');
+	sessionStorage.setItem("chatF"+f+"T"+t,"");
 	jQuery(document).ready(function(){
 		var jid=(typeof lbl.id!="undefined"?lbl.id:'id'),
 		p={'action':'miniPortrait2','rencTok':rencTok};
@@ -561,7 +613,7 @@ function f_tchat_dem(f,t){
 				f_tchat_fin(f,t,rencobjet.ajaxchat);
 			});
 			jQuery("#rencChat").removeClass('w3-hide');
-			rencDVeil=setInterval(f_tchat_dem_veille,5111);
+			f_tchat_interval('dveil',1,[]);
 		});
 	});
 }
@@ -569,52 +621,86 @@ function f_tchat_dem_veille(s,p){
 	if(!s)s='';
 	if(p)rencName=p;
 	jQuery(document).ready(function(){
-		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatDemVeille','fm':rencobjet.mid,'d':rencBasedir,'c':rencTokc},function(r){
+		jQuery.post(rencobjet.ajaxchat,{'tchat':'tchatdemveille','fm':rencobjet.mid,'d':rencBasedir,'c':rencTokc},function(r){
 			if(r==1){
-				clearInterval(rencDVeil);
+				f_tchat_interval('dveil',0,[]);
+				jQuery("#rencChat").addClass('w3-hide');
 				jQuery("#rcContent").empty();
-				rencVeil=setInterval(f_tchat_veille,5111);
+				jQuery("#rcInput").addClass('w3-hide').val('');
+				if(rencMoi!=''){
+					rencMoi='';
+					f_camOff();
+				}
+				f_tchat_interval('veil',1,[]);
 			}
 		});
 	});
 }
 function f_tchat_ok(f,t,g){
-	clearInterval(rencDVeil);
+	f_tchat_interval('dveil',0,[]);
+	if(document.getElementById('rencCam')!==null){
+		jQuery("#rcBcam").removeClass('w3-hide').click(function(){
+			if(rencMoi!=''){
+				rencMoi='';f_camOff();
+			}
+			else webcam(f,t);
+		});
+	}
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatOk','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
+		jQuery.post(g,{'tchat':'tchatok','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
 			f_tchat(f,t,g,0,rencName);
 			jQuery("#rcContent").empty();
 			jQuery("#rcInput").prop("disabled",false);
+			jQuery("#rcEmot").removeClass('w3-hide');
+			f_tchat_actualise("","",f,t); // sessionStorage
 		});
 	});
 }
-function f_tchat_on(){
+function f_tchat_on(f,t){
+	if(document.getElementById('rencCam')!==null){
+		jQuery("#rcBcam").removeClass('w3-hide').click(function(){
+			if(rencMoi!=''){
+				rencMoi='';f_camOff();
+			}
+			else webcam(f,t);
+		});
+	}
 	jQuery("#rcInput").prop("disabled",false);
+	if(jQuery("#rcEmot").length!=0&&jQuery("#rcEmot").hasClass("w3-hide"))jQuery("#rcEmot").removeClass('w3-hide');
 	jQuery("#rcContent").append('<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+rencobjet.tchat_dem_ok+'</div><div class="w3-col s2 m3">&nbsp;</div></div>');
 }
 function f_tchat_off(){
 	var u=navigator.userAgent.toLowerCase(),sm=u.indexOf("android")>-1;
-	clearInterval(rencScrut);
+	f_tchat_interval('scrut',0,[]);
+	f_tchat_interval('dveil',0,[]);
+	f_tchat_interval('veil',0,[]);
 	jQuery("#rcInput").prop("disabled",true);
 	var a='<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+rencobjet.ferme_fenetre+'</div><div class="w3-col s2 m3">&nbsp;</div></div>';
 	if(sm)jQuery("#rcContent").prepend(a);
 	else jQuery("#rcContent").append(a).scrollTop(jQuery("#rcContent")[0].scrollHeight);
+	if(!jQuery("#rcBcam").hasClass("w3-hide"))jQuery("#rcBcam").addClass('w3-hide');
 	jQuery("#rcBcam").click(function(){
 		return true;
 	});
+	f_camOff();
 }
 function f_tchat_envoi(f,t,h,g){
+	if(h.length>2000)h=h.substring(0,1999)+'...';
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'tchat':'tchatEnvoi','fm':f,'to':t,'msg':h,'d':rencBasedir,'c':rencTokc},function(r){
+		jQuery.post(g,{'tchat':'tchatenvoi','fm':f,'to':t,'msg':h,'d':rencBasedir,'c':rencTokc},function(r){
 			f_tchat_actualise(h,r,f,t);
 		});
 	});
 }
 function f_tchat_actualise(h,r,f,t){
-	var a,u=navigator.userAgent.toLowerCase(),sm=u.indexOf("android")>-1,c=document.getElementById('rcContent');
+	var a,s,u=navigator.userAgent.toLowerCase(),sm=u.indexOf("android")>-1,c=document.getElementById('rcContent'),r1;
 	h=f_emot(h);
 	r=f_emot(r);
-	if(r){
+	if(!r&&!h){
+		s=sessionStorage.getItem("chatF"+f+"T"+t);
+		if(s)jQuery("#rcContent").append(s);
+	}
+	else if(r&&(r.length-r.indexOf("]")-1)!=0){
 		r1=r.split('['+t+']');
 		if(r1!=null){
 			for(v=0;v<r1.length;v++){
@@ -632,25 +718,43 @@ function f_tchat_actualise(h,r,f,t){
 					}
 					var fbip=f_bip();
 					a='<div class="w3-row w3-padding-small"><div class="w3-renc-msbs rcYou w3-col s10 m9 w3-card w3-padding">'+'<b>'+rencName+'</b><br />'+r1[v]+'</div><div class="w3-col s2 m3">&nbsp;</div></div>';
-					if(sm)jQuery("#rcContent").prepend(a);
-					else jQuery("#rcContent").append(a);
-					fbip.playclip();
+					s=sessionStorage.getItem("chatF"+f+"T"+t);
+					if(sm){
+						jQuery("#rcContent").prepend(a);
+						s=a+(s?s:'');
+					}
+					else{
+						jQuery("#rcContent").append(a);
+						s=(s?s:'')+a;
+					}
+					sessionStorage.setItem("chatF"+f+"T"+t,s);
+					if(fbip)fbip.playclip();
 				}
 			}
 		}
 	}
-	if(h){
+	else if(h){
 		a='<div class="w3-row w3-padding-small"><div class="w3-col s2 m3">&nbsp;</div><div class="w3-renc-msbr rcMe w3-col s10 m9 w3-card w3-padding">'+h+'</div></div>';
-		if(sm)jQuery("#rcContent").prepend(a);
-		else jQuery("#rcContent").append(a);
+		s=sessionStorage.getItem("chatF"+f+"T"+t);
+		if(sm){
+			jQuery("#rcContent").prepend(a);
+			s=a+(s?s:'');
+		}
+		else{
+			jQuery("#rcContent").append(a);
+			s=(s?s:'')+a;
+		}
+		sessionStorage.setItem("chatF"+f+"T"+t,s);
 	}
 	if(!sm)jQuery("#rcContent").scrollTop(jQuery("#rcContent")[0].scrollHeight);
 }
 function f_tchat_fin(f,t,g){
+	f_tchat_interval('scrut',0,[]);
+	f_tchat_interval('dveil',0,[]);
+	f_tchat_interval('veil',0,[]);
 	jQuery(document).ready(function(){
-		clearInterval(rencScrut);clearInterval(rencDVeil);
-		jQuery.post(g,{'tchat':'tchatFin','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
-			rencVeil=setInterval(f_tchat_veille,5111);
+		jQuery.post(g,{'tchat':'tchatfin','fm':f,'to':t,'d':rencBasedir,'c':rencTokc},function(r){
+			f_tchat_interval('veil',1,[]);
 		});
 		jQuery("#rencChat").addClass('w3-hide');
 		jQuery("#rcContent").empty();
@@ -660,27 +764,55 @@ function f_tchat_fin(f,t,g){
 		rencMoi='';
 		f_camOff();
 	}
+	sessionStorage.removeItem("chatF"+f+"T"+t);
+}
+function f_tchat_interval(f,g,h){
+	if(g==1){
+		if(f=='veil'&&rencVeil===false){
+			if(rencobjet.tchaton==1)rencVeil=setInterval(f_tchat_veille,5111);
+			else rencVeil=setInterval(f_tchat_off_session,21111);
+		}
+		else if(f=='dveil'&&rencDVeil===false)rencDVeil=setInterval(f_tchat_dem_veille,5111);
+		else if(f=='scrut'&&rencScrut===false)rencScrut=setInterval(function(){f_tchat_scrute(h[0],h[1],h[2])},2023);
+		else if(f=='cam1'&&rencSetiCam1===false)rencSetiCam1=setInterval(saveCam,790);
+		else if(f=='cam2'&&rencSetiCam2===false)rencSetiCam2=setInterval(stream_cam,890); // +100ms
+	}
+	else{
+		if(f=='veil'&&rencVeil!==false){
+			clearInterval(rencVeil);
+			rencVeil=false;
+		}
+		else if(f=='dveil'&&rencDVeil!==false){
+			clearInterval(rencDVeil);
+			rencDVeil=false;
+		}
+		else if(f=='scrut'&&rencScrut!==false){
+			clearInterval(rencScrut);
+			rencScrut=false;
+		}
+		else if(f=='cam1'&&rencSetiCam1!==false){
+			clearInterval(rencSetiCam1);
+			rencSetiCam1=false;
+		}
+		else if(f=='cam2'&&rencSetiCam2!==false){
+			clearInterval(rencSetiCam2);
+			rencSetiCam2=false;
+		}
+	}
 }
 /* Webcam */
 function webcam(f,t){
 	rencMoi=f+"-"+t;
 	rencToi=t+"-"+f;
 	var m=document.getElementById('rencCam2'),c=document.getElementById('rencCamCanvas');
-	navigator.getMedia=(navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia);
-	navigator.getMedia(
-		{video:{width:{ideal:160},height:{ideal:120}},audio:false},
-		function(stream){
-			rencStream=stream;
-			try{
-				video.srcObject=stream;
-			}catch(error){
-				var u=window.URL||window.webkitURL;
-			//	m.src=u.createObjectURL(stream); // deprecated
-				m.srcObject=stream;
-			}
-			m.onloadedmetadata=function(e){m.play();};
-		},
-		function(err){console.log(err.name + " : " + err.message);}
+	navigator.mediaDevices.getUserMedia(
+		{video:{width:{ideal:160},height:{ideal:120},facingMode:'user'},audio:false}
+	).then(function(mediaStream){
+			rencStream=mediaStream;
+			m.srcObject=mediaStream;
+			m.onloadedmetadata=function(e){m.play()}
+		}
+	).catch(function(err){console.log(err.name+" : "+err.message)}
 	);
 	m.addEventListener('canplay',function(e){
 		m.style.visibility="visible";
@@ -688,26 +820,26 @@ function webcam(f,t){
 		m.style.height="120px";
 		c.setAttribute('width',300);
 		c.setAttribute('height',225);
-		rencSetiCam1=setInterval(saveCam,790);
+		f_tchat_interval('cam1',1,[]);
 	});
 	stream_on();
 }
 function f_camOff(){
 	var a=document.getElementById('rencCam'),m=document.getElementById('rencCam2'),t;
-	if(rencSetiCam1)clearInterval(rencSetiCam1);
-	if(rencSetiCam2)clearInterval(rencSetiCam2);
+	f_tchat_interval('cam1',0,[]);
+	f_tchat_interval('cam2',0,[]);
 	if(rencStream){
 		t=rencStream.getTracks();
 		t.forEach(function(r){r.stop();});
 	}
-	rencStream=false;rencSetiCam1=false;rencSetiCam2=false;
+	rencStream=false;
 	a.innerHTML="";
 	a.style.visibility="hidden";
 	m.style.bottom="10px";
 	m.style.visibility="hidden";
 }
 function saveCam(){
-	if(rencSave==1&&rencSetiCam1){
+	if(rencSave==1&&rencSetiCam1!==false){
 		rencSave=0;
 		var c=document.getElementById('rencCamCanvas'),i,m=document.getElementById('rencCam2'),t=c.getContext("2d"),x=new XMLHttpRequest();
 		t.drawImage(m,0,0,300,225);
@@ -720,7 +852,7 @@ function saveCam(){
 	}
 }
 function stream_cam(){
-	if(!rencSetiCam2)return;
+	if(rencSetiCam2===false)return;
 	document.getElementById('rencCamImg').src=rencBaseurl+'/tchat/cam'+rencToi+'.jpg?'+new Date().getTime();
 }
 function stream_on(){
@@ -730,21 +862,17 @@ function stream_on(){
 	a.appendChild(b);
 	a.style.visibility="visible";
 	m.style.bottom="245px";
-	rencSetiCam2=setInterval(stream_cam,890); // +100ms
+	f_tchat_interval('cam2',1,[]);
 }
-function f_dynamicWidth(){
-	var a=jQuery(".rencMyHome").width(),b=200,c=Math.max(Math.floor(a/(b+16)),1);
-	jQuery(".rencMiniPortrait").width(Math.floor(a/c)-16.51).css("min-width",b);
-}
-function f_dynamicWidthLibre(){
-	var a=jQuery(".ficheLibre").width(),b=200,c=Math.max(Math.floor(a/(b+16)),1);
-	jQuery(".rencLibrePortrait").width(Math.floor(a/c)-16.51);
+function f_dynamicWidth(f,s){
+	if(typeof f==='undefined')f=200;
+	if(typeof s==='undefined')s=168;
+	if(window.matchMedia("(max-width:600px)").matches)f=s;
+	var a=jQuery(".rencMyHome").width(),c=Math.max(Math.floor(a/(f+16)),1);
+	jQuery(".rencMiniPortrait").width(Math.floor(a/c)-16);
 }
 //
 if(document.getElementById("infoChange")!==null)window.setTimeout(function(){jQuery("#infoChange").remove()},((typeof rencInfochange!=='undefined')?rencInfochange:5000));
 jQuery(document).ready(function(){
-	if(typeof rencobjet!=='undefined'){
-		if(rencobjet.tchaton==1)rencVeil=setInterval(f_tchat_veille,5111);
-		else rencVeil=setInterval(f_tchat_off_session,21111);
-	}
+	if(typeof rencobjet!=='undefined')f_tchat_interval('veil',1,[]);
 });

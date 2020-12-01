@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Chat
- * Last Change : Rencontre 3.0
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_chat.php
  *
 */
@@ -16,13 +16,16 @@
 				</span>
 				<span id="rcClose" class="w3-button w3-padding-small w3-hover-black w3-hover-opacity">&times;</span>
 			</div>
-			<div>Chat&nbsp;<span id="rcName" class="w3-opacity"></span></div>
+			<div>
+				<span id="rcOnOff" class="rcOnOff w3-hover-opacity">&nbsp;</span>
+				Chat&nbsp;<span id="rcName" class="w3-opacity"></span>
+			</div>
 		</header>
 		<div id="rcContent" style="height:280px;overflow-y:auto;"></div>
 	<?php if(empty($rencCustom['emot'])) { ?>
 		
-		<div id="rcEmot" class="w3-center w3-clear">
-		<?php for($i=1;$i<16;++$i) { ?><img src="<?php echo plugins_url('rencontre/images/'.$i.'.gif'); ?>" alt="<?php echo $i; ?>" /><?php } ?>
+		<div id="rcEmot" class="w3-center w3-clear w3-hide">
+		<?php for($i=1;$i<16;++$i) { ?><img src="<?php echo plugins_url('rencontre/images/'.$i.'.gif'); ?>" alt="<?php echo $i; ?>" style="display:inline" /><?php } ?>
 		</div>
 	<?php } ?>
 	

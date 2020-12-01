@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Quick Search
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_quick_search.php
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_region, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, agemin, agemax
 */
@@ -19,7 +19,7 @@
 					
 					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
 					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>" value="<?php echo $u0->zsex; ?>" />
-					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['homo'])?$rencOpt['lbl']['homo']:'homoc'); ?>" value="<?php echo $u0->homo; ?>" />
+					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['homo'])?$rencOpt['lbl']['homo']:'homo'); ?>" value="<?php echo $u0->homo; ?>" />
 					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['pagine'])?$rencOpt['lbl']['pagine']:'pagine'); ?>" value="0" />
 				<?php if(!isset($rencCustom['born'])) { ?>
 					

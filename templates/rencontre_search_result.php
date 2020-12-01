@@ -2,13 +2,13 @@
 /*
  * Plugin : Rencontre
  * Template : Search Result
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search_result.php
  * $u : user_login, user_id, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_annonce, t_profil, t_action, looking, forwhat, hidephoto, online, online_ago
 */
 ?>
 
-	<div class="rencSearchResult w3-container w3-padding-small">
+	<div class="rencSearchResult w3-margin-bottom">
 		<div class="w3-card w3-renc-blbg">
 			<div class="w3-container">
 				<div class="w3-row w3-border-bottom w3-renc-line w3-section">
@@ -108,5 +108,5 @@
 				</div>
 			</div><!-- .w3-container --> 
 		</div><!-- .w3-card -->
-	</div><!-- .w3-container -->
+	</div><!-- .rencSearchResult -->
 	<div class="w3-clear"></div>

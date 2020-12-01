@@ -2,13 +2,13 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 1/3 and 1/2
- * Last Change : Rencontre 3.2
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part1.php
  * Filter : do_action('rencontre_registration', $f, $g) - see below
 */
 ?>
 
-	<div class="rencReg1 w3-container w3-padding-small">
+	<div class="rencReg1 w3-margin-bottom">
 		<div class="w3-card w3-renc-blbg w3-padding">
 			<div class="rencRegProgress w3-white w3-border">
 			<?php if(!isset($rencCustom['place'])) { ?>
@@ -146,7 +146,7 @@
 				</div>
 			</div>
 		</div><!-- .w3-card -->
-	</div><!-- .w3-container -->
+	</div><!-- .rencReg1 -->
 
 <?php
 /*

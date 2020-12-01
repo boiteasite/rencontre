@@ -1,6 +1,6 @@
 /*
  * Plugin : Rencontre
- * Last Change : Rencontre 3.0.2
+ * Last Change : Rencontre 3.5
  * Custom or don't want to load this original file ? : create wp-content/themes/name-of-my-theme/templates/rencontre.css
 */
 /* General */
@@ -8,6 +8,7 @@
 #widgRenc img{box-shadow:none;border:none;margin:0;}
 .rencOneLine{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rencCam, .rencCam2{position:fixed;bottom:10px;right:320px;visibility:hidden;overflow:hidden;z-index:999;margin:0;padding:0;width:300px;height:225px;border:1px solid #444;border-radius:4px;box-shadow:0px 0px 5px rgba(0, 0, 0, 0.5);background-color:#fff;}
+.rcOnOff{display:inline-block;cursor:pointer;width:16px;height:12px;vertical-align:middle;background:url('../images/onoff.png') no-repeat 0px -24px;}
 
 /* Labelauty */
 .rencLabelauty{display:none;}
@@ -21,7 +22,13 @@ input.labelauty:checked+label>span.labelauty-unchecked{display:none;}
 input.labelauty:checked+label>span.labelauty-checked{display:inline-block;}
 
 /* SHORTCODE [rencontre_imgreg]  */
-.imgreg{background-color:rgba(255,255,255,.88);border-radius:5px;border:2px solid #eee;max-width:280px;padding:10px 15px;z-index:999;}
+.imgreg{background-color:rgba(255,255,255,.88);border-radius:5px;border:2px solid #eee;padding:10px 15px;z-index:999;}
 .imgreg input[type='text'],.imgreg input[type='email'],.imgreg input[type='password']{padding:.3em;}
 .imgreg select{height:2em;}
 .imgreg h2{text-align:center;margin:.15em 0 .3em;}
+
+@media (max-width:600px){
+	.rencCam{bottom:390px;right:10px;}
+	.rencCam.contOff{bottom:110px;right:10px;}
+	.rencCam2{display:none;}
+}

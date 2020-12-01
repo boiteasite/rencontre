@@ -42,24 +42,36 @@ add_action('wp_ajax_testPass', 'rencTestPass'); // changement du mot de passe
 add_action('wp_ajax_fbok', 'rencFbok'); add_action('wp_ajax_nopriv_fbok', 'rencFbok'); // connexion via FB
 add_action('wp_ajax_miniPortrait2', 'f_miniPortrait2');
 add_action('wp_ajax_fastregMail', 'f_fastregMail');
+add_action('wp_ajax_dynSearch', 'f_dynSearch');
 //add_action('wp_ajax_addCountSearch', 'f_addCountSearch'); // +1 dans action search si meme jour
 add_action('wp_ajax_gpsnavigator', 'rencGpsNavigator');
 function f_voirMsg() {
+	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 	$Pho = (isset($_POST['ho'])?rencSanit($_POST['ho'],'int'):false);
 	$Pidmsg = rencSanit($_POST['idmsg'],'int');
 	$Palias = rencSanit($_POST['alias'],'words');
 	RencontreWidget::f_voirMsg($Pidmsg,$Palias,$Pho);
+	exit;
 }
 function f_miniPortrait2() {
+	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 	global $rencOpt;
 	$Lid = (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id');
 	$Pid = rencSanit($_POST[$Lid],'int');
 	RencontreWidget::f_miniPortrait2($Pid);
+	exit;
 }
 function f_fastregMail() {
 	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 	$u = wp_get_current_user();
 	rencFastreg_email($u,1);
+	exit;
+}
+function f_dynSearch() {
+	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok') || empty($_REQUEST['var'])) return;
+	if(empty($_REQUEST['quick'])) RencontreWidget::f_trouver($_REQUEST['var'],$_REQUEST['dyn']);
+	else RencontreWidget::f_quickFind($_REQUEST['var'],$_REQUEST['dyn']);
+	exit;
 }
 if(is_admin()) { // Check for an administrative interface page
 	add_action('wp_ajax_iso', 'rencontreIso'); // Test si le code ISO est libre (Partie ADMIN)
@@ -137,6 +149,7 @@ function set_html_content_type(){ return 'text/html'; }
 function f_cron_on($cronBis=0) {
 	// NETTOYAGE QUOTIDIEN
 	global $wpdb; global $rencOpt; global $rencDiv; global $rencCustom;
+	clearstatcache();
 	$Loo = (!empty($rencOpt['lbl']['rencoo'])?$rencOpt['lbl']['rencoo']:'rencoo');
 	$Lii = (!empty($rencOpt['lbl']['rencii'])?$rencOpt['lbl']['rencii']:'rencii');
 	$mailPerline = (!empty($rencOpt['nbr']['mailUserPerLine'])?$rencOpt['nbr']['mailUserPerLine']:2) - 1;
@@ -162,7 +175,7 @@ function f_cron_on($cronBis=0) {
 				while(($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[]=$d.$file; }
 				closedir($dh);
 				if($tab!=array()) foreach($tab as $r) {
-					if(file_exists($r) && filemtime($r)<time()-248400) unlink($r); // 69 heures
+					if(file_exists($r) && filemtime($r)<time()-248400) @unlink($r); // 69 heures
 				}
 			}
 		}
@@ -327,7 +340,7 @@ function f_cron_on($cronBis=0) {
 			if($dh=opendir($d)) {
 				while (($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[] = $d.$file; }
 				closedir($dh);
-				if($tab!=array()) foreach($tab as $r){if(filemtime($r)<time()-1296000) unlink($r);} // 15 jours
+				if($tab!=array()) foreach($tab as $r){if(filemtime($r)<time()-1296000) @unlink($r);} // 15 jours
 			}
 		}
 		if(!is_dir($rencDiv['basedir'].'/tchat/')) mkdir($rencDiv['basedir'].'/tchat/');
@@ -336,7 +349,7 @@ function f_cron_on($cronBis=0) {
 			if($dh=opendir($d)) {
 				while (($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[] = $d.$file; }
 				closedir($dh);
-				if($tab!=array()) foreach($tab as $r){if(filemtime($r)<time()-86400) unlink($r);} // 24 heures
+				if($tab!=array()) foreach($tab as $r){if(filemtime($r)<time()-86400) @unlink($r);} // 24 heures
 			}
 		}
 		if(is_dir($rencDiv['basedir'].'/tmp/')) {
@@ -416,7 +429,7 @@ function f_cron_on($cronBis=0) {
 			$j4=$j0+28; $j5=$j0+35; $j6=$j0+42; $j7=$j0+49; $j8=$j0+56;
 		}
 	}
-	else {
+	else { // ($max needed)
 		$jj = ($j>29)?$j-30:$j+30; // aujourd'hui : 34
 		if(!$cronBis) $max = floor(max(0, (isset($rencOpt['qmail'])?$rencOpt['qmail']:0)*.85)); // 85% du max - heure creuse - 15% restant pour inscription nouveaux membres et anniv
 		else $max = floor(max(0, (isset($rencOpt['qmail'])?$rencOpt['qmail']:0)*.95)); // 95% du max - heure creuse - 5% restant pour inscription nouveaux membres
@@ -431,7 +444,7 @@ function f_cron_on($cronBis=0) {
 			FROM
 				".$wpdb->prefix."rencontre_liste 
 			WHERE 
-				c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang3'],0,2)."')
+				c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang'],0,2)."')
 			");
 		foreach($q as $r) {
 			if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
@@ -715,7 +728,7 @@ function f_cron_liste($d2) {
 		$q = $wpdb->get_results("SELECT c_liste_categ, c_liste_valeur, c_liste_iso 
 			FROM ".$wpdb->prefix."rencontre_liste 
 			WHERE 
-				c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang3'],0,2)."') ");
+				c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang'],0,2)."') ");
 		foreach($q as $r) {
 			if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
 		}
@@ -1071,7 +1084,14 @@ function rencCssJs() {
 function rencAddCustomW3css($f=0) {
 	include(dirname(__FILE__).'/rencontre_color.php');
 	global $rencCustom;
-	$a = '';
+	$a = ''; $alm = '@media(min-width:601px){'; $as = '@media(max-width:600px){';
+	$alm .= '.w3-renc-container-lm{padding:0.01em 16px}';
+	$alm .= '.w3-renc-margin-left-8-lm{margin-left:8px}';
+	$as .= '.w3-renc-margin-top-8-s{margin-top:8px!important}';
+	$as .= '.w3-renc-padding-8-s{padding:8px!important}';
+	$as .= '.w3-renc-medium-s{font-size:15px!important}';
+	$as .= '.w3-renc-small-s{font-size:12px!important}';
+	$as .= '.w3-renc-underline-s{text-decoration: underline;}';
 	foreach($w3rencDef as $k=>$v) if(empty($rencCustom[$k])) $rencCustom[$k] = $v;
 	if(!empty($w3renc[$rencCustom['mebg']])) $a .= '.w3-renc-mebg{color:'.$w3renc[$rencCustom['mebg'].'T'].'!important;background-color:'.$w3renc[$rencCustom['mebg']].'!important}';
 	if(!empty($w3renc[$rencCustom['mebt']])) $a .= '.w3-renc-mebt{color:'.$w3renc[$rencCustom['mebt'].'T'].'!important;background-color:'.$w3renc[$rencCustom['mebt']].'!important}';
@@ -1087,6 +1107,7 @@ function rencAddCustomW3css($f=0) {
 	if(!empty($w3renc[$rencCustom['wabg']])) $a .= '.w3-renc-wabg{color:'.$w3renc[$rencCustom['wabg'].'T'].'!important;background-color:'.$w3renc[$rencCustom['wabg']].'!important}';
 	if(!empty($w3renc[$rencCustom['msbs']])) $a .= '.w3-renc-msbs{color:'.$w3renc[$rencCustom['msbs'].'T'].'!important;background-color:'.$w3renc[$rencCustom['msbs']].'!important}';
 	if(!empty($w3renc[$rencCustom['msbr']])) $a .= '.w3-renc-msbr{color:'.$w3renc[$rencCustom['msbr'].'T'].'!important;background-color:'.$w3renc[$rencCustom['msbr']].'!important}';
+	$a .= $alm.'}' . $as.'}';
 	if(!$f) wp_add_inline_style('w3css', $a);
 	else echo '<link rel="stylesheet" href="'.plugins_url('rencontre/css/w3.css').'"><style>'.$a.'</style>';
 }
@@ -1158,13 +1179,14 @@ function rencInLine() {
 		if(!is_dir($upl['basedir'].'/session/')) mkdir($upl['basedir'].'/session/');
 		$t = @fopen($upl['basedir'].'/session/'.$current_user->ID.'.txt', 'w') or die();
 		fclose($t);
+		session_write_close();
 	}
 }
 //
 function rencOutLine() {
 	global $current_user; global $rencDiv;
-	if(file_exists($rencDiv['basedir'].'/session/'.$current_user->ID.'.txt')) unlink($rencDiv['basedir'].'/session/'.$current_user->ID.'.txt');
-	session_destroy();
+	if(file_exists($rencDiv['basedir'].'/session/'.$current_user->ID.'.txt')) @unlink($rencDiv['basedir'].'/session/'.$current_user->ID.'.txt');
+	// session_destroy(); // !!!!!!!! ERROR (Cannot modify header information - headers already sent) !!!!!!!!
 }
 //
 function rencUserLogin($current_user,$pass) {
@@ -1337,7 +1359,7 @@ function f_suppImgAll($id) { // After init (has_filter)
 		$a = array();
 		$a[] = Rencontre::f_img($id.$v) . '.jpg';
 		foreach($size as $s) $a[] = Rencontre::f_img($id.$v.$s['label']) . '.jpg';
-		foreach($a as $b) if(file_exists($r.$b)) unlink($r.$b);
+		foreach($a as $b) if(file_exists($r.$b)) @unlink($r.$b);
 		if(has_filter('rencBlurDelP', 'f_rencBlurDelP')) {
 			$ho = new StdClass();
 			$ho->id = $id;
@@ -1348,13 +1370,14 @@ function f_suppImgAll($id) { // After init (has_filter)
 		}
 	}
 }
-function rencPhotoSize() {
+function rencPhotoSize($f=0) {
 	$size = array(
 		array('label'=>'-mini', 'width'=>60, 'height'=>60, 'quality'=>75),
 		array('label'=>'-grande', 'width'=>250, 'height'=>250, 'quality'=>75),
 		array('label'=>'-libre', 'width'=>260, 'height'=>195, 'quality'=>75)
 		);
 	if(has_filter('rencImgSize')) $size = apply_filters('rencImgSize', $size);
+	if($f && has_filter('rencImgSizeP', 'f_rencImgSizeP')) $size = apply_filters('rencImgSizeP', $size);
 	foreach($size as $k=>$v) if(empty($v['label']) || empty($v['width']) || empty($v['height'])) unset($size[$k]);
 	return $size;
 }
@@ -1374,7 +1397,9 @@ function rencNumbers() {
 		'infochange'=>5000,
 		'delNotConfirmed'=>60,
 		'imgQuality'=>75,
-		'urlNoCryptId'=>0
+		'urlNoCryptId'=>0,
+		'visiteUpdateTime'=>0,
+		'smileUpdateTime'=>0
 		);
 	$a = $nb;
 	if(has_filter('rencNumbers')) {
@@ -1439,6 +1464,7 @@ function rencGpsNavigator() {
 		if($opt==1 || $opt>$acc) $wpdb->update($wpdb->prefix.'rencontre_users', array('e_lat'=>$lat,'e_lon'=>$lon), array('user_id'=>$current_user->ID));
 		$_SESSION['gps'] = 1;
 	}
+	session_write_close();
 }
 //
 function rencFastreg_form() {
@@ -1661,16 +1687,17 @@ function renc_clear_cache_portrait($f=0) {
 	// $f=1 => force deletion
 	global $rencDiv; global $rencOpt;
 	$t = time() + ($f?3000000:0);
+	$b = intval(!empty($rencOpt['rlibre'])?$rencOpt['rlibre']:0);
 	$a = $rencDiv['basedir'].'/portrait/cache/cache_portraits_accueil.html';
-	if(file_exists($a) && $t>filemtime($a)+$rencOpt['rlibre']) unlink($a);
+	if(file_exists($a) && $t>filemtime($a)+$b) @unlink($a);
 	$a = $rencDiv['basedir'].'/portrait/cache/cache_portraits_accueil1.html';
-	if(file_exists($a) && $t>filemtime($a)+$rencOpt['rlibre']) unlink($a);
+	if(file_exists($a) && $t>filemtime($a)+$b) @unlink($a);
 	$a = $rencDiv['basedir'].'/portrait/cache/cache_portraits_accueilmix.html'; // mix = 1 (old)
-	if(file_exists($a) && $t>filemtime($a)+$rencOpt['rlibre']) unlink($a);
+	if(file_exists($a) && $t>filemtime($a)+$b) @unlink($a);
 	$a = $rencDiv['basedir'].'/portrait/cache/cache_portraits_accueilgirl.html';
-	if(file_exists($a) && $t>filemtime($a)+$rencOpt['rlibre']) unlink($a);
+	if(file_exists($a) && $t>filemtime($a)+$b) @unlink($a);
 	$a = $rencDiv['basedir'].'/portrait/cache/cache_portraits_accueilmen.html';
-	if(file_exists($a) && $t>filemtime($a)+$rencOpt['rlibre']) unlink($a);
+	if(file_exists($a) && $t>filemtime($a)+$b) @unlink($a);
 }
 function rencModerType() {
 	global $rencDiv;
@@ -1705,6 +1732,15 @@ function rencTplDir() {
 		if(isset($tdir['original'])) unset($tdir['original']);
 	}
 	return $tdir;
+}
+//
+function rencTpl($tpl,$noplug=0,$plugin='rencontre') {
+	$o = false;
+	if(empty($tdir)) $tdir = rencTplDir();
+	if(file_exists(get_stylesheet_directory().'/templates/'.$tpl)) $o = get_stylesheet_directory().'/templates/'.$tpl;
+	else if($tdir['path']!=WP_PLUGIN_DIR.'/'.$plugin.'/templates/' && file_exists($tdir['path'].$tpl)) $o = $tdir['path'].$tpl;
+	else if(!$noplug) $o = WP_PLUGIN_DIR.'/'.$plugin.'/templates/'.$tpl;
+	return $o;
 }
 //
 // functions not used by Rencontre but helpful for dev
@@ -1799,7 +1835,7 @@ function rencGetUserProfils($id,$lang=0) {
 			".$wpdb->prefix."rencontre_profil
 		WHERE
 			id IN (".$l.")
-			and c_lang='".(!empty($lang)?strtolower($lang):substr($rencDiv['lang2'],0,2))."'
+			and c_lang='".(!empty($lang)?strtolower($lang):substr($rencDiv['lang'],0,2))."'
 			and c_categ!=''
 			and c_label!=''
 			and i_poids<5

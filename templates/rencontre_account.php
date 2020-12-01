@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
  * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert
  * Filter : do_action('rencontre_account', $f, $g) - see below
@@ -11,7 +11,7 @@
 
 	<div class="rencAccount">
 		<?php if(!empty($u0->accountAlert)) { ?>
-		<div class="w3-container w3-padding-small">
+		<div class="w3-margin-bottom">
 			<div class="w3-card w3-renc-blbg">
 				<div class="w3-panel w3-renc-wabg"><?php echo $u0->accountAlert; ?></div>
 			</div>
@@ -20,7 +20,7 @@
 		<?php } ?>
 		<?php if(!empty($accountPlus)) echo $accountPlus; ?>
 		
-		<div class="w3-container w3-padding-small">
+		<div class="w3-margin-bottom">
 			<div class="w3-card w3-renc-blbg">
 				<div class="w3-container w3-renc-lblc">
 					<div class="w3-section">
@@ -48,8 +48,8 @@
 					</div>
 				</div>
 			</div><!-- .w3-card -->
-		</div><!-- .w3-container -->
-		<div class="w3-container w3-padding-small">
+		</div><!-- .w3-margin-bottom -->
+		<div class="w3-margin-bottom">
 			<div class="w3-card w3-renc-blbg">
 				<div class="w3-container w3-renc-lblc">
 					<div class="w3-section">
@@ -267,11 +267,16 @@
 							<?php } ?>
 							
 							</div>
+							<div class="w3-right-align w3-padding-small">
+								<label><?php _e('No beep on the chat','rencontre'); ?>
+									<input type="checkbox" style="margin:0 8px" name="nobip"<?php if(strpos($u0->t_action,',nobip,')!==false) echo ' checked'; ?> />
+								</label>
+							</div>
 							<?php if(empty($rencCustom['unmail'])) { ?>
 							
 							<div class="w3-right-align w3-padding-small">
 								<label><?php _e('No email from this site','rencontre'); ?>
-									<input type="checkbox" style="margin:0 8px" name="nomail"<?php if(strpos($u0->t_action,",nomail,")!==false) echo ' checked'; ?> />
+									<input type="checkbox" style="margin:0 8px" name="nomail"<?php if(strpos($u0->t_action,',nomail,')!==false) echo ' checked'; ?> />
 								</label>
 							</div>
 						<?php } ?>
@@ -287,7 +292,7 @@
 			</div><!-- .w3-card -->
 			<?php echo $scriptMap; ?>
 
-		</div><!-- .w3-container -->
+		</div><!-- .w3-margin-bottom -->
 	</div><!-- .rencAccount -->
 
 

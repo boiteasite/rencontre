@@ -2,13 +2,13 @@
 /*
  * Plugin : Rencontre
  * Template : ImgReg shortcode
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_imgreg.php
  * $arg : 'title', 'selector', 'left', 'top', 'login'
 */
 ?>
 
-	<div id="imgreg" class="imgreg" style="position:absolute;"><h2><?php echo $arg['title']; ?></h2>
+	<div id="imgreg" class="imgreg w3-hide-small" style="position:absolute;max-width:280px;"><h2><?php echo $arg['title']; ?></h2>
 	<?php if(empty($arg['login'])) { ?>
 
 		<form name="registerform" id="registerform" action="<?php echo esc_url(site_url('wp-login.php?action=register','login_post')); ?>" method="post" novalidate="novalidate">

@@ -1,12 +1,12 @@
 <?php
 // ******************************************************************************************************************
-// Fichier d'appel AJAX en boucle courte pour le tchat. Beaucoup plus rapide que le passage par admin-ajax.php
-// Pilote : rencontre.js
+// Short loop AJAX call file for the chat. Much faster than using admin-ajax.php
+// Pilot : rencontre.js
 // ******************************************************************************************************************
 //
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])!='xmlhttprequest') {die;} // ajax request
 if(isset($_POST['tchat'])) {
-	if(!session_id()) session_start();
+	if(empty($_SESSION)) session_start();
 	if(empty($_POST['c']) || empty($_SESSION['rencTokc']) || $_SESSION['rencTokc']!==$_POST['c']) die;
 	$tc = preg_replace("/[^a-z]+/i", "", $_POST['tchat']);
 	if(isset($_POST['fm'])) $fm = intval($_POST['fm']);
@@ -17,13 +17,13 @@ if(isset($_POST['tchat'])) {
 	$d = $base.'tchat/';
 	switch($tc) {
 		// ********************************************************************************************
-		case 'tchatVeille':
+		case 'tchatveille':
 		if(!file_exists($d.$fm.'.txt')) {  // init de mon txt
 			$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
 			echo null;
 		}
 		else if(filesize($d.$fm.'.txt')==0) {
-			if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
+			if(isset($_SESSION['tchat'])) unset($_SESSION['tchat']);
 			$t = fopen($base.'session/'.$fm.'.txt', 'w'); fclose($t); // Refresh session
 			echo null;
 		}
@@ -31,36 +31,43 @@ if(isset($_POST['tchat'])) {
 			$t = fopen($d.$fm.'.txt', 'r'); $r = fread($t, 15); fclose($t);
 			$to = substr($r,1,(strpos($r,']')-1));
 			if(!file_exists($d.$to.'.txt') || filesize($d.$to.'.txt')==0) { // old tchat
-				if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
+				if(isset($_SESSION['tchat'])) unset($_SESSION['tchat']);
 				$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
 				echo null;
 			}
 			else {
+				$t = fopen($d.$to.'.txt', 'r'); $r = fread($t, 15); fclose($t);
+				if($r=='['.$fm.']') echo null;
 				echo $to;
 			}
 		}
 		break;
 		// ********************************************************************************************
-		case 'tchatDebut': // mon ID dans les deux txt
-		if(filesize($d.$fm.'.txt')===0 && filesize($d.$to.'.txt')===0) {
-			$_SESSION["tchat"] = $to;
+		case 'tchatbutton': // Is chat available or already active
+		if((!file_exists($d.$fm.'.txt') || filesize($d.$fm.'.txt')==0) && (!file_exists($d.$to.'.txt') || filesize($d.$to.'.txt')==0)) echo 1;
+		else echo null;
+		break;
+		// ********************************************************************************************
+		case 'tchatdebut': // mon ID dans les deux txt
+		if(@filesize($d.$fm.'.txt')===0 && @filesize($d.$to.'.txt')===0) {
+			$_SESSION['tchat'] = $to;
 			$t = fopen($d.$fm.'.txt', 'wb'); fwrite($t,'['.$fm.']',15); fclose($t);
 			$t = fopen($d.$to.'.txt', 'wb'); fwrite($t,'['.$fm.']',15); fclose($t);
 		}
 		clearstatcache();
 		break;
 		// ********************************************************************************************
-		case 'tchatFin':  // vide les deux txt
+		case 'tchatfin':  // vide les deux txt
 		if(filesize($d.$fm.'.txt')>0) {
-			if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
+			if(isset($_SESSION['tchat'])) unset($_SESSION['tchat']);
 			$t = fopen($d.$to.'.txt', 'w'); fclose($t);
 			$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
 			clearstatcache();
 		}
 		break;
 		// ********************************************************************************************
-		case 'tchatOk': // accepte le tchat - mon ID dans txt du demandeur
-		$_SESSION["tchat"] = $to;
+		case 'tchatok': // accepte le tchat - mon ID dans txt du demandeur
+		$_SESSION['tchat'] = $to;
 		$t = fopen($base.'session/'.$fm.'.txt', 'w'); fclose($t);
 		$t = fopen($d.$to.'.txt', 'wb'); fwrite($t,'['.$fm.']-',15); fclose($t); // '-' pour > size (scrute)
 		@copy('../images/no-photoCam.jpg', $base.'tchat/cam'.$fm.'-'.$to.'.jpg');
@@ -68,26 +75,34 @@ if(isset($_POST['tchat'])) {
 		clearstatcache();
 		break;
 		// ********************************************************************************************
-		case 'tchatDemVeille': // La demande est elle toujours valable ?
+		case 'tchatdemveille': // La demande est elle toujours valable ?
 		if(filesize($d.$fm.'.txt')==0) echo 1;
 		else echo null;
 		break;
 		// ********************************************************************************************
-		case 'tchatScrute':
+		case 'tchatscrute':
 		if(time()-filemtime($base.'session/'.$fm.'.txt')>5) {
 			$t = fopen($base.'session/'.$fm.'.txt', 'w'); fclose($t); // raffraichissement de ma session 5 sec
 		}
 		if(!file_exists($d.$fm.'.txt') || filesize($d.$fm.'.txt')===0) {
-			if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
+			if(isset($_SESSION['tchat'])) unset($_SESSION['tchat']);
 			echo "::".$fm."::"; // fin du chat =>JS f_tchat_off()
+			$t = fopen($d.$to.'.txt', 'r'); $r=fread($t, 15); fclose($t);
+			if($r=='['.$fm.']') {
+				fopen($d.$to.'.txt', 'w'); fclose($t);
+			}
 		}
 		else if(!file_exists($base.'session/'.$to.'.txt') || time()-filemtime($base.'session/'.$to.'.txt')>17) { // sa session >17 sec : fin sauf demande
 			$t = fopen($d.$fm.'.txt', 'r'); $r=fread($t, 15); fclose($t);
 			$r = substr($r,1,(strpos($r,']')-1));
 			if($r!=$fm || time()-filemtime($base.'session/'.$to.'.txt')>60) { // fin si session to > 60 (voir f_en_ligne() rencontre_widget.php)
-				if(isset($_SESSION["tchat"])) unset($_SESSION["tchat"]);
+				if(isset($_SESSION['tchat'])) unset($_SESSION['tchat']);
 				echo "::".$fm."::"; // fin du chat sauf si demande en cours (fm dans mon fichier fm)
 				$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
+				$t = fopen($d.$to.'.txt', 'r'); $r=fread($t, 15); fclose($t);
+				if($r=='['.$fm.']') {
+					$t = fopen($d.$to.'.txt', 'w'); fclose($t);
+				}
 			}
 			else echo null;
 			clearstatcache();
@@ -105,7 +120,7 @@ if(isset($_POST['tchat'])) {
 		else echo null;
 		break;
 		// ********************************************************************************************
-		case 'tchatEnvoi':
+		case 'tchatenvoi':
 		if(!is_dir($d)) mkdir($d); $r = "";
 		if(filemtime($d.$to.'.txt')>filemtime($d.$fm.'.txt')) { // envoi mon message en conservant le precedant - pas encore de reponse : deux messages de suite
 			$t = fopen($d.$to.'.txt', 'a+'); fwrite($t,'['.$fm.']'.$ms); fclose($t);
@@ -137,6 +152,7 @@ if(isset($_POST['tchat'])) {
 		break;
 		// ********************************************************************************************
 	}
+	session_write_close();
 }
 else die;
 //

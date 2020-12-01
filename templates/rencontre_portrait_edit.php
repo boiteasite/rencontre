@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.4.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
 */
@@ -22,7 +22,6 @@
 			<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
 			<input type="hidden" name="a1" value="" />
 			<input type="hidden" name="a2" value="" />
-			<input type="hidden" name="rnd" value="<?php echo $_SESSION['rnd']; ?>" />
 		</form>
 		<form name='portraitChange' method='post' action=''>
 			<div class="w3-row w3-margin-bottom">
@@ -43,8 +42,8 @@
 						<?php for($v=0;$v<$rencOpt['imnb'];++$v) { ?>
 							<?php if($u0->i_photo >= $u0->ID*10+$v) { ?>
 							
-							<a href="javascript:void(0)" onClick="<?php echo $onClick['delete'.$v]; ?>">
-								<img class="portraitMini w3-show-inline-block" onMouseOver="<?php echo $u0->photo->over[$v]; ?>" src="<?php echo $u0->photoUrl.$u0->photo->mini[$v]; ?>" alt="<?php _e('Click to delete','rencontre'); ?>" title="<?php _e('Click to delete','rencontre'); ?>" />
+							<a href="javascript:void(0)" onClick="<?php echo $onClick['change'.$v]; ?>">
+								<img class="portraitMini w3-show-inline-block" onMouseOver="<?php echo $u0->photo->over[$v]; ?>" src="<?php echo $u0->photoUrl.$u0->photo->mini[$v]; ?>" alt="<?php _e('Click the photo','rencontre'); ?>" title="<?php _e('Click the photo','rencontre'); ?>" />
 							</a>
 							<img style="display:none;" src="<?php echo $u0->photoUrl.$u0->photo->grande[$v]; ?>" />
 							<?php } else {  ?>
@@ -62,9 +61,9 @@
 							
 						</div><!-- .rencBlocimg -->
 						<div id="changePhoto" class="w3-center"></div>
-						<div class="rencInfo w3-center w3-opacity"><?php _e('Click the photo','rencontre');?></div>
+						<div id="clickPhoto" class="rencInfo w3-center w3-opacity"><?php _e('Click the photo','rencontre');?></div>
 						<div class="w3-section w3-center">
-							<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['deleteAll']; ?>"><?php _e('Delete all photos','rencontre');?></button>
+							<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" style="white-space:normal" onClick="<?php echo $onClick['deleteAll']; ?>"><?php _e('Delete all photos','rencontre');?></button>
 						</div>
 					</div><!-- .w3-card -->
 				</div><!-- .w3-col -->

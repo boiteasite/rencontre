@@ -2,12 +2,12 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 2/3
- * Last Change : Rencontre 3.2
+ * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part2.php
 */
 ?>
 
-	<div class="rencReg2 w3-container w3-padding-small">
+	<div class="rencReg2 w3-margin-bottom">
 		<div class="w3-card w3-renc-blbg w3-padding">
 			<div class="rencRegProgress w3-white w3-border">
 				<div class="w3-container w3-renc-mebg w3-center" style="width:66.7%">2 / 3</div>
@@ -60,4 +60,4 @@
 				</div>
 			</div>
 		</div><!-- .w3-card -->
-	</div><!-- .w3-container -->
+	</div><!-- .rencReg2 -->

@@ -397,7 +397,7 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 		}
 	}
 	if($a3=="c_categ") {
-		$q = $wpdb->get_results("SELECT c_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' ");
+		$q = $wpdb->get_results("SELECT i_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' ");
 		foreach($q as $qr) {
 			for($v=0;$v<count($c4);++$v) {
 				$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
@@ -405,7 +405,7 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 						c_categ='".$c4[$v]['b']."',
 						c_genre='".$g."'
 					WHERE
-						c_categ='".addslashes($qr->c_categ)."' and
+						i_categ='".$qr->i_categ."' and
 						c_lang='".$c4[$v]['a']."' 
 					");
 			}
@@ -982,7 +982,7 @@ function liste_langplus($loc,$a4) {
 		$q = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_categ='p' and c_liste_lang='".$loc."' ORDER BY id");
 		if(!$q) $q = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_categ='p' and c_liste_lang='en' ORDER BY id");
 		foreach($q as $r) {
-			$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_liste (c_liste_categ,c_liste_valeur,c_liste_iso,c_liste_lang) VALUES('p','?','".$r->c_liste_iso."','".$a4."')");
+			$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_liste (c_liste_categ,c_liste_valeur,c_liste_iso,c_liste_lang) VALUES('p','".$r->c_liste_iso."','".$r->c_liste_iso."','".$a4."')");
 		}
 	}
 }
@@ -1028,9 +1028,11 @@ function update_rencontre_options($P) {
 		if(!empty($P['disnam'])) $rencOpt['disnam'] =  rencSanit($P['disnam'],'int'); else unset($rencOpt['disnam']);
 		if(isset($P['npa'])) $rencOpt['npa'] = rencSanit($P['npa'],'int'); else unset($rencOpt['npa']);
 		if(!empty($P['wlibre'])) $rencOpt['wlibre'] = rencSanit($P['wlibre'],'int'); else unset($rencOpt['wlibre']);
+		if(!empty($P['wslibre'])) $rencOpt['wslibre'] = rencSanit($P['wslibre'],'int'); else unset($rencOpt['wslibre']);
 		if(!empty($P['rlibre'])) $rencOpt['rlibre'] = rencSanit($P['rlibre'],'int'); else unset($rencOpt['rlibre']);
 		if(!empty($P['jlibre'])) $rencOpt['jlibre'] = rencSanit($P['jlibre'],'int'); else unset($rencOpt['jlibre']);
 		if(!empty($P['limit'])) $rencOpt['limit'] = rencSanit($P['limit'],'int'); else unset($rencOpt['limit']);
+		if(!empty($P['dynsearch'])) $rencOpt['dynsearch'] = 1; else unset($rencOpt['dynsearch']);
 		if(!empty($P['newtab'])) $rencOpt['newtab'] = 1; else unset($rencOpt['newtab']);
 		if(!empty($P['myctry'])) $rencOpt['myctry'] = 1; else unset($rencOpt['myctry']);
 		if(!empty($P['anniv'])) $rencOpt['anniv'] = 1; else unset($rencOpt['anniv']);
@@ -1040,6 +1042,7 @@ function update_rencontre_options($P) {
 		if(!empty($P['imnb'])) $rencOpt['imnb'] = rencSanit($P['imnb'],'int'); else unset($rencOpt['imnb']);
 		if(!empty($P['imcopyright'])) $rencOpt['imcopyright'] = rencSanit($P['imcopyright'],'int'); else unset($rencOpt['imcopyright']);
 		if(!empty($P['txtcopyright'])) $rencOpt['txtcopyright'] = rencSanit($P['txtcopyright'],'text'); else unset($rencOpt['txtcopyright']);
+		if(!empty($P['lightbox'])) $rencOpt['lightbox'] = 1; else unset($rencOpt['lightbox']);
 		if(!empty($P['onlyphoto'])) $rencOpt['onlyphoto'] = 1; else unset($rencOpt['onlyphoto']);
 		if(!empty($P['photoz'])) $rencOpt['photoz'] = 1; else unset($rencOpt['photoz']);
 		if(!empty($P['pacamsg'])) $rencOpt['pacamsg'] = 1; else unset($rencOpt['pacamsg']);
@@ -1330,13 +1333,15 @@ function rencTabDis() {
 			</tr>
 			<tr valign="top">
 				<th scope="row">
-					<label><?php _e('Width of portrait on logged out plugin homepage', 'rencontre'); ?>
-					<?php if(!empty($wlibre)) { ?>
-						<br />
-						<em><?php _e('Empty', 'rencontre'); ?> => <?php echo $wlibre; ?></em>
-					<?php } ?>
-					</label></th>
+					<label><?php _e('Min width of portrait on logged out plugin homepage', 'rencontre'); ?></label>
+				</th>
 				<td><input type="number" name="wlibre" value="<?php if(!empty($rencOpt['wlibre'])) echo $rencOpt['wlibre']; ?>" /></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row">
+					<label><?php _e('Min width of portrait on logged out plugin homepage on small screen', 'rencontre'); ?></label>
+				</th>
+				<td><input type="number" name="wlibre" value="<?php if(!empty($rencOpt['wslibre'])) echo $rencOpt['wslibre']; ?>" /></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Update plugin homepage for logged out users', 'rencontre'); ?></label></th>
@@ -1373,6 +1378,10 @@ function rencTabDis() {
 						?>
 					</select>
 				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Dynamic loading of search results', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="dynsearch" value="1" <?php if(!empty($rencOpt['dynsearch'])) echo 'checked'; ?>></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Display profiles searched in a new tab', 'rencontre'); ?></label></th>
@@ -1428,6 +1437,10 @@ function rencTabDis() {
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Copyright text on pictures. Empty => Site URL.', 'rencontre'); ?></label></th>
 				<td><input type="text" name="txtcopyright" value="<?php if(isset($rencOpt['txtcopyright'])) echo $rencOpt['txtcopyright']; ?>" /></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Lightbox Image Gallery', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="lightbox" value="1" <?php if(!empty($rencOpt['lightbox'])) echo 'checked'; ?>></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Members without photo are less visible', 'rencontre'); ?></label></th>
@@ -4143,6 +4156,7 @@ function rencGDPRData($email_address, $page=1) {
 	if(!$user->ID) return array('data' => array(), 'done' => false);
 	// 1. rencontre_users
 	$q = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$user->ID);
+	if(!$q) return array('data' => array(), 'done' => false);
 	$photo = $q->i_photo;
 	$d = array();
 	foreach($q as $k=>$v) $d[] = array('name' => $k, 'value' => $v);
