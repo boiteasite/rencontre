@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : My Home
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_my_home.php
  * $u : user_id
  * $u0 : ID
@@ -12,9 +12,9 @@
 <?php if(!empty($rencCustom['fitw'])) { ?>
 
 	<script type="text/javascript">jQuery(document).ready(function(){if(typeof f_dynamicWidth==="function")f_dynamicWidth(<?php echo ($photoWidth+120); ?>,<?php echo ($photoWidth+68); ?>)})</script>
-<?php } ?>
+<?php }?>
 
-	<style type="text/css">.rencMiniPortrait{min-width:<?php echo ($photoWidth+120); ?>px}@media(max-width:600px){.rencMiniPortrait{min-width:<?php echo ($photoWidth+68); ?>px}}</style>
+	<style type="text/css">.rencMiniPortrait{width:<?php echo ($photoWidth+120); ?>px;min-width:<?php echo ($photoWidth+120); ?>px}@media(max-width:600px){.rencMiniPortrait{width:<?php echo ($photoWidth+68); ?>px;min-width:<?php echo ($photoWidth+68); ?>px}}</style>
 	<div class="rencMyHome" style="margin-left:-8px;margin-right:-8px;">
 		<?php if(count($uFeatProf)) { ?>
 

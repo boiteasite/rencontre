@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : ImgReg shortcode
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_imgreg.php
  * $arg : 'title', 'selector', 'left', 'top', 'login'
 */
@@ -11,7 +11,7 @@
 	<div id="imgreg" class="imgreg w3-hide-small" style="position:absolute;max-width:280px;"><h2><?php echo $arg['title']; ?></h2>
 	<?php if(empty($arg['login'])) { ?>
 
-		<form name="registerform" id="registerform" action="<?php echo esc_url(site_url('wp-login.php?action=register','login_post')); ?>" method="post" novalidate="novalidate">
+		<form name="registerform" id="registerform" action="<?php echo esc_url(wp_registration_url()); ?>" method="post" novalidate="novalidate">
 			<p>
 				<label for="user_login"><?php _e('Username'); ?><br /><input type="text" name="user_login" id="user_login" class="input" value="" size="20" />
 				</label>
@@ -56,7 +56,7 @@
 		</form>
 	<?php } else { ?>
 	
-		<form name="loginform" id="loginform" action="<?php echo esc_url(site_url('wp-login.php','login_post'))?>" method="post">
+		<form name="loginform" id="loginform" action="<?php echo esc_url(wp_login_url(get_permalink())); ?>" method="post">
 			<p>
 				<label for="user_login"><?php _e( 'Username or Email Address' ); ?><br /><input type="text" name="log" id="user_login" class="input" value="" size="20" />
 				</label>

@@ -121,6 +121,7 @@ if(isset($_POST['tchat'])) {
 		break;
 		// ********************************************************************************************
 		case 'tchatenvoi':
+		if(!isset($_SESSION['tchatCount'])) $_SESSION['tchatCount'] = $to;
 		if(!is_dir($d)) mkdir($d); $r = "";
 		if(filemtime($d.$to.'.txt')>filemtime($d.$fm.'.txt')) { // envoi mon message en conservant le precedant - pas encore de reponse : deux messages de suite
 			$t = fopen($d.$to.'.txt', 'a+'); fwrite($t,'['.$fm.']'.$ms); fclose($t);

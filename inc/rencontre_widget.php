@@ -13,8 +13,7 @@ class RencontreWidget extends WP_widget {
 			echo '</div>';
 			return;
 		}
-		global $current_user; global $wpdb; global $rencBlock; global $pacam;
-		global $rencDrap; global $rencDrapNom; global $rencOpt; global $rencDiv; global $rencCustom;
+		global $current_user, $wpdb, $rencBlock, $pacam, $rencDrap, $rencDrapNom, $rencOpt, $rencDiv, $rencCustom;
 		// Old installation directly in theme file
 		$tdir = rencTplDir();
 		if(!wp_style_is('rencontre') && !empty($tdir['original'])) { ?>
@@ -101,7 +100,11 @@ class RencontreWidget extends WP_widget {
 		if(has_filter('rencJsLang')) $lang = apply_filters('rencJsLang', $lang);
 		$maction = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$mid."' LIMIT 1");
 		if(isset($rencOpt['tchat'])) {
-			if(isset($_SESSION["tchat"])) $tchatName = $wpdb->get_var("SELECT display_name FROM ".$wpdb->base_prefix."users WHERE ID=".$_SESSION["tchat"]." LIMIT 1");
+			if(isset($_SESSION['tchatCount'])) {
+				if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array('chat',$_SESSION['tchatCount']));
+				unset($_SESSION['tchatCount']);
+			}
+			if(isset($_SESSION['tchat'])) $tchatName = $wpdb->get_var("SELECT display_name FROM ".$wpdb->base_prefix."users WHERE ID=".$_SESSION["tchat"]." LIMIT 1");
 			$lang += array(
 				'mid'=>$current_user->ID,
 				'ajaxchat'=>plugins_url('rencontre/inc/rencontre_tchat.php'),
@@ -142,6 +145,7 @@ class RencontreWidget extends WP_widget {
 				echo "rencBaseurl='".$rencDiv['baseurl']."',";
 				echo "rencBasedir='".$rencDiv['basedir']."',";
 				echo "rencTok='".$rencTok."',rencTokc='".$rencTokc."',";
+				if(!empty($rencOpt['tchatsm'])) echo "rencChatSm=1,";
 				echo "rencInfochange='".(!empty($rencOpt['nbr']['infochange'])?$rencOpt['nbr']['infochange']:5000)."';";
 				$blockSearch = false; if(has_filter('rencSearchP', 'f_rencSearchP')) $blockSearch = apply_filters('rencSearchP', $blockSearch);
 				$m = "{edit:".((isset($rencOpt['fastreg'])&&$rencOpt['fastreg']>1)?0:1).",msg:".((isset($rencOpt['fastreg'])&&$rencOpt['fastreg']>1)?0:1).",search:".($blockSearch?0:1)."}";
@@ -219,7 +223,7 @@ class RencontreWidget extends WP_widget {
 				// ************************
 			}
 			else if($_SESSION['rencontre']=='nouveau') { 
-				$onClick = array("save"=>"f_nouveau(".$mid.",'".admin_url('admin-ajax.php')."',0)");
+				$onClick = array("save"=>"f_nouveau(".$mid.",0)");
 				$y = current_time('Y');
 				$oldmax = $y-(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99)-1;
 				$oldmin = $y-(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18)+1;
@@ -232,7 +236,7 @@ class RencontreWidget extends WP_widget {
 			else if($_SESSION['rencontre']=='nouveau1') { 
 				$onClick = array(
 					"country"=>"f_region_select(this.options[this.selectedIndex].value,'".admin_url('admin-ajax.php')."','regionSelect')",
-					"save"=>"f_nouveau(".$mid.",'".admin_url('admin-ajax.php')."',1)",
+					"save"=>"f_nouveau(".$mid.",1)",
 					);
 				if(function_exists('wpGeonames_shortcode') && empty($rencCustom['country']) && empty($rencCustom['place']) && empty($rencCustom['region'])) {
 					$rencGeonames = wpGeonames_shortcode(array('map'=>1, 'data'=>$rencOpt['pays'].'|||0|0'));
@@ -245,7 +249,7 @@ class RencontreWidget extends WP_widget {
 				$onClick = array(
 					"agemin"=>"f_min(this.options[this.selectedIndex].value,'formNouveau','zageMin','zageMax')",
 					"agemax"=>"f_max(this.options[this.selectedIndex].value,'formNouveau','zageMin','zageMax')",
-					"save"=>"f_nouveau(".$mid.",'".admin_url('admin-ajax.php')."',2)"
+					"save"=>"f_nouveau(".$mid.",2)"
 					);
 				$hetero = false;
 				$u0 = $wpdb->get_row("SELECT i_sex, d_naissance FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$mid);
@@ -269,6 +273,11 @@ class RencontreWidget extends WP_widget {
 		// 2. Partie portrait
 		else if(strstr($_SESSION['rencontre'],'card')) {
 			$id = ($rencidfm)?substr($rencidfm,1):($Gid?$Gid:$mid);
+			if($id!=$mid && empty($rencOpt['paus'])) {
+				$a = $wpdb->get_var("SELECT user_id FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$id."' and t_action REGEXP ',pause1,|,pause2,' LIMIT 1");
+				$b = $wpdb->get_var("SELECT user_id FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$mid."' and t_action REGEXP ',pause1,|,pause2,' LIMIT 1");
+				if($a || $b) $id = $mid;
+			}
 			if(strstr($_SESSION['rencontre'],'favoriAdd')) self::f_favori($id,2);
 			else if(strstr($_SESSION['rencontre'],'favoriDel')) self::f_favori($id,1);
 			$u0 = new StdClass();
@@ -326,6 +335,7 @@ class RencontreWidget extends WP_widget {
 			if($mid!=$id) {
 				self::f_visite($id); // visite du profil - enregistrement sur ID
 				$u->blocked->he = self::f_etat_bloque($id); // je l ai bloque ? - lecture de MID
+				if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array('profil',$id));
 				if(has_filter('rencNbProfP', 'f_rencNbProfP')) $hop = apply_filters('rencNbProfP', $hop);
 				if($hop) echo $hop;
 			}
@@ -348,6 +358,7 @@ class RencontreWidget extends WP_widget {
 				$u->photo = new StdClass();
 				$u->photo->full = array();
 				$u->photo->mini = array();
+				$u->photo->miniWebp = array();
 				$u->photo->grande = array();
 				$u->photo->over = array();
 				$title = array(
@@ -400,7 +411,10 @@ class RencontreWidget extends WP_widget {
 				else $disable['thumb'] = 1;
 				for($v=0;$v<$u->maxPhoto;++$v) {
 					if(($u->ID)*10+$v <= $u->i_photo) {
-						$u->photo->mini[$v] = Rencontre::f_img((($u->ID)*10+$v).'-mini').'.jpg?r='.rand();
+						$a = Rencontre::f_img((($u->ID)*10+$v).'-mini');
+						$u->photo->mini[$v] = $a.'.jpg?r='.rand();
+						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.$a.'.webp')) $u->photo->miniWebp[$v] = Rencontre::f_img((($u->ID)*10+$v).'-mini').'.webp?r='.rand();
+						else $u->photo->miniWebp[$v] = false;
 						if(empty($rencOpt['photoz']) || $u0->i_photo || $hob) {
 							$u->photo->grande[$v] = Rencontre::f_img((($u->ID)*10+$v).'-grande').'.jpg?r='.rand();
 							$u->photo->over[$v] = "f_vignette(".(($u->ID)*10+$v).",'".Rencontre::f_img((($u->ID)*10+$v)."-grande")."')";
@@ -461,7 +475,6 @@ class RencontreWidget extends WP_widget {
 				if($u->i_zsex!=99) {
 					// looking
 					if(isset($rencOpt['iam'][$u->i_zsex])) $u->looking = $rencOpt['iam'][$u->i_zsex];
-					if($u->i_zsex==$u->i_sex && !isset($rencCustom['sex'])) $u->looking .= '&nbsp;'.__('gay','rencontre');
 					// forwhat
 					if(isset($rencOpt['for'][$u->i_zrelation])) $u->forwhat = '&nbsp;'.__('for','rencontre').'&nbsp;'.$rencOpt['for'][$u->i_zrelation];
 				}
@@ -486,51 +499,50 @@ class RencontreWidget extends WP_widget {
 				else if(strstr($_SESSION['rencontre'],'demcont')) $infochange = self::f_demcont($id);
 				// profil
 				$u->profil = array();
-				$ho = false; if($mid!=$id && has_filter('rencViewpP', 'f_rencViewpP')) $ho = apply_filters('rencViewpP', $ho);
-				if(!$ho) {
-					$profil = json_decode($u->t_profil,true);
-					$out = ''; $l = '';
-					if($profil) {
-						foreach($profil as $h) $l .= $h['i'].',';
-						$l = substr($l,0,-1);
-						$q = $wpdb->get_results("SELECT
-								id,
-								c_categ,
-								c_label,
-								t_valeur,
-								i_type,
-								c_genre
-							FROM ".$wpdb->prefix."rencontre_profil
-							WHERE
-								id IN (".$l.") and
-								c_lang='".substr($rencDiv['lang2'],0,2)."' and
-								c_categ!='' and
-								c_label!='' and
-								i_poids<5
-							"); // Ordre inutile (get_row)
-						if($q) {
-							$l = array();
-							foreach($q as $r) $l[$r->id] = $r; // general profile
-							foreach($profil as $h) { // user profile
-								$i = $h['i']; // more simple
-								if(isset($l[$i])) {
-									if($l[$i]->c_genre==='0' || strpos($l[$i]->c_genre,','.$u->i_sex.',')!==false) {
-										if($l[$i]->i_type<3) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = $h['v'];
-										else if($l[$i]->i_type==6) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = date_i18n(get_option('date_format'),strtotime($h['v']));
-										else {
-											$val = json_decode($l[$i]->t_valeur);
-											if($l[$i]->i_type==3) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = $val[$h['v']];
-											elseif($l[$i]->i_type==4) {
-												$tmp="";
-												foreach($h['v'] as $pv) { $tmp.=$val[$pv].", "; }
-												$u->profil[$l[$i]->c_categ][$l[$i]->c_label] = substr($tmp, 0, -2);
-											}
-											else if($l[$i]->i_type==5) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = ($val[0]+$h['v']*$val[2]) . ' '.$val[3];
+				$hideProf = false; if($mid!=$id && has_filter('rencViewpP', 'f_rencViewpP')) $hideProf = apply_filters('rencViewpP', $hideProf);
+				$profil = json_decode($u->t_profil,true);
+				$out = ''; $l = '';
+				if($profil) {
+					foreach($profil as $h) $l .= $h['i'].',';
+					$l = substr($l,0,-1);
+					$q = $wpdb->get_results("SELECT
+							id,
+							c_categ,
+							c_label,
+							t_valeur,
+							i_type,
+							c_genre
+						FROM ".$wpdb->prefix."rencontre_profil
+						WHERE
+							id IN (".$l.") and
+							c_lang='".substr($rencDiv['lang2'],0,2)."' and
+							c_categ!='' and
+							c_label!='' and
+							i_poids<5
+						"); // Ordre inutile (get_row)
+					if($q) {
+						$l = array();
+						foreach($q as $r) $l[$r->id] = $r; // general profile
+						foreach($profil as $h) { // user profile
+							$i = $h['i']; // more simple
+							if(isset($l[$i])) {
+								if($l[$i]->c_genre==='0' || strpos($l[$i]->c_genre,','.$u->i_sex.',')!==false) {
+									if($l[$i]->i_type<3) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = $h['v'];
+									else if($l[$i]->i_type==6) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = date_i18n(get_option('date_format'),strtotime($h['v']));
+									else {
+										$val = json_decode($l[$i]->t_valeur);
+										if($l[$i]->i_type==3) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = $val[$h['v']];
+										elseif($l[$i]->i_type==4) {
+											$tmp="";
+											foreach($h['v'] as $pv) { $tmp.=$val[$pv].", "; }
+											$u->profil[$l[$i]->c_categ][$l[$i]->c_label] = substr($tmp, 0, -2);
 										}
+										else if($l[$i]->i_type==5) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = ($val[0]+$h['v']*$val[2]) . ' '.$val[3];
 									}
 								}
 							}
 						}
+					if($hideProf) foreach($u->profil as $key=>$value) $u->profil[$key] = array(' '=>strlen($hideProf)>5?$hideProf:'...');
 					}
 				}
 				$photoWidth = 250;
@@ -654,7 +666,7 @@ class RencontreWidget extends WP_widget {
 					if(!file_exists($rencDiv['basedir'].'/portrait/'.floor($u0->ID/1000).'/'.Rencontre::f_img(($v).'-mini').'.jpg')) self::suppImg($v,$u0->ID);
 				}
 				$ho = false; if(has_filter('rencNbPhotoP', 'f_rencNbPhotoP')) $ho = apply_filters('rencNbPhotoP', $ho);
-				$u0->maxPhoto = ($ho!==false?min($ho,(isset($rencOpt['imnb']))?$rencOpt['imnb']:4):(isset($rencOpt['imnb']))?$rencOpt['imnb']:4);
+				$u0->maxPhoto = ($ho!==false?min($ho,(isset($rencOpt['imnb']))?$rencOpt['imnb']:4):((isset($rencOpt['imnb']))?$rencOpt['imnb']:4));
 				$u0->photoUrl = $rencDiv['baseurl'].'/portrait/'.floor($u0->ID/1000).'/';
 				$u0->photo = new StdClass();
 				$u0->photo->full = array();
@@ -733,11 +745,20 @@ class RencontreWidget extends WP_widget {
 					$renc = new RencontreSidebarWidget;
 					$renc->widget(0,$s); // data send to limit sql request & remove clear end
 				}
-				if($s->i_zsex!=99) $zsex=$s->i_zsex;
-				else $zsex='('.substr($s->c_zsex,1,-1).')';
-				$homo=(($s->i_sex==$s->i_zsex)?1:0); // seulement si genre sans custom
-				if($s->i_zage_min) $zmin=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$s->i_zage_min)); else $zmin=0;
-				if($s->i_zage_max) $zmax=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$s->i_zage_max)); else $zmax=0;
+				$sex = $s->i_sex;
+				if($s->i_zsex!=99) $zsex = $s->i_zsex;
+				else $zsex = '('.substr($s->c_zsex,1,-1).')';
+				$homo = (($s->i_sex==$s->i_zsex)?1:0); // seulement si genre sans custom
+				if($s->i_zage_min) {
+					$zmin = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-($s->i_zage_min)));
+					$zmin2 = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-($s->i_zage_min)+10));
+				}
+				else { $zmin = 0; $zmin2 = 0; }
+				if($s->i_zage_max) {
+					$zmax = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-($s->i_zage_max)));
+					$zmax2 = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-($s->i_zage_max)-10));
+				}
+				else { $zmax = 0; $zmax2 = 0; }
 				$mage = date_diff(date_create($s->d_naissance), date_create('today'))->y;
 			}
 			//
@@ -758,20 +779,30 @@ class RencontreWidget extends WP_widget {
 							user_id='".$mid."'
 						LIMIT 1
 						");
-					if($q>i_zsex!=99) $zsex=$q->i_zsex;
-					else $zsex='('.substr($q->c_zsex,1,-1).')';
-					$homo=(($s->i_sex==$s->i_zsex)?1:0);
-					if($q->i_zage_min) $zmin=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$q->i_zage_min)); else $zmin=0;
-					if($q->i_zage_max) $zmax=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$q->i_zage_max)); else $zmax=0;
+					$sex = $q->i_sex;
+					if($q>i_zsex!=99) $zsex = $q->i_zsex;
+					else $zsex = '('.substr($q->c_zsex,1,-1).')';
+					$homo = (($s->i_sex==$s->i_zsex)?1:0);
+					if($q->i_zage_min) {
+						$zmin = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$q->i_zage_min));
+						$zmin2 = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$q->i_zage_min+10));
+					}
+					else { $zmin = 0; $zmin2 = 0; }
+					if($q->i_zage_max) {
+						$zmax = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$q->i_zage_max));
+						$zmax2 = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$q->i_zage_max-10));
+					}
+					else { $zmax = 0; $zmax2 = 0; }
 				}
 				// Selection par le sex
-				if(strpos($zsex,')')===false) {
-					$sexQuery = " and R.i_sex=".$zsex." ";
-					if(!isset($rencCustom['sex'])) $sexQuery .= " and R.i_zsex".(($homo)?'='.$zsex:'!='.$zsex)." ";
-				}
-				else {
-					$sexQuery = " and R.i_sex IN ".$zsex." ";
-				}
+
+
+				$sexQuery = ''; // and R.i_zsex!=0 and R.i_sex=0
+				// 1. SEX
+				if(strpos($zsex,')')!==false) $sexQuery .= " and R.i_sex IN ".$zsex; // allow multi choice in custom multiSR => () in zsex
+				else $sexQuery .= " and R.i_sex=".$zsex;
+				// 2. ZSEX - multiSR => c_zsex
+				$sexQuery .= " and (R.c_zsex LIKE '%,".$sex.",%' or R.i_zsex=".$sex.") "; // multiSR or not (in case of change multiSR by ADMIN but not by users Account)
 				// Relation type
 				$zrelat = '';
 				if($s->i_zrelation!=99) $zrelat = "and R.i_zrelation=".$s->i_zrelation;
@@ -785,6 +816,7 @@ class RencontreWidget extends WP_widget {
 				}
 
 				$myCountry = (!empty($rencOpt['myctry'])&&!empty($s->c_pays)&&empty($rencCustom['country'])&&empty($rencCustom['place'])?"and R.c_pays='".$s->c_pays."'":"");
+				$qpause = (empty($rencOpt['paus'])?"and (P.t_action NOT REGEXP ',pause1,|,pause2,' or P.t_action IS NULL) ":"");
 				?>
 				
 				<div <?php if(empty($rencCustom['side'])) echo 'class="w3-twothird w3-left"'; ?>>
@@ -812,6 +844,7 @@ class RencontreWidget extends WP_widget {
 						and CHAR_LENGTH(P.t_annonce)>30 
 						and R.user_id!=".$mid."
 						".$myCountry."
+						".$qpause."
 					ORDER BY RAND() LIMIT ".$feat);
 				// Not enough results 1 => less restrictive and merge
 				if(count($uFeatProf)<$feat) {
@@ -836,10 +869,11 @@ class RencontreWidget extends WP_widget {
 							and R.user_id!=".$mid."
 							".(!empty($b)?"and R.user_id NOT IN (".$b.") ":"")."
 							".$myCountry."
+							".$qpause."
 						ORDER BY RAND() LIMIT ".$a);
 					$uFeatProf = array_merge($uFeatProf,$uFeatProf1);
 				}
-				// Not enough results 2 => less restrictive and merge
+				// Not enough results 2 => less restrictive (no featuredDayOld) and merge
 				if(count($uFeatProf)<$feat) {
 					$a = $feat-count($uFeatProf);
 					$b = '';
@@ -861,6 +895,33 @@ class RencontreWidget extends WP_widget {
 							and R.user_id!=".$mid."
 							".(!empty($b)?"and R.user_id NOT IN (".$b.") ":"")."
 							".$myCountry."
+							".$qpause."
+						ORDER BY RAND() LIMIT ".$a);
+					$uFeatProf = array_merge($uFeatProf,$uFeatProf1);
+				}
+				// Not enough results 3 => less restrictive (age) and merge
+				if(count($uFeatProf)<$feat) {
+					$a = $feat-count($uFeatProf);
+					$b = '';
+					foreach($uFeatProf as $a1) $b .= $a1->user_id . ',';
+					if($b!='') $b = substr($b,0,-1);
+					$uFeatProf1 = $wpdb->get_results("SELECT DISTINCT(R.user_id) 
+						FROM ".$wpdb->prefix."rencontre_users R
+						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+							ON P.user_id=R.user_id
+						WHERE 
+							R.i_status IN (0,2)
+							".$sexQuery."
+							".((!isset($rencCustom['born']) && $zmax2 && $zmin2)?"
+							and R.d_naissance>'".$zmax2."' 
+							and R.d_naissance<'".$zmin2."'":" ")."
+							".(!empty($rencOpt['onlyphoto'])?" and R.i_photo>0 ":" ")."
+							and CHAR_LENGTH(P.t_titre)>4 
+							and CHAR_LENGTH(P.t_annonce)>30 
+							and R.user_id!=".$mid."
+							".(!empty($b)?"and R.user_id NOT IN (".$b.") ":"")."
+							".$myCountry."
+							".$qpause."
 						ORDER BY RAND() LIMIT ".$a);
 					$uFeatProf = array_merge($uFeatProf,$uFeatProf1);
 				}
@@ -868,13 +929,16 @@ class RencontreWidget extends WP_widget {
 				if(!empty($rencOpt['anniv']) && !isset($rencCustom['born'])) {
 					$uBirthday = $wpdb->get_results("SELECT R.user_id 
 						FROM ".$wpdb->prefix."rencontre_users R
+						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+							ON P.user_id=R.user_id
 						WHERE 
 							R.d_naissance LIKE '%".current_time('m-d')."' 
 							".$sexQuery."
-							".((!isset($rencCustom['born']) && $zmax && $zmin)?"and R.d_naissance>'".$zmax."' and R.d_naissance<'".$zmin."'":"")."
+							".((!isset($rencCustom['born']) && $zmax2 && $zmin2)?"and R.d_naissance>'".$zmax2."' and R.d_naissance<'".$zmin2."'":"")."
 							and R.user_id!=".$mid."
 							and R.i_status IN (0,2)
 							".$myCountry."
+							".$qpause."
 						ORDER BY RAND() LIMIT ".(!empty($rencOpt['nbr']['birthday'])?$rencOpt['nbr']['birthday']:4));
 				}
 				if(!empty($rencOpt['ligne'])) {
@@ -887,12 +951,15 @@ class RencontreWidget extends WP_widget {
 					}
 					$uLine = $wpdb->get_results("SELECT R.user_id 
 						FROM ".$wpdb->prefix."rencontre_users R
+						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+							ON P.user_id=R.user_id
 						WHERE 
 							R.user_id IN (".substr($tab,0,-1).") 
 							".$sexQuery."
 							and R.user_id!=".$mid."
 							and R.i_status IN (0,2)
 							".$myCountry."
+							".$qpause."
 						ORDER BY RAND() LIMIT ".(!empty($rencOpt['nbr']['online'])?$rencOpt['nbr']['online']:16)); // AND d_naissance>'".$zmax."' AND d_naissance<'".$zmin."' ?>
 						
 					<form name="rencLine" method="get" action="">
@@ -911,21 +978,39 @@ class RencontreWidget extends WP_widget {
 					WHERE 
 						R.i_status IN (0,2)
 						".$sexQuery."
+						".((!isset($rencCustom['born']) && $zmax2 && $zmin2)?"and R.d_naissance>'".$zmax2."' and R.d_naissance<'".$zmin2."'":"")."
 						".(!empty($rencOpt['onlyphoto'])?" AND R.i_photo>0 ":" ")."
 						and CHAR_LENGTH(P.t_titre)>4 
 						and CHAR_LENGTH(P.t_annonce)>30 
 						and R.user_id!=".$mid." 
 						".$myCountry."
+						".$qpause."
 					ORDER BY R.user_id DESC LIMIT ".(!empty($rencOpt['nbr']['new'])?$rencOpt['nbr']['new']:12));
 				$action = json_decode($s->t_action,true);
 				$uFavori = array();
 				if(isset($action['favori'])) {
 					$b = '';
 					foreach($action['favori'] as $r) $b .= $r['i'].',';
-					if($b) $uFavori = $wpdb->get_results("SELECT user_id FROM ".$wpdb->prefix."rencontre_users WHERE user_id IN (".substr($b,0,-1).")");
+					if($b) $uFavori = $wpdb->get_results("SELECT R.user_id
+						FROM ".$wpdb->prefix."rencontre_users R
+						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+							ON P.user_id=R.user_id
+						WHERE
+							R.user_id IN (".substr($b,0,-1).")
+							".$qpause." 
+						");
 				}
 				$u0 = new StdClass();
 				$u0->ID = $mid;
+				$warning = '';
+				if(strstr($_SESSION['rencontre'],'pause1')) $warning = __('Profile hidden','rencontre');
+				else if(strstr($_SESSION['rencontre'],'pause2')) $warning = __('Profile switched off','rencontre');
+				if($warning) {
+					$timeout = 3000;
+					// ****** TEMPLATE ********
+					if($tpl=rencTpl('rencontre_warning.php')) include($tpl);
+					// ************************
+				}
 				// ****** TEMPLATE ********
 				if($tpl=rencTpl('rencontre_my_home.php')) include($tpl);
 				// ************************
@@ -949,7 +1034,7 @@ class RencontreWidget extends WP_widget {
 					'CertifiedP'=>$CertifiedP,
 					'SendP'=>$SendP
 				);
-				self::f_quickFind(json_encode($var)); // cherche toujours avec accueil
+				self::f_quickFind(json_encode($var,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)); // cherche toujours avec accueil
 			}
 			//
 			// 7. Partie recherche plus
@@ -986,69 +1071,92 @@ class RencontreWidget extends WP_widget {
 					if($tpl=rencTpl('rencontre_warning.php')) include($tpl);
 					// ************************
 				}
-				$out = $wpdb->get_results("SELECT 
-						M.id,
-						M.sender,
-						M.recipient,
-						M.date,
-						M.read,
-						U.ID as user_id,
-						U.display_name,
-						R.i_photo
-					FROM ".$wpdb->base_prefix."users U
-					INNER JOIN ".$wpdb->prefix."rencontre_users R
-						ON R.user_id=U.ID
-					INNER JOIN ".$wpdb->prefix."rencontre_msg M
-						ON U.user_login=M.sender".(isset($rencOpt['collat'])?" COLLATE ".$rencOpt['collat']:"")."
-					WHERE 
-						M.recipient='".$current_user->user_login."'
-						and M.deleted!=1"); // delete=1 : supp par dest
-				$in = $wpdb->get_results("SELECT 
-						M.id,
-						M.sender,
-						M.recipient,
-						M.date,
-						M.read,
-						U.ID as user_id,
-						U.display_name,
-						R.i_photo
-					FROM ".$wpdb->base_prefix."users U
-					INNER JOIN ".$wpdb->prefix."rencontre_users R
-						ON R.user_id=U.ID
-					INNER JOIN ".$wpdb->prefix."rencontre_msg M
-						ON U.user_login=M.recipient".(isset($rencOpt['collat'])?" COLLATE ".$rencOpt['collat']:"")."
-					WHERE 
-						M.sender='".$current_user->user_login."'
-						and M.deleted!=2"); // delete=2 : supp par writter
-				$q1 = array_merge($out,$in);
-				usort($q1, array($this, 'message_sort'));
-				$a = ','; $inbox = array();
-				foreach($q1 as $k=>$v) { // only one line by sender
-					if($v->sender!=$current_user->user_login && strpos($a,','.$v->sender.',')===false) {
-						$a .= $v->sender.',';
-						$q1[$k]->member = $v->display_name; // $v->sender;
-						$v->date = self::format_dateTime($v->date,1);
-						$v->type = 'msgin';
-						$inbox[] = $v;
+				if(empty($rencDiv['mpause']) || $rencDiv['mpause']!='pause2') {
+					$qpause = (empty($rencOpt['paus'])?"and (P.t_action NOT LIKE '%,pause2,%' or P.t_action IS NULL) ":"");
+					$out = $wpdb->get_results("SELECT 
+							M.id,
+							M.sender,
+							M.recipient,
+							M.date,
+							M.read,
+							U.ID as user_id,
+							U.display_name,
+							R.i_photo
+						FROM ".$wpdb->base_prefix."users U
+						INNER JOIN ".$wpdb->prefix."rencontre_users R
+							ON R.user_id=U.ID
+						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+							ON P.user_id=U.ID
+						INNER JOIN ".$wpdb->prefix."rencontre_msg M
+							ON U.user_login=M.sender".(isset($rencOpt['collat'])?" COLLATE ".$rencOpt['collat']:"")."
+						WHERE 
+							M.recipient='".$current_user->user_login."'
+							and M.deleted!=1
+							".$qpause." "); // delete=1 : supp par dest
+					$in = $wpdb->get_results("SELECT 
+							M.id,
+							M.sender,
+							M.recipient,
+							M.date,
+							M.read,
+							U.ID as user_id,
+							U.display_name,
+							R.i_photo
+						FROM ".$wpdb->base_prefix."users U
+						INNER JOIN ".$wpdb->prefix."rencontre_users R
+							ON R.user_id=U.ID
+						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+							ON P.user_id=U.ID
+						INNER JOIN ".$wpdb->prefix."rencontre_msg M
+							ON U.user_login=M.recipient".(isset($rencOpt['collat'])?" COLLATE ".$rencOpt['collat']:"")."
+						WHERE 
+							M.sender='".$current_user->user_login."'
+							and M.deleted!=2
+							".$qpause." "); // delete=2 : supp par writter
+					$q1 = array_merge($out,$in);
+					usort($q1, array($this, 'message_sort'));
+					$a = ','; $inbox = array();
+					foreach($q1 as $k=>$v) { // only one line by sender
+						if($v->sender!=$current_user->user_login && strpos($a,','.$v->sender.',')===false) {
+							$a .= $v->sender.',';
+							$q1[$k]->member = $v->display_name; // $v->sender;
+							$v->date = self::format_dateTime($v->date,1);
+							$v->type = 'msgin';
+							$b = '/portrait/'.floor(($v->user_id)/1000).'/'.Rencontre::f_img(($v->user_id*10).'-mini');
+							$v->miniPhoto = $rencDiv['baseurl'].$b.'.jpg?r='.rand();
+							if(file_exists($rencDiv['basedir'].$b.'.webp')) $v->miniPhotoWebp = $rencDiv['baseurl'].$b.'.webp?r='.rand();
+							$inbox[] = $v;
+						}
+						else if($v->recipient!=$current_user->user_login && strpos($a,','.$v->recipient.',')===false) {
+							$a .= $v->recipient.',';
+							$q1[$k]->member = $v->display_name; // $v->recipient;
+							$v->date = self::format_dateTime($v->date,1);
+							$v->type = 'msgout';
+							$b = '/portrait/'.floor(($v->user_id)/1000).'/'.Rencontre::f_img(($v->user_id*10).'-mini');
+							$v->miniPhoto = $rencDiv['baseurl'].$b.'.jpg?r='.rand();
+							if(file_exists($rencDiv['basedir'].$b.'.webp')) $v->miniPhotoWebp = $rencDiv['baseurl'].$b.'.webp?r='.rand();
+							$inbox[] = $v;
+						}
 					}
-					else if($v->recipient!=$current_user->user_login && strpos($a,','.$v->recipient.',')===false) {
-						$a .= $v->recipient.',';
-						$q1[$k]->member = $v->display_name; // $v->recipient;
-						$v->date = self::format_dateTime($v->date,1);
-						$v->type = 'msgout';
-						$inbox[] = $v;
-					}
+					$hoAns = false; if(has_filter('rencAnswerP', 'f_rencAnswerP')) $hoAns = apply_filters('rencAnswerP', $hoAns);
+					$onClick = array(
+						'look'=>"f_voir_msg(id,'".admin_url("admin-ajax.php")."','".$current_user->user_login."','".$hoAns."');",
+						'del'=>"document.forms['formEcrire'].elements['".$Lrenc."'].value='".$Lmsg."';document.forms['formEcrire'].elements['".$Lmsg."'].value='msgdel';document.forms['formEcrire'].elements['".$Lid."'].value=id;document.forms['formEcrire'].submit();"
+						);
+					$u0 = new StdClass();
+					$u0->user_login = $current_user->user_login;
+					// ****** TEMPLATE ********
+					if($tpl=rencTpl('rencontre_message_inbox.php')) include($tpl);
+					// ************************
 				}
-				$hoAns = false; if(has_filter('rencAnswerP', 'f_rencAnswerP')) $hoAns = apply_filters('rencAnswerP', $hoAns);
-				$onClick = array(
-					'look'=>"f_voir_msg(id,'".admin_url("admin-ajax.php")."','".$current_user->user_login."','".$hoAns."');",
-					'del'=>"document.forms['formEcrire'].elements['".$Lrenc."'].value='".$Lmsg."';document.forms['formEcrire'].elements['".$Lmsg."'].value='msgdel';document.forms['formEcrire'].elements['".$Lid."'].value=id;document.forms['formEcrire'].submit();"
-					);
-				$u0 = new StdClass();
-				$u0->user_login = $current_user->user_login;
-				// ****** TEMPLATE ********
-				if($tpl=rencTpl('rencontre_message_inbox.php')) include($tpl);
-				// ************************
+				else {
+					$warning = __('Profile switched off','rencontre');
+					$timeout = 3000;
+					// ****** TEMPLATE ********
+					if($tpl=rencTpl('rencontre_warning.php')) include($tpl);
+					// ************************
+				}
+
 				?>
 				
 				</div><?php if(empty($rencCustom['side'])) echo '<!-- .w3-twothird -->'; ?>
@@ -1066,21 +1174,28 @@ class RencontreWidget extends WP_widget {
 					$u = $wpdb->get_row("SELECT
 							U.user_login,
 							U.display_name,
-							R.i_photo
+							R.i_photo,
+							P.t_action
 						FROM ".$wpdb->base_prefix."users U
 						INNER JOIN ".$wpdb->prefix."rencontre_users R
 							ON R.user_id=U.ID
+						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+							ON P.user_id=U.ID
 						WHERE
 							U.ID='".$id."'
 						LIMIT 1
 						");
 					$u->user_id = $id;
-					$u->photo = $rencDiv['baseurl'].'/portrait/'.floor(($u->i_photo)/10000).'/'.Rencontre::f_img((floor(($u->i_photo)/10)*10).'-mini').'.jpg?r='.rand();
+					$a = '/portrait/'.floor(($u->i_photo)/10000).'/'.Rencontre::f_img((floor(($u->i_photo)/10)*10).'-mini');
+					$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+					$u->photo = $u->miniPhoto; // name before V3.6.2
+					if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
 					$onClick = array(
 						'profile'=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lcard."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($id,0)."';document.forms['rencMenu'].submit();",
 						'send'=>"document.forms['formEcrire'].elements['".$Lrenc."'].value='".$Lmsg."';document.forms['formEcrire'].elements['".$Lid."'].value='".$id."';document.forms['formEcrire'].submit();",
 						'inbox'=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lmsg."';document.forms['rencMenu'].submit();"
 						);
+					if(empty($rencOpt['paus']) && strpos($u->t_action, ',pause1,')!==false || strpos($u->t_action, ',pause2,')!==false) $onClick['profile'] = '';
 					$u0 = new StdClass();
 					$u0->user_login = $current_user->user_login;
 					// ****** TEMPLATE ********
@@ -1119,15 +1234,16 @@ class RencontreWidget extends WP_widget {
 				$ho = false; if(has_filter('rencPageContent')) $ho = apply_filters('rencPageContent', $_SESSION['rencontre']);
 				if($ho) echo $ho;
 			}
-			//
-			// OTHER
-			if(!$fantome && !isset($_COOKIE["rencfantome"]) && !current_user_can("administrator") && isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) {
-				$ho = false; if(has_filter('rencAdwC', 'f_rencAdwC') && $rencOpt['fastreg']>2) $ho = apply_filters('rencAdwC', $ho); if($ho) echo $ho;
-			}
-			// ****** TEMPLATE ********
-			if($tpl=rencTpl('rencontre_modal_warning.php')) include($tpl);
-			// ************************
-		} ?>
+		}
+		//
+		// OTHER
+		if(!$fantome && !isset($_COOKIE["rencfantome"]) && !current_user_can("administrator") && isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) {
+			$ho = false; if(has_filter('rencAdwC', 'f_rencAdwC') && $rencOpt['fastreg']>2) $ho = apply_filters('rencAdwC', $ho); if($ho) echo $ho;
+		}
+		// ****** TEMPLATE ********
+		if($tpl=rencTpl('rencontre_modal_warning.php')) include($tpl);
+		// ************************
+			?>
 			
 			<div style="clear:both;">&nbsp;</div>
 			<div id="rencAdsB" class="rencAds w3-margin-bottom">
@@ -1148,10 +1264,15 @@ class RencontreWidget extends WP_widget {
 		$size = rencPhotoSize();
 		global $rencDiv;
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
-		$a = array();
+		$a = array(); $a1 = array();
 		$a[] = Rencontre::f_img($im) . '.jpg';
-		foreach($size as $s) $a[] = Rencontre::f_img($im.$s['label']) . '.jpg';
+		$a1[] = Rencontre::f_img($im) . '.webp';
+		foreach($size as $s) {
+			$a[] = Rencontre::f_img($im.$s['label']) . '.jpg';
+			$a1[] = Rencontre::f_img($im.$s['label']) . '.webp';
+		}
 		foreach($a as $b) if(file_exists($r.$b)) unlink($r.$b);
+		foreach($a1 as $b) if(file_exists($r.$b)) unlink($r.$b);
 		global $wpdb;
 		$q = $wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$id."' LIMIT 1");
 		if(!$q || floor($q/10)*10==$q) $p=0; // plus de photo
@@ -1161,7 +1282,11 @@ class RencontreWidget extends WP_widget {
 		$c=0;
 		for($v=$im; $v<$q; ++$v) {
 			if(file_exists($r.Rencontre::f_img(($v+1)).'.jpg')) rename($r.Rencontre::f_img(($v+1)).'.jpg', $r.Rencontre::f_img($v).'.jpg');
-			foreach($size as $s) if(file_exists($r.Rencontre::f_img(($v+1).$s['label']).'.jpg')) rename($r.Rencontre::f_img(($v+1).$s['label']).'.jpg', $r.Rencontre::f_img($v.$s['label']).'.jpg');
+			if(file_exists($r.Rencontre::f_img(($v+1)).'.webp')) rename($r.Rencontre::f_img(($v+1)).'.webp', $r.Rencontre::f_img($v).'.webp');
+			foreach($size as $s) {
+				if(file_exists($r.Rencontre::f_img(($v+1).$s['label']).'.jpg')) rename($r.Rencontre::f_img(($v+1).$s['label']).'.jpg', $r.Rencontre::f_img($v.$s['label']).'.jpg');
+				if(file_exists($r.Rencontre::f_img(($v+1).$s['label']).'.webp')) rename($r.Rencontre::f_img(($v+1).$s['label']).'.webp', $r.Rencontre::f_img($v.$s['label']).'.webp');
+			}
 		}
 		if(has_filter('rencBlurDelP', 'f_rencBlurDelP')) {
 			$ho = new StdClass();
@@ -1171,7 +1296,12 @@ class RencontreWidget extends WP_widget {
 			$ho->size = $size;
 			apply_filters('rencBlurDelP', $ho);
 		}
-		if($im==$id*10) self::suppImgLib($id);
+		//
+		if(file_exists($rencDiv['basedir'].'/portrait/libre/libreIDs.json')) {
+			$j = file_get_contents($rencDiv['basedir'].'/portrait/libre/libreIDs.json');
+			$a = json_decode($j);
+			if(is_array($a) && $im==$id*10 && in_array($id,$a)) self::suppImgLib($id);
+		}
 	}
 	//
 	static function mainImg($im,$id) {
@@ -1182,17 +1312,37 @@ class RencontreWidget extends WP_widget {
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
 		// 1. Future Main TMP name
 		$a = array(array(Rencontre::f_img($im).'.jpg',''));
-		foreach($size as $s) $a[] = array(Rencontre::f_img($im.$s['label']).'.jpg', $s['label']);
+		$a1 = array(array(Rencontre::f_img($im).'.webp',''));
+		foreach($size as $s) {
+			$a[] = array(Rencontre::f_img($im.$s['label']).'.jpg', $s['label']);
+			$a1[] = array(Rencontre::f_img($im.$s['label']).'.webp', $s['label']);
+		}
 		foreach($a as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.$id.'main00'.$b[1].'.jpg'); // $im => tmp name
+		foreach($a1 as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.$id.'main00'.$b[1].'.webp');
 		// 2. Current Main
 		$a = array(array(Rencontre::f_img($id.'0').'.jpg',''));
-		foreach($size as $s) $a[] = array(Rencontre::f_img($id.'0'.$s['label']).'.jpg', $s['label']);
+		$a1 = array(array(Rencontre::f_img($id.'0').'.webp',''));
+		foreach($size as $s) {
+			$a[] = array(Rencontre::f_img($id.'0'.$s['label']).'.jpg', $s['label']);
+			$a1[] = array(Rencontre::f_img($id.'0'.$s['label']).'.webp', $s['label']);
+		}
 		foreach($a as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.$pos.$b[1]).'.jpg'); // main => $im
+		foreach($a1 as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.$pos.$b[1]).'.webp');
 		// 3. Future Main 
 		$a = array(array($id.'main00'.'.jpg',''));
-		foreach($size as $s) $a[] = array($id.'main00'.$s['label'].'.jpg', $s['label']);
+		$a1 = array(array($id.'main00'.'.wepb',''));
+		foreach($size as $s) {
+			$a[] = array($id.'main00'.$s['label'].'.jpg', $s['label']);
+			$a1[] = array($id.'main00'.$s['label'].'.webp', $s['label']);
+		}
 		foreach($a as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.'0'.$b[1]).'.jpg'); // tmp name => main
+		foreach($a1 as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.'0'.$b[1]).'.webp');
 		//
+		if(file_exists($rencDiv['basedir'].'/portrait/libre/libreIDs.json')) {
+			$j = file_get_contents($rencDiv['basedir'].'/portrait/libre/libreIDs.json');
+			$a = json_decode($j);
+			if(is_array($a) && in_array($id,$a)) self::suppImgLib($id);
+		}
 	}
 	//
 	static function plusImg($nim,$id,$rot=0) {
@@ -1229,8 +1379,8 @@ class RencontreWidget extends WP_widget {
 					}
 				}
 				else if(!$_FILES['plusPhoto']['size']) $e = "The file was not uploaded (empty size).";
-				if($nim==0) $p=$id*10; // premiere photo
-				else $p=$nim+1;
+				if(empty($nim)) $p = $id * 10; // first img
+				else $p = intval($nim) + 1;
 				$cible = $r . basename($_FILES['plusPhoto']['tmp_name']);
 				if(move_uploaded_file($_FILES['plusPhoto']['tmp_name'], $cible)) {
 					self::f_photo($p,$cible,$rot);
@@ -1262,7 +1412,8 @@ class RencontreWidget extends WP_widget {
 			}
 			else $e = "No Facebook file upload";
 		}
-		if($nim==0) self::suppImgLib($id);
+		//
+		if($nim==0) renc_clear_cache_portrait(); // Not in libreIDs.json because no photo
 		if($e) {
 			$warning = $e;
 			// ****** TEMPLATE ********
@@ -1277,10 +1428,15 @@ class RencontreWidget extends WP_widget {
 		$size = rencPhotoSize();
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
 		for($v=0;$v<=9;++$v) {
-			$a = array();
+			$a = array(); $a1 = array();
 			$a[] = Rencontre::f_img($id.$v) . '.jpg';
-			foreach($size as $s) $a[] = Rencontre::f_img($id.$v.$s['label']) . '.jpg';
+			$a1[] = Rencontre::f_img($id.$v) . '.webp';
+			foreach($size as $s) {
+				$a[] = Rencontre::f_img($id.$v.$s['label']) . '.jpg';
+				$a1[] = Rencontre::f_img($id.$v.$s['label']) . '.webp';
+			}
 			foreach($a as $b) if(file_exists($r.$b)) unlink($r.$b);
+			foreach($a1 as $b) if(file_exists($r.$b)) unlink($r.$b);
 			if(has_filter('rencBlurDelP', 'f_rencBlurDelP')) {
 				$ho = new StdClass();
 				$ho->id = $id;
@@ -1292,27 +1448,28 @@ class RencontreWidget extends WP_widget {
 		}
 		global $wpdb;
 		if($upd) $wpdb->update($wpdb->prefix.'rencontre_users', array('i_photo'=>0), array('user_id'=>$id));
-		self::suppImgLib($id);
+		//
+		if(file_exists($rencDiv['basedir'].'/portrait/libre/libreIDs.json')) {
+			$j = file_get_contents($rencDiv['basedir'].'/portrait/libre/libreIDs.json');
+			$a = json_decode($j);
+			if(is_array($a) && in_array($id,$a)) self::suppImgLib($id);
+		}
 	}
 	//
 	static function suppImgLib($id) {
 		global $rencDiv;
-		$b = 0;
-		if(file_exists($rencDiv['basedir'].'/portrait/libre/'.($id*10).'-mini.jpg')) {
-			unlink($rencDiv['basedir'].'/portrait/libre/'.($id*10).'-mini.jpg');
-			$b = 1;
+		$photo = Rencontre::f_img(($id*10).'-libre',2); // ($id*10).'-libre';
+		if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg')) {
+			unlink($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg');
+			if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp')) unlink($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp');
+			renc_clear_cache_portrait();
 		}
-		if(file_exists($rencDiv['basedir'].'/portrait/libre/'.($id*10).'-libre.jpg')) {
-			unlink($rencDiv['basedir'].'/portrait/libre/'.($id*10).'-libre.jpg');
-			$b = 1;
-		}
-		if($b) renc_clear_cache_portrait(1);
 	}
 	//
 	static function sauvProfil($in,$id) {
 		// entree : Sauvegarde du profil
 		// sortie bdd : [{"i":10,"v":"Sur une ile deserte avec mon amoureux."},{"i":35,"v":0},{"i":53,"v":[0,4,6]}]
-		$u = "";
+		$u = '';
 		if($in) foreach($in as $k=>$v) {
 			switch($v[0]) {
 				case 1:
@@ -1350,7 +1507,7 @@ class RencontreWidget extends WP_widget {
 				break;
 			}
 		}
-		global $wpdb;
+		global $wpdb, $rencDiv;
 		$Ptitre = rencSanit($_POST['titre'],'text');
 		$Pannonce = rencSanit($_POST['annonce'],'para');
 		if(strlen($Ptitre)<2 && strlen($Pannonce)>10) {
@@ -1362,18 +1519,26 @@ class RencontreWidget extends WP_widget {
 			$tit = str_replace(', ', ',', $tit); $tit = str_replace(',', ', ', $tit);
 			$tit = strtr($tit, "0123456789#(){[]}", ".................");
 			$tit = substr($tit,0,25).'...';
+			$Ptitre = $tit;
 		}
-		else $wpdb->update($wpdb->prefix.'rencontre_users_profil',
+		$wpdb->update($wpdb->prefix.'rencontre_users_profil',
 			array('d_modif'=>current_time("mysql"),
 				't_titre'=>$Ptitre,
 				't_annonce'=>$Pannonce,
 				't_profil'=>'['.substr($u, 0, -1).']'),
 			array('user_id'=>$id));
+		//
+		if(file_exists($rencDiv['basedir'].'/portrait/libre/libreIDs.json')) {
+			$j = file_get_contents($rencDiv['basedir'].'/portrait/libre/libreIDs.json');
+			$a = json_decode($j);
+			if(is_array($a) && in_array($id,$a)) renc_clear_cache_portrait();
+		}
+
 	}
 	//
 	static function f_photo($im,$rim,$rot=0,$regen=0) {
 		// im : user_id *10 + numero de photo a partir de 0
-		global $rencOpt; global $rencDiv;
+		global $rencOpt, $rencDiv;
 		$size = rencPhotoSize();
 		$fullSize = array(1280,960);
 		if(has_filter('rencImgFullSize')) $fullSize = apply_filters('rencImgFullSize', $fullSize);
@@ -1432,6 +1597,9 @@ class RencontreWidget extends WP_widget {
 				imagecopyresampled($out[$k+1], $in, 0, 0, $inX, $inY, $v['width'], $v['height'], $inW, $inH); 
 				if(!$regen) imagejpeg(self::f_imcopyright($out[$k+1],$imco,$txco), $r."/".Rencontre::f_img($im.$v['label']).".jpg", (!empty($v['quality'])?$v['quality']:$quality));
 				else imagejpeg($out[$k+1], $r."/".Rencontre::f_img($im.$v['label']).".jpg", (!empty($v['quality'])?$v['quality']:$quality));
+				if($v['label']=='-mini' && function_exists('imagewebp')) { // V3.6.2 - currently only mini
+					imagewebp((!$regen?self::f_imcopyright($out[$k+1],$imco,$txco):$out[$k+1]), $r."/".Rencontre::f_img($im.$v['label']).".webp", (!empty($v['quality'])?$v['quality']:$quality));
+				}
 			}
 			if(has_filter('rencBlurCreaP', 'f_rencBlurCreaP')) {
 				$ho = new StdClass();
@@ -1490,9 +1658,9 @@ class RencontreWidget extends WP_widget {
 	}
 	//
 	static function f_pays($f='FR',$indif=0) {
-		if(!$indif) echo '<option value=""'.($f=='i'?' selected':'').'>- '.__('Immaterial','rencontre').' -</option>';
+		if(!$indif) echo '<option value=""'.($f=='i'?' selected':'').'>- '.__('No matter','rencontre').' -</option>';
 		if(strlen($f)!=2 && $f!='i') $f = 'FR';
-		global $wpdb; global $rencDiv;
+		global $wpdb, $rencDiv;
 		$q = $wpdb->get_results("SELECT
 				c_liste_valeur,
 				c_liste_iso
@@ -1509,11 +1677,11 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_regionBDD($f=1,$g=0) {
 		// Initial fields (Ajax update in rencontre_filter.php)
-		global $rencOpt; global $rencCustom; global $wpdb;
+		global $rencOpt, $rencCustom, $wpdb;
 		if(!empty($rencCustom['country']) || !$g) $g = (!empty($rencOpt['pays'])?$rencOpt['pays']:'FR'); // default : FR
 		$b = 0;
-		if(!$f || substr($f,0,1)=='_') echo '<option value="">- '.__('Immaterial','rencontre').' -</option>';
-		if($g!='i') { // Country Immaterial => NO Region
+		if(!$f || substr($f,0,1)=='_') echo '<option value="">- '.__('No matter','rencontre').' -</option>';
+		if($g!='i') { // Country No matter => NO Region
 			if(substr($f,0,1)=='_') $f = substr($f,1);
 			$q = $wpdb->get_results("SELECT
 					id,
@@ -1530,10 +1698,10 @@ class RencontreWidget extends WP_widget {
 		}
 	}
 	//
-	static function f_miniPortrait($user_id, $t=0, $photoWidth) {
+	static function f_miniPortrait($user_id, $t=0, $photoWidth=250) {
 		// entree : user_id
 		// sortie : code HTML avec le mini portrait
-		global $wpdb; global $rencDrap; global $rencDrapNom; global $rencDiv; global $rencCustom; global $rencOpt;
+		global $wpdb, $rencDrap, $rencDrapNom, $rencDiv, $rencCustom, $rencOpt;
 		$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
 		$Lid = (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id');
 		$Lcard = (!empty($rencOpt['lbl']['card'])?$rencOpt['lbl']['card']:'card');
@@ -1568,7 +1736,9 @@ class RencontreWidget extends WP_widget {
 				else $title['thumb'] = stripslashes($rencCustom['nophText']);
 			}
 			$u->online = self::f_enLigne($user_id);
-			$u->miniPhoto = $rencDiv['baseurl'].'/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini').'.jpg?r='.rand();
+			$a = '/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini');
+			$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+			if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
 			$certified = ''; if(has_filter('rencCertifiedP', 'f_rencCertifiedP')) $certified = apply_filters('rencCertifiedP', array($u->ID, 2, $u->t_action));
 			if(!empty($rencOpt['nbr']['lengthTitle']) && strlen($u->t_titre)>$rencOpt['nbr']['lengthTitle']) $u->t_titre = substr(trim($u->t_titre), 0, $rencOpt['nbr']['lengthTitle']).'...';
 			// ****** TEMPLATE ********
@@ -1583,7 +1753,7 @@ class RencontreWidget extends WP_widget {
 		// entree : user_id
 		// sortie : code HTML avec le mini portrait
 		if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
-		global $wpdb; global $rencDiv; global $rencCustom;
+		global $wpdb, $rencDiv, $rencCustom;
 		$u = $wpdb->get_row("SELECT
 				U.display_name,
 				R.c_pays,
@@ -1641,7 +1811,7 @@ class RencontreWidget extends WP_widget {
 		// read = 1 => lu
 		// read = 2 => repondu
 		if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
-		global $wpdb; global $rencOpt;
+		global $wpdb, $rencOpt;
 		// $u : other than me (sender or recipient)
 		$u = $wpdb->get_row("SELECT
 				U.ID,
@@ -1668,13 +1838,17 @@ class RencontreWidget extends WP_widget {
 		// 1:me, 2:you - a:alias, id: user_id, ph:i_photo - $a2 array(user_login, display_name)
 		// hoans=99 => deja dans le formulaire de reponse 
 		// function used by template rencontre_message_write.php
-		global $wpdb; global $rencDiv; global $rencCustom; global $rencOpt;
+		global $wpdb, $rencDiv, $rencCustom, $rencOpt;
 		$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
 		$Lid = (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id');
 		$Lcard = (!empty($rencOpt['lbl']['card'])?$rencOpt['lbl']['card']:'card');
 		$Lmsg = (!empty($rencOpt['lbl']['msg'])?$rencOpt['lbl']['msg']:'msg');
 		$Lwrite = (!empty($rencOpt['lbl']['write'])?$rencOpt['lbl']['write']:'write');
 		//
+		if(empty($rencOpt['paus'])) {
+			$action = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$id2."' LIMIT 1");
+			if(strpos($action, ',pause2,')!==false) return;
+		}
 		if(!is_array($a2)) $a2 = array($a2,$a2); // mod V3.1.1 : Display_name
 		$conversation = $wpdb->get_results("SELECT
 				M.id,
@@ -1702,13 +1876,17 @@ class RencontreWidget extends WP_widget {
 			$u->login = substr($a2[0],0,20);
 			$u->display_name = $a2[1];
 			$u->i_photo = $ph2;
-			$u->photo = $rencDiv['baseurl'].'/portrait/'.floor(($ph2)/10000).'/'.Rencontre::f_img((floor(($ph2)/10)*10).'-mini').'.jpg?r='.rand();
+			$a = '/portrait/'.floor(($ph2)/10000).'/'.Rencontre::f_img((floor(($ph2)/10)*10).'-mini');
+			$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+			$u->photo = $u->miniPhoto; // name before V3.6.2
+			if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
 			$onClick = array(
 				'profile'=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lcard."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($id2,0)."';document.forms['rencMenu'].submit();",
 				'write'=>"document.forms['formEcrire'].elements['".$Lrenc."'].value='".$Lwrite."';document.forms['formEcrire'].elements['".$Lid."'].value='".$id2."';document.forms['formEcrire'].submit();",
 				'del'=>"document.forms['formEcrire'].elements['".$Lrenc."'].value='".$Lmsg."';document.forms['formEcrire'].elements['".$Lmsg."'].value='msgdel';document.forms['formEcrire'].elements['".$Lid."'].value='".$id2."';document.forms['formEcrire'].submit();",
 				'inbox'=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lmsg."';document.forms['rencMenu'].submit();"
 				);
+			if(empty($rencOpt['paus']) && !empty($action) && strpos($action, ',pause1,')!==false) $onClick['profile'] = '';
 			foreach($conversation as $k=>$m) {
 				$conversation[$k]->date = self::format_dateTime($m->date);
 				if($m->read==0 && $m->sender!=$a1) $wpdb->update($wpdb->prefix.'rencontre_msg', array('read'=>1), array('id'=>$m->id));
@@ -1744,12 +1922,12 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_envoiMsg($f) {
 		// entree : mon alias
-		global $wpdb; global $rencDiv; global $current_user; global $rencOpt;
+		global $wpdb, $rencDiv, $current_user, $rencOpt;
 		$Lid = (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id');
 		//
 		$Pcontenu = rencSanit($_POST['contenu'],'para');
 		$Pid = rencSanit($_POST[$Lid],'int');
-		$a = $wpdb->get_row("SELECT ID,user_login FROM ".$wpdb->base_prefix."users WHERE ID='".$Pid."' LIMIT 1");
+		$a = $wpdb->get_row("SELECT ID, user_login FROM ".$wpdb->base_prefix."users WHERE ID='".$Pid."' LIMIT 1");
 		if($a->ID) $q = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_msg 
 			WHERE 
 				content = '".addslashes($Pcontenu)."' and 
@@ -1774,6 +1952,7 @@ class RencontreWidget extends WP_widget {
 				fclose($t);
 			}
 			$warning = __('Message sent','rencontre');
+			if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array('sendmsg',$a->ID));
 			if(has_filter('rencMsgNotifP', 'f_rencMsgNotifP')) apply_filters('rencMsgNotifP', array(1,$a->ID));
 		}
 		else $warning = __('Not sent','rencontre');
@@ -1792,7 +1971,7 @@ class RencontreWidget extends WP_widget {
 		//
 		if($NbSearchP) echo $NbSearchP;
 		else {
-			global $wpdb; global $rencOpt; global $rencCustom; global $rencDiv;
+			global $wpdb, $rencOpt, $rencCustom, $rencDiv;
 			//
 			$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
 			$Lid = (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id');
@@ -1854,6 +2033,7 @@ class RencontreWidget extends WP_widget {
 			</form>
 			<div <?php if(empty($rencCustom['side'])) echo 'class="w3-twothird w3-left"'; ?>>
 			<?php }
+			$qpause = (empty($rencOpt['paus'])?" and (P.t_action NOT REGEXP ',pause1,|,pause2,' or P.t_action IS NULL) ":"");
 			$sel = "R.user_id,
 					R.i_zsex,
 					R.c_zsex,
@@ -1882,6 +2062,7 @@ class RencontreWidget extends WP_widget {
 						".$sel."
 					WHERE R.i_status IN (0,2)
 						and U.ID!=".$mid;
+				$s .= $qpause;
 				if($Gregion) $s.=" and R.c_region LIKE '".addslashes($wpdb->get_var("SELECT c_liste_valeur FROM ".$wpdb->prefix."rencontre_liste WHERE id='".$Gregion."' LIMIT 1"))."'";
 				if($Gpays) $s.=" and R.c_pays='".$Gpays."'";
 				// zsex : si parenthese => c_zsex au format IN : (a,b,g) au lieu de ,a,b,g,
@@ -1893,11 +2074,11 @@ class RencontreWidget extends WP_widget {
 				else $s.=" and R.i_sex IN ".$Gzsex;
 				if(empty($rencCustom['born'])) {
 					if($Gagemin!=='' && $Gagemin>(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18)) { // 18 & 99 => no limit
-						$zmin=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$Gagemin));
+						$zmin = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-intval($Gagemin)));
 						$s.=" and R.d_naissance<'".$zmin."'";
 					}
 					if($Gagemax!=='' && $Gagemax<(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99)) {
-						$zmax=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$Gagemax));
+						$zmax = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-intval($Gagemax+1)));
 						$s.=" and R.d_naissance>'".$zmax."'";
 					}
 				}
@@ -1994,6 +2175,7 @@ class RencontreWidget extends WP_widget {
 								WHERE 
 									U.ID='".$r['i']."'
 									and R.i_status IN (0,2)
+									".$qpause."
 								LIMIT 1
 								");
 							if($q[$c]) ++$n;
@@ -2027,6 +2209,7 @@ class RencontreWidget extends WP_widget {
 								WHERE 
 									U.ID='".$r['i']."'
 									and R.i_status IN (0,2)
+									".$qpause."
 								LIMIT 1
 								");
 							if($q[$c]) ++$n;
@@ -2057,6 +2240,7 @@ class RencontreWidget extends WP_widget {
 								WHERE 
 									U.ID='".$r['i']."'
 									and R.i_status IN (0,2)
+									".$qpause."
 								LIMIT 1
 								");
 							if($q[$c]) ++$n;
@@ -2087,6 +2271,7 @@ class RencontreWidget extends WP_widget {
 								WHERE 
 									U.ID='".$r['i']."'
 									and R.i_status IN (0,2)
+									".$qpause."
 								LIMIT 1
 								");
 							if($q[$c]) ++$n;
@@ -2120,6 +2305,7 @@ class RencontreWidget extends WP_widget {
 								WHERE 
 									U.ID='".$r['i']."'
 									and R.i_status IN (0,2)
+									".$qpause."
 								LIMIT 1");
 							if($q[$c]) ++$n;
 							if($q[$c] && $n>$Gpagine*$limit) {
@@ -2149,6 +2335,7 @@ class RencontreWidget extends WP_widget {
 								WHERE 
 									U.ID='".$r['i']."'
 									and R.i_status IN (0,2)
+									".$qpause."
 								LIMIT 1
 								");
 							if($q[$c]) ++$n;
@@ -2188,6 +2375,7 @@ class RencontreWidget extends WP_widget {
 						".$sexQuery."
 						and U.ID!=".$mid."
 						and R.i_status IN (0,2)
+						".$qpause."
 					LIMIT ".($Gpagine*$limit).", ".($limit+1)); // LIMIT indice du premier, nombre de resultat
 				if($wpdb->num_rows<=$limit) $suiv=0;
 				else array_pop($q); // supp le dernier ($rencOpt['limit']+1) qui sert a savoir si page suivante
@@ -2205,9 +2393,9 @@ class RencontreWidget extends WP_widget {
 					"profile"=>""
 					);
 				$disable = array(
-					"send"=>0,
-					"smile"=>0,
-					"profile"=>0
+					"send"=>(empty($rencDiv['mpause'])?0:1),
+					"smile"=>(empty($rencDiv['mpause'])?0:1),
+					"profile"=>(empty($rencDiv['mpause'])?0:1)
 					);
 				$onClick = array(
 					"send"=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lwrite."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u->user_id,0)."';document.forms['rencMenu'].submit();",
@@ -2234,7 +2422,9 @@ class RencontreWidget extends WP_widget {
 					if(!isset($rencCustom['noph']) || empty($rencCustom['nophText'])) $u->thumb = addslashes(__("To be more visible and to view photos of other members, you should add one to your profile.","rencontre"));
 					else $u->thumb = stripslashes($rencCustom['nophText']);
 				}
-				$u->miniPhoto = $rencDiv['baseurl'].'/portrait/'.floor(($u->user_id)/1000).'/'.Rencontre::f_img(($u->user_id*10).'-mini').'.jpg?r='.rand();
+				$a = '/portrait/'.floor(($u->user_id)/1000).'/'.Rencontre::f_img(($u->user_id*10).'-mini');
+				$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+				if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
 				//
 				$searchAdd1 = ''; // not in quick search
 				//
@@ -2317,7 +2507,7 @@ class RencontreWidget extends WP_widget {
 	}
 	static function f_cherchePlus($mid) {
 		// formulaire de la recherche plus
-		global $wpdb; global $rencOpt; global $rencCustom;
+		global $wpdb, $rencOpt, $rencCustom;
 		$Lagemin = (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin');
 		$Lagemax = (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax');
 		$Ltaillemin = (!empty($rencOpt['lbl']['tailleMin'])?$rencOpt['lbl']['tailleMin']:'tailleMin');
@@ -2352,7 +2542,7 @@ class RencontreWidget extends WP_widget {
 		$u0->ID = $mid;
 		$u0->cryptID = rencGetId($mid,0);
 		$u0->zsex = (($u0->i_zsex!=99)?$u0->i_zsex:'('.substr($u0->c_zsex,1,-1).')');
-		$u0->homo = (($u0->i_sex==$u0->i_zsex)?1:0);
+		$u0->homo = (($u0->i_sex==$u0->i_zsex)?1:0); // TO BE REMOVED SOON - NOT USED - V3.6
 		$u0->country = ($u0->c_pays?$u0->c_pays:($rencOpt['pays']?$rencOpt['pays']:''));
 		if(empty($mem['country'])) $mem['country'] = $u0->country;
 		$u0->age = Rencontre::f_age($u0->d_naissance);
@@ -2422,7 +2612,7 @@ class RencontreWidget extends WP_widget {
 				'SendP'=>$SendP,
 				'SmileP'=>$SmileP
 			);
-			self::f_trouver(json_encode($var)); // resultat apres Submit
+			self::f_trouver(json_encode($var,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)); // resultat apres Submit
 		}
 	}
 	//
@@ -2441,7 +2631,7 @@ class RencontreWidget extends WP_widget {
 		//
 		if($NbSearchP) echo $NbSearchP;
 		else {
-			global $wpdb; global $rencOpt; global $rencDiv; global $rencBlock; global $rencCustom; global $pacam;
+			global $wpdb, $rencOpt, $rencDiv, $rencBlock, $rencCustom, $pacam;
 			//
 			$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
 			$Lid = (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id');
@@ -2452,7 +2642,6 @@ class RencontreWidget extends WP_widget {
 			$Lsex = (!empty($rencOpt['lbl']['sex'])?$rencOpt['lbl']['sex']:'sex');
 			$Lzsex = (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex');
 			$Lz2sex = (!empty($rencOpt['lbl']['z2sex'])?$rencOpt['lbl']['z2sex']:'z2sex');
-			$Lhomo = (!empty($rencOpt['lbl']['homo'])?$rencOpt['lbl']['homo']:'homo');
 			$Lpagine = (!empty($rencOpt['lbl']['pagine'])?$rencOpt['lbl']['pagine']:'pagine');
 			$Lagemin = (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin');
 			$Lagemax = (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax');
@@ -2472,12 +2661,14 @@ class RencontreWidget extends WP_widget {
 			$Lgps = (!empty($rencOpt['lbl']['gps'])?$rencOpt['lbl']['gps']:'gps');
 			$Lkm = (!empty($rencOpt['lbl']['km'])?$rencOpt['lbl']['km']:'km');
 			//
+			$pageRefresh = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0'; // True if page is refreshed
+			$newSearch = (($_GET['pagine']===""&&!$pageRefresh)?1:0); // pagine = "" in FORM - pagine = "0", "1", "2"... after pagination
+			//
 			$varSan = $var;
 			if(!$dyn) $var = $_GET;
 			//
 			$Gid = (isset($var[$Lid])?rencSanit(rencGetId($var[$Lid],1),'int'):''); $varSan[$Lid] = rencSanit($var[$Lid],'alphanum');
 			$Gpagine = (isset($var[$Lpagine])?rencSanit($var[$Lpagine],'int'):(!empty($dyn)?$dyn:0)); // Dynamic load => $dyn
-			$Ghomo = (isset($var[$Lhomo])?rencSanit($var[$Lhomo],'int'):0); $varSan[$Lhomo] = $Ghomo;
 			$Gpays = (isset($var[$Lpays])?rencSanit($var[$Lpays],'AZ'):''); $varSan[$Lpays] = $Gpays;
 			$Gregion = (isset($var[$Lregion])?rencSanit($var[$Lregion],'alphanum'):''); $varSan[$Lregion] = $Gregion; // !! Region GET = id  -  Region POST = c_liste_valeur (string)
 			$Gville = (isset($var[$Lville])?rencSanit($var[$Lville],'words'):''); $vaSanr[$Lville] = $Gville;
@@ -2486,7 +2677,9 @@ class RencontreWidget extends WP_widget {
 			$Gpseudo = (isset($var[$Lpseudo])?rencSanit($var[$Lpseudo],'words'):''); $varSan[$Lpseudo] = $Gpseudo;
 			$Gsex = (isset($var[$Lsex])?rencSanit($var[$Lsex],'int'):''); $varSan[$Lsex] = $Gsex;
 			$Gzsex = (isset($var[$Lzsex])?rencSanit($var[$Lzsex],'numplus'):''); $varSan[$Lzsex] = $Gzsex;
-			$Gz2sex = (isset($var[$Lz2sex])?rencSanit($var[$Lz2sex],'numplus'):false); $varSan[$Lz2sex] = $Gz2sex;
+			if(isset($rencCustom['sex']) || isset($rencCustom['sexAll'])) {
+				$Gz2sex = (isset($var[$Lz2sex])?rencSanit($var[$Lz2sex],'numplus'):''); $varSan[$Lz2sex] = $Gz2sex; // string
+			}
 			$Gagemin = (isset($var[$Lagemin])?rencSanit($var[$Lagemin],'int'):''); $varSan[$Lagemin] = $Gagemin;
 			$Gagemax = (isset($var[$Lagemax])?rencSanit($var[$Lagemax],'int'):''); $varSan[$Lagemax] = $Gagemax;
 			$Gtaillemin = (isset($var[$Ltaillemin])?rencSanit($var[$Ltaillemin],'int'):''); $varSan[$Ltaillemin] = $Gtaillemin;
@@ -2498,7 +2691,7 @@ class RencontreWidget extends WP_widget {
 			$Gprofil = (isset($var[$Lprofil])?rencSanit($var[$Lprofil],'int'):''); $varSan[$Lprofil] = $Gprofil;
 			$Gastro = (isset($var[$Lastro])?rencSanit($var[$Lastro],'int'):''); $varSan[$Lastro] = $Gastro;
 			$Grelation = (isset($var[$Lrelation])?rencSanit($var[$Lrelation],'numplus'):''); $varSan[$Lrelation] = $Grelation;
-			if($NbSearchP===0) f_addCountSearch();
+			if($NbSearchP===0 && !$dyn && $newSearch) f_addCountSearch();
 			if($WssP && $Gid!=='') $mephoto = $wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$Gid."' LIMIT 1");
 			else $mephoto = 1;
 			$limit = (!empty($rencOpt['limit'])?$rencOpt['limit']:10);
@@ -2518,8 +2711,11 @@ class RencontreWidget extends WP_widget {
 				<input type="hidden" name="<?php echo $Lpseudo; ?>" value="<?php echo $Gpseudo; ?>" />
 				<input type="hidden" name="<?php echo $Lsex; ?>" value="<?php echo $Gsex; ?>" />
 				<input type="hidden" name="<?php echo $Lzsex; ?>" value="<?php echo $Gzsex; ?>" />
-				<?php if($Gz2sex!=='') { ?><input type="hidden" name="<?php echo $Lz2sex; ?>" value="<?php echo $Gz2sex; ?>" /><?php } ?>
-				<input type="hidden" name="<?php echo $Lhomo; ?>" value="<?php echo $Ghomo; ?>" />
+				<?php if(isset($rencCustom['sex']) || isset($rencCustom['sexAll'])) { ?>
+
+				<input type="hidden" name="<?php echo $Lz2sex; ?>" value="<?php echo $Gz2sex; ?>" />
+				<?php } ?>
+
 				<input type="hidden" name="<?php echo $Lagemin; ?>" value="<?php echo $Gagemin; ?>" />
 				<input type="hidden" name="<?php echo $Lagemax; ?>" value="<?php echo $Gagemax; ?>" />
 				<input type="hidden" name="<?php echo $Ltaillemin; ?>" value="<?php echo $Gtaillemin; ?>" />
@@ -2538,17 +2734,17 @@ class RencontreWidget extends WP_widget {
 			<?php }
 			$hoprofil = false; $hoastro = false;
 			// Selection par le sex - zsex:my setting in DB - z2sex:search select (only custom sex)
-			$sexQuery = '';
-			if(strpos($Gzsex,')')===false) {
-				if(empty($Gzsex)) $Gzsex = 0; // Not needed
-				if($Gz2sex===false) $sexQuery .= " and R.i_zsex".($Ghomo?'='.$Gzsex:'!='.$Gzsex)." ";
-				if($Gz2sex===false || $Gz2sex!=="") $sexQuery .= " and R.i_sex=".($Gz2sex!==false?$Gz2sex:$Gzsex);
-				else if($Gz2sex==="" && !empty($rencCustom['hetero']) && $Gsex!=='') $sexQuery .= " and R.i_sex!=".$Gsex;
+			$sexQuery = ''; // and R.i_zsex!=0 and R.i_sex=0
+			// 1. SEX
+			if(isset($Gz2sex) && $Gz2sex!=='') $sexQuery .= " and R.i_sex=".$Gz2sex; // z2sex : gender field in search => only if custom gender
+			else if(empty($rencCustom['sexAll'])) {
+				if(strpos($Gzsex,')')!==false) $sexQuery .= " and R.i_sex IN ".$Gzsex; // allow multi choice in custom multiSR => () in zsex
+				else $sexQuery .= " and R.i_sex=".$Gzsex;
 			}
-			else {
-				if($Gz2sex) $sexQuery .= " and R.i_sex=".$Gz2sex;
-				else if($Gz2sex===false) $sexQuery .= " and R.i_sex IN ".$Gzsex;
-			}
+			// 2. ZSEX - multiSR => c_zsex
+			if(empty($rencCustom['sexAll'])) $sexQuery .= " and (R.c_zsex LIKE '%,".$Gsex.",%' or R.i_zsex=".$Gsex.") "; // multiSR or not (in case of change multiSR by ADMIN but not by users Account)
+			//
+			$qpause = (empty($rencOpt['paus'])?" and (P.t_action NOT REGEXP ',pause1,|,pause2,' or P.t_action IS NULL) ":"");
 			if($Gpseudo) $s = "SELECT 
 					R.user_id,
 					R.i_zsex,
@@ -2559,6 +2755,7 @@ class RencontreWidget extends WP_widget {
 					R.c_zrelation,
 					R.c_pays,
 					R.c_ville,
+					R.i_sex,
 					R.d_naissance,
 					R.i_photo,
 					P.t_titre,
@@ -2574,6 +2771,8 @@ class RencontreWidget extends WP_widget {
 					(U.user_login LIKE '%".$Gpseudo."%'
 					or U.display_name LIKE '%".$Gpseudo."%')
 					".$sexQuery."
+					".$qpause."
+					and R.user_id!=".$Gid."
 					and R.i_status IN (0,2)";
 			else {
 				$s = "SELECT 
@@ -2589,6 +2788,7 @@ class RencontreWidget extends WP_widget {
 						R.c_zrelation,
 						R.c_pays,
 						R.c_ville,
+						R.i_sex,
 						R.d_naissance,
 						R.i_photo,
 						R.e_lat,
@@ -2605,6 +2805,7 @@ class RencontreWidget extends WP_widget {
 						ON P.user_id=U.ID
 					WHERE 
 						R.i_status IN (0,2)
+						".$qpause."
 						and U.ID!=".$Gid;
 				$s .= $sexQuery;
 				if(empty($rencCustom['born'])) {
@@ -2613,7 +2814,7 @@ class RencontreWidget extends WP_widget {
 						$s .= " and R.d_naissance<'".$zmin."'";
 					}
 					if($Gagemax<(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99)) { // pas de filtre si maw
-						$zmax = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-intval($Gagemax)));
+						$zmax = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-intval($Gagemax+1)));
 						$s .= " and R.d_naissance>'".$zmax."'";
 					}
 				}
@@ -2667,99 +2868,103 @@ class RencontreWidget extends WP_widget {
 				if(!empty($map1)) echo $map1;
 			}
 			// ***********************************************************************************************************************
-			if($q) foreach($q as $u) {
-				$m = (!empty($rencOpt['nbr']['searchResultAd'])?intval($rencOpt['nbr']['searchResultAd']):300);
-				preg_match('/^.{0,'.$m.'}(?:.*?)\b/iu',$u->t_annonce,$n); // 300 character cut
-				$u->t_annonce = (!empty($n[0])?$n[0].'...':'');
-				$u->blocked = new StdClass();
-				$u->blocked->me = self::f_etat_bloque1($u->user_id,$u->t_action); // je suis bloque ?
-				$title = array(
-					"send"=>"",
-					"smile"=>"",
-					"profile"=>""
-					);
-				$disable = array(
-					"send"=>0,
-					"smile"=>0,
-					"profile"=>0
-					);
-				$newtab = (!empty($rencOpt['newtab'])?"document.forms['rencMenu'].target='_blank';":"");
-				$onClick = array(
-					"send" => $newtab."document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lwrite."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u->user_id,0)."';document.forms['rencMenu'].submit();",
-					"smile" => $newtab."document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lsourire."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u->user_id,0)."';document.forms['rencMenu'].submit();",
-					"profile" => $newtab."document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lcard."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u->user_id,0)."';document.forms['rencMenu'].submit();"
-					);
-				$u->looking = '';
-				$u->forwhat = '';
-				$u->date = '';
-				if(isset($u->d_session) && substr($u->d_session,0,4)!=0) {
-					$u->online = self::format_date($u->d_session);
-					$a = human_time_diff(strtotime($u->d_session), current_time('timestamp'));
-					$u->online_ago = sprintf(__('%s ago','rencontre'), $a);
-				}
-				else {
-					$u->online = '';
-					$u->online_ago = '';
-				}
-				if(!empty($rencOpt['onlyphoto']) && !$mephoto) $u->hidephoto = 1;
-				else $u->hidephoto = 0;
-				$u->thumb = '';
-				if($u->hidephoto) {
-					if(!isset($rencCustom['noph']) || empty($rencCustom['nophText'])) $u->thumb = addslashes(__("To be more visible and to view photos of other members, you should add one to your profile.","rencontre"));
-					else $u->thumb = stripslashes($rencCustom['nophText']);
-				}
-				$u->miniPhoto = $rencDiv['baseurl'].'/portrait/'.floor(($u->user_id)/1000).'/'.Rencontre::f_img(($u->user_id*10).'-mini').'.jpg?r='.rand();
-				//
-				$searchAdd1 = '';
-				if($hoastro && $u->score) { 				
-					$searchAdd1 = '<div class="affinity">'.__('Astrological affinity','rencontre').'&nbsp;:&nbsp;<span>'.$u->score.' / 5</span>';
-					$searchAdd1 .= '<img style="margin:-5px 0 0 5px;" src="'.plugins_url($hoastro.'/img/astro'.$u->score.'.png').'" alt="astro" /></div>';
-				}
-				else if($hoprofil && $u->score) {
-					$searchAdd1 = '<div class="affinity">'.__('Affinity with my profile','rencontre').'&nbsp;:&nbsp;<span>'.$u->score.'</span>&nbsp;'.__('points','rencontre').'.</div>';
-				}
-				//
-				if($u->i_zsex!=99) { 
-					if(isset($rencOpt['iam'][$u->i_zsex])) $u->looking = $rencOpt['iam'][$u->i_zsex];
-					if(isset($rencOpt['for'][$u->i_zrelation])) $u->forwhat = $rencOpt['for'][$u->i_zrelation];
-				}
-				else { // looking
-					$a = explode(',', $u->c_zsex);
-					$as = '';
-					foreach($a as $a1) if(isset($rencOpt['iam'][$a1])) $as .= $rencOpt['iam'][$a1] . ', ';
-					$u->looking = substr($as,0,-2);
-					// forwhat
-					$a = explode(',', $u->c_zrelation);
-					$as = '';
-					foreach($a as $a1) if(isset($rencOpt['for'][$a1])) $as .= $rencOpt['for'][$a1] . ', ';
-					$u->forwhat = substr($as,0,-2);
-				}
-				$certified = '';
-				if($CertifiedP) {
-					$action = json_decode($u->t_action,true);
-					if(!empty($action['certified'])) $certified = $CertifiedP;
-				}
-				// Send a message - Smile - Profile	
-				// 1. Send a message
-				if($u->blocked->me || (isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) || $rencBlock || $pacam) $disable['send'] = 1;
-				else if($SendP) {
-					$disable['send'] = 1;
-					$title['send'] = $SendP;
-				}
-				// 2. Smile
-				if(empty($rencCustom['smile'])) {
-					if($u->blocked->me || (isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) || $rencBlock) $disable['smile'] = 1;
-					else if($SmileP) {
-						$disable['smile'] = 1;
-						$title['smile'] = $SmileP;
+			if($q) {
+				foreach($q as $u) {
+					$m = (!empty($rencOpt['nbr']['searchResultAd'])?intval($rencOpt['nbr']['searchResultAd']):300);
+					preg_match('/^.{0,'.$m.'}(?:.*?)\b/iu',$u->t_annonce,$n); // 300 character cut
+					$u->t_annonce = (!empty($n[0])?$n[0].'...':'');
+					$u->blocked = new StdClass();
+					$u->blocked->me = self::f_etat_bloque1($u->user_id,$u->t_action); // je suis bloque ?
+					$title = array(
+						"send"=>"",
+						"smile"=>"",
+						"profile"=>""
+						);
+					$disable = array(
+						"send"=>(empty($rencDiv['mpause'])?0:1),
+						"smile"=>(empty($rencDiv['mpause'])?0:1),
+						"profile"=>(empty($rencDiv['mpause'])?0:1)
+						);
+					$newtab = (!empty($rencOpt['newtab'])?"document.forms['rencMenu'].target='_blank';":"");
+					$onClick = array(
+						"send" => $newtab."document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lwrite."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u->user_id,0)."';document.forms['rencMenu'].submit();",
+						"smile" => $newtab."document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lsourire."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u->user_id,0)."';document.forms['rencMenu'].submit();",
+						"profile" => $newtab."document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lcard."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u->user_id,0)."';document.forms['rencMenu'].submit();"
+						);
+					$u->looking = '';
+					$u->forwhat = '';
+					$u->date = '';
+					if(isset($u->d_session) && substr($u->d_session,0,4)!=0) {
+						$u->online = self::format_date($u->d_session);
+						$a = human_time_diff(strtotime($u->d_session), current_time('timestamp'));
+						$u->online_ago = sprintf(__('%s ago','rencontre'), $a);
 					}
+					else {
+						$u->online = '';
+						$u->online_ago = '';
+					}
+					if(!empty($rencOpt['onlyphoto']) && !$mephoto) $u->hidephoto = 1;
+					else $u->hidephoto = 0;
+					$u->thumb = '';
+					if($u->hidephoto) {
+						if(!isset($rencCustom['noph']) || empty($rencCustom['nophText'])) $u->thumb = addslashes(__("To be more visible and to view photos of other members, you should add one to your profile.","rencontre"));
+						else $u->thumb = stripslashes($rencCustom['nophText']);
+					}
+					$a = '/portrait/'.floor(($u->user_id)/1000).'/'.Rencontre::f_img(($u->user_id*10).'-mini');
+					$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+					if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
+					//
+					$searchAdd1 = '';
+					if($hoastro && $u->score) { 				
+						$searchAdd1 = '<div class="affinity">'.__('Astrological affinity','rencontre').'&nbsp;:&nbsp;<span>'.$u->score.' / 5</span>';
+						$searchAdd1 .= '<img style="margin:-5px 0 0 5px;" src="'.plugins_url($hoastro.'/img/astro'.$u->score.'.png').'" alt="astro" /></div>';
+					}
+					else if($hoprofil && $u->score) {
+						$searchAdd1 = '<div class="affinity">'.__('Affinity with my profile','rencontre').'&nbsp;:&nbsp;<span>'.$u->score.'</span>&nbsp;'.__('points','rencontre').'.</div>';
+					}
+					//
+					if($u->i_zsex!=99) { 
+						if(isset($rencOpt['iam'][$u->i_zsex])) $u->looking = $rencOpt['iam'][$u->i_zsex];
+						if(isset($rencOpt['for'][$u->i_zrelation])) $u->forwhat = $rencOpt['for'][$u->i_zrelation];
+					}
+					else { // looking
+						$a = explode(',', $u->c_zsex);
+						$as = '';
+						foreach($a as $a1) if(isset($rencOpt['iam'][$a1])) $as .= $rencOpt['iam'][$a1] . ', ';
+						$u->looking = substr($as,0,-2);
+						// forwhat
+						$a = explode(',', $u->c_zrelation);
+						$as = '';
+						foreach($a as $a1) if(isset($rencOpt['for'][$a1])) $as .= $rencOpt['for'][$a1] . ', ';
+						$u->forwhat = substr($as,0,-2);
+					}
+					$certified = '';
+					if($CertifiedP) {
+						$action = json_decode($u->t_action,true);
+						if(!empty($action['certified'])) $certified = $CertifiedP;
+					}
+					// Send a message - Smile - Profile	
+					// 1. Send a message
+					if($u->blocked->me || (isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) || $rencBlock || $pacam) $disable['send'] = 1;
+					else if($SendP) {
+						$disable['send'] = 1;
+						$title['send'] = $SendP;
+					}
+					// 2. Smile
+					if(empty($rencCustom['smile'])) {
+						if($u->blocked->me || (isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) || $rencBlock) $disable['smile'] = 1;
+						else if($SmileP) {
+							$disable['smile'] = 1;
+							$title['smile'] = $SmileP;
+						}
+					}
+					else $disable['smile'] = 1; // securite
+					// 3. Profile
+						// empty
+					// ****** TEMPLATE ********
+					if($tpl=rencTpl('rencontre_search_result.php')) include($tpl);
+					// ************************
 				}
-				else $disable['smile'] = 1; // securite
-				// 3. Profile
-					// empty
-				// ****** TEMPLATE ********
-				if($tpl=rencTpl('rencontre_search_result.php')) include($tpl);
-				// ************************
 			}
 			else if(!$dyn) echo '<p>'.__('Sorry, but nothing matched your search terms.','rencontre').'</p>';
 			if(!$dyn) {
@@ -2795,7 +3000,7 @@ class RencontreWidget extends WP_widget {
 	static function f_registerMember($f,$g) {
 		// $f : ID
 		// $g : 1, 2, OK
-		global $wpdb; global $rencOpt;
+		global $wpdb, $rencOpt;
 		$Pannee = (isset($_POST['annee'])?rencSanit($_POST['annee'],'int'):0);
 		$Pmois = (isset($_POST['mois'])?rencSanit($_POST['mois'],'int'):0);
 		$Pjour = (isset($_POST['jour'])?rencSanit($_POST['jour'],'int'):0);
@@ -2868,7 +3073,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_updateMember($f) {
 		// $f : ID
-		global $wpdb; global $rencOpt; global $rencCustom;
+		global $wpdb, $rencOpt, $rencCustom;
 		if(has_action('rencontre_account')) do_action('rencontre_account', $f);
 		else {
 			$Pdname = (!empty($_POST['dname'])?rencSanit($_POST['dname'],'words'):'');
@@ -2886,7 +3091,7 @@ class RencontreWidget extends WP_widget {
 			$Psex = (isset($_POST['sex'])?rencSanit($_POST['sex'],'int'):'');
 			if(strlen($Pdname)>2) {
 				global $current_user;
-				if($Pdname!=$current_user->display_name) wp_update_user(array('ID'=>$current_user->ID, 'display_name'=>substr($Pdname,0,30)));
+				if($Pdname!=$current_user->display_name) wp_update_user(array('ID'=>$current_user->ID, 'display_name'=>substr(strtok($Pdname,'@'),0,30)));
 			}
 			if($Pannee && $Pmois && $Pjour) $nais = $Pannee.'-'.((strlen($Pmois)<2)?'0'.$Pmois:$Pmois).'-'.((strlen($Pjour)<2)?'0'.$Pjour:$Pjour);
 			else $nais = '';
@@ -2904,8 +3109,8 @@ class RencontreWidget extends WP_widget {
 					'c_pays'=>$Ppays,
 					'c_region'=>$Pregion,
 					'c_ville'=>$Pville,
-					'e_lat'=>($Pgps?round($gps[0],5):''),
-					'e_lon'=>($Pgps?round($gps[1],5):''),
+					'e_lat'=>(!empty($Pgps[0])?round($gps[0],5):''),
+					'e_lon'=>(!empty($Pgps[1])?round($gps[1],5):''),
 					'd_naissance'=>$nais,
 					'i_taille'=>$Ptaille,
 					'i_poids'=>$Ppoids,
@@ -2977,7 +3182,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_compte($mid) {
 		// Fenetre de modification du compte
-		global $wpdb; global $rencOpt; global $rencDrapNom; global $rencCustom;
+		global $wpdb, $rencOpt, $rencDrapNom, $rencCustom;
 		$u0 = $wpdb->get_row("SELECT 
 				U.user_login,
 				U.user_email,
@@ -3027,6 +3232,7 @@ class RencontreWidget extends WP_widget {
 		$u0->agemax = (intval($b)+10<$a2?intval($b)+10:$a2);
 		if(empty($u0->i_zage_min)) $u0->i_zage_min = $u0->agemin;
 		if(empty($u0->i_zage_max)) $u0->i_zage_max = $u0->agemax;
+		$u0->pause = (strpos($u0->t_action,',pause2,')!==false?2:(strpos($u0->t_action,',pause1,')!==false?1:0));
 		$onClick = array(
 			"change"=>"f_password(document.forms['formPass'].elements['pass0'].value,document.forms['formPass'].elements['pass1'].value,document.forms['formPass'].elements['pass2'].value,".$u0->ID.",'".admin_url('admin-ajax.php')."')",
 			"country"=>"f_region_select(this.options[this.selectedIndex].value,'".admin_url('admin-ajax.php')."','regionSelect');",
@@ -3081,7 +3287,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_sourire($f) {
 		// envoi un sourire a ID=$f
-		global $wpdb; global $current_user; global $rencOpt; global $rencCustom; global $rencDiv;
+		global $wpdb, $current_user, $rencOpt, $rencCustom, $rencDiv;
 		// 1. mon compte : sourireOut
 		$q = $wpdb->get_row("SELECT
 				R.i_photo,
@@ -3118,13 +3324,14 @@ class RencontreWidget extends WP_widget {
 		$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$current_user->ID));
 		// 2. son compte : sourireIn
 		$q = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$f."' LIMIT 1");
-		$action= json_decode($q,true);
+		$action = json_decode($q,true);
 		$action['sourireIn'] = (isset($action['sourireIn'])?$action['sourireIn']:array());
 		$c = count($action['sourireIn']);
 		$action['sourireIn'][$c]['i'] = ($current_user->ID+0);
 		$action['sourireIn'][$c]['d'] = current_time("Y-m-d");
 		$out = json_encode($action);
 		$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$f));
+		if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array('smile',$f));
 		// memo pour mail CRON
 		if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_liste/');
 		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$f.'.txt') && !empty($rencOpt['mailsmile'])) {
@@ -3148,7 +3355,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_demcont($f) {
 		// demander un contact a ID=$f
-		global $wpdb; global $current_user; global $rencOpt; global $rencDiv;
+		global $wpdb, $current_user, $rencOpt, $rencDiv;
 		// 1. mon compte : contactOut
 		$q = $wpdb->get_row("SELECT
 				R.i_photo,
@@ -3182,6 +3389,7 @@ class RencontreWidget extends WP_widget {
 		$action['contactIn'][$c]['d'] = current_time("Y-m-d");
 		$out = json_encode($action);
 		$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$f));
+		if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array('contreq',$f));
 		// memo pour mail CRON
 		if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_liste/');
 		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$f.'.txt')) {
@@ -3195,7 +3403,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_signal($f) {
 		// envoi un signalement sur ID=$f
-		global $wpdb; global $current_user;
+		global $wpdb, $current_user;
 		// 1. mon compte : sourireOut
 		$q = $wpdb->get_var("SELECT t_signal FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$f."' LIMIT 1");
 		$signal = json_decode($q,true);
@@ -3214,7 +3422,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_bloque($f) {
 		// bloque ou debloque ID=$f
-		global $wpdb; global $current_user;
+		global $wpdb, $current_user;
 		$q = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' LIMIT 1");
 		$action = json_decode($q,true);
 		$action['bloque'] = (isset($action['bloque'])?$action['bloque']:array());
@@ -3238,7 +3446,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_etat_bloque($f) {
 		// regarde si un membre est bloque
-		global $wpdb; global $current_user;
+		global $wpdb, $current_user;
 		$q = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' LIMIT 1");
 		$action= json_decode($q,true);
 		$action['bloque']=(isset($action['bloque'])?$action['bloque']:array());
@@ -3246,13 +3454,14 @@ class RencontreWidget extends WP_widget {
 		else return false;
 	}
 	//
-	static function f_etat_bloque1($f,$action=0) {
+	static function f_etat_bloque1($f,$t_action='') {
 		// regarde si un membre m a bloque
 		global $current_user;
-		if($action==0) {
+		$action = json_decode($t_action,true);
+		if(empty($action)) {
 			global $wpdb;
 			$q = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$f."' LIMIT 1");
-			$action= json_decode($q,true);
+			$action = json_decode($q,true);
 		}
 		$action['bloque'] = (isset($action['bloque'])?$action['bloque']:array());
 		$c = count($action['bloque']);
@@ -3262,7 +3471,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_visite($f) {
 		// id : MID visite F - sauvegarde chez F
-		global $wpdb; global $current_user; global $rencOpt;
+		global $wpdb, $current_user, $rencOpt;
 		$q = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$f."' LIMIT 1");
 		$action = json_decode($q,true);
 		$action['visite'] = (isset($action['visite'])?$action['visite']:array());
@@ -3288,7 +3497,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_favori($f,$g=0) {
 		// $f : id - $g : O=>EXISTS?, 1=>DELETE, 2=>ADD
-		global $wpdb; global $current_user; global $rencOpt;
+		global $wpdb, $current_user, $rencOpt;
 		$b = 0;
 		$q = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' LIMIT 1");
 		$action = json_decode($q,true);
@@ -3320,7 +3529,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_distance($lat,$lon) {
 		// distance from me
-		global $wpdb; global $current_user; global $rencCustom;
+		global $wpdb, $current_user, $rencCustom;
 		$q = $wpdb->get_row("SELECT e_lat, e_lon FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$current_user->ID."' LIMIT 1");
 		if($q->e_lat!=0 && $q->e_lon!=0 && $lat!=0 && $lon!=0 && $lat!=$q->e_lat && $lon!=$q->e_lon) {
 			$d = (floor(sqrt(pow(($q->e_lat-$lat)*60*1.852,2)+pow(($q->e_lon-$lon)*60*1.852*cos(($lat+$q->e_lat) / 2 * 0.0174533),2))));
@@ -3383,7 +3592,7 @@ class RencontreSidebarWidget extends WP_widget {
 	//
 	function widget($arguments, $data) { // Partie Site
 		if(current_user_can("administrator")) return;
-		global $wpdb; global $rencDiv; global $rencOpt; global $rencCustom; global $current_user; global $rencDrap; global $rencDrapNom; global $post;
+		global $wpdb, $rencDiv, $rencOpt, $rencCustom, $current_user, $rencDrap, $rencDrapNom, $post;
 		$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
 		$Lid = (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id');
 		$Ledit = (!empty($rencOpt['lbl']['edit'])?$rencOpt['lbl']['edit']:'edit');
@@ -3429,6 +3638,10 @@ class RencontreSidebarWidget extends WP_widget {
 		if(isset($_COOKIE['searchmem'.$mid])) $mem = json_decode(base64_decode($_COOKIE['searchmem'.$mid]),true);
 		if(!empty($mem['zage_min'])) $u0->i_zage_min = $mem['zage_min'];
 		if(!empty($mem['zage_max'])) $u0->i_zage_max = $mem['zage_max'];
+		$a = '/portrait/'.floor(($u0->ID)/1000).'/'.Rencontre::f_img(($u0->ID*10).'-mini');
+		$u0->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+		if(file_exists($rencDiv['basedir'].$a.'.webp')) $u0->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
+		$u0->pause = (strpos($u0->t_action,',pause2,')!==false?2:(strpos($u0->t_action,',pause1,')!==false?1:0));
 		$action = json_decode($u0->t_action,true);
 		$u0->sourireIn = (isset($action['sourireIn'])?$action['sourireIn']:array());
 		$u0->visite = (isset($action['visite'])?$action['visite']:array());

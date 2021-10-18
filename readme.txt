@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
 Requires at least: 4.3
-Tested up to: 5.5
+Tested up to: 5.8
 Requires PHP: 5.5
-Stable tag: 3.5.1
+Stable tag: 3.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,7 @@ Rencontre is currently translated in :
 * Czech - thanks to Libor and WP Translation Team
 * Danish - thanks to [C-FR](http://www.C-FR.net/)
 * Dutch - thanks to Martin Zaagman
+* German (front office) - thanks to Stefan Wolfarth
 * Hungarian - thanks to FunnelXpert
 * Italian - thanks to Gaelle Dozzi
 * Japanese - thanks to Rorylouis
@@ -306,11 +307,13 @@ It's better to limit the data size.
    * country=fr : only members from France (fr)
    * region=aquitaine : only members from Aquitaine
    * city=paris : only members from Paris
+   * redirect=https://mysite.com/wp-login.php?action=register : Redirection URL when click on profile
 * [rencontre_nbmembre] or [rencontre_nbmembre gen=girl ph=1] : Display the number of user
    * gen=girl or gen=men
    * ph=1 : only with photo
-* [rencontre_search nb=8] : Display a search form for unconnected member (home page for example)
+* [rencontre_search nb=8 day=365] : Display a search form for unconnected member (home page for example)
    * nb: number of results
+   * day: age of last connection
 * [rencontre_login] : link to login/logout/register
 * [rencontre_loginFB] : Display the button to log with Facebook
 * [rencontre_imgreg title= selector= left= top=] - Display registration form (See screenshots for example)
@@ -350,6 +353,55 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+18/10/2021 : 3.6.5
+
+* Option to make the choice of one of the proposed cities mandatory, on registration, if wp_geonames is actived.
+* Fix somes issues in back-office.
+
+06/10/2021 : 3.6.4
+
+* Add empty Modal Warning ready to be used in rencontre_modal_warning.php.
+* Fix PHP8 issue in photo upload.
+* dbip-country update 2021-10.
+
+04/08/2021 : 3.6.3
+
+* Display warning if custom genders mixed with default genders.
+* Option to show chat conversation down on android.
+* Add age of last connection (day) to rencontre_search shortcode filter result.
+* Scroll down to result in rencontre_search.
+
+11/04/2021 : 3.6.2
+
+* Add WEBP image format (currently only Mini and Libre) to improve speed and quality.
+* Redirect URL in Shortcode Rencontre_libre.
+* Login and Redirect Link with WordPress method.
+* Hide email if used as login.
+
+08/03/2021 : 3.6.1
+
+* PHP 8 compatibility.
+* Redirect Profile Edition after registration.
+* Fix registration issue.
+* Fix age max search issue.
+* Avoid duplicate shortcode installation for [rencontre].
+* Ability to allow all gender search.
+* Fix GPS issue.
+* Rencontre Metabox Menu remove select all.
+* Add German translation (front office only) - thanks to Stefan Wolfarth
+
+26/01/2021 : 3.6
+
+* Import CSV and photo available with a ZIP file.
+* Remove rencontre_libre reloading delay.
+* Ability for user to temporarily deactivate his profile.
+* Change "Immaterial" to "No matter".
+* Remove "gay" label.
+* Add rencjs.js file in template to override rencontre.js functions.
+* Fix search issue.
+* Fix modal window issue.
+* Fix some issues.
 
 01/12/2020 : 3.5.1
 

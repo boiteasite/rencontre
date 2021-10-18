@@ -2,9 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
- * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert
+ * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert, pause
  * Filter : do_action('rencontre_account', $f, $g) - see below
 */
 ?>
@@ -293,6 +293,32 @@
 			<?php echo $scriptMap; ?>
 
 		</div><!-- .w3-margin-bottom -->
+		<?php if(empty($rencOpt['paus'])) { ?>
+
+		<div class="w3-margin-bottom">
+			<div class="w3-card w3-renc-blbg">
+				<div class="w3-container w3-renc-lblc">
+					<div class="w3-section">
+						<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Profile visibility','rencontre'); ?></div>
+						<form name="formPause" method="post" action="">
+							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="pause" />
+							<div>
+								<select name="pause" class="w3-select w3-border w3-renc-sebg">
+									<option value="0" <?php if(!$u0->pause) echo ' selected'; ?>><?php _e('Profile visible','rencontre'); ?></option>
+									<option value="1" <?php if($u0->pause==1) echo ' selected'; ?>><?php echo __('Profile hidden','rencontre').' ('.__('home page and search','rencontre').')'; ?></option>
+									<option value="2" <?php if($u0->pause==2) echo ' selected'; ?>><?php echo __('Profile switched off','rencontre').' ('.__('home page, search and message','rencontre').')'; ?></option>
+								</select>
+							</div>
+						</form>
+						<div class="w3-section w3-right-align">
+							<button id="buttonPass" class="w3-button w3-renc-mebt w3-renc-mebo" onClick="document.forms['formPause'].submit();"><?php _e('Save','rencontre'); ?></button>
+						</div>
+					</div>
+				</div>
+			</div><!-- .w3-card -->
+		</div><!-- .w3-margin-bottom -->
+		<?php } ?>
+
 	</div><!-- .rencAccount -->
 
 

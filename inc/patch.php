@@ -54,7 +54,7 @@ if(file_exists(WP_PLUGIN_DIR.'/rencontreP/rencontreP.php'))
 //
 // PERMANENT : Update DBIP
 //
-$versionDBIP = "202003"; // new version with this update
+$versionDBIP = "202110"; // new version with this update
 $a = get_option('rencontre_dbip');
 $b = $wpdb->get_var("SELECT ip_end FROM ".$wpdb->base_prefix."rencontre_dbip LIMIT 1"); // empty ?
 if(file_exists(dirname(__FILE__).'/dbip-country.csv.gz') && (!$a || intval($a)<intval($versionDBIP) || !$b))

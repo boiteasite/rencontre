@@ -2,9 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait
- * Last Change : Rencontre 3.5.1
+ * Last Change : Rencontre 3.6.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait.php
- * $u : ID, display_name, c_pays, c_ville, d_naissance, i_photo, t_titre, online, miniPhoto
+ * $u : ID, display_name, c_pays, c_ville, d_naissance, i_photo, t_titre, online, miniPhoto, miniPhotoWebp
 */
 ?>
 	<div class="rencMiniPortrait w3-padding-small w3-col <?php if($highlight) echo 'highlight'; ?>">
@@ -15,7 +15,18 @@
 
 					<div class="w3-col w3-margin-top w3-renc-margin-top-8-s w3-display-container" style="width:<?php echo $photoWidth; ?>px;">
 						<a href="javascript:void(0)" onClick="<?php echo $onClick['profile']; ?>">
+						<?php if(!empty($u->miniPhotoWebp)) { ?>
+						
+							<picture <?php echo $title['thumb']; ?>>
+								<source class="w3-circle" srcset="<?php echo $u->miniPhotoWebp; ?>" type="image/webp" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>">
+								<source class="w3-circle" srcset="<?php echo $u->miniPhoto; ?>" type="image/jpeg" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>"> 
+								<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>" />
+							</picture>
+						<?php } else { ?>
+			
 							<img class="w3-circle" style="width:<?php echo $photoWidth; ?>px;" src="<?php echo $u->miniPhoto; ?>" alt="<?php echo $u->display_name; ?>" <?php echo $title['thumb']; ?> />
+						<?php } ?>
+						
 						</a>
 						<?php if(!empty($certified)) echo $certified; ?>
 						
@@ -40,7 +51,7 @@
 						<?php } ?>
 					</div>
 				</div>
-				<div class="w3-medium w3-renc-txtc w3-border-top w3-renc-line w3-rest w3-hide-small" style="line-height:1.4em;height:4.2em;"><?php echo $u->t_titre; ?></div>
+				<div class="w3-medium w3-renc-txtc w3-border-top w3-renc-line w3-rest w3-hide-small" style="line-height:1.4em;height:4.2em;"><?php echo stripslashes($u->t_titre); ?></div>
 			</div>
 			<div class="w3-button w3-block w3-renc-sebg" onClick="<?php echo $onClick['profile']; ?>"><?php _e('Profile','rencontre'); ?>...</div>
 		</div>

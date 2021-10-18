@@ -2,9 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Top
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_top.php
- * $u0 : ID, display_name, user_login, c_ip, c_pays, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, age, agemin, agemax
+ * $u0 : ID, display_name, user_login, c_ip, c_pays, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, miniPhoto, miniPhotoWebp, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, age, agemin, agemax, pause
 */
 ?>
 
@@ -20,7 +20,18 @@
 			<?php if($u0->i_photo!=0) { ?>
 
 				<div class="w3-cell w3-cell-middle" style="width:60px;">
-					<img class="w3-circle" src="<?php echo $rencDiv['baseurl'].'/portrait/'.floor(($u0->ID)/1000).'/'.Rencontre::f_img(($u0->ID*10).'-mini').'.jpg?r='.rand(); ?>" alt="<?php echo $u0->display_name; ?>" alt="<?php echo $u0->display_name; ?>" />
+				<?php if(!empty($u0->miniPhotoWebp)) { ?>
+				
+					<picture>
+						<source class="w3-circle" srcset="<?php echo $u0->miniPhotoWebp; ?>" type="image/webp" alt="<?php echo $u0->display_name; ?>">
+						<source class="w3-circle" srcset="<?php echo $u0->miniPhoto; ?>" type="image/jpeg" alt="<?php echo $u0->display_name; ?>"> 
+						<img class="w3-circle" src="<?php echo $u0->miniPhoto; ?>" alt="<?php echo $u0->display_name; ?>" />
+					</picture>
+				<?php } else { ?>
+				
+					<img class="w3-circle" src="<?php echo $u0->miniPhoto; ?>" alt="<?php echo $u0->display_name; ?>" />
+				<?php } ?>
+				
 				</div>
 			<?php } else { ?>
 
@@ -40,6 +51,11 @@
 					<?php } ?>
 				</div>
 			</div>
+			<?php if(!empty($u0->pause)) { ?>
+			
+			<div class="w3-panel w3-renc-wabg w3-center"><?php echo ($u0->pause==1?__('Profile hidden','rencontre'):__('Profile switched off','rencontre')); ?></div>
+			<?php } ?>
+			
 			<div class="myAction w3-medium w3-border-bottom w3-renc-line">
 				<div class="firstMaj">
 				<?php if($u0->looking) { ?>

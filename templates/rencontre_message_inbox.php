@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Message Inbox
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_inbox.php
  * $u0 : user_login
 */
@@ -32,12 +32,22 @@
 					<div class="w3-bar" <?php if(empty($m->read) && $m->sender!=$u0->user_login) echo 'style="font-weight:700"'; ?>>
 						<div class="w3-bar-item" style="width:60px">
 						<?php if(!empty($m->i_photo)) { ?>
+							<?php if(!empty($m->miniPhotoWebp)) { ?>
 
-								<img class="w3-circle w3-image" src="<?php echo $rencDiv['baseurl'].'/portrait/'.floor(($m->user_id)/1000).'/'.Rencontre::f_img(($m->user_id*10).'-mini').'.jpg?r='.rand(); ?>" alt="<?php echo $m->member; ?>" />
+							<picture>
+								<source class="w3-circle w3-image" srcset="<?php echo $m->miniPhotoWebp; ?>" type="image/webp" alt="<?php echo $m->member; ?>">
+								<source class="w3-circle w3-image" srcset="<?php echo $m->miniPhoto; ?>" type="image/jpeg" alt="<?php echo $m->member; ?>"> 
+								<img class="w3-circle w3-image" src="<?php echo $m->miniPhoto; ?>" alt="<?php echo $m->member; ?>" />
+							</picture>
+							<?php } else { ?>
+			
+							<img class="w3-circle w3-image" src="<?php echo $m->miniPhoto; ?>" alt="<?php echo $m->member; ?>" />
+							<?php } ?>
 						<?php } else { ?>
 
-								<img class="w3-circle w3-image" src="<?php echo plugins_url('rencontre/images/no-photo60.jpg'); ?>" alt="<?php echo $m->member; ?>" />
+							<img class="w3-circle w3-image" src="<?php echo plugins_url('rencontre/images/no-photo60.jpg'); ?>" alt="<?php echo $m->member; ?>" />
 						<?php } ?>
+						
 						</div>
 						<div class="w3-bar-item">
 							<a href="javascript:void(0)" style="text-transform:capitalize;" onClick="id=<?php echo $m->id.';'.$onClick['look']; ?>"><?php echo $m->member; ?></a>

@@ -12,8 +12,9 @@ a.rencBlockoff{display:inline-block;background:transparent url("../images/eyeRou
 a.rencMailon{display:inline-block;background:transparent url("../images/mailVert16.png") no-repeat scroll 0 0;width:16px;height:16px;margin:0 3px;}
 a.rencMailoff{display:inline-block;background:transparent url("../images/mailRouge16.png") no-repeat scroll 0 0;width:16px;height:16px;margin:0 3px;}
 table.membre, table.prison{text-align:center;}
-table.membre tr:nth-child(2n+2), table.prison tr:nth-child(2n+2) {background-color:#e5d4ac;}
+table.membre tr:nth-child(2n+2), table.prison tr:nth-child(2n+2){background-color:#cbe2f7;}
 table.membre td{max-width:100px;padding:4px 10px 0;}
+table.membre td .pause{font-size:80%;color:#ff4500;line-height:1;}
 table.portraitTable input{width:auto;}
 table.prison td{padding:4px 15px 0;}
 table.tem{text-align:center;border:2px solid #0074a2;width:auto; margin:15px;}

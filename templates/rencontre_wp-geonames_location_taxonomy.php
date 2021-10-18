@@ -2,15 +2,16 @@
 /*
  * Plugin : Rencontre
  * Template : WpGeonames Location taxonomy
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.6.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_wp-geonames_location_taxonomy.php
  * $data : 0=>country, 1=>region, 2=>city, 3=>lat, 4=>lon
 */
 ?>
-<?php $data = explode('|',$shortcode['data']); ?>
+<?php
+global $rencOpt;
+$data = explode('|',$shortcode['data']);
+?>
 
-		<?php if(empty($rencCustom['country'])) { ?>
-		
 		<div>
 			<label><?php _e('My country','rencontre'); ?></label>
 			<select id="rencPays" name="pays" class="w3-select w3-border w3-renc-sebg" <?php echo $geoData['onChangeCountry']; ?>>
@@ -19,21 +20,16 @@
 
 			</select>
 		</div>
-		<?php } ?>
-		<?php if(empty($rencCustom['region'])) { ?>
-		
 		<div>
 			<label><?php _e('My region','rencontre'); ?></label>
 			<select id="regionSelect" name="region" class="w3-select w3-border w3-renc-sebg" style="display:none;" <?php echo $geoData['onChangeRegion']; ?> >
 				<option value=""> - </option>
 			</select>
 		</div>
-		<?php } ?>
-		
 		<div>
 			<label><?php _e('My city','rencontre'); ?></label>
 			<input id="rencVille" name="ville" type="text" autocomplete="off" class="w3-input w3-renc-inbg" value="<?php echo $data[2]; ?>" style="display:none;"  />
-			<input id="gps" name="gps" type="hidden" value="<?php echo $data[1].'|'.$data[2]; ?>" />
+			<input id="gps" name="gps" type="hidden" value="<?php echo $data[3].'|'.$data[4]; ?>" />
 			<div id="rencCity" class="rencCity"></div>
 			<div class="w3-clear" style="height:5px;"></div>					
 			<div id="geomap" style="display:none;height:300px;max-width:400px"></div>
@@ -64,6 +60,7 @@
 	}
 	function geoDataCity(){
 		jQuery('#rencVille').show().keyup(function(){
+			<?php if(isset($rencOpt['geocity'])) echo "jQuery('#geomap').hide();jQuery('#gps').val('|');"; ?>
 			if(jQuery('#rencVille').val().length>2){
 				wpgeoajx=null;
 				var regid=jQuery('#regionSelect option:selected').attr('data-regionid');

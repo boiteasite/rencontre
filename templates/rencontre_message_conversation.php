@@ -2,9 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Message Conversation
- * Last Change : Rencontre 3.1.1
+ * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_conversation.php
- * $u : ID, user_login, display_name, login, i_photo, photo
+ * $u : ID, user_login, display_name, login, i_photo, miniPhoto, miniPhotoWebp
  * $u0 : user_login, login
 */
 ?>
@@ -15,18 +15,41 @@
 
 			<div class="w3-cell-row">
 				<div class="w3-container w3-cell">
+					<?php if(!empty($onClick['profile'])) { ?>
+					
 					<a class="msgProfil" href="javascript:void(0)" onClick="<?php echo $onClick['profile']; ?>">
+					<?php } else { ?>
+					
+					<span class="msgProfil">
+					<?php } ?>
 					<?php if(!empty($u->i_photo)) { ?>
+						<?php if(!empty($u->miniPhotoWebp)) { ?>
 
-						<img class="w3-circle w3-image" src="<?php echo $u->photo; ?>" alt="<?php echo $u->display_name; ?>" />
+						<picture>
+							<source class="w3-circle w3-image" srcset="<?php echo $u->miniPhotoWebp; ?>" type="image/webp" alt="<?php echo $u->display_name; ?>">
+							<source class="w3-circle w3-image" srcset="<?php echo $u->miniPhoto; ?>" type="image/jpeg" alt="<?php echo $u->display_name; ?>"> 
+							<img class="w3-circle w3-image" src="<?php echo $u->miniPhoto; ?>" alt="<?php echo $u->display_name; ?>" />
+						</picture>
+						<?php } else { ?>
+			
+						<img class="w3-circle w3-image" src="<?php echo $u->miniPhoto; ?>" alt="<?php echo $u->display_name; ?>" />
+						<?php } ?>
 					<?php } else { ?>
 
 						<img class="w3-circle w3-image" src="<?php echo plugins_url('rencontre/images/no-photo60.jpg'); ?>" alt="<?php echo $u->display_name; ?>" title="<?php echo $u->display_name; ?>" />
 					<?php } ?>
-
-					</a>
+					
+					<?php if(!empty($onClick['profile'])) { ?></a><?php } else { ?></span><?php } ?>
+					
 					<div style="text-transform:capitalize;">
-						<a class="msgProfil" href="javascript:void(0)" onClick="<?php echo $onClick['profile']; ?>"><?php echo $u->display_name; ?></a>
+					<?php if(!empty($onClick['profile'])) { ?>
+					
+						<a class="msgProfil" href="javascript:void(0)" style="text-transform:capitalize;" onClick="<?php echo $onClick['profile']; ?>"><?php echo $u->display_name; ?></a>
+					<?php } else { ?>
+
+						<span class="msgProfil" style="text-transform:capitalize;"><?php echo $u->display_name; ?></span>
+					<?php } ?>
+					
 					</div>
 				</div>
 				<div class="w3-container w3-cell">

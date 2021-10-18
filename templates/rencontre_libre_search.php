@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Libre Search
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.6.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_search.php
 */
 ?>
@@ -10,6 +10,9 @@
 	<script type="text/javascript">
 	function f_min(f,x,y,z){var c=0,d=document.forms[x][y],e=document.forms[x][z];f=parseInt(f);for(v=0;v<e.length;v++){if(parseInt(d.options[v].value)==f)c=v;if(parseInt(e.options[v].value)<=f)e.options[v].disabled=true;else e.options[v].disabled=false;}if(f>parseInt(e.options[e.selectedIndex].value))e.selectedIndex=c;};
 	function f_max(f,x,y,z){var c=0,d=document.forms[x][z],e=document.forms[x][y];f=parseInt(f);for(v=0;v<e.length;v++){if(parseInt(d.options[v].value)==f)c=v;if(parseInt(e.options[v].value)>=f)e.options[v].disabled=true;else e.options[v].disabled=false;}if(f<parseInt(e.options[e.selectedIndex].value))e.selectedIndex=c;};
+<?php if(!empty($searchResult)) { ?>
+	jQuery(document).ready(function(){jQuery('html,body').animate({scrollTop:jQuery('#searchLibreResult').offset().top},'slow')});
+<?php } ?>
 	</script>
 	<div id="rencSearchLibre" class="rencLibreSearch w3-container w3-padding-small">
 		<div class="w3-card w3-renc-blbg">
@@ -27,7 +30,7 @@
 								<select name="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>" class="w3-select w3-border w3-renc-sebg">
 								<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
 
-									<option value="<?php echo $v; ?>"><?php echo $rencOpt['iam'][$v]; ?></option>
+									<option value="<?php echo $v; ?>" <?php if(isset($Gzsex)&&$Gzsex==$v) echo 'selected'; ?>><?php echo $rencOpt['iam'][$v]; ?></option>
 								<?php } ?>
 
 								</select>
@@ -39,7 +42,7 @@
 								<select name="<?php echo (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemin']; ?>">
 								<?php for($v=20;$v<91;$v+=5) { ?>
 								
-									<option value="<?php echo $v; ?>"<?php if($v==20) echo ' selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
+									<option value="<?php echo $v; ?>" <?php if((!empty($Gagemin)&&$Gagemin==$v)||(empty($Gagemin)&&$v==20)) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
 								<?php } ?>
 								
 								</select>
@@ -49,7 +52,7 @@
 								<select name="<?php echo (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemax']; ?>">
 								<?php for($v=25;$v<96;$v+=5) { ?>
 								
-									<option value="<?php echo $v; ?>"<?php if($v==95) echo ' selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
+									<option value="<?php echo $v; ?>" <?php if((!empty($Gagemax)&&$Gagemax==$v)||(empty($Gagemax)&&$v==95)) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
 								<?php } ?>
 								
 								</select>
@@ -63,7 +66,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="w3-container<?php if(empty($searchResult)) echo ' w3-hide'; ?>">
+			<div id="searchLibreResult" class="w3-container<?php if(empty($searchResult)) echo ' w3-hide'; ?>">
 				<div class="w3-section w3-border-top">
 					<div class="w3-row">
 					<?php echo $searchResult; ?>

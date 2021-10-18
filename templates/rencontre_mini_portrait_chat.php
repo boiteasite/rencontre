@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait Chat - Chat only
- * Last Change : Rencontre 3.0
+ * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait_chat.php
  * $u : display_name, c_pays, c_ville, d_naissance, i_photo, t_titre 
 */
@@ -15,7 +15,18 @@
 				<?php if($u->i_photo!=0) { ?>
 
 					<div class="w3-cell w3-cell-middle" style="width:60px;">
+					<?php if(file_exists($rencDiv['basedir'].'/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini').'.webp')) { ?>
+					
+						<picture>
+							<source class="w3-circle" srcset="<?php echo $rencDiv['baseurl'].'/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini').'.webp?r='.rand(); ?>" type="image/webp" alt="<?php echo $u->display_name; ?>">
+							<source class="w3-circle" srcset="<?php echo $rencDiv['baseurl'].'/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini').'.jpg?r='.rand(); ?>" type="image/jpeg" alt="<?php echo $u->display_name; ?>"> 
+							<img class="w3-circle" src="<?php echo $rencDiv['baseurl'].'/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini').'.jpg?r='.rand(); ?>" alt="<?php echo $u->display_name; ?>" />
+						</picture>
+					<?php } else { ?>
+			
 						<img class="w3-circle" src="<?php echo $rencDiv['baseurl'].'/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini').'.jpg?r='.rand(); ?>" alt="<?php echo $u->display_name; ?>" />
+					<?php } ?>
+
 					</div>
 				<?php } else { ?>
 

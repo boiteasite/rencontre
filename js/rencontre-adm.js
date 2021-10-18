@@ -27,8 +27,16 @@ function f_exportCsv(){
 	});
 }
 function startUpload(){
-	document.getElementById('loadingCsv').style.display='inline';
-	return true;
+	document.getElementById('impCsv1').style.display='none';
+	document.getElementById('impCsv2').style.display='none';
+	document.getElementById('impCsv3').style.display='none';
+	document.getElementById('impCsv4').style.display='none';
+	document.getElementById('impCsv5').style.display='none';
+	document.getElementById('impCsv7').style.display='none';
+	if(document.getElementById("fileCsv").files.length!=0){
+		document.getElementById('loadingCsv').style.display='inline';
+		return true;
+	}
 }
 function finUpload(s){
 	var result='';

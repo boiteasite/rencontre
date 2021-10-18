@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6.4
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
  * $u0 (myself) : ID
@@ -45,8 +45,18 @@
 								
 							<a href="javascript:void(0)" class="rencZoombox" title="<?php echo $title['zoombox']; ?>" onClick="f_lightbox(<?php echo $v; ?>)">
 							<?php } ?>
+							<?php if(!empty($u->photo->miniWebp[$v])) { ?>
+							
+								<picture onMouseOver="<?php echo $u->photo->over[$v]; ?>" title="<?php echo $title['thumb']; ?>">
+									<source class="w3-show-inline-block" srcset="<?php echo $u->photoUrl.$u->photo->miniWebp[$v]; ?>" type="image/webp">
+									<source class="w3-show-inline-block" srcset="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" type="image/jpeg"> 
+									<img class="w3-show-inline-block" src="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" />
+								</picture>
+							<?php } else { ?>
 
 								<img class="w3-show-inline-block" onMouseOver="<?php echo $u->photo->over[$v]; ?>" src="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" alt="" title="<?php echo $title['thumb']; ?>" />
+							<?php } ?>
+							
 							</a>
 							<?php if(!empty($u->photo->grande[$v])) { ?>
 							
@@ -76,8 +86,8 @@
 					<div class="w3-section w3-cell-row w3-border-bottom w3-renc-line">
 						<div class="w3-cell">
 							<div class="w3-large" style="text-transform:capitalize"><?php echo $u->display_name; ?>
-							<?php if($u->display_name!=$u->user_login) { ?>
-							&nbsp;<span class="w3-small w3-opacity">(<?php echo $u->user_login; ?>)</span>
+							<?php if($u->display_name!=strtok($u->user_login, '@')) { ?>
+							&nbsp;<span class="w3-small w3-opacity">(<?php echo strtok($u->user_login, '@'); ?>)</span>
 							<?php } ?>
 							</div>
 							<div>
@@ -150,14 +160,14 @@
 						<div class="w3-bar w3-renc-mebg">
 						<?php $i = 0; foreach($u->profil as $key=>$value) { ?>
 							
-							<div id="portraitTab<?php echo $i; ?>" class="w3-bar-item w3-button<?php if($i==0) echo ' w3-renc-mebt'; ?>" style="text-transform:capitalize;" onclick="javascript:f_onglet(<?php echo $i; ?>);"><?php echo $key; ?></div>
+							<div id="portraitTab<?php echo $i; ?>" class="w3-bar-item w3-button<?php if($i==0 && !$hideProf) echo ' w3-renc-mebt'; ?>" style="text-transform:capitalize;" onclick="javascript:f_onglet(<?php echo $i; ?>);"><?php echo $key; ?></div>
 							<?php ++$i; ?>
 						<?php } ?>
-						</div><!-- .w3-bar -->
 						
+						</div><!-- .w3-bar -->
 						<?php $i = 0; foreach($u->profil as $key=>$value) { ?>
 
-						<div id="portraitCont<?php echo $i; ?>" class="w3-container w3-border w3-renc-line w3-hide<?php if($i==0) echo ' w3-show'; ?>">
+						<div id="portraitCont<?php echo $i; ?>" class="w3-container w3-border w3-renc-line w3-hide<?php if($i==0 && !$hideProf) echo ' w3-show'; ?>">
 							<?php foreach($value as $k=>$v) { ?>
 							
 							<div class="w3-row">
@@ -185,7 +195,7 @@
 					<button class="w3-button w3-margin-bottom w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
 				<?php } else { ?>
 					
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['send']; ?>')" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
 				<?php } ?>
 				<?php if(empty($rencCustom['smile'])) { ?>
 					<?php if(!$disable['smile']) { ?>
@@ -193,7 +203,7 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['smile']; ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(empty($rencCustom['creq'])) { ?>
@@ -202,7 +212,7 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" title="<?php echo $title['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['contact']; ?>')" title="<?php echo $title['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(!empty($rencOpt['tchat'])) { ?>
@@ -211,7 +221,7 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" title="<?php echo $title['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['chat']; ?>')" title="<?php echo $title['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(!$disable['block']) { ?>
@@ -219,14 +229,14 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php if(!$u->blocked->he) _e('Block','rencontre'); else _e('Unblock','rencontre'); ?></button> 
 				<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" title="<?php echo $title['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php _e('Block','rencontre'); ?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['block']; ?>')" title="<?php echo $title['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php _e('Block','rencontre'); ?></button> 
 				<?php } ?>
 				<?php if(!$disable['report']) { ?>
 					
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['report']; ?>" title="<?php _e('Report a fake profile or inappropriate content','rencontre'); ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
 				<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" title="<?php echo $title['report']; ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['report']; ?>')" title="<?php echo $title['report']; ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
 				<?php } ?>
 				<?php if(!$disable['favori']) { ?>
 					

@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Modal Warning
- * Last Change : Rencontre 3.3
+ * Last Change : Rencontre 3.6.4
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_modal_warning.php
 */
 ?>
@@ -51,3 +51,13 @@
 		</div><!-- .w3-modal -->
 		<?php } ?>
 	<?php } ?>
+
+		<div id="modalWarn" class="w3-modal w3-animate-opacity">
+			<div class="w3-modal-content w3-card-4 w3-renc-wabg" style="max-width:600px;">
+				<div class="w3-container">
+					<div class="w3-button w3-display-topright w3-large w3-renc-mebo" onClick="document.getElementById('modalWarn').style.display='none'">&times;</div>
+					<div id="modalWarnContent" class="w3-padding-48 w3-center">
+					</div>
+				</div>
+			</div>
+		</div><!-- .w3-modal -->

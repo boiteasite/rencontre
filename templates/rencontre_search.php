@@ -2,9 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Search
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search.php
- * $u0 : ID, cryptID, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, e_lat, e_lon, zsex, homo, c_pays, country, age, agemin, agemax
+ * $u0 : ID, cryptID, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, e_lat, e_lon, zsex, c_pays, country, age, agemin, agemax
 */
 ?>
 
@@ -23,8 +23,7 @@
 						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="<?php echo $u0->cryptID; ?>" />
 						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['sex'])?$rencOpt['lbl']['sex']:'sex'); ?>" value="<?php echo $u0->i_sex; ?>" />
 						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>" value="<?php echo $u0->zsex; ?>" />
-						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['homo'])?$rencOpt['lbl']['homo']:'homo'); ?>" value="<?php echo $u0->homo; ?>" />
-						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['pagine'])?$rencOpt['lbl']['pagine']:'pagine'); ?>" value="0" />
+						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['pagine'])?$rencOpt['lbl']['pagine']:'pagine'); ?>" value="" />
 					<?php if(!isset($rencCustom['born'])) { ?>
 
 						<div>
@@ -109,6 +108,15 @@
 									if($v==$u0->i_sex && !empty($rencCustom['hetero'])) continue;
 								?><option value="<?php echo $v; ?>" <?php if(!empty($mem['zsex']) && $mem['zsex']==$v) echo 'selected'; ?>><?php echo $rencOpt['iam'][$v]; ?></option><?php } ?>
 							
+							</select>
+						</div>
+					<?php } else if(isset($rencCustom['sexAll'])) { ?>
+						<div>
+							<label><?php _e('Gender','rencontre');?></label>
+							<select name="<?php echo (!empty($rencOpt['lbl']['z2sex'])?$rencOpt['lbl']['z2sex']:'z2sex'); ?>" class="w3-select w3-border w3-renc-sebg">
+								<option value="">-</option>
+								<option value="0" <?php if(isset($mem['zsex']) && $mem['zsex']!=='' && $mem['zsex']==0) echo 'selected'; ?>><?php echo $rencOpt['iam'][0]; ?></option>
+								<option value="1" <?php if(isset($mem['zsex']) && $mem['zsex']==1) echo 'selected'; ?>><?php echo $rencOpt['iam'][1]; ?></option>
 							</select>
 						</div>
 					<?php } ?>
