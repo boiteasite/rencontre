@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.6.4
+ * Last Change : Rencontre 3.6.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
  * $u0 (myself) : ID
@@ -143,7 +143,7 @@
 					<?php if(!empty($certified)) echo $certified; ?>
 					<div class="w3-renc-txtc">
 						<div class="titre"><?php echo stripslashes($u->t_titre); ?></div>
-						<div class="w3-section"><?php echo stripslashes($u->t_annonce); ?></div>
+						<div class="annonce w3-section" style="word-break:break-word"><?php echo stripslashes($u->t_annonce); ?></div>
 					</div>
 					<div>
 						<div class="looking"><?php _e('I\'m looking for','rencontre'); ?>&nbsp;<?php echo $u->looking . $u->forwhat; ?></div>

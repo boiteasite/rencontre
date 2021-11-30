@@ -7,6 +7,11 @@
 		<tr>
 			<td><?php _e('Enjoyed this free dating plugin?  A donation or a good review will help us to spend more time to make it evolve. Thanks for your contribution.','rencontre') ?></td>
 		</tr>
+			<td style="text-align:center;position:relative;">
+				<a href="https://www.buymeacoffee.com/j.malgrange" target="_blank">
+					<img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174">
+				</a>
+			</td>
 		<tr>
 			<td style="text-align:center;position:relative;">
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">

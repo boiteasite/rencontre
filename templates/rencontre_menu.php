@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Menu
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_menu.php
 */
 ?>
@@ -28,12 +28,12 @@
 			<span class="w3-badge w3-small w3-green w3-display-topright" style="margin:4px"><?php echo RencontreWidget::f_count_inbox($current_user->user_login); ?></span>
 		</a>
 			<?php } ?>
-			<?php if(!$blockSearch) { ?>
+			<?php if(empty($blockSearch)) { ?>
 			
 		<a id="rencMenuSearch" class="rencMenuSearch w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Search','rencontre'); ?>"><i class="fas fa-search"></i></a>
 			<?php } else { ?>
 
-		<a id="rencMenuSearch" class="rencMenuSearch w3-bar-item w3-button w3-disable w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Search','rencontre'); ?>"><i class="fas fa-search"></i></a>
+		<a id="rencMenuSearch" class="rencMenuSearch w3-bar-item w3-button w3-opacity w3-padding-large w3-renc-mebo" onClick="f_modalWarn('<?php echo $blockSearch; ?>')" href="javascript:void(0)" title="<?php _e('Search','rencontre'); ?>"><i class="fas fa-search"></i></a>
 			<?php } ?>
 		
 		<a id="rencMenuAccount" class="rencMenuAccount w3-bar-item w3-button w3-padding-large <?php if($rencOpt['fastreg']>1) echo 'w3-renc-mebw '; ?>w3-renc-mebo" href="javascript:void(0)" title="<?php _e('My Account','rencontre'); ?>"><i class="fas fa-sliders-h"></i></a>

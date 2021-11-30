@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Quick Search
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.6.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_quick_search.php
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_region, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, agemin, agemax
 */
@@ -20,7 +20,7 @@
 					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
 					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>" value="<?php echo $u0->zsex; ?>" />
 					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['homo'])?$rencOpt['lbl']['homo']:'homo'); ?>" value="<?php echo $u0->homo; ?>" />
-					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['pagine'])?$rencOpt['lbl']['pagine']:'pagine'); ?>" value="0" />
+					<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['pagine'])?$rencOpt['lbl']['pagine']:'pagine'); ?>" value="" />
 				<?php if(!isset($rencCustom['born'])) { ?>
 					
 					<div>
@@ -103,10 +103,16 @@
 					</div>
 				<?php } ?>
 					
-					<div class="w3-section w3-right-align">
-						<button class="<?php echo $find['class']; ?>" onClick="<?php echo $onClick['find']; ?>"><?php _e('Find','rencontre'); ?></button>
-					</div>
 				</form>
+				<div class="w3-section w3-right-align">
+					<?php if(empty($blockQSearch)) { ?>
+					
+					<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['find']; ?>"><?php _e('Find','rencontre'); ?></button>
+					<?php } else { ?>
+
+					<button class="w3-button w3-renc-mebt w3-opacity w3-disable w3-renc-mebo" onClick="f_modalWarn('<?php echo $blockQSearch; ?>')"><?php _e('Find','rencontre'); ?></button>
+					<?php } ?>
+				</div>
 			</div>
 		</div><!-- .w3-container --> <?php // open in rencontre_sidebar_top.php ?>
 	</div><!-- .w3-card .w3-white --> <?php // open in rencontre_sidebar_top.php ?>

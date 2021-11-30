@@ -2,14 +2,14 @@
 /*
  * Plugin : Rencontre
  * Template : Search Result
- * Last Change : Rencontre 3.6.4
+ * Last Change : Rencontre 3.6.8
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search_result.php
  * $u : user_login, user_id, d_naissance, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_annonce, t_profil, t_action, looking, forwhat, hidephoto, online, online_ago, miniPhoto, miniPhotoWebp
 */
 ?>
 
 	<div class="rencSearchResult w3-margin-bottom">
-		<div class="w3-card w3-renc-blbg">
+		<div class="w3-card w3-renc-blbg <?php if(!empty($highlight)) echo 'w3-renc-hili'; ?>">
 			<div class="w3-container">
 				<div class="w3-row w3-border-bottom w3-renc-line w3-section">
 					<div class="w3-half">
@@ -86,7 +86,7 @@
 
 					</div><!-- .w3-half -->
 				</div><!-- .w3-row -->
-				<div class="annonce w3-section w3-renc-txtc">
+				<div class="annonce w3-section w3-renc-txtc" style="word-break:break-word">
 					<?php echo stripslashes($u->t_annonce); ?>
 
 					<div class="w3-right-align"><?php echo $searchAdd1; ?></div>

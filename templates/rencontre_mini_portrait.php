@@ -2,13 +2,13 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait
- * Last Change : Rencontre 3.6.3
+ * Last Change : Rencontre 3.6.8
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait.php
  * $u : ID, display_name, c_pays, c_ville, d_naissance, i_photo, t_titre, online, miniPhoto, miniPhotoWebp
 */
 ?>
-	<div class="rencMiniPortrait w3-padding-small w3-col <?php if($highlight) echo 'highlight'; ?>">
-		<div class="w3-card w3-renc-blbg">
+	<div class="rencMiniPortrait w3-padding-small w3-col <?php if(!empty($highlight)) echo 'highlight'; ?>">
+		<div class="w3-card w3-renc-blbg <?php if(!empty($highlight)) echo 'w3-renc-hili'; ?>">
 			<div class="w3-renc-container-lm">
 				<div class="w3-row">
 				<?php if($u->i_photo!=0) { ?>

@@ -873,10 +873,11 @@ function f_dynamicWidth(f,s){
 	jQuery(".rencMiniPortrait").width(Math.floor(a/c)-16);
 }
 function f_modalWarn(f){
-	var a=document.getElementById('modalWarn'),b=document.getElementById('modalWarnContent');
+	var a=document.getElementById('modalWarn'),b=document.getElementById('modalWarnContent'),c=4000;
 	if(f.length<4||a==null||b==null)return;
+	if(typeof rencmodaltimeout!=='undefined')c=rencmodaltimeout;
 	b.innerHTML=f;a.style.display='block';
-	window.setTimeout(function(){b.innerHTML='';a.style.display='none';},4000);
+	window.setTimeout(function(){b.innerHTML='';a.style.display='none';},c);
 }
 //
 if(document.getElementById("infoChange")!==null)window.setTimeout(function(){jQuery("#infoChange").remove()},((typeof rencInfochange!=='undefined')?rencInfochange:5000));

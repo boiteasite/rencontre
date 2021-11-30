@@ -1747,7 +1747,7 @@ function rencMenuMembres() {
 				}
 			}
 			$tri = "";
-			$ho = false; if(has_filter('rencMemP', 'f_rencMemP')) $ho = apply_filters('rencMemP', $ho); // ouput : array()
+			$hoUsr = false; if(has_filter('rencMemP', 'f_rencMemP')) $hoUsr = apply_filters('rencMemP', 1); // ouput : array()
 			$hoip = false; if(has_filter('rencMemipP', 'f_rencMemipP')) $hoip = apply_filters('rencMemipP', 0); // 0 : title
 			if(!empty($Gtri)) {
 				$p = 'c_pays';
@@ -1767,7 +1767,7 @@ function rencMenuMembres() {
 				else if($Gtri=='Rip') $tri='ORDER BY R.c_ip DESC';
 				else if($Gtri=='signal') $tri='ORDER BY length(P.t_signal) DESC, P.d_modif DESC';
 				else if($Gtri=='action') $tri='ORDER BY R.i_status DESC, P.d_modif DESC';
-				else if($ho!==false && isset($ho[5]) && isset($ho[6]) && $Gtri==$ho[5]) $tri=$ho[6];
+				else if($hoUsr!==false && isset($hoUsr[5]) && isset($hoUsr[6]) && $Gtri==$hoUsr[5]) $tri=$hoUsr[6];
 			}
 			else $tri='ORDER BY P.d_modif DESC';
 			if($Ppseu) {
@@ -1798,8 +1798,8 @@ function rencMenuMembres() {
 					P.d_modif, 
 					P.t_titre, 
 					P.t_annonce,
-					P.t_action".($ho?', '.$ho[0].'':'')." 
-				FROM (".$wpdb->base_prefix."users U, ".$wpdb->prefix."rencontre_users R, ".$wpdb->prefix."rencontre_users_profil P) ".($ho?$ho[1]:'')." 
+					P.t_action".($hoUsr?', '.$hoUsr[0].'':'')." 
+				FROM (".$wpdb->base_prefix."users U, ".$wpdb->prefix."rencontre_users R, ".$wpdb->prefix."rencontre_users_profil P) ".($hoUsr?$hoUsr[1]:'')." 
 				WHERE 
 					R.user_id=P.user_id 
 					and R.user_id=U.ID ".$tri."
@@ -1846,7 +1846,7 @@ function rencMenuMembres() {
 					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='ip') echo 'R'; ?>ip" title="<?php _e('Sort','rencontre'); ?>"><?php _e('IP address','rencontre');?></a></td>
 					<?php if($hoip) echo '<td>'.$hoip.'</td>'; ?>
 					<td><a href="admin.php?page=rencmembers&tri=signal" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Reporting','rencontre');?></a></td>
-					<?php if($ho) echo '<td>'.$ho[2].'</td>'; ?>
+					<?php if($hoUsr) echo '<td>'.$hoUsr[2].'</td>'; ?>
 				</tr>
 			<?php
 			$categ="";
@@ -1947,14 +1947,21 @@ function rencMenuMembres() {
 				// Reporting
 				echo '<td>'.(count($signal)?count($signal):'').'</td>';
 				// Hook
-				if($ho) {
+				if($hoUsr) {
 					$endate = '';
-					if(isset($ho[9]) && $s->{$ho[9]}) {
-						if(strtotime($s->{$ho[9]})>current_time('timestamp')) $endate = '<br /><span style="font-size:.9em;color:green">'.substr($s->{$ho[9]},0,10).'</span>';
-						else $endate = '<br /><span style="font-size:.9em;color:red">'.substr($s->{$ho[9]},0,10).'</span>';
+					$py = ((isset($s->{$hoUsr[3]})&&isset($hoUsr[4][$s->{$hoUsr[3]}][1]))?$hoUsr[4][$s->{$hoUsr[3]}][1]:'');
+					if(isset($hoUsr[9][$py]) && !empty($s->{$hoUsr[9][$py]})) {
+						if($py==1) {
+							$x = substr($s->{$hoUsr[9][1]},0,10);
+							if(strtotime($s->{$hoUsr[9][1]})>current_time('timestamp')) $endate = '<br /><span style="font-size:.9em;color:green">'.$x.'</span>';
+							else $endate = '<br /><span style="font-size:.9em;color:red">'.$x.'</span>';
+						}
+						else if($py==2){
+							$endate = '<br /><span style="font-size:.9em;color:green">'.$s->{$hoUsr[9][2]}.' pt</span>';
+						}
 					}
-					if(isset($ho[8]) && $s->{$ho[7]}==$ho[8]) echo '<td><i>'.$ho[8].'</i>'.$endate.'</td>';
-					else echo '<td>'.((isset($ho[4][$s->{$ho[3]}])&&$s->{$ho[3]}!='')?$ho[4][$s->{$ho[3]}]:'').$endate.'</td>';
+					if(isset($hoUsr[8]) && $s->{$hoUsr[7]}==$hoUsr[8]) echo '<td><i>'.$hoUsr[8].($endate?'</i>'.$endate.'</td>':'');
+					else echo '<td>'.((isset($hoUsr[4][$s->{$hoUsr[3]}][0])&&$s->{$hoUsr[3]}!='')?$hoUsr[4][$s->{$hoUsr[3]}][0]:'').($endate?$endate:'').'</td>';
 				}
 				//
 				echo '</tr>';
@@ -2458,6 +2465,16 @@ function rencMenuProfil() {
 		if(isset($a['for'])) unset($a['for']);
 		if(isset($a['iam'])) unset($a['iam']);
 		update_option('rencontre_options',$a);
+	}
+	else {
+		$q2 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$loc."' and (c_categ='?' or c_label='?') LIMIT 1");
+		if($q2) { ?>
+
+	<div class="notice notice-warning"> 
+		<p><strong><?php _e('The profiles are not all translated into the language of the site. Users will see the character "?".', 'rencontre'); ?></strong></p>
+	</div>
+		
+		<?php }
 	}
 	if(!isset($_SESSION['a2'])) $_SESSION['a2'] = 'off';
 	if(!isset($_SESSION['a4'])) $_SESSION['a4'] = 'off';
@@ -3569,6 +3586,11 @@ function rencTabTem() {
 					</select>
 				</td>
 			</tr>
+			<?php $ho = false;
+			if(has_filter('rencCustomColorP', 'f_rencCustomColorP')) $ho = apply_filters('rencCustomColorP', array($w3renc,$w3rencDef));
+			if($ho) echo $ho;
+			?>
+			
 			<tr valign="top">
 				<th scope="row">
 					<label><?php _e('Fit portraits width in home page', 'rencontre'); ?></label>
@@ -3817,6 +3839,7 @@ function f_update_custom($P) {
 		if(!empty($P['msbs'])) $a['msbs'] = rencSanit($P['msbs'],'alphanum'); else unset($a['msbs']);
 		if(!empty($P['msbr'])) $a['msbr'] = rencSanit($P['msbr'],'alphanum'); else unset($a['msbr']);
 		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
+		if(has_filter('rencCustomColorSP', 'f_rencCustomColorSP')) $a = apply_filters('rencCustomColorSP', $P, $a);
 	}
 	$rencOpt['custom'] = json_encode($a);
 	$for = $rencOpt['for']; $iam = $rencOpt['iam'];

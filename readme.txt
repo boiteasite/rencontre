@@ -5,7 +5,7 @@ Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social,
 Requires at least: 4.3
 Tested up to: 5.8
 Requires PHP: 5.5
-Stable tag: 3.6.5
+Stable tag: 3.6.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,6 +353,21 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+27/11/2021 : 3.6.8
+
+* Fix modal warning issue.
+* Add 'rencmodaltimeout' filter to set modal warning windows timeout delay.
+
+23/11/2021 : 3.6.7
+
+* Remove "Region field is empty or outdated !" Warning when option "no region" or "No localisation" is checked.
+* Avoid that very long words exceeds the box.
+* Profiles not translated into the default language are indicated by a warning on the Rencontre > Profile dashboard
+* Add 'searchResultAd' filter also to quick search.
+* Add 'lengthNameHome' and 'lengthName' filter to limit display_name length.
+
+08/11/2021 : 3.6.6 - Fix issue in Sidebar with language switcher plugins
 
 18/10/2021 : 3.6.5
 

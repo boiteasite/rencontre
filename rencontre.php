@@ -6,11 +6,11 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.6.5
+Version: 3.6.8
 Author URI: https://www.boiteasite.fr
 */
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.6.5';
+$rencVersion = '3.6.8';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'],'theme-editor.php')) return;
@@ -260,7 +260,7 @@ class Rencontre {
 	//
 	function rencwidget() { // loaded at WIDGET-INIT
 		global $rencOpt, $rencDiv, $wpdb;
-		if(!isset($_SESSION)) session_start();
+		if(!headers_sent() && empty(session_id())) session_start();
 		$rencOpt['nbr'] = rencNumbers();
 		$rencOpt['lbl'] = rencLabels();
 		if(empty($rencOpt['home']) && !current_user_can("administrator")) {
@@ -739,7 +739,10 @@ class Rencontre {
 				$ca = str_replace(',', ', ', $ca);
 				if(!empty($rencOpt['nbr']['lengthTitle']) && strlen($ca)>$rencOpt['nbr']['lengthTitle']) $ca = substr(trim($ca), 0, $rencOpt['nbr']['lengthTitle']).'...';
 				$u->title = strtr($ca, "0123456789#(){[]}", ".................");
-				$photo = self::f_img((($u->ID)*10).'-libre',2); // (($u->ID)*10).'-libre';
+				$m = (!empty($rencOpt['nbr']['lengthName'])?intval($rencOpt['nbr']['lengthName']):50);
+				$u->display_name = substr($u->display_name,0,$m);
+				$photo = false; if(has_filter('rencBlurLibreP', 'f_rencBlurLibreP')) $photo = apply_filters('rencBlurLibreP', $u->ID);
+				if(empty($photo)) $photo = self::f_img((($u->ID)*10).'-libre',2); // (($u->ID)*10).'-libre';
 				$u->librePhoto = $rencDiv['baseurl'].'/portrait/libre/'.$photo.'.jpg';
 				$u->libreID = $c;
 				$u->genre='girl';

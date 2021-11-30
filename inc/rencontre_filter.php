@@ -49,7 +49,7 @@ add_action('wp_ajax_dynSearch', 'f_dynSearch');
 add_action('wp_ajax_gpsnavigator', 'rencGpsNavigator');
 function f_voirMsg() {
 	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
-	$Pho = (isset($_POST['ho'])?rencSanit($_POST['ho'],'int'):false);
+	$Pho = (isset($_POST['ho'])?rencSanit($_POST['ho'],'text'):false);
 	$Pidmsg = rencSanit($_POST['idmsg'],'int');
 	$Palias = rencSanit($_POST['alias'],'words');
 	RencontreWidget::f_voirMsg($Pidmsg,$Palias,$Pho);
@@ -84,7 +84,7 @@ if(is_admin()) { // Check for an administrative interface page
 	add_action('wp_ajax_profilA', 'f_rencProfil'); // Modif Profil : plus & edit
 	add_action('wp_ajax_stat', 'f_rencStat'); // Members - Registration statistics
 	add_action('wp_ajax_newMember', 'f_newMember'); // Add new Rencontre Members from WP Users - Members Tab
-	add_action('wp_ajax_regeneratePhotos', 'rencRegeneratePhotos'); // Regenerate all users photos.
+	add_action('wp_ajax_regeneratePhotos', 'rencRegeneratePhotos'); // Regenerate all users photos. base.php
 	add_filter('wp_privacy_personal_data_exporters', 'rencGDPRExport', 10); // Include Data in the GDPR WP Export
 	add_action('wp_privacy_personal_data_export_file_created', 'rencGDPRExportimg', 10, 4);
 }
@@ -1126,6 +1126,7 @@ function rencAddCustomW3css($f=0) {
 	if(!empty($w3renc[$rencCustom['wabg']])) $a .= '.w3-renc-wabg{color:'.$w3renc[$rencCustom['wabg'].'T'].'!important;background-color:'.$w3renc[$rencCustom['wabg']].'!important}';
 	if(!empty($w3renc[$rencCustom['msbs']])) $a .= '.w3-renc-msbs{color:'.$w3renc[$rencCustom['msbs'].'T'].'!important;background-color:'.$w3renc[$rencCustom['msbs']].'!important}';
 	if(!empty($w3renc[$rencCustom['msbr']])) $a .= '.w3-renc-msbr{color:'.$w3renc[$rencCustom['msbr'].'T'].'!important;background-color:'.$w3renc[$rencCustom['msbr']].'!important}';
+	if(has_filter('rencCustomColorIncP', 'f_rencCustomColorIncP')) $a .= apply_filters('rencCustomColorIncP', $a, $w3renc);
 	$a .= $alm.'}' . $as.'}';
 	if(!$f) wp_add_inline_style('w3css', $a);
 	else echo '<link rel="stylesheet" href="'.plugins_url('rencontre/css/w3.css').'"><style>'.$a.'</style>';
@@ -1205,7 +1206,7 @@ function rencHideMenu($items,$m,$a) {
 //
 function rencInLine() {
 	if(is_user_logged_in()) {
-		if(!session_id()) session_start();
+		if(!headers_sent() && empty(session_id())) session_start();
 		global $current_user, $wpdb;
 		$upl = wp_upload_dir();
 		if(!is_dir($upl['basedir'].'/tchat/')) mkdir($upl['basedir'].'/tchat/');
@@ -1337,8 +1338,9 @@ function rencFbokName($u,$i,$c=0) {
 	}
 }
 //
-function f_addCountSearch() {
+function f_addCountSearch($r=0) {
 	// +1 in count search/day
+	// Quick search => $r=1
 	global $wpdb, $current_user;
 	$p = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' LIMIT 1");
 	$action = json_decode($p,true);
@@ -1346,7 +1348,7 @@ function f_addCountSearch() {
 	else $action['search']=array('d'=>date("z"),'n'=>1);
 	$p = json_encode($action);
 	$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$p), array('user_id'=>$current_user->ID));
-	if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array('search',0));
+	if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array(($r?'q':'').'search',0));
 }
 //
 function f_userSupp($f,$a,$b) { // rencontre.php - in action 'widget_init' - base.php
@@ -1427,7 +1429,10 @@ function rencNumbers() {
 		'mailSelection'=>4,
 		'mailUserPerLine'=>2,
 		'lengthTitle'=>30,
+		'lengthNameHome'=>50,
+		'lengthName'=>50,
 		'infochange'=>5000,
+		'rencmodaltimeout'=>4000,
 		'delNotConfirmed'=>60,
 		'imgQuality'=>75,
 		'urlNoCryptId'=>0,
@@ -1486,7 +1491,7 @@ function rencAvatar($avatar, $id_or_email, $size, $default, $alt) {
 }
 //
 function rencGpsNavigator() {
-	if(!session_id()) session_start(); // not needed but ...
+	if(!headers_sent() && empty(session_id())) session_start(); // not needed but ...
 	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
 	global $wpdb, $current_user;
 	if(!empty($_POST['lat']) && !empty($current_user->ID)) {
