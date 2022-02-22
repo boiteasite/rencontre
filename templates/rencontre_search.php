@@ -2,8 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Search
- * Last Change : Rencontre 3.6.5
+ * Last Change : Rencontre 3.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search.php
+ * Call : rencontre_widget.php => f_cherchePlus()
  * $u0 : ID, cryptID, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, e_lat, e_lon, zsex, c_pays, country, age, agemin, agemax
 */
 ?>
@@ -173,7 +174,14 @@
 							<label><?php _e('Only with picture','rencontre');?></label>
 						</div>
 						<div class="w3-section w3-right-align">
+						<?php if(empty($blockSearch)) { ?>
+						
 							<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['find']; ?>"><?php _e('Find','rencontre'); ?></button>
+						<?php } else { ?>
+
+							<button class="w3-button w3-renc-mebt w3-opacity w3-disable w3-renc-mebo" onClick="f_modalWarn('<?php echo addslashes($blockSearch); ?>')"><?php _e('Find','rencontre'); ?></button>
+						<?php } ?>
+
 						</div>
 					</form>
 				</div>

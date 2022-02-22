@@ -4,6 +4,7 @@
  * Template : Portrait add photo
  * Last Change : Rencontre 3.4.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_add_photo.php
+ * Call : rencontre_widget.php => widget() 2X
  * $u0 : i_photo
 */
 ?>

@@ -4,6 +4,7 @@
  * Template : Lightbox
  * Last Change : Rencontre 3.4
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_lightbox.php
+ * Call : templates/rencontre_portrait.php
 */
 ?>
 

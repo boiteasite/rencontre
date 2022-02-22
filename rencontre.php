@@ -6,11 +6,11 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.6.8
+Version: 3.7.1
 Author URI: https://www.boiteasite.fr
 */
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.6.8';
+$rencVersion = '3.7.1';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'],'theme-editor.php')) return;
@@ -168,7 +168,6 @@ class Rencontre {
 		if(!load_plugin_textdomain('rencontre', false, dirname(plugin_basename( __FILE__ )).'/lang/')) { // language
 			$a = get_locale();
 			$lo = array(
-				'da_DK'=>'da_DK',
 				'es_AR'=>'es_ES',
 				'es_CL'=>'es_ES',
 				'es_CO'=>'es_ES',
@@ -181,8 +180,6 @@ class Rencontre {
 				'fr_BE'=>'fr_FR',
 				'fr_CA'=>'fr_FR',
 				'fr_FR'=>'fr_FR',
-				'pt_BR'=>'pt_PT',
-				'pt_PT'=>'pt_PT',
 				'zh_CN'=>'zh_CN',
 				'zh_HK'=>'zh_CN',
 				'zh_TW'=>'zh_CN');
@@ -223,7 +220,7 @@ class Rencontre {
 				++$c;
 			}
 		}
-		add_action('widgets_init', array($this, 'rencwidget')); // WIDGET
+		add_action('widgets_init', array($this, 'rencwidget'), 10); // WIDGET
 		if(is_admin()) { // Check for an administrative interface page
 			add_action('admin_menu', array($this, 'admin_menu_link')); // Menu admin
 			add_action('admin_print_scripts', array($this, 'adminCSS')); // CSS pour le bouton du menu
@@ -263,10 +260,7 @@ class Rencontre {
 		if(!headers_sent() && empty(session_id())) session_start();
 		$rencOpt['nbr'] = rencNumbers();
 		$rencOpt['lbl'] = rencLabels();
-		if(empty($rencOpt['home']) && !current_user_can("administrator")) {
-			$a = explode("?",$_SERVER['REQUEST_URI']);
-			$rencOpt['home'] = 'http://'.$_SERVER['HTTP_HOST'] . $a[0];
-		}
+		if(empty($rencOpt['home']) && !current_user_can("administrator")) $rencOpt['home'] = home_url();
 		$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
 		$Lfr = (!empty($rencOpt['lbl']['rencfastreg'])?$rencOpt['lbl']['rencfastreg']:'rencfastreg');
 		$Loo = (!empty($rencOpt['lbl']['rencoo'])?$rencOpt['lbl']['rencoo']:'rencoo');
@@ -339,22 +333,43 @@ class Rencontre {
 			global $current_user, $rencCustom;
 			if(has_filter('rencInitHook')) $ho = apply_filters('rencInitHook', 0);
 			if(empty($current_user->user_login)) $current_user = wp_get_current_user();
-			if(empty($_SESSION['rencontre'])) $_SESSION['rencontre']='mini,accueil,menu';
+			if(empty($_SESSION['rencontre'])) $_SESSION['rencontre'] = 'mini,accueil,menu';
 			$rencTokc = wp_create_nonce('rencTokc'); $_SESSION['rencTokc'] = $rencTokc; // Only for Chat (AJAX outside WP)
 			if(isset($_GET[$Lidf])) { // acces a la fiche d un membre depuis un lien email
 				$Grencidfm = rencSanit(rencGetId($_GET[$Lidf],1),'alphanum');
-				if(substr($Grencidfm,0,1)=='c') $_SESSION['rencontre']='card,menu,demcont';
-				else if(substr($Grencidfm,0,1)=='m') $_SESSION['rencontre']='write,accueil,menu';
-				else if(substr($Grencidfm,0,1)=='p') $_SESSION['rencontre']='card,menu';
-				else if(substr($Grencidfm,0,1)=='s') $_SESSION['rencontre']='card,menu,sourire';
-				else if(substr($Grencidfm,0,1)=='r') $_SESSION['rencontre']='msg,accueil,menu';
+				if(substr($Grencidfm,0,1)=='c') $_SESSION['rencontre'] = 'card,menu,demcont';
+				else if(substr($Grencidfm,0,1)=='m') $_SESSION['rencontre'] = 'write,accueil,menu';
+				else if(substr($Grencidfm,0,1)=='p') $_SESSION['rencontre'] = 'card,menu';
+				else if(substr($Grencidfm,0,1)=='s') $_SESSION['rencontre'] = 'card,menu,sourire';
+				else if(substr($Grencidfm,0,1)=='r') $_SESSION['rencontre'] = 'msg,accueil,menu';
 			}
 			$ip = $wpdb->get_var("SELECT c_ip FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$current_user->ID."' LIMIT 1");
+			// rencDiv USER VAR
+			$rencDiv['action'] = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' LIMIT 1");
+			$rencDiv['mpause'] = '';
 			if(empty($rencOpt['paus'])) {
-				$a = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' and t_action REGEXP ',pause1,|,pause2,' LIMIT 1");
-				if($a && strpos($a,',pause2,')!==false) $rencDiv['mpause'] = 'pause2';
-				else if($a && strpos($a,',pause1,')!==false) $rencDiv['mpause'] = 'pause1';
+				if(strpos($rencDiv['action'],',pause2,')!==false) $rencDiv['mpause'] = 'pause2';
+				else if(strpos($rencDiv['action'],',pause1,')!==false) $rencDiv['mpause'] = 'pause1';
 			}
+			$rencDiv['istatus'] = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$current_user->ID." LIMIT 1");
+			$rencDiv['rencBlock'] = rencistatus($rencDiv['istatus'],0); // (($rencDiv['istatus']==1 || $rencDiv['istatus']==3)?1:0); // blocked
+			$rencDiv['pacam'] = false;
+			$rencDiv['pacas'] = false;
+			$rencDiv['titann'] = $wpdb->get_var("SELECT
+					user_id 
+				FROM ".$wpdb->prefix."rencontre_users_profil
+				WHERE
+					user_id='".$current_user->ID."' and
+					CHAR_LENGTH(t_titre)>4 and
+					CHAR_LENGTH(t_annonce)>30
+				LIMIT 1"); // return null or user_id
+			if(!empty($rencOpt['pacamsg']) || !empty($rencOpt['pacasig'])) {
+				if(!$rencDiv['titann']) $a = true; // photo & attention-catcher & ad ; null => OK
+				else $a = (($wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$current_user->ID."' LIMIT 1"))?false:true);
+				$rencDiv['pacam'] = (!empty($rencOpt['pacamsg']))?$a:false;
+				$rencDiv['pacas'] = (!empty($rencOpt['pacasig']))?$a:false;
+			}
+			//
 			$Prenc = (!empty($_POST[$Lrenc])?rencSanit($_POST[$Lrenc],'alphanum'):'');
 			$Grenc = (!empty($_GET[$Lrenc])?rencSanit($_GET[$Lrenc],'alphanum'):'');
 			$Pnouveau = (!empty($_POST['nouveau'])?rencSanit($_POST['nouveau'],'alphanum'):'');
@@ -377,26 +392,26 @@ class Rencontre {
 							user_id='".$current_user->ID."'
 						LIMIT 1
 						");
-					if(($q && $q->c_ville) || (isset($rencCustom['place']) && $q)) $_SESSION['rencontre']='nouveau2';
-					else if($q) $_SESSION['rencontre']='nouveau1';
-					else $_SESSION['rencontre']='nouveau';
+					if(($q && $q->c_ville) || (isset($rencCustom['place']) && $q)) $_SESSION['rencontre'] = 'nouveau2';
+					else if($q) $_SESSION['rencontre'] = 'nouveau1';
+					else $_SESSION['rencontre'] = 'nouveau';
 				}
 				else {
-					if($Pnouveau=='1' && isset($rencCustom['place'])) $_SESSION['rencontre']='nouveau2';
-					else if($Pnouveau=='1') $_SESSION['rencontre']='nouveau1';
-					else if($Pnouveau=='2') $_SESSION['rencontre']='nouveau2';
+					if($Pnouveau=='1' && isset($rencCustom['place'])) $_SESSION['rencontre'] = 'nouveau2';
+					else if($Pnouveau=='1') $_SESSION['rencontre'] = 'nouveau1';
+					else if($Pnouveau=='2') $_SESSION['rencontre'] = 'nouveau2';
 				}
 			}
 			else if(empty($spot) && !isset($_GET[$Lidf])) { // my home page & after registration part3
-				$_SESSION['rencontre']='mini,accueil,menu';
+				$_SESSION['rencontre'] = 'mini,accueil,menu';
 				$Pnouveau = (isset($_POST['nouveau'])?rencSanit($_POST['nouveau'],'alphanum'):'');
 				if($Pnouveau=='OK') {
-					$_SESSION['rencontre']='edit,menu';
+					$_SESSION['rencontre'] = 'edit,menu';
 					self::rencIniUser();
 				}
 			}
 			else if($hopage) $_SESSION['rencontre'] = $hopage;
-			else if($spot==$Lpaswd) $_SESSION['rencontre']='mini,accueil,menu,paswd';
+			else if($spot==$Lpaswd) $_SESSION['rencontre'] = 'mini,accueil,menu,paswd';
 			else if($spot==$Lfin) {
 				$photo = self::f_img((($current_user->ID)*10).'-libre',2);
 				if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg')) {
@@ -412,19 +427,20 @@ class Rencontre {
 				}
 			}
 			else if($spot==$Lcard) {
-				if(!empty($rencDiv['mpause']) && $Gid!=$current_user->ID) $_SESSION['rencontre']='mini,accueil,menu,'.$rencDiv['mpause'];
-				else $_SESSION['rencontre']='card,menu';
+				if(!empty($rencDiv['mpause']) && $Gid!=$current_user->ID) $_SESSION['rencontre'] = 'mini,accueil,menu,'.$rencDiv['mpause'];
+				else $_SESSION['rencontre'] = 'card,menu';
 			}
-			else if($spot==$Lsourire) $_SESSION['rencontre']='card,menu,sourire';
-			else if($spot==$Ldemcont) $_SESSION['rencontre']='card,menu,demcont';
-			else if($spot==$Lsignale) $_SESSION['rencontre']='card,menu,signale';
-			else if($spot==$Lbloque) $_SESSION['rencontre']='card,menu,bloque';
-			else if($spot==$LfavoriAdd) $_SESSION['rencontre']='card,menu,favoriAdd';
-			else if($spot==$LfavoriDel) $_SESSION['rencontre']='card,menu,favoriDel';
-			else if($spot==$Ledit) $_SESSION['rencontre']='edit,menu';
-			else if($spot==$Lgsearch) $_SESSION['rencontre']='gsearch,accueil,menu';
+			else if($spot==$Lsourire) $_SESSION['rencontre'] = 'card,menu,sourire';
+			else if($spot==$Ldemcont) $_SESSION['rencontre'] = 'card,menu,demcont';
+			else if($spot==$Lsignale) $_SESSION['rencontre'] = 'card,menu,signale';
+			else if($spot==$Lbloque) $_SESSION['rencontre'] = 'card,menu,bloque';
+			else if($spot==$LfavoriAdd) $_SESSION['rencontre'] = 'card,menu,favoriAdd';
+			else if($spot==$LfavoriDel) $_SESSION['rencontre'] = 'card,menu,favoriDel';
+			else if($spot==$Ledit) $_SESSION['rencontre'] = 'edit,menu';
+			else if($spot==$Lgsearch) $_SESSION['rencontre'] = 'gsearch,accueil,menu';
 			else if($spot==$Lqsearch) { // Quick Search result
-				$_SESSION['rencontre']='qsearch,accueil,menu';
+				$blockQSearch = false; if(is_numeric($Gid) && has_filter('rencLimitedActionP')) $blockQSearch = apply_filters('rencLimitedActionP', array('qsearch',0,0)); // security - Already done before
+				$_SESSION['rencontre'] = ($blockQSearch?'mini,accueil,menu':'qsearch,accueil,menu');
 				if(isset($_COOKIE['searchmem'.$current_user->ID])) $mem = json_decode(base64_decode($_COOKIE['searchmem'.$current_user->ID]),true);
 				$mem = array(
 					'zage_min'=>(isset($_GET[$Lagemin])?rencSanit($_GET[$Lagemin],'int'):''),
@@ -445,7 +461,8 @@ class Rencontre {
 				setcookie('searchmem'.$current_user->ID, base64_encode(json_encode($mem)), time()+(86400*90), '/'); // 90 days
 			}
 			else if($spot==$Lliste) { // Search result
-				$_SESSION['rencontre']='gsearch,liste,accueil,menu';
+				$blockSearch = false; if(has_filter('rencLimitedActionP')) $blockSearch = apply_filters('rencLimitedActionP', array('search',0,0)); // security - Already done before
+				$_SESSION['rencontre'] = ($blockSearch?'mini,accueil,menu':'gsearch,liste,accueil,menu');
 				// $mem : array(zage_min, zage_max, size_min, size_max, weight_min, weight_max, zsex, country, region, city, gps, km, photo, relation)
 				$mem = array(
 					'zage_min'=>(isset($_GET[$Lagemin])?rencSanit($_GET[$Lagemin],'int'):''),
@@ -465,15 +482,21 @@ class Rencontre {
 					);
 				setcookie('searchmem'.$current_user->ID, base64_encode(json_encode($mem)), time()+(86400*90), '/'); // 90 days
 			}
-			else if($spot==$Lmsg) $_SESSION['rencontre']='msg,accueil,menu';
-			else if($spot==$Lwrite) $_SESSION['rencontre']='write,accueil,menu';
-			else if($spot==$Laccount) $_SESSION['rencontre']='account,accueil,menu';
+			else if($spot==$Lmsg) $_SESSION['rencontre'] = 'msg,accueil,menu';
+			else if($spot==$Lwrite) $_SESSION['rencontre'] = 'write,accueil,menu';
+			else if($spot==$Laccount) $_SESSION['rencontre'] = 'account,accueil,menu';
 			else if($spot=='pause') {
 				rencPause($Ppause,$current_user->ID);
-				$_SESSION['rencontre']='account,accueil,menu';
+				$_SESSION['rencontre'] = 'account,accueil,menu';
 			}
-			else if($spot=='c1') $_SESSION['rencontre']='custom1,accueil,menu';
-			else if($spot=='c2') $_SESSION['rencontre']='custom2,accueil,menu';
+			else if($spot=='c1') $_SESSION['rencontre'] = 'custom1,accueil,menu';
+			else if($spot=='c2') $_SESSION['rencontre'] = 'custom2,accueil,menu';
+			// avoid direct access to profile via bookmarks if not allowed
+			if($Gid!=$current_user->ID && strstr($_SESSION['rencontre'],'card')) {
+				$noProfile = false; if(has_filter('rencLimitedActionP')) $noProfile = apply_filters('rencLimitedActionP', array('profil',0,$Gid));
+				if($noProfile) $_SESSION['rencontre'] = 'mini,accueil,menu';
+			}
+			//
 			require(dirname (__FILE__).'/inc/rencontre_widget.php');
 			if(!empty($rencOpt['fastreg'])) { // 0 or 1
 				$rencOpt['fastreg'] = 1; // string to int
@@ -570,7 +593,7 @@ class Rencontre {
 			if(!wp_style_is('rencontre') && !empty($tdir['original'])) $out .= '<link rel="stylesheet" href="'.plugins_url('rencontre/css/rencontre.css').'" />'."\r\n";
 		}
 		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cache_portraits_accueil'.($atts['gen']?$atts['gen']:'').'.html')) {
-			$ho = false; if(has_filter('rencAds3P', 'f_rencAds3P')) $ho = apply_filters('rencAds3P', $ho);
+			$ho = false; if(has_filter('rencAds3P')) $ho = apply_filters('rencAds3P', $ho);
 			if($ho) $out .= $ho."\r\n";
 			$wlm = (!empty($rencOpt['wlibre'])?$rencOpt['wlibre']:200);
 			$ws = (!empty($rencOpt['wslibre'])?$rencOpt['wslibre']:128);
@@ -723,6 +746,7 @@ class Rencontre {
 			$c = 0; $ids = array();
 			if($q) foreach($q as $u) {
 				$ids[] = intval($u->ID);
+				//
 				$ad = substr(stripslashes($u->t_annonce),0,180);
 				preg_match('`\w(?:[-_.]?\w)*@\w(?:[-_.]?\w)*\.(?:[a-z]{2,4})`', $ad, $m);
 				$m[0] = (isset($m[0])?$m[0]:'');
@@ -731,17 +755,22 @@ class Rencontre {
 				$ad = str_replace(',', ', ', $ad);
 				$ad = strtr($ad, "0123456789#(){[]}", ".................");
 				$u->annonce = mb_substr($ad,0,150,'UTF-8').'...';
-				$ca = stripslashes($u->t_titre);
+				//
+				$ca = trim(stripslashes($u->t_titre));
 				preg_match('`\w(?:[-_.]?\w)*@\w(?:[-_.]?\w)*\.(?:[a-z]{2,4})`', $ca, $m);
 				$m[0] = (isset($m[0])?$m[0]:'');
 				$ca = str_replace(array($m[0]), array(''), $ca);
 				$ca = str_replace(', ', ',', $ca);
 				$ca = str_replace(',', ', ', $ca);
-				if(!empty($rencOpt['nbr']['lengthTitle']) && strlen($ca)>$rencOpt['nbr']['lengthTitle']) $ca = substr(trim($ca), 0, $rencOpt['nbr']['lengthTitle']).'...';
-				$u->title = strtr($ca, "0123456789#(){[]}", ".................");
-				$m = (!empty($rencOpt['nbr']['lengthName'])?intval($rencOpt['nbr']['lengthName']):50);
-				$u->display_name = substr($u->display_name,0,$m);
-				$photo = false; if(has_filter('rencBlurLibreP', 'f_rencBlurLibreP')) $photo = apply_filters('rencBlurLibreP', $u->ID);
+				$ca = strtr($ca, "0123456789#(){[]}", ".................");
+				$nbt = (!empty($rencOpt['nbr']['lengthTitle'])?$rencOpt['nbr']['lengthTitle']:30);
+				if(strlen($ca)>$nbt) $ca = mb_substr($ca,0,$nbt,'UTF-8').'...';
+				$u->title = $ca;
+				//
+				$nbn = (!empty($rencOpt['nbr']['lengthName'])?intval($rencOpt['nbr']['lengthName']):50);
+				$u->display_name = mb_substr($u->display_name,0,$nbn,'UTF-8');
+				//
+				$photo = false; if(has_filter('rencBlurLibreP')) $photo = apply_filters('rencBlurLibreP', $u->ID);
 				if(empty($photo)) $photo = self::f_img((($u->ID)*10).'-libre',2); // (($u->ID)*10).'-libre';
 				$u->librePhoto = $rencDiv['baseurl'].'/portrait/libre/'.$photo.'.jpg';
 				$u->libreID = $c;
@@ -782,7 +811,7 @@ class Rencontre {
 			$out .= '</div>'."\r\n"; // margin left right -8px
 			$out .= '</div><!-- #widgRenc -->'."\r\n";
 			$out .= $sc;
-			$ho = false; if(has_filter('rencAds4P', 'f_rencAds4P')) $ho = apply_filters('rencAds4P', $ho);
+			$ho = false; if(has_filter('rencAds4P')) $ho = apply_filters('rencAds4P', $ho);
 			if($ho) $out .= $ho;
 			if(has_filter('rencFicheLibre')) $out = apply_filters('rencFicheLibre', $atts, $out);
 			file_put_contents($rencDiv['basedir'].'/portrait/cache/cache_portraits_accueil'.$atts['gen'].'.html', $out);
@@ -944,10 +973,10 @@ class Rencontre {
 		}
 	}
 	//
-	static function f_img($img,$f=0) { // $f = 1 : ENCODE or DECODE ALL in base - $f = 2 : No Filter
+	static function f_img($img,$f=0) { // ENCODE only - $f = 1 : ALL in base - $f = 2 : No Filter
 		global $rencOpt;
 		$ho = false;
-		if(!$f && has_filter('rencImgP', 'f_rencImgP')) $ho = apply_filters('rencImgP',$img);
+		if(!$f && has_filter('rencImgP')) $ho = apply_filters('rencImgP',$img);
 		if($ho) return $ho;
 		//
 		if($f==1 || !empty($rencOpt['imcode'])) {

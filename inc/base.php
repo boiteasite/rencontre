@@ -1064,7 +1064,7 @@ function update_rencontre_options($P) {
 		if(!empty($P['mailfo'])) $rencOpt['mailfo'] = 1; else unset($rencOpt['mailfo']);
 	}
 	else if($Grenctab=='pre') {
-		if(has_filter('rencSaveOptP', 'f_rencSaveOptP')) $rencOpt = apply_filters('rencSaveOptP', $rencOpt, $P);
+		if(has_filter('rencSaveOptP')) $rencOpt = apply_filters('rencSaveOptP', $rencOpt, $P);
 	}
 	if(isset($rencOpt['page_id'])) unset($rencOpt['page_id']);
 	if(isset($rencOpt['for'])) unset($rencOpt['for']);
@@ -1112,7 +1112,7 @@ function rencMenuGeneral() {
 			<a href="admin.php?page=rencontre.php&renctab=mel" class="nav-tab<?php if($Grenctab=='mel') echo ' nav-tab-active'; ?>"><?php _e('E-mails', 'rencontre'); ?></a>
 			<a href="admin.php?page=rencontre.php&renctab=csv" class="nav-tab<?php if($Grenctab=='csv') echo ' nav-tab-active'; ?>"><?php _e('CSV', 'rencontre'); ?></a>
 		<?php $hoPre = false;
-		if(has_filter('rencPremiumOptP', 'f_rencPremiumOptP')) $hoPre = apply_filters('rencPremiumOptP', 1);
+		if(has_filter('rencPremiumOptP')) $hoPre = apply_filters('rencPremiumOptP', 1);
 		if($hoPre) { ?>
 			
 			<a href="admin.php?page=rencontre.php&renctab=pre" class="nav-tab<?php if($Grenctab=='pre') echo ' nav-tab-active'; ?>"><?php _e('Premium', 'rencontre'); ?></a>
@@ -1636,7 +1636,7 @@ function rencTabCsv() {
 function rencTabPre() {
 	if(!current_user_can("administrator")) die;
 	$hoPre = false;
-	if(has_filter('rencPremiumOptP', 'f_rencPremiumOptP')) $hoPre = apply_filters('rencPremiumOptP', $hoPre);
+	if(has_filter('rencPremiumOptP')) $hoPre = apply_filters('rencPremiumOptP', $hoPre);
 	if($hoPre) echo $hoPre;
 }
 function rencMenuMembres() {
@@ -1669,29 +1669,28 @@ function rencMenuMembres() {
 		<div id="bulle"></div>
 		<div class='icon32' id='icon-options-general'><br/></div>
 		<h2>Rencontre&nbsp;<span style='font-size:60%;'><?php echo $rencVersion; ?></span></h2>
-		<h2><?php _e('Members', 'rencontre'); ?></h2>
 		<?php 
-		rencGenderMix(); // Members with default gender mixed with members with custom gender
-		$nm = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_users");
-		$np = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_users R, ".$wpdb->prefix."rencontre_users_profil P WHERE R.user_id=P.user_id AND R.i_photo>0 AND CHAR_LENGTH(P.t_titre)>4 AND CHAR_LENGTH(P.t_annonce)>30");
-		$nl = 0; $d = $rencDiv['basedir'].'/session/';
-		if($dh=opendir($d)) {
-			while(($file = readdir($dh))!==false) if($file!='.' && $file!='..' && filemtime($d.$file)>time()-180) ++$nl;
-			closedir($dh);
-		}
-		echo '<p style="color:#D54E21;">'.__('Number of registered members','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$nm.'</span></p>';
-		echo '<p style="color:#D54E21;">'.__('Number of members with profile and photo','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$np.'</span></p>';
-		echo '<p style="color:#D54E21;">'.__('Online now','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$nl.'</span>';
-		$ng = false; if(has_filter('rencNbGeoP', 'f_rencNbGeoP')) $ng = apply_filters('rencNbGeoP', $nm); if($ng) echo $ng;
-		echo '</p>';
-		echo "\r\n".'<script src="'.plugins_url('rencontre/js/jquery.flot.min.js').'"></script>'."\r\n";
-		echo '<script src="'.plugins_url('rencontre/js/jquery.flot.time.min.js').'"></script>'."\r\n";
-		$hostat = ''; if(has_filter('rencStatP', 'f_rencStatP')) $hostat = apply_filters('rencStatP', $hostat);
-		echo '<div class="button-primary" onClick="rencStat()">'.__('Statistic','rencontre').'</div><div id="rencStat" style="display:none;"><div id="rencStat1" style="float:left;height:300px;width:600px;"></div><div id="rencStat2" style="float:left;height:300px;width:400px;"></div>'.$hostat.'</div><div style="clear:left;"></div>';
 		// 1. ALL MEMBERS
 		if(empty($Gid)) { ?>
 		
-			<?php 
+			<h2><?php _e('Members', 'rencontre'); ?></h2>
+			<?php rencGenderMix(); // Members with default gender mixed with members with custom gender
+			$nm = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_users");
+			$np = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_users R, ".$wpdb->prefix."rencontre_users_profil P WHERE R.user_id=P.user_id AND R.i_photo>0 AND CHAR_LENGTH(P.t_titre)>4 AND CHAR_LENGTH(P.t_annonce)>30");
+			$nl = 0; $d = $rencDiv['basedir'].'/session/';
+			if($dh=opendir($d)) {
+				while(($file = readdir($dh))!==false) if($file!='.' && $file!='..' && filemtime($d.$file)>time()-180) ++$nl;
+				closedir($dh);
+			}
+			echo '<p style="color:#D54E21;">'.__('Number of registered members','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$nm.'</span></p>';
+			echo '<p style="color:#D54E21;">'.__('Number of members with profile and photo','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$np.'</span></p>';
+			echo '<p style="color:#D54E21;">'.__('Online now','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$nl.'</span>';
+			$ng = false; if(has_filter('rencNbGeoP')) $ng = apply_filters('rencNbGeoP', $nm); if($ng) echo $ng;
+			echo '</p>';
+			echo "\r\n".'<script src="'.plugins_url('rencontre/js/jquery.flot.min.js').'"></script>'."\r\n";
+			echo '<script src="'.plugins_url('rencontre/js/jquery.flot.time.min.js').'"></script>'."\r\n";
+			$hostat = ''; if(has_filter('rencStatP')) $hostat = apply_filters('rencStatP', $hostat);
+			echo '<div class="button-primary" onClick="rencStat()">'.__('Statistic','rencontre').'</div><div id="rencStat" style="display:none;"><div id="rencStat1" style="float:left;height:300px;width:600px;"></div><div id="rencStat2" style="float:left;height:300px;width:400px;"></div>'.$hostat.'</div><div style="clear:left;"></div>';
 			$q = $wpdb->get_results("SELECT
 					U.ID,
 					U.user_login
@@ -1722,7 +1721,7 @@ function rencMenuMembres() {
 			<input type="hidden" name="tok" value="<?php echo $rencToka; ?>" />
 		</form>
 			<?php
-			$ho = false; if(has_filter('rencMurP', 'f_rencMurP')) $ho = apply_filters('rencMurP', $ho); if($ho) echo $ho;
+			$ho = false; if(has_filter('rencMurP')) $ho = apply_filters('rencMurP', $ho); if($ho) echo $ho;
 			if($Pa1 && !empty($_REQUEST['tok']) && wp_verify_nonce($_REQUEST['tok'],'rencToka')) {
 				if($Pa2=='b0' || $Pa2=='b1' || $Pa2=='m0' || $Pa2=='m1') {
 					// Status : blocked = +1 ; no message = +2 ; (both : 3) ; fastreg : 4
@@ -1747,8 +1746,8 @@ function rencMenuMembres() {
 				}
 			}
 			$tri = "";
-			$hoUsr = false; if(has_filter('rencMemP', 'f_rencMemP')) $hoUsr = apply_filters('rencMemP', 1); // ouput : array()
-			$hoip = false; if(has_filter('rencMemipP', 'f_rencMemipP')) $hoip = apply_filters('rencMemipP', 0); // 0 : title
+			$hoUsr = false; if(has_filter('rencMemP')) $hoUsr = apply_filters('rencMemP', 1); // ouput : array()
+			$hoip = false; if(has_filter('rencMemipP')) $hoip = apply_filters('rencMemipP', 0); // 0 : title
 			if(!empty($Gtri)) {
 				$p = 'c_pays';
 				if(isset($rencCustom['pays']) && isset($rencCustom['region'])) $p = 'c_ville';
@@ -1850,7 +1849,7 @@ function rencMenuMembres() {
 				</tr>
 			<?php
 			$categ="";
-			$jailaction = 0; if(has_filter('rencJailActionP', 'f_rencJailActionP')) $jailaction = 1;
+			$jailaction = 0; if(has_filter('rencJailActionP')) $jailaction = 1;
 			foreach($q as $s) {
 				if($hoip) $hoip2 = apply_filters('rencMemipP', array($s->user_email,$s->t_action,$s->ID,$rencDrap));
 				$q1 = $wpdb->get_row("SELECT
@@ -1882,8 +1881,8 @@ function rencMenuMembres() {
 				echo '</td>';
 				// Photo
 				echo '<td><a href="admin.php?page=rencmembers&id='.$s->ID.'" title="'.__('See','rencontre').'"><img class="tete" src="'.($s->i_photo!=0?$rencDiv['baseurl'].'/portrait/'.floor(($s->ID)/1000).'/'.Rencontre::f_img((($s->ID)*10).'-mini').'.jpg?r='.rand().'" alt="" /></a></td>':plugins_url('rencontre/images/no-photo60.jpg').'" alt="'.$s->display_name.'" /></td>');
-				$cert = ''; if(has_filter('rencCertifiedP', 'f_rencCertifiedP')) $cert = apply_filters('rencCertifiedP', array($s->ID, 4, $s->t_action));
-				echo '<td>'.$s->user_login.'<br /><i>'.$s->display_name.'</i>' . $cert.'</td>';
+				$cert = ''; if(has_filter('rencCertifiedP')) $cert = apply_filters('rencCertifiedP', array($s->ID, 4, $s->t_action));
+				echo '<td><div style="word-break:break-all;font-size:90%">'.$s->user_login.'<br /><i>'.$s->display_name.'</i>' . $cert.'</div></td>';
 				// Sex
 				if($s->i_sex==0) echo '<td><img class="imgsex" src="'.plugins_url('rencontre/images/men32.png').'" alt="'.$rencOpt['iam'][$s->i_sex].'" title="'.$rencOpt['iam'][$s->i_sex].'" /></td>';
 				else if($s->i_sex==1) echo '<td><img class="imgsex" src="'.plugins_url('rencontre/images/girl32.png').'" alt="'.$rencOpt['iam'][$s->i_sex].'" title="'.$rencOpt['iam'][$s->i_sex].'" /></td>';
@@ -2047,7 +2046,7 @@ function rencMenuMembres() {
 			$pause = (strpos($s->t_action,',pause2,')!==false?2:(strpos($s->t_action,',pause1,')!==false?1:0));
 			?>
 			
-			<h3><?php _e('Change a Profile','rencontre');?></h3>
+			<h2><?php _e('Members', 'rencontre'); ?>&nbsp;-&nbsp;<?php _e('Change a Profile','rencontre');?></h2>
 			<div class="bouton"><a href="javascript:void(0)" onclick="javascript:history.back();"><?php _e('Previous page','rencontre');?></a></div>
 			<?php if(has_filter('rencModerEmail')) apply_filters('rencModerEmail', array('ID'=>$id,'user_email'=>$s->user_email,'display_name'=>$s->display_name)); ?>
 			<div class="rencPortrait">
@@ -2153,7 +2152,7 @@ function rencMenuMembres() {
 								<p style="line-height:1em;">
 									<input id="rencVille" name="ville" type="text" size="18" value="<?php echo $s->c_ville; ?>" <?php if(function_exists('wpGeonames')) echo 'onkeyup="f_city(this.value,\''.admin_url('admin-ajax.php').'\','.(!isset($rencCustom['country'])?'document.getElementById(\'rencPays\').options[document.getElementById(\'rencPays\').selectedIndex].value':'\''.$s->c_pays.'\'').',0);"'; ?> />
 									<br /><?php _e('Reset GPS','rencontre'); ?> <input type="checkbox" name="resetgps" style="width:auto;margin:0;padding:0;" value="1" />
-									<br /><em style="display:block;text-align:right;margin-top:-5px;font-size:.8em;letter-spacing:-1px;color:#888;"><?php echo $s->e_lat.'|'.$s->e_lon ?></em>
+									<em style="display:inline-block;text-align:right;margin-top:-1px;font-size:.8em;letter-spacing:-1px;color:#888;"><?php echo $s->e_lat.'|'.$s->e_lon ?></em>
 								</p>
 							</div>
 						<?php } ?>
@@ -2273,7 +2272,7 @@ function rencMenuMembres() {
 							</div>
 						<?php } ?>
 						<?php
-							$ho = false; if(has_filter('rencCertifiedP', 'f_rencCertifiedP')) $ho = apply_filters('rencCertifiedP', array($id, 0, $s->t_action));
+							$ho = false; if(has_filter('rencCertifiedP')) $ho = apply_filters('rencCertifiedP', array($id, 0, $s->t_action));
 							if($ho) echo '<div class="compte">'.$ho.'</div>';
 						?>
 						
@@ -2348,7 +2347,7 @@ function rencMenuMembres() {
 						</div>
 					</div>
 					<?php
-					$portraitPlus = ''; if(has_filter('rencPortraitPlusEditP', 'f_rencPortraitPlusEditP')) $portraitPlus = apply_filters('rencPortraitPlusEditP', $s);
+					$portraitPlus = ''; if(has_filter('rencPortraitPlusEditP')) $portraitPlus = apply_filters('rencPortraitPlusEditP', $s);
 					echo $portraitPlus;
 					?>
 					
@@ -3346,7 +3345,7 @@ function rencTabSea() {
 				</td>
 			</tr>
 			<?php $ho = false;
-			if(has_filter('rencProfilSaP', 'f_rencProfilSaP')) $ho = apply_filters('rencProfilSaP', $p3);
+			if(has_filter('rencProfilSaP')) $ho = apply_filters('rencProfilSaP', $p3);
 			if($ho) echo $ho;
 			else { ?>
 			<tr>
@@ -3587,7 +3586,7 @@ function rencTabTem() {
 				</td>
 			</tr>
 			<?php $ho = false;
-			if(has_filter('rencCustomColorP', 'f_rencCustomColorP')) $ho = apply_filters('rencCustomColorP', array($w3renc,$w3rencDef));
+			if(has_filter('rencCustomColorP')) $ho = apply_filters('rencCustomColorP', array($w3renc,$w3rencDef));
 			if($ho) echo $ho;
 			?>
 			
@@ -3669,18 +3668,20 @@ function rencTabTem() {
 			<th><?php _e('Theme version','rencontre') ?></th>
 		</tr>
 	<?php
+		$rencTdir = rencTplDir(1);
 		if(empty($tdir)) $tdir = rencTplDir();
-		if(is_dir($tdir['path']) && $h=opendir($tdir['path'])) {
+		if($tdir==$rencTdir) $tdir = 0;
+		if(is_dir($rencTdir['path']) && $h=opendir($rencTdir['path'])) {
 			$d = array();
 			while(false!==($f=readdir($h))) {
-				if($f!='.' && $f!='..' && is_file($tdir['path'].$f)) $d[] = $f;
+				if($f!='.' && $f!='..' && is_file($rencTdir['path'].$f)) $d[] = $f;
 			}
 			closedir($h);
 		}
 		if(!empty($d)) {
 			sort($d);
 			foreach($d as $r) {
-				$q = file_get_contents($tdir['path'].$r, false, null, 0, 300);
+				$q = file_get_contents($rencTdir['path'].$r, false, null, 0, 300);
 				$a = '?'; $b = '/';
 				$a1 = strpos($q, '* Last Change :');
 				if($a1) {
@@ -3689,6 +3690,17 @@ function rencTabTem() {
 				}
 				if(file_exists(get_stylesheet_directory().'/templates/'.$r)) {
 					$q = file_get_contents(get_stylesheet_directory().'/templates/'.$r, false, null, 0, 300);
+					$a1 = strpos($q, '* Last Change :');
+					if($a1) {
+						$a2 = strpos(substr($q,$a1+15,30), '*');
+						if($a2) {
+							$b = trim(substr($q,$a1+15,$a2));
+							if($b!=$a) $b = '<span style="color:brown;">'.$b.'</span>';
+						}
+					}
+				}
+				else if($tdir && file_exists($tdir['path'].$r)) {
+					$q = file_get_contents($tdir['path'].$r, false, null, 0, 300);
 					$a1 = strpos($q, '* Last Change :');
 					if($a1) {
 						$a2 = strpos(substr($q,$a1+15,30), '*');
@@ -3730,7 +3742,7 @@ function rencTabTem() {
 			<td><?php echo $a; ?></td>
 			<td><?php echo $b; ?></td>
 		</tr>
-		<?php $ho = false; if(has_filter('rencTempListaP', 'f_rencTempListaP')) $ho = apply_filters('rencTempListaP', $ho); if($ho) echo $ho; ?>
+		<?php $ho = false; if(has_filter('rencTempListaP')) $ho = apply_filters('rencTempListaP', $ho); if($ho) echo $ho; ?>
 	
 	</table>
 <?php
@@ -3821,7 +3833,7 @@ function f_update_custom($P) {
 		if(!empty($P['searchAd'])) $a['searchAd'] = 1; else unset($a['searchAd']);
 		if(!empty($P['profilQS1'])) $a['profilQS1'] = rencSanit($P['profilQS1'],'alphanum'); else unset($a['profilQS1']);
 		if(!empty($P['profilQS2'])) $a['profilQS2'] = rencSanit($P['profilQS2'],'alphanum'); else unset($a['profilQS2']);
-		if(has_filter('rencProfilS2aP', 'f_rencProfilS2aP')) $a = apply_filters('rencProfilS2aP', $P, $a);
+		if(has_filter('rencProfilS2aP')) $a = apply_filters('rencProfilS2aP', $P, $a);
 	}
 	else if($Grenctab=='tem') {
 		if(!empty($P['mebg'])) $a['mebg'] = rencSanit($P['mebg'],'alphanum'); else unset($a['mebg']);
@@ -3839,7 +3851,7 @@ function f_update_custom($P) {
 		if(!empty($P['msbs'])) $a['msbs'] = rencSanit($P['msbs'],'alphanum'); else unset($a['msbs']);
 		if(!empty($P['msbr'])) $a['msbr'] = rencSanit($P['msbr'],'alphanum'); else unset($a['msbr']);
 		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
-		if(has_filter('rencCustomColorSP', 'f_rencCustomColorSP')) $a = apply_filters('rencCustomColorSP', $P, $a);
+		if(has_filter('rencCustomColorSP')) $a = apply_filters('rencCustomColorSP', $P, $a);
 	}
 	$rencOpt['custom'] = json_encode($a);
 	$for = $rencOpt['for']; $iam = $rencOpt['iam'];
@@ -3924,7 +3936,7 @@ function sauvProfilAdm($in,$id) {
 	if($Pannonce) $a['t_annonce'] = $Pannonce;
 	$a['t_profil'] = '['.substr($u, 0, -1).']';
 	$a['t_action'] = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id=".$id." LIMIT 1");
-	if(has_filter('rencCertifiedP', 'f_rencCertifiedP')) $a['t_action'] = apply_filters('rencCertifiedP', array($id, 1, $a['t_action']));
+	if(has_filter('rencCertifiedP')) $a['t_action'] = apply_filters('rencCertifiedP', array($id, 1, $a['t_action']));
 	$action = json_decode($a['t_action'],true);
 	if(empty($action['option'])) $action['option'] = ',';
 	$action['option'] = str_replace(',pause1,', ',', $action['option']);
@@ -4015,8 +4027,8 @@ function renc_encodeImg($f=1) {
 	global $rencDiv, $rencOpt;
 	$size = array("","-mini","-grande","-libre");
 	$nocode = array(); // exclusion
-	if(has_filter('rencImgName', 'f_rencImgName')) $size = apply_filters('rencImgName', $size);
-	if(has_filter('rencImgNoCode', 'f_rencImgNoCode')) $nocode = apply_filters('rencImgNoCode', $nocode);
+	if(has_filter('rencImgName')) $size = apply_filters('rencImgName', $size);
+	if(has_filter('rencImgNoCode')) $nocode = apply_filters('rencImgNoCode', $nocode);
 	if($f) { // ENCODE
 		$a = renc_list_files($rencDiv['basedir'].'/portrait/');
 		foreach($a as $r) {

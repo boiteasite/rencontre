@@ -4,6 +4,7 @@
  * Template : Registration Part 3/3 and 2/2
  * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part3.php
+ * Call : rencontre_widget.php => widget()
  * $u0 (myself) : i_sex, d_naissance, age, agemin, agemax
 */
 ?>

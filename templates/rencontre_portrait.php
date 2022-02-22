@@ -2,8 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.6.7
+ * Last Change : Rencontre 3.7.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
+ * Call : rencontre_widget.php => widget()
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
  * $u0 (myself) : ID
 */
@@ -189,13 +190,13 @@
 			<div class="w3-container">
 				<div id="rencAlert" class="w3-panel w3-renc-wabg" style="display:none"></div>
 				<div class="w3-section">
-
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="if(jQuery(this).children('i').hasClass('fa-angle-up')){jQuery('.btnrar.w3-hide').removeClass('w3-hide');jQuery(this).children('i').removeClass('fa-angle-up').addClass('fa-angle-down')}else{jQuery('.btnrar').addClass('w3-hide');jQuery(this).children('i').removeClass('fa-angle-down').addClass('fa-angle-up')}"><i class="fa fa-angle-up"></i></button>
 				<?php if(!$disable['send']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
 				<?php } else { ?>
 					
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['send']; ?>')" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['send']); ?>')" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
 				<?php } ?>
 				<?php if(empty($rencCustom['smile'])) { ?>
 					<?php if(!$disable['smile']) { ?>
@@ -203,7 +204,7 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['smile']; ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['smile']); ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(empty($rencCustom['creq'])) { ?>
@@ -212,7 +213,7 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['contact']; ?>')" title="<?php echo $title['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['contact']); ?>')" title="<?php echo $title['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(!empty($rencOpt['tchat'])) { ?>
@@ -221,22 +222,22 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['chat']; ?>')" title="<?php echo $title['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['chat']); ?>')" title="<?php echo $title['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(!$disable['block']) { ?>
 
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php if(!$u->blocked->he) _e('Block','rencontre'); else _e('Unblock','rencontre'); ?></button> 
+					<button class="w3-button btnrar w3-hide w3-margin-bottom w3-renc-mebt <?php echo (!$u->blocked->he?'w3-renc-mebo':'w3-renc-mebw'); ?>" onClick="<?php echo $onClick['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php if(!$u->blocked->he) _e('Block','rencontre'); else _e('Unblock','rencontre'); ?></button> 
 				<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['block']; ?>')" title="<?php echo $title['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php _e('Block','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['block']); ?>')" title="<?php echo $title['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php _e('Block','rencontre'); ?></button> 
 				<?php } ?>
 				<?php if(!$disable['report']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['report']; ?>" title="<?php _e('Report a fake profile or inappropriate content','rencontre'); ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
+					<button class="w3-button btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['report']; ?>" title="<?php _e('Report a fake profile or inappropriate content','rencontre'); ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
 				<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo $title['report']; ?>')" title="<?php echo $title['report']; ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['report']); ?>')" title="<?php echo $title['report']; ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
 				<?php } ?>
 				<?php if(!$disable['favori']) { ?>
 					
@@ -246,7 +247,7 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['favoriDel']; ?>" title="<?php _e('Delete from my favorites','rencontre'); ?>"><i class="far fa-star"></i>&nbsp;<?php _e('Favorite','rencontre'); ?>&nbsp;(-)</button> 
 				<?php } ?>
 				<?php if(!empty($buttonPlus)) echo $buttonPlus; ?>
-
+				
 				</div>
 			</div>
 		</div><!-- .w3-card -->

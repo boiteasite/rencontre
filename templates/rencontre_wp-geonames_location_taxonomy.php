@@ -4,6 +4,7 @@
  * Template : WpGeonames Location taxonomy
  * Last Change : Rencontre 3.6.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_wp-geonames_location_taxonomy.php
+ * Call : rencontre_filter.php => renc_wpGeonames_tpl()
  * $data : 0=>country, 1=>region, 2=>city, 3=>lat, 4=>lon
 */
 ?>

@@ -1,12 +1,12 @@
 <?php
 // ******************************************************************************************************************
-// Short loop AJAX call file for the chat. Much faster than using admin-ajax.php
+// Short loop AJAX call file for the chat. Faster than using admin-ajax.php
 // Pilot : rencontre.js
 // ******************************************************************************************************************
 //
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])!='xmlhttprequest') {die;} // ajax request
 if(isset($_POST['tchat'])) {
-	if(empty($_SESSION)) session_start();
+	if(!headers_sent() && empty(session_id())) session_start();
 	if(empty($_POST['c']) || empty($_SESSION['rencTokc']) || $_SESSION['rencTokc']!==$_POST['c']) die;
 	$tc = preg_replace("/[^a-z]+/i", "", $_POST['tchat']);
 	if(isset($_POST['fm'])) $fm = intval($_POST['fm']);
@@ -72,6 +72,7 @@ if(isset($_POST['tchat'])) {
 		$t = fopen($d.$to.'.txt', 'wb'); fwrite($t,'['.$fm.']-',15); fclose($t); // '-' pour > size (scrute)
 		@copy('../images/no-photoCam.jpg', $base.'tchat/cam'.$fm.'-'.$to.'.jpg');
 		@copy('../images/no-photoCam.jpg', $base.'tchat/cam'.$to.'-'.$fm.'.jpg');
+	//	file_put_contents($d.'/check'.$fm.'.txt', $to);
 		clearstatcache();
 		break;
 		// ********************************************************************************************
@@ -113,6 +114,7 @@ if(isset($_POST['tchat'])) {
 				$t = fopen($d.$fm.'.txt', 'w'); fwrite($t,'['.$to.']',15); fclose($t);
 				if(file_exists($base.'tchat/cam'.$to.'-'.$fm.'.jpg') && $r!='['.$to.']-') echo stripslashes($r.chr(127)); // cam chez autre
 				else echo stripslashes($r);
+				file_put_contents($d.'/check'.$fm.'.txt', $to); // both users pass here => 2 files
 			}
 			else echo null;
 			clearstatcache();
@@ -121,7 +123,6 @@ if(isset($_POST['tchat'])) {
 		break;
 		// ********************************************************************************************
 		case 'tchatenvoi':
-		if(!isset($_SESSION['tchatCount'])) $_SESSION['tchatCount'] = $to;
 		if(!is_dir($d)) mkdir($d); $r = "";
 		if(filemtime($d.$to.'.txt')>filemtime($d.$fm.'.txt')) { // envoi mon message en conservant le precedant - pas encore de reponse : deux messages de suite
 			$t = fopen($d.$to.'.txt', 'a+'); fwrite($t,'['.$fm.']'.$ms); fclose($t);

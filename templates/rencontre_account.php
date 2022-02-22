@@ -4,6 +4,7 @@
  * Template : Account
  * Last Change : Rencontre 3.6
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
+ * Call : rencontre_widget.php => f_compte()
  * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert, pause
  * Filter : do_action('rencontre_account', $f, $g) - see below
 */

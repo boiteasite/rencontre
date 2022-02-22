@@ -49,10 +49,9 @@ add_action('wp_ajax_dynSearch', 'f_dynSearch');
 add_action('wp_ajax_gpsnavigator', 'rencGpsNavigator');
 function f_voirMsg() {
 	if(empty($_REQUEST['rencTok']) || !wp_verify_nonce($_REQUEST['rencTok'],'rencTok')) return;
-	$Pho = (isset($_POST['ho'])?rencSanit($_POST['ho'],'text'):false);
 	$Pidmsg = rencSanit($_POST['idmsg'],'int');
 	$Palias = rencSanit($_POST['alias'],'words');
-	RencontreWidget::f_voirMsg($Pidmsg,$Palias,$Pho);
+	RencontreWidget::f_voirMsg($Pidmsg,$Palias);
 	exit;
 }
 function f_miniPortrait2() {
@@ -108,41 +107,44 @@ function f_cron() {
 	}
 	add_filter('wp_setup_nav_menu_item', 'rencMetaMenuItem', 1);
 	//if(!is_user_logged_in()) add_filter('wp_get_nav_menu_items', 'rencHideMenu', null, 3); // hide rencontre items in WP menu
-	global $rencDiv;
-	if(!is_dir($rencDiv['basedir'].'/portrait/')) mkdir($rencDiv['basedir'].'/portrait/');
-	if(!is_dir($rencDiv['basedir'].'/portrait/cache/')) mkdir($rencDiv['basedir'].'/portrait/cache/');
-	if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_liste/');
-	$d = $rencDiv['basedir'].'/portrait/cache/rencontre_cron.txt';
-	$d1 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronOn.txt';
-	$d2 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronListe.txt'; if(!file_exists($d2)) {$t=@fopen($d2,'w'); @fwrite($t,'0'); @fclose($t);}
-	$d3 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronListeOn.txt';
-	$d4 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronBis.txt';
-	global $rencOpt;
-	$t = current_time('timestamp',0); // timestamp local
-	$gmt = time(); // timestamp GMT
-	$hcron = (isset($rencOpt['hcron'])?$rencOpt['hcron']+0:3);
-	$u1 = date("G",$t-3600*$hcron); // heure actuelle(UTC) - heure creuse (+24 si <0) ; ex il est 15h23Z (15), Hcreuse:4h (4) => $u = 15 - 4 = 11;
-	// u1 progresse 21, 22, 23 puis 0 lorsqu'il est l'heure creuse (donc<12). Il reste alors 12 heures pour qu"un visiteur provoque le CRON.
-	if((!file_exists($d) || $gmt>filemtime($d)+43000) && $u1<12) {
-		if(!file_exists($d1) || $gmt>filemtime($d1)+120) {
-			$t=fopen($d1, 'w'); fclose($t); // CRON une seule fois
+	if(has_filter('rencCron')) apply_filters('rencCron', 0);
+	else {
+		global $rencDiv;
+		if(!is_dir($rencDiv['basedir'].'/portrait/')) mkdir($rencDiv['basedir'].'/portrait/');
+		if(!is_dir($rencDiv['basedir'].'/portrait/cache/')) mkdir($rencDiv['basedir'].'/portrait/cache/');
+		if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_liste/');
+		$d = $rencDiv['basedir'].'/portrait/cache/rencontre_cron.txt';
+		$d1 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronOn.txt';
+		$d2 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronListe.txt'; if(!file_exists($d2)) {$t=@fopen($d2,'w'); @fwrite($t,'0'); @fclose($t);}
+		$d3 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronListeOn.txt';
+		$d4 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronBis.txt';
+		global $rencOpt;
+		$t = current_time('timestamp',0); // timestamp local
+		$gmt = time(); // timestamp GMT
+		$hcron = (isset($rencOpt['hcron'])?$rencOpt['hcron']+0:3);
+		$u1 = date("G",$t-3600*$hcron); // heure actuelle(UTC) - heure creuse (+24 si <0) ; ex il est 15h23Z (15), Hcreuse:4h (4) => $u = 15 - 4 = 11;
+		// u1 progresse 21, 22, 23 puis 0 lorsqu'il est l'heure creuse (donc<12). Il reste alors 12 heures pour qu"un visiteur provoque le CRON.
+		if((!file_exists($d) || $gmt>filemtime($d)+43000) && $u1<12) {
+			if(!file_exists($d1) || $gmt>filemtime($d1)+120) {
+				$t=fopen($d1, 'w'); fclose($t); // CRON une seule fois
+				clearstatcache();
+				f_cron_on(0);
+			}
+		}
+		else if(file_exists($d4) && $u1<12 && $gmt>filemtime($d)+3661) {
+			if(!file_exists($d1) || $gmt>filemtime($d1)+120) {
+				$t=fopen($d1, 'w'); fclose($t); // CRON BIS une seule fois, une heure apres CRON
+				clearstatcache();
+				f_cron_on(1); // second passage (travail sur deux passages)
+			}
+		}
+		else if(file_exists($d) && $gmt>filemtime($d)+3661 && $gmt>filemtime($d2)+3661 && $u1<23 && (!file_exists($d3) || $gmt>filemtime($d3)+120)) {
+			$t=fopen($d3, 'w'); fclose($t); // CRON LISTE une seule fois
 			clearstatcache();
-			f_cron_on(0);
+			f_cron_liste($d2); // MSG ACTION
 		}
 	}
-	else if(file_exists($d4) && $u1<12 && $gmt>filemtime($d)+3661) {
-		if(!file_exists($d1) || $gmt>filemtime($d1)+120) {
-			$t=fopen($d1, 'w'); fclose($t); // CRON BIS une seule fois, une heure apres CRON
-			clearstatcache();
-			f_cron_on(1); // second passage (travail sur deux passages)
-		}
-	}
-	else if(file_exists($d) && $gmt>filemtime($d)+3661 && $gmt>filemtime($d2)+3661 && $u1<23 && (!file_exists($d3) || $gmt>filemtime($d3)+120)) {
-		$t=fopen($d3, 'w'); fclose($t); // CRON LISTE une seule fois
-		clearstatcache();
-		f_cron_liste($d2); // MSG ACTION
-	}
-	 //f_cron_on(); // mode force
+	 //if(!file_exists($d1) || $gmt>filemtime($d1)+120) f_cron_on(); // mode force
 	 //f_cron_liste($d2); // mode force
 }
 //
@@ -163,12 +165,16 @@ function f_cron_on($cronBis=0) {
 		$iv = openssl_random_pseudo_bytes(16);
 		$ii = base64_encode($iv);
 	}
-	$bn = get_bloginfo('name');
-	$s1 = ""; // (synthese admin)
+	$blogName = get_bloginfo('name');
 	$cm = 0; // compteur de mail
 	if(!$cronBis) {
 		// 1. Efface les _transient dans wp_option
-		$wpdb->query("DELETE FROM ".$wpdb->prefix."options WHERE option_name like '\_transient\_namespace\_%' OR option_name like '\_transient\_timeout\_namespace\_%' ");
+		$wpdb->query("DELETE
+			FROM ".$wpdb->prefix."options
+			WHERE
+				option_name like '\_transient\_namespace\_%'
+				OR option_name like '\_transient\_timeout\_namespace\_%'
+			");
 		// 2. Suppression fichiers anciens dans UPLOADS/PORTRAIT/LIBRE/ : > 2.9 jours
 		if(!is_dir($rencDiv['basedir'].'/portrait/libre/')) @mkdir($rencDiv['basedir'].'/portrait/libre/');
 		else {
@@ -313,25 +319,28 @@ function f_cron_on($cronBis=0) {
 				WHERE
 					R.c_ip=''
 				");
-			$o = '';
-			if($q) foreach($q as $r) {
-				if(function_exists('openssl_encrypt')) $oo = base64_encode(openssl_encrypt($r->ID.'|'.$r->user_login.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
-				$s = "<div style='text-align:left;margin:5px 5px 5px 10px;font-size:13px;font-family:\"Helvetica Neue\",Helvetica;'>".__('Hello','rencontre')." ".$r->user_login.","."\n";
-				if(isset($rencCustom['relanc']) && isset($rencCustom['relancText']) && $rencCustom['relanc']) $s .= "<br />".nl2br(stripslashes($rencCustom['relancText']))."\n";
+			$mailSubj = '';
+			if($q) foreach($q as $u) {
+				if(has_filter('rencMailRemind')) apply_filters('rencMailRemind', $u);
 				else {
-					$s .= '<p>'.__('You registered on our website but you did not complete the procedure. You\'ll miss a date. That\'s too bad.','rencontre').'</p>';
-					$s .= '<p>'.__('Thus take two minutes to finish the registration. You should not be disappointed.','rencontre').'</p>';
-					$s .= '<p>'.__('Regards,','rencontre').'</p>';
+					if(function_exists('openssl_encrypt')) $oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
+					$remindUrl = htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home']).'?'.$Loo.'='.urlencode($oo).'&'.$Lii.'='.urlencode($ii));
+					// ****** TEMPLATE ********
+					ob_start();
+					if($tpl=rencTpl('rencontre_mail_remind.php')) include $tpl;
+					$s = ob_get_clean();
+					// ************************
+					$s = trim(preg_replace('/\t+/', '', $s)); // remove tab
+					$s = preg_replace('/^\s+|\n|\r|\s+$/m', '', $s); // remove line break
+					$he = array();
+					if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
+						$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
+						$he[] = 'Content-type: text/html; charset=UTF-8';
+						$s = '<html><head></head><body>'.$s.'</body></html>';
+					}
+					if(empty($mailSubj)) $mailSubj = $blogName." - ".__('Registration','rencontre');
+					@wp_mail($u->user_email, $mailSubj, $s, $he);
 				}
-				$s .= '<a href="'.htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home']).'?'.$Loo.'='.urlencode($oo).'&'.$Lii.'='.urlencode($ii)).'">'.__('Login','rencontre').'</a>';
-				$s .= "</div>\n";
-				$he = array();
-				if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
-					$he[] = 'From: '.$bn.' <'.$rencDiv['admin_email'].'>';
-					$he[] = 'Content-type: text/html; charset=UTF-8';
-					$s = '<html><head></head><body>'.$s.'</body></html>';
-				}
-				@wp_mail($r->user_email, $bn." - ".__('Registration','rencontre'), $s, $he);
 				++$cm;
 			}
 		}
@@ -384,20 +393,27 @@ function f_cron_on($cronBis=0) {
 					R.d_naissance LIKE '%".current_time('m-d')."' 
 					".(!empty($rencOpt['mailph'])?'and R.i_photo>0':'')."
 				LIMIT ".floor(max(0, (isset($rencOpt['qmail'])?$rencOpt['qmail']:0)*.1)) );
-			foreach($q as $r) {
-				$s = "<div style='font-family:\"Helvetica Neue\",Helvetica;font-size:13px;text-align:left;margin:5px 5px 5px 10px;'>".__('Hello','rencontre')." ".$r->user_login.","."\n";
-				if(!empty($rencOpt['textanniv']) && strlen($rencOpt['textanniv'])>10) $s .= "<br />".nl2br(stripslashes($rencOpt['textanniv']))."\n";
-				else $s .= "<br />".__('Happy Birthday','rencontre')."&nbsp;".$r->user_login." !\n";
-				$s .= "</div>\n";
-				$he = array();
-				if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
-					$he[] = 'From: '.$bn.' <'.$rencDiv['admin_email'].'>';
-					$he[] = 'Content-type: text/html; charset=UTF-8';
-					$s = '<html><head></head><body>'.$s.'</body></html>';
+			$mailSubj = '';
+			foreach($q as $u) {
+				if(has_filter('rencMailBirthday')) apply_filters('rencMailBirthday', $u);
+				else {
+					// ****** TEMPLATE ********
+					ob_start();
+					if($tpl=rencTpl('rencontre_mail_birthday.php')) include $tpl;
+					$s = ob_get_clean();
+					// ************************
+					$s = trim(preg_replace('/\t+/', '', $s)); // remove tab
+					$s = preg_replace('/^\s+|\n|\r|\s+$/m', '', $s); // remove line break
+					$he = array();
+					if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
+						$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
+						$he[] = 'Content-type: text/html; charset=UTF-8';
+						$s = '<html><head></head><body>'.$s.'</body></html>';
+					}
+					if(empty($mailSubj)) $mailSubj = $blogName." - ".__('Happy Birthday','rencontre');
+					@wp_mail($u->user_email, $mailSubj, $s, $he);
 				}
-				@wp_mail($r->user_email, $bn." - ".__('Happy Birthday','rencontre'), $s, $he);
 				++$cm;
-				$s1 .= $s;
 			}
 		}
 		// 12. Efface une fois par semaine les statistiques du nombre de mail par heure
@@ -452,7 +468,7 @@ function f_cron_on($cronBis=0) {
 			if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
 		}
 	}
-	$q=0;
+	$q = 0;
 	$qq1 = "SELECT 
 			U.ID,
 			U.user_login,
@@ -488,35 +504,30 @@ function f_cron_on($cronBis=0) {
 	
 		// 13.2 boucle de mail
 	$ct=0;
-	if($q) foreach($q as $r) {
+	if($q) foreach($q as $u) {
 		++$ct;
-		$melCountry = (!empty($rencOpt['melctry'])&&!empty($r->c_pays)&&empty($rencCustom['country'])&&empty($rencCustom['place'])?"and R.c_pays='".$r->c_pays."'":"");
-		$action = json_decode($r->t_action,true);
+		$melCountry = (!empty($rencOpt['melctry'])&&!empty($u->c_pays)&&empty($rencCustom['country'])&&empty($rencCustom['place'])?"and R.c_pays='".$u->c_pays."'":"");
+		$action = json_decode($u->t_action,true);
 		if(!empty($rencOpt['mailmois']) && $ct<=$max) {
 			$b = 0;
 			// Connect_link
-			if(function_exists('openssl_encrypt')) $oo = base64_encode(openssl_encrypt($r->ID.'|'.$r->user_login.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
-			// BONJOUR
-			$s = "<div style='font-family:\"Helvetica Neue\",Helvetica;font-size:13px;text-align:left;margin:5px 5px 5px 10px;'>".__('Hello','rencontre')."&nbsp;".$r->user_login.",";
-			if(!empty($rencOpt['textmail']) && strlen($rencOpt['textmail'])>10) $s .= "<br />".nl2br(stripslashes($rencOpt['textmail']))."\n";
-			// NBR VISITES
-			if(isset($action['visite'])) $s .= "<p style='font-weight:700;font-size:.9em;'>".__('Your profile has been visited','rencontre')."&nbsp;<span style='color:red;'>".count($action['visite'])."&nbsp;".__('time','rencontre')."</span>.\n</p>";
+			if(function_exists('openssl_encrypt')) $oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
 			// PROPOSITIONS
-			$zmin=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$r->i_zage_min));
-			$zmax=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$r->i_zage_max));
+			$zmin=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$u->i_zage_min));
+			$zmax=date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$u->i_zage_max));
 			// Selection par le sex
 			$sexQuery = ''; // and R.i_zsex!=0 and R.i_sex=0
 			// 1. SEX
-			if($r->i_zsex==99) $sexQuery .= " and R.i_sex IN (".substr($r->c_zsex,1,-1).") ";
-			else $sexQuery .= " and R.i_sex=".$r->i_zsex." ";
+			if($u->i_zsex==99) $sexQuery .= " and R.i_sex IN (".substr($u->c_zsex,1,-1).") ";
+			else $sexQuery .= " and R.i_sex=".$u->i_zsex." ";
 			// 2. ZSEX
-			$sexQuery .= " and (R.c_zsex LIKE '%,".$r->i_sex.",%' or R.i_zsex=".$r->i_sex.") "; // multiSR or not (in case of change multiSR by ADMIN but not by users Account)
+			$sexQuery .= " and (R.c_zsex LIKE '%,".$u->i_sex.",%' or R.i_zsex=".$u->i_sex.") "; // multiSR or not (in case of change multiSR by ADMIN but not by users Account)
 			//
-			if($r->i_zrelation!=99) $relQuery = " and (R.i_zrelation=".$r->i_zrelation." or  R.c_zrelation LIKE '%,".$r->i_zrelation.",%') ";
+			if($u->i_zrelation!=99) $relQuery = " and (R.i_zrelation=".$u->i_zrelation." or  R.c_zrelation LIKE '%,".$u->i_zrelation.",%') ";
 			else $relQuery = ''; // pas de else - trop complique sans boucle - ,1,3,6, IN/LIKE/= ,2,3,5,
 			//
 			$qpause = (empty($rencOpt['paus'])?"and (P.t_action NOT REGEXP ',pause1,|,pause2,' or P.t_action IS NULL) ":"");
-			$q1 = $wpdb->get_results("SELECT 
+			$selectionQuery = $wpdb->get_results("SELECT 
 					U.ID, 
 					U.user_login, 
 					R.d_naissance, 
@@ -529,7 +540,7 @@ function f_cron_on($cronBis=0) {
 				INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 					ON P.user_id=U.ID
 				WHERE 
-					U.ID!='".$r->ID."'
+					U.ID!='".$u->ID."'
 					".$sexQuery."
 					".$relQuery."
 					and R.d_naissance<'".$zmin."' 
@@ -539,31 +550,17 @@ function f_cron_on($cronBis=0) {
 					".$qpause."
 				ORDER BY U.user_registered DESC
 				LIMIT ".(!empty($rencOpt['nbr']['mailSelection'])?$rencOpt['nbr']['mailSelection']:4));
-			if($q1) {
-				$b = 1;
-				$s .= "<p style='font-weight:700;font-size:.9em;'>".__('Here\'s a selection of members that may interest you','rencontre')." :</p>";
-				$s .= "<table><tr>";
-				$c = 0;
-				foreach($q1 as $r1) {
-					++$c;
-					$s .= "<td>".rencMailBox($r1,$rencDrap,$oo,$ii)."</td>"."\n";
-					if($c>$mailPerline)
-						{
-						$c = 0;
-						$s .= "</tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>";
-					}
-				}
-				$s .= "</tr></table>"."\n";
+			if($selectionQuery) $b = 1;
+			$smilread = false; $contread = false;
+			if(has_filter('rencLimitedActionP')) {
+				$smilread = apply_filters('rencLimitedActionP', array('smilread',0,$u->ID));
+				$contread = apply_filters('rencLimitedActionP', array('contread',0,$u->ID));
 			}
 			// SOURIRES
 			if(isset($action['sourireIn']) && count($action['sourireIn'])) {
-				$t = "<p style='font-weight:700;font-size:.9em;'>";
-				if(isset($rencCustom['smiw']) && isset($rencCustom['smiw4']) && $rencCustom['smiw'] && $rencCustom['smiw4']) $t .= stripslashes($rencCustom['smiw4']);
-				else $t .= __('You have received a smile from','rencontre');
-				$t .= " :\n</p><table><tr>";
-				$c = 0;
+				$c = 0; $smileQuery = array();
 				for($v=0; $v<count($action['sourireIn']);++$v) {
-					if(isset($action['contactIn'][$v]['d']) && strtotime($action['contactIn'][$v]['d'])>current_time('timestamp',0)-$ti) { // only new before last mail
+					if(isset($action['sourireIn'][$v]['d']) && strtotime($action['sourireIn'][$v]['d'])>current_time('timestamp',0)-$ti) { // only new before last mail
 						$r1 = $wpdb->get_row("SELECT
 								U.ID,
 								U.user_login,
@@ -585,24 +582,16 @@ function f_cron_on($cronBis=0) {
 							LIMIT 1
 							");
 						if($r1) {
+							$smileQuery[] = $r1;
 							$b = 1;
-							++$c;
-							$s .= $t."<td>".rencMailBox($r1,$rencDrap,$oo,$ii)."</td>"."\n";
-							$t = '';
-							if($c>$mailPerline) {
-								$c = 0;
-								$s .= "</tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>";
-							}
 						}
 					}
 				}
-				if($t=="") $s .= "</tr></table>"."\n";
 			}
 			// DEMANDES DE CONTACT
 			if(isset($action['contactIn']) && count($action['contactIn'])) {
-				$t = "<p style='font-weight:700;font-size:.9em;'>".__('You have received a contact request from','rencontre')." :\n</p><table><tr>";
-				$c = 0;
-				for ($v=0; $v<count($action['contactIn']);++$v) {
+				$c = 0; $contactQuery = array();
+				for($v=0; $v<count($action['contactIn']);++$v) {
 					if(isset($action['contactIn'][$v]['d']) && strtotime($action['contactIn'][$v]['d'])>current_time('timestamp',0)-$ti) { // only new before last mail
 						$r1 = $wpdb->get_row("SELECT
 								U.ID,
@@ -625,47 +614,42 @@ function f_cron_on($cronBis=0) {
 							LIMIT 1
 							");
 						if($r1) {
-							++$c;
-							$s .= $t."<td>".rencMailBox($r1,$rencDrap,$oo,$ii)."</td>"."\n";
-							$t = '';
-							if($c>$mailPerline) {
-								$b = 1;
-								$c = 0;
-								$s .= "</tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>";
-							}
+							$contactQuery[] = $r1;
+							$b = 1;
 						}
 					}
 				}
-				if($t=="") $s .= "</tr></table>";
 			}
 			// MESSAGES
-			$n = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_msg M WHERE M.recipient='".$r->user_login."' and M.read=0 and M.deleted=0");
-			if($n) {
-				$b = 1;
-				$s .= "<p style='font-weight:700;font-size:.9em;'>".__('You have','rencontre')."&nbsp;<span style='color:red;'>".$n."&nbsp;".(($n>1)?__('messages','rencontre'):__('message','rencontre'))."</span>&nbsp;".__('in your inbox.','rencontre')."\n</p>";
-			}
+			$nbMessage = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_msg M WHERE M.recipient='".$u->user_login."' and M.read=0 and M.deleted=0");
+			if($nbMessage) $b = 1;
 			// MOT DE LA FIN
-			$s .= "<p>".__("Do not hesitate to send us your comments.",'rencontre')."\n</p><br />".__('Regards,','rencontre')."<br />".$bn;
-			if($b) {
-				$buttonCSS = "color:".$w3renc[$bt0.'T'].";background-color:".$w3renc[$bt0].";border:none;display:inline-block;width:45%;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;cursor:pointer;white-space:nowrap;font-size:11px;letter-spacing:-.5px";
-				$buttonHover = "this.style.backgroundColor='".$w3renc[$bt1]."';this.style.color='".$w3renc[$bt1.'T']."'";
-				$buttonOut = "this.style.backgroundColor='".$w3renc[$bt0]."';this.style.color='".$w3renc[$bt0.'T']."'";
-				$s .= "<div style='margin:8px 0 0;text-align:center;'><a style='".$buttonCSS."' onMouseOver='".$buttonHover."' onMouseOut='".$buttonOut."' href='".htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home'])."?".$Loo."=".urlencode($oo)."&".$Lii."=".urlencode($ii))."' target='_blank'> ".__('Login','rencontre')."\n</a></div>";
-			}
-			$s .= "</div>";
+			$wid = 260 - 32;
+			$buttonCSS = "color:".$w3renc[$bt0.'T'].";background-color:".$w3renc[$bt0].";border:none;display:inline-block;width:".$wid."px;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;cursor:pointer;white-space:nowrap;font-size:13px;";
+			$buttonHover = "this.style.backgroundColor='".$w3renc[$bt1]."';this.style.color='".$w3renc[$bt1.'T']."'";
+			$buttonOut = "this.style.backgroundColor='".$w3renc[$bt0]."';this.style.color='".$w3renc[$bt0.'T']."'";
+			$buttonLink = htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home'])."?".$Loo."=".urlencode($oo)."&".$Lii."=".urlencode($ii));
+			$mailSubj = '';
 			//
-			$s1 .= $s;
 			if($b) {
+				// ****** TEMPLATE ********
+				ob_start();
+				if($tpl=rencTpl('rencontre_mail_regular_global.php')) include $tpl;
+				$s = ob_get_clean();
+				// ************************
+				$s = trim(preg_replace('/\t+/', '', $s)); // remove tab
+				$s = preg_replace('/^\s+|\n|\r|\s+$/m', '', $s); // remove line break
 				$he = array();
 				if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
-					$he[] = 'From: '.$bn.' <'.$rencDiv['admin_email'].'>';
+					$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
 					$he[] = 'Content-type: text/html; charset=UTF-8';
 					$s = '<html><head></head><body>'.$s.'</body></html>';
 				}
-				@wp_mail($r->user_email, $bn, $s, $he);
+				if(empty($mailSubj)) $mailSubj = $blogName;
+				@wp_mail($u->user_email, $mailSubj, $s, $he);
 				++$cm;
 			}
-			if(file_exists($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$r->ID.'.txt')) @unlink($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$r->ID.'.txt');
+			if(file_exists($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$u->ID.'.txt')) @unlink($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$u->ID.'.txt');
 		}
 		// 13.3 *********** Nettoyage des comptes action *********
 		// {"sourireIn":[{"i":992,"d":"2015-09-01"},{"i":75,"d":"2015-09-01"}],"contactIn":[{"i":992,"d":"2015-09-01"}]}
@@ -693,7 +677,7 @@ function f_cron_on($cronBis=0) {
 		}
 		if($x) {
 			$out = json_encode($action);
-			$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$r->ID));
+			$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$u->ID));
 		}
 		// 14. Suppression des msg anciens
 		if(!empty($rencOpt['msgdel'])) {
@@ -706,7 +690,7 @@ function f_cron_on($cronBis=0) {
 		// ***************************************************
 	}
 	// 15. Premium Cron
-	$ho = false; if(has_filter('rencCronP', 'f_rencCronP')) $ho = apply_filters('rencCronP', $ho);
+	$ho = false; if(has_filter('rencCronP')) $ho = apply_filters('rencCronP', $ho);
 	//
 	if(current_time("N")!="1") { // N : day of the week - 1 for Monday
 		$t = @fopen($rencDiv['basedir'].'/portrait/cache/rencontre_cron.txt', 'w');
@@ -752,7 +736,7 @@ function f_cron_liste($d2) {
 	$cm = 0; // compteur de mail
 	// 1. listing des USERS en attente
 	if($dh = @opendir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) {
-		$bn = get_bloginfo('name');
+		$blogName = get_bloginfo('name');
 		$lis = '(';
 		$fi = Array();
 		$c = 0;
@@ -792,94 +776,109 @@ function f_cron_liste($d2) {
 				".((!empty($rencOpt['mailph']))?" and R.i_photo>0 ":" ")."
 			LIMIT ".$max); // clause IN : WHERE U.ID IN ( 250, 220, 170 );
 		$las = 0;
+		$mailSubj = '';
 		if($q) foreach($q as $u) { // {"sourireIn":[{"i":992,"d":"2015-09-01"},{"i":75,"d":"2015-09-01"}],"contactIn":[{"i":992,"d":"2015-09-01"}]}
-			$buttons = 0; $smile = 0; $contact = 0; $inbox = 0;
-			if(function_exists('openssl_encrypt')) $oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
-			$action= json_decode($u->t_action,true);
-			//
-			if(isset($action['contactIn']) && count($action['contactIn'])) {
-				$v = count($action['contactIn'])-1;
-				if(isset($action['contactIn'][$v]['d']) && strtotime($action['contactIn'][$v]['d'])>current_time('timestamp',0)-64800) { // 18h
-					$r = $wpdb->get_row("SELECT
-							U.ID,
-							U.user_login,
-							R.d_naissance,
-							R.c_pays,
-							R.c_ville,
-							P.t_titre
-						FROM ".$wpdb->base_prefix."users U
-						INNER JOIN ".$wpdb->prefix."rencontre_users R
-							ON R.user_id=U.ID
-						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
-							ON P.user_id=U.ID
-						WHERE 
-							R.user_id='".$action['contactIn'][$v]['i']."'
-							".((!empty($rencOpt['mailph']))?" and R.i_photo>0 ":" ")."
-						LIMIT 1
-						");
-					if($r) {
-						$contact = "<td>".rencMailBox($r,$rencDrap,$oo,$ii)."</td>";
-						$buttons = 1;
+			if(has_filter('rencMailInstant')) apply_filters('rencMailInstant', $u);
+			else {
+				$b = 0; $smile = 0; $contact = 0; $inbox = 0;
+				if(function_exists('openssl_encrypt')) $oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
+				$action= json_decode($u->t_action,true);
+				//
+				$smilread = false; $contread = false;
+				if(has_filter('rencLimitedActionP')) {
+					$smilread = apply_filters('rencLimitedActionP', array('smilread',0,$u->ID));
+					$contread = apply_filters('rencLimitedActionP', array('contread',0,$u->ID));
+				}
+				if(isset($action['contactIn']) && count($action['contactIn'])) {
+					$v = count($action['contactIn'])-1;
+					if(isset($action['contactIn'][$v]['d']) && strtotime($action['contactIn'][$v]['d'])>current_time('timestamp',0)-64800) { // 18h
+						$r = $wpdb->get_row("SELECT
+								U.ID,
+								U.user_login,
+								R.d_naissance,
+								R.c_pays,
+								R.c_ville,
+								P.t_titre
+							FROM ".$wpdb->base_prefix."users U
+							INNER JOIN ".$wpdb->prefix."rencontre_users R
+								ON R.user_id=U.ID
+							INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+								ON P.user_id=U.ID
+							WHERE 
+								R.user_id='".$action['contactIn'][$v]['i']."'
+								".((!empty($rencOpt['mailph']))?" and R.i_photo>0 ":" ")."
+							LIMIT 1
+							");
+						if($r) {
+							$contact = rencMailBox($r,$rencDrap,$oo,$ii);
+							$b = 1;
+						}
 					}
 				}
-			}
-			//
-			if(isset($action['sourireIn']) && count($action['sourireIn'])) {
-				$v = count($action['sourireIn'])-1;
-				if(isset($action['sourireIn'][$v]['d']) && strtotime($action['sourireIn'][$v]['d'])>current_time('timestamp',0)-64800) { // 18h
-					$r = $wpdb->get_row("SELECT
-							U.ID,
-							U.user_login,
-							R.d_naissance,
-							R.c_pays,
-							R.c_ville,
-							P.t_titre
-						FROM ".$wpdb->base_prefix."users U
-						INNER JOIN ".$wpdb->prefix."rencontre_users R
-							ON R.user_id=U.ID
-						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
-							ON P.user_id=U.ID
-						WHERE 
-							R.user_id='".$action['sourireIn'][$v]['i']."'
-							".((!empty($rencOpt['mailph']))?" and R.i_photo>0 ":" ")."
-						LIMIT 1
-						");
-					if($r) {
-						$smile = "<td>".rencMailBox($r,$rencDrap,$oo,$ii)."</td>";
-						$buttons = 1;
+				//
+				if(isset($action['sourireIn']) && count($action['sourireIn'])) {
+					$v = count($action['sourireIn'])-1;
+					if(isset($action['sourireIn'][$v]['d']) && strtotime($action['sourireIn'][$v]['d'])>current_time('timestamp',0)-64800) { // 18h
+						$r = $wpdb->get_row("SELECT
+								U.ID,
+								U.user_login,
+								R.d_naissance,
+								R.c_pays,
+								R.c_ville,
+								P.t_titre
+							FROM ".$wpdb->base_prefix."users U
+							INNER JOIN ".$wpdb->prefix."rencontre_users R
+								ON R.user_id=U.ID
+							INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+								ON P.user_id=U.ID
+							WHERE 
+								R.user_id='".$action['sourireIn'][$v]['i']."'
+								".((!empty($rencOpt['mailph']))?" and R.i_photo>0 ":" ")."
+							LIMIT 1
+							");
+						if($r) {
+							$smile = rencMailBox($r,$rencDrap,$oo,$ii);
+							$b = 1;
+						}
 					}
 				}
-			}
-			//
-			$inbox = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix."rencontre_msg M WHERE M.recipient='".$u->user_login."' and M.read=0 and M.deleted=0");
-			if($inbox) {
-				$hrefinbox = htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home'])."?".$Lidf."=".rencGetId('r0',0)."&".$Loo."=".urlencode($oo)."&".$Lii."=".urlencode($ii));
-				$buttons = 1;
-			}
-			//
-			if($buttons) {
-				$buttonCSS = "color:".$w3renc[$bt0.'T'].";background-color:".$w3renc[$bt0].";border:none;display:inline-block;width:45%;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;cursor:pointer;white-space:nowrap;font-size:11px;letter-spacing:-.5px";
-				$buttonHover = "this.style.backgroundColor='".$w3renc[$bt1]."';this.style.color='".$w3renc[$bt1.'T']."'";
-				$buttonOut = "this.style.backgroundColor='".$w3renc[$bt0]."';this.style.color='".$w3renc[$bt0.'T']."'";
-				$buttons = "<div style='margin:8px 0 0;text-align:center;'><a style='".$buttonCSS."' onMouseOver='".$buttonHover."' onMouseOut='".$buttonOut."' href='".htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home'])."?".$Loo."=".urlencode($oo)."&".$Lii."=".urlencode($ii))."' target='_blank'> ".__('Login','rencontre')."\n</a></div>";
-				// ****** TEMPLATE ********
-				$mailtit = ''; // Var in template
-				ob_start();
-				if(empty($tdir)) $tdir = rencTplDir();
-				if(file_exists(get_stylesheet_directory().'/templates/rencontre_mail_instant.php')) include(get_stylesheet_directory().'/templates/rencontre_mail_instant.php');
-				else if(file_exists($tdir['path'].'rencontre_mail_instant.php')) include($tdir['path'].'rencontre_mail_instant.php');
-				else include(WP_PLUGIN_DIR.'/rencontre/templates/rencontre_mail_instant.php');
-				$o = ob_get_clean();
-				// ************************
-				$o = trim(preg_replace('/\s+/', ' ', $o)); // remove line break that cause <br /> in mail
-				$he = array();
-				if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
-					$he[] = 'From: '.$bn.' <'.$rencDiv['admin_email'].'>';
-					$he[] = 'Content-type: text/html; charset=UTF-8';
-					$o = '<html><head></head><body>'.$o.'</body></html>';
+				//
+				$inbox = $wpdb->get_var("SELECT
+						COUNT(*)
+					FROM ".$wpdb->prefix."rencontre_msg M
+					WHERE
+						M.recipient='".$u->user_login."'
+						and M.read=0
+						and M.deleted=0
+					");
+				if($inbox) {
+					$hrefinbox = htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home'])."?".$Lidf."=".rencGetId('r0',0)."&".$Loo."=".urlencode($oo)."&".$Lii."=".urlencode($ii));
+					$b = 1;
 				}
-				@wp_mail($u->user_email, $bn." - ".(empty($mailtit)?__('A member contact you','rencontre'):$mailtit), $o, $he);
-				++$cm;
+				//
+				if($b) {
+					$wid = 260 - 32;
+					$buttonCSS = "color:".$w3renc[$bt0.'T'].";background-color:".$w3renc[$bt0].";border:none;display:inline-block;width:".$wid."px;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;text-align:center;cursor:pointer;white-space:nowrap;font-size:13px;";
+					$buttonHover = "this.style.backgroundColor='".$w3renc[$bt1]."';this.style.color='".$w3renc[$bt1.'T']."'";
+					$buttonOut = "this.style.backgroundColor='".$w3renc[$bt0]."';this.style.color='".$w3renc[$bt0.'T']."'";
+					$buttonLink = htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home'])."?".$Loo."=".urlencode($oo)."&".$Lii."=".urlencode($ii));
+					// ****** TEMPLATE ********
+					ob_start();
+					if($tpl=rencTpl('rencontre_mail_instant.php')) include $tpl;
+					$o = ob_get_clean();
+					// ************************
+					$o = trim(preg_replace('/\t+/', '', $o)); // remove tab
+					$o = preg_replace('/^\s+|\n|\r|\s+$/m', '', $o); // remove line break
+					$he = array();
+					if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
+						$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
+						$he[] = 'Content-type: text/html; charset=UTF-8';
+						$o = '<html><head></head><body>'.$o.'</body></html>';
+					}
+					if(empty($mailSubj)) $mailSubj = $blogName." - ".__('A member contact you','rencontre');
+					@wp_mail($u->user_email, $mailSubj, $o, $he);
+					++$cm;
+				}
 			}
 			$d = filemtime($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$u->ID.'.txt');
 			if($d>$las) $las = $d;
@@ -901,7 +900,7 @@ function rencMailBox($u,$rencDrap,$oo,$ii) {
 	$Loo = (!empty($rencOpt['lbl']['rencoo'])?$rencOpt['lbl']['rencoo']:'rencoo');
 	$Lii = (!empty($rencOpt['lbl']['rencii'])?$rencOpt['lbl']['rencii']:'rencii');
 	$Lidf = (!empty($rencOpt['lbl']['rencidfm'])?$rencOpt['lbl']['rencidfm']:'rencidfm');
-	if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img(($u->ID*10).'-libre').'.jpg')) $u->photoUrl = $rencDiv['baseurl'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img(($u->ID*10).'-libre').'.jpg';
+	if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img(($u->ID*10).'-libre',2).'.jpg')) $u->photoUrl = $rencDiv['baseurl'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img(($u->ID*10).'-libre',2).'.jpg'; // 2 : no filter (current_user != dest user)
 	else $u->photoUrl = plugins_url('rencontre/images/no-photo60.jpg');
 	$age = 0;
 	if(!isset($rencCustom['born'])) {
@@ -934,10 +933,7 @@ function rencMailBox($u,$rencDrap,$oo,$ii) {
 	$buttonOut = "this.style.backgroundColor=\"#000\";this.style.color=\"#fff\"";
 	// ****** TEMPLATE ********
 	ob_start();
-	if(empty($tdir)) $tdir = rencTplDir();
-	if(file_exists(get_stylesheet_directory().'/templates/rencontre_mail_regular.php')) include(get_stylesheet_directory().'/templates/rencontre_mail_regular.php');
-	else if(file_exists($tdir['path'].'rencontre_mail_regular.php')) include($tdir['path'].'rencontre_mail_regular.php');
-	else include(WP_PLUGIN_DIR.'/rencontre/templates/rencontre_mail_regular.php');
+	if($tpl=rencTpl('rencontre_mail_regular.php')) include $tpl;
 	$o = ob_get_clean();
 	// ************************
 	$o = trim(preg_replace('/\t+/', '', $o)); // remove tab
@@ -1126,7 +1122,7 @@ function rencAddCustomW3css($f=0) {
 	if(!empty($w3renc[$rencCustom['wabg']])) $a .= '.w3-renc-wabg{color:'.$w3renc[$rencCustom['wabg'].'T'].'!important;background-color:'.$w3renc[$rencCustom['wabg']].'!important}';
 	if(!empty($w3renc[$rencCustom['msbs']])) $a .= '.w3-renc-msbs{color:'.$w3renc[$rencCustom['msbs'].'T'].'!important;background-color:'.$w3renc[$rencCustom['msbs']].'!important}';
 	if(!empty($w3renc[$rencCustom['msbr']])) $a .= '.w3-renc-msbr{color:'.$w3renc[$rencCustom['msbr'].'T'].'!important;background-color:'.$w3renc[$rencCustom['msbr']].'!important}';
-	if(has_filter('rencCustomColorIncP', 'f_rencCustomColorIncP')) $a .= apply_filters('rencCustomColorIncP', $a, $w3renc);
+	if(has_filter('rencCustomColorIncP')) $a .= apply_filters('rencCustomColorIncP', $a, $w3renc);
 	$a .= $alm.'}' . $as.'}';
 	if(!$f) wp_add_inline_style('w3css', $a);
 	else echo '<link rel="stylesheet" href="'.plugins_url('rencontre/css/w3.css').'"><style>'.$a.'</style>';
@@ -1134,7 +1130,11 @@ function rencAddCustomW3css($f=0) {
 //
 function rencPause($f,$id) {
 	global $wpdb;
-	$q = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$id."' LIMIT 1");
+	$q = $wpdb->get_var("SELECT
+			t_action
+		FROM ".$wpdb->prefix."rencontre_users_profil
+		WHERE user_id='".$id."'
+		LIMIT 1");
 	$action = json_decode($q,true);
 	if(empty($action['option'])) $action['option'] = ',';
 	$action['option'] = str_replace(',pause1,', ',', $action['option']);
@@ -1225,7 +1225,7 @@ function rencOutLine() {
 //
 function rencUserLogin($current_user,$pass) {
 	global $wpdb;
-	$wpdb->update($wpdb->prefix.'rencontre_users', array('d_session'=>current_time("mysql")), array('user_id'=>$current_user->ID));
+	if(isset($current_user->ID)) $wpdb->update($wpdb->prefix.'rencontre_users', array('d_session'=>current_time("mysql")), array('user_id'=>$current_user->ID));
 	return $current_user;
 }
 //
@@ -1338,19 +1338,6 @@ function rencFbokName($u,$i,$c=0) {
 	}
 }
 //
-function f_addCountSearch($r=0) {
-	// +1 in count search/day
-	// Quick search => $r=1
-	global $wpdb, $current_user;
-	$p = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' LIMIT 1");
-	$action = json_decode($p,true);
-	if(isset($action['search']['n']) && isset($action['search']['d']) && $action['search']['d']==date("z")) $action['search']=array('d'=>date("z"),'n'=>($action['search']['n']+1));
-	else $action['search']=array('d'=>date("z"),'n'=>1);
-	$p = json_encode($action);
-	$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$p), array('user_id'=>$current_user->ID));
-	if(has_filter('rencPointP', 'f_rencPointP')) apply_filters('rencPointP', array(($r?'q':'').'search',0));
-}
-//
 function f_userSupp($f,$a,$b) { // rencontre.php - in action 'widget_init' - base.php
 	// return ID
 	f_suppImgAll($f);
@@ -1386,6 +1373,20 @@ function f_userSupp($f,$a,$b) { // rencontre.php - in action 'widget_init' - bas
 	if(!empty($q->user_email)) return $q->user_email; // Admin deletion
 }
 //
+function rencRotateJpg($f,$rot,$id=0) {
+	// f : img not crypted (id*10 + numImg)
+	global $rencDiv, $current_user;
+	if(empty($id)) $id = $current_user->ID;
+	$size = rencPhotoSize();
+	$img = $rencDiv['basedir'].'/portrait/'.floor(intval($id)/1000).'/'.Rencontre::f_img($f).'.jpg';
+	$im = imagecreatefromjpeg($img);
+	$imrot = imagerotate($im, $rot, 0);
+	imagejpeg($imrot, $img, 95); // Img rot lose quality
+	imagedestroy($im);
+	imagedestroy($imrot);
+	RencontreWidget::f_photo($f,$img,0,1);
+}
+//
 function f_suppImgAll($id) { // After init (has_filter)
 	global $rencDiv;
 	$size = rencPhotoSize();
@@ -1395,7 +1396,7 @@ function f_suppImgAll($id) { // After init (has_filter)
 		$a[] = Rencontre::f_img($id.$v) . '.jpg';
 		foreach($size as $s) $a[] = Rencontre::f_img($id.$v.$s['label']) . '.jpg';
 		foreach($a as $b) if(file_exists($r.$b)) @unlink($r.$b);
-		if(has_filter('rencBlurDelP', 'f_rencBlurDelP')) {
+		if(has_filter('rencBlurDelP')) {
 			$ho = new StdClass();
 			$ho->id = $id;
 			$ho->v = $v;
@@ -1412,7 +1413,7 @@ function rencPhotoSize($f=0) {
 		array('label'=>'-libre', 'width'=>260, 'height'=>195, 'quality'=>75)
 		);
 	if(has_filter('rencImgSize')) $size = apply_filters('rencImgSize', $size);
-	if($f && has_filter('rencImgSizeP', 'f_rencImgSizeP')) $size = apply_filters('rencImgSizeP', $size);
+	if($f && has_filter('rencImgSizeP')) $size = apply_filters('rencImgSizeP', $size);
 	foreach($size as $k=>$v) if(empty($v['label']) || empty($v['width']) || empty($v['height'])) unset($size[$k]);
 	return $size;
 }
@@ -1606,16 +1607,22 @@ function rencFastreg_email($u,$other=0) {
 			$oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|confirm|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
 		}
 		$he = array();
-		$t = get_bloginfo('name');
-		$s = __('Hello','rencontre').'&nbsp;'.$u->user_login.', <br />'.__('You should confirm your email with this link','rencontre').' : <br />';
-		$s .= '<a href="'.htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home']).'?'.$Lfr.'=1&'.$Loo.'='.urlencode($oo).'&'.$Lii.'='.urlencode($ii)).'" target="_blank">'.htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home']).'?'.$Lfr.'='.$u->ID.'&'.$Loo.'='.urlencode($oo).'&'.$Lii.'='.urlencode($ii)).'</a> <br />';
-		$s .= '<br />'.__('Regards,','rencontre').'<br /><br />'.$t;
+		$blogName = get_bloginfo('name');
+		$confirmUrl = htmlspecialchars((empty($rencOpt['home'])?site_url():$rencOpt['home']).'?'.$Lfr.'=1&'.$Loo.'='.urlencode($oo).'&'.$Lii.'='.urlencode($ii));
+		// ****** TEMPLATE ********
+		ob_start();
+		if($tpl=rencTpl('rencontre_mail_fastreg_confirm.php')) include $tpl;
+		$s = ob_get_clean();
+		// ************************
+		$s = trim(preg_replace('/\t+/', '', $s)); // remove tab
+		$s = preg_replace('/^\s+|\n|\r|\s+$/m', '', $s); // remove line break
 		if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
 			$he[] = 'From: '.$t.' <'.$rencDiv['admin_email'].'>';
 			$he[] = 'Content-type: text/html; charset=UTF-8';
 			$s = '<html><head></head><body>'.$s.'</body></html>';
 		}
-		@wp_mail($u->user_email, $t.' - '.__('Confirmation email','rencontre'), $s, $he);
+		if(empty($mailSubj)) $mailSubj = $blogName.' - '.__('Confirmation email','rencontre');
+		@wp_mail($u->user_email, $mailSubj, $s, $he);
 		if($other==1) {
 			echo __('Confirmation email sent','rencontre');
 		}
@@ -1753,7 +1760,7 @@ function rencModerType() {
 	if(has_filter('rencUserDelMailContent')) $typ = apply_filters('rencUserDelMailContent', $typ);
 	return $typ;
 }
-function rencTplDir() {
+function rencTplDir($origin=0) {
 	$tdir = array(
 		'original' => 1,
 		'path' => realpath(__DIR__ . '/..').'/templates/',
@@ -1761,7 +1768,7 @@ function rencTplDir() {
 		'csspath' => realpath(__DIR__ . '/..').'/css/',
 		'cssurl'  => plugins_url('rencontre/css/')
 		);
-	if(has_filter('rencTemplateDir')) {
+	if(empty($origin) && has_filter('rencTemplateDir')) {
 		$tdir = apply_filters('rencTemplateDir', $tdir);
 		if(isset($tdir['original'])) unset($tdir['original']);
 	}
@@ -1818,7 +1825,7 @@ function rencGetUserPhotos($id) {
 	$photos = array();
 	$size = rencPhotoSize();
 	$size[] = array('label' => '');
-	$hob = false; if(has_filter('rencBlurP', 'f_rencBlurP')) $hob = apply_filters('rencBlurP', $hob);
+	$hob = false; if(has_filter('rencBlurP')) $hob = apply_filters('rencBlurP', $hob);
 	$p = $wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$id." LIMIT 1");
 	if(empty($p)) return $photos;
 	for($v=0;$v<10;++$v) {

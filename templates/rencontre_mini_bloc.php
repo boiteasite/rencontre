@@ -4,6 +4,7 @@
  * Template : Warning
  * Last Change : Rencontre 3.5
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_bloc.php
+ * Call : rencontre_widget.php => f_compte()
  * input : $title, $content
 */
 ?>

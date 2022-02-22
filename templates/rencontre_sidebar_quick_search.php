@@ -2,12 +2,14 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Quick Search
- * Last Change : Rencontre 3.6.5
+ * Last Change : Rencontre 3.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_quick_search.php
+ * Call : rencontre_widget.php => RencontreSidebarWidget::widget()
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_region, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, agemin, agemax
 */
 ?>
 
+<?php if(empty($blockQSearch) || $blockQSearch!==true) { ?>
 
 			<div class="w3-medium w3-border-grey w3-renc-lblc">
 				<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Quick Search','rencontre');?></div>
@@ -110,9 +112,12 @@
 					<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['find']; ?>"><?php _e('Find','rencontre'); ?></button>
 					<?php } else { ?>
 
-					<button class="w3-button w3-renc-mebt w3-opacity w3-disable w3-renc-mebo" onClick="f_modalWarn('<?php echo $blockQSearch; ?>')"><?php _e('Find','rencontre'); ?></button>
+					<button class="w3-button w3-renc-mebt w3-opacity w3-disable w3-renc-mebo" onClick="f_modalWarn('<?php echo addslashes($blockQSearch); ?>')"><?php _e('Find','rencontre'); ?></button>
 					<?php } ?>
+					
 				</div>
 			</div>
+<?php } ?>
+
 		</div><!-- .w3-container --> <?php // open in rencontre_sidebar_top.php ?>
 	</div><!-- .w3-card .w3-white --> <?php // open in rencontre_sidebar_top.php ?>

@@ -2,8 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.4.2
+ * Last Change : Rencontre 3.7.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
+ * Call : rencontre_widget.php => widget()
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
 */
 ?>
@@ -60,10 +61,17 @@
 						<?php } ?>
 							
 						</div><!-- .rencBlocimg -->
-						<div id="changePhoto" class="w3-center"></div>
+						<div class="w3-center">
+							<div id="changePhoto" class="w3-xlarge w3-text-dark-gray" style="display:none" data-photo="0">
+								<a href="javascript:void(0)" class="rencMain w3-padding-small" onClick="f_main_photo(this.parentElement.getAttribute('data-photo'))" style="display:none" title="<?php _e('Main photo','rencontre'); ?>"><i class="fas fa-user-circle"></i></a>
+								<a href="javascript:void(0)" class="rencRotL w3-padding-small" onClick="f_rotate_photo(this.parentElement.getAttribute('data-photo'),0)"><i class="fas fa-undo-alt"></i></a>
+								<a href="javascript:void(0)" class="rencRotR w3-padding-small" onClick="f_rotate_photo(this.parentElement.getAttribute('data-photo'),1)"><i class="fas fa-redo-alt"></i></a>
+								<a href="javascript:void(0)" class="rencSupp w3-padding-small" onClick="f_supp_photo(this.parentElement.getAttribute('data-photo'))" title="<?php _e('Delete this photo','rencontre'); ?>"><i class="fas fa-trash"></i></a>
+							</div>
+						</div>
 						<div id="clickPhoto" class="rencInfo w3-center w3-opacity"><?php _e('Click the photo','rencontre');?></div>
 						<div class="w3-section w3-center">
-							<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" style="white-space:normal" onClick="<?php echo $onClick['deleteAll']; ?>"><?php _e('Delete all photos','rencontre');?></button>
+							<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" style="white-space:normal" onClick="<?php echo $onClick['deleteAll']; ?>"><?php _e('Delete all photos','rencontre'); ?></button>
 						</div>
 					</div><!-- .w3-card -->
 				</div><!-- .w3-col -->

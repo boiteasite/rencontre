@@ -4,6 +4,7 @@
  * Template : Custom Page 1
  * Last Change : Rencontre 3.0
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_custom_page1.php
+ * Call : rencontre_widget.php => widget()
 */
 ?>
 

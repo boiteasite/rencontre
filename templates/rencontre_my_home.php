@@ -2,8 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : My Home
- * Last Change : Rencontre 3.6
+ * Last Change : Rencontre 3.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_my_home.php
+ * Call : rencontre_widget.php => widget()
  * $u : user_id
  * $u0 : ID
 */
@@ -37,7 +38,7 @@
 		</div>
 		<?php } ?>
 
-		<?php $ho = false; if(has_filter('rencAddBox', 'f_rencAddBox')) $ho = apply_filters('rencAddBox', $u0->ID); if($ho) echo $ho; ?>
+		<?php if(!empty($myHomeAddBox)) echo $myHomeAddBox; ?>
 
 		<?php if(!empty($rencOpt['ligne']) && count($uLine)) { ?>
 

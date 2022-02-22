@@ -2,8 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Message Write
- * Last Change : Rencontre 3.6.2
+ * Last Change : Rencontre 3.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_write.php
+ * Call : rencontre_widget.php => widget()
  * $u : user_id, user_login, display_name, i_photo, miniPhoto, miniPhotoWebp
  * $u0 : user_login
 */
@@ -83,7 +84,7 @@
 				</div>
 				<div class="w3-container">
 					<div class="w3-section w3-border-top w3-renc-line">
-					<?php RencontreWidget::f_conversation($u0->user_login,$u->user_id,array($u->user_login,$u->display_name),$u->i_photo,99); ?>
+					<?php RencontreWidget::f_conversation($u0->user_login,$u->user_id,array($u->user_login,$u->display_name),$u->i_photo,1); ?>
 
 					</div>
 				</div>

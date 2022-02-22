@@ -52,7 +52,7 @@ table.tem th,table.tem td{padding:4px 6px;vertical-align:middle;}
 .rencPortrait input{width:90%;}
 .rencPortrait label{font-weight:700;}
 .rencPortrait .portraitProfil label{display:inline-block;font-weight:400;}
-.compte{float:left;height:80px;border:1px solid #e5d4ac;border-radius:3px;margin:1px;padding:5px;}
+.compte{float:left;height:90px;border:1px solid #e5d4ac;border-radius:3px;margin:1px;padding:5px;}
 .compte span{font-weight:700;}
 .compte select{height:auto;}
 .compte input[type="checkbox"]{width:auto;}

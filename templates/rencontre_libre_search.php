@@ -4,6 +4,7 @@
  * Template : Libre Search
  * Last Change : Rencontre 3.6.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_search.php
+ * Call : rencontre.php => f_rencontreSearch()
 */
 ?>
 

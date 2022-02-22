@@ -4,6 +4,7 @@
  * Template : ImgReg shortcode
  * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_imgreg.php
+ * Call : rencontre.php => f_rencontreImgReg()
  * $arg : 'title', 'selector', 'left', 'top', 'login'
 */
 ?>

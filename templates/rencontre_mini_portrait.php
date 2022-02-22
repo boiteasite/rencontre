@@ -2,8 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait
- * Last Change : Rencontre 3.6.8
+ * Last Change : Rencontre 3.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait.php
+ * Call : rencontre_widget.php => f_miniPortrait()
  * $u : ID, display_name, c_pays, c_ville, d_naissance, i_photo, t_titre, online, miniPhoto, miniPhotoWebp
 */
 ?>
@@ -14,7 +15,11 @@
 				<?php if($u->i_photo!=0) { ?>
 
 					<div class="w3-col w3-margin-top w3-renc-margin-top-8-s w3-display-container" style="width:<?php echo $photoWidth; ?>px;">
+					<?php if(!empty($onClick['profile'])) { ?>
+					
 						<a href="javascript:void(0)" onClick="<?php echo $onClick['profile']; ?>">
+					<?php } ?>
+					
 						<?php if(!empty($u->miniPhotoWebp)) { ?>
 						
 							<picture <?php echo $title['thumb']; ?>>
@@ -27,8 +32,11 @@
 							<img class="w3-circle" style="width:<?php echo $photoWidth; ?>px;" src="<?php echo $u->miniPhoto; ?>" alt="<?php echo $u->display_name; ?>" <?php echo $title['thumb']; ?> />
 						<?php } ?>
 						
+					<?php if(!empty($onClick['profile'])) { ?>
+					
 						</a>
-						<?php if(!empty($certified)) echo $certified; ?>
+					<?php } ?>
+					<?php if(!empty($certified)) echo $certified; ?>
 						
 					</div>
 				<?php } else { ?>
@@ -53,6 +61,13 @@
 				</div>
 				<div class="w3-medium w3-renc-txtc w3-border-top w3-renc-line w3-rest w3-hide-small" style="line-height:1.4em;height:4.2em;"><?php echo stripslashes($u->t_titre); ?></div>
 			</div>
+		<?php if(!empty($onClick['profile'])) { ?>
+		
 			<div class="w3-button w3-block w3-renc-sebg" onClick="<?php echo $onClick['profile']; ?>"><?php _e('Profile','rencontre'); ?>...</div>
+		<?php } else { ?>
+			
+			<div class="w3-button w3-block w3-renc-sebg w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['profile']); ?>')" title="<?php echo $title['profile']; ?>"><?php _e('Profile','rencontre'); ?>...</div>
+		<?php } ?>
+
 		</div>
 	</div>

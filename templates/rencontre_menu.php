@@ -2,8 +2,9 @@
 /*
  * Plugin : Rencontre
  * Template : Menu
- * Last Change : Rencontre 3.6.5
+ * Last Change : Rencontre 3.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_menu.php
+ * Call : rencontre_widget.php => widget()
 */
 ?>
 
@@ -16,7 +17,7 @@
 		<a id="rencMenuEdit" class="rencMenuEdit w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Edit My Profile','rencontre'); ?>"><i class="far fa-edit"></i></a>
 			<?php } else { ?>
 			
-		<a id="rencMenuEdit" class="rencMenuEdit w3-bar-item w3-button w3-padding-large <?php if(!$fantome) echo 'w3-renc-mebw '; ?>w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Edit My Profile','rencontre'); ?>"><i class="far fa-edit"></i></a>
+		<a id="rencMenuEdit" class="rencMenuEdit w3-bar-item w3-button w3-padding-large <?php if(empty($rencDiv['titann'])) echo 'w3-renc-mebw '; ?>w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Edit My Profile','rencontre'); ?>"><i class="far fa-edit"></i></a>
 			<?php } ?>
 			<?php if($rencOpt['fastreg']>1) { ?>
 			
@@ -33,7 +34,7 @@
 		<a id="rencMenuSearch" class="rencMenuSearch w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Search','rencontre'); ?>"><i class="fas fa-search"></i></a>
 			<?php } else { ?>
 
-		<a id="rencMenuSearch" class="rencMenuSearch w3-bar-item w3-button w3-opacity w3-padding-large w3-renc-mebo" onClick="f_modalWarn('<?php echo $blockSearch; ?>')" href="javascript:void(0)" title="<?php _e('Search','rencontre'); ?>"><i class="fas fa-search"></i></a>
+		<a id="rencMenuSearch" class="rencMenuSearch w3-bar-item w3-button w3-opacity w3-padding-large w3-renc-mebo" onClick="f_modalWarn('<?php echo addslashes($blockSearch); ?>')" href="javascript:void(0)" title="<?php _e('Search','rencontre'); ?>"><i class="fas fa-search"></i></a>
 			<?php } ?>
 		
 		<a id="rencMenuAccount" class="rencMenuAccount w3-bar-item w3-button w3-padding-large <?php if($rencOpt['fastreg']>1) echo 'w3-renc-mebw '; ?>w3-renc-mebo" href="javascript:void(0)" title="<?php _e('My Account','rencontre'); ?>"><i class="fas fa-sliders-h"></i></a>

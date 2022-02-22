@@ -4,6 +4,7 @@
  * Template : Libre SEARCH Portrait
  * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_search_portrait.php
+ * Call : rencontre.php => f_rencontreSearch()
  * $u : U.ID, display_name, i_sex, c_pays, c_ville, d_naissance, i_photo, t_titre, title, miniPhoto
 */
 ?>

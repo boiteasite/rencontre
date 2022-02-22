@@ -2,14 +2,15 @@
 /*
  * Plugin : Rencontre
  * Template : Libre Portrait
- * Last Change : Rencontre 3.6.5
+ * Last Change : Rencontre 3.7
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_portrait.php
+ * Call : rencontre.php => f_ficheLibre()
  * $u : ID, display_name, user_registered, i_sex, i_zsex, c_pays, c_ville, d_naissance, i_photo, t_titre, t_annonce, titre, annonce, libreID, librePhoto, genre
 */
 ?>
 
 	<div class="rencLibrePortrait <?php echo $u->genre; ?> w3-padding-small w3-col">
-		<div class="w3-card w3-white">
+		<div class="w3-card w3-white"  style="overflow:hidden">
 			<?php if(!empty($rencCustom['reglink'])) { ?>
 		
 			<a href="<?php echo $rencCustom['reglink']; ?>">

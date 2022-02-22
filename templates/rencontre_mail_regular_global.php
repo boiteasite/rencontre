@@ -1,0 +1,84 @@
+<?php
+/*
+* Plugin : Rencontre
+* Template : Mail Regular global
+* Last Change : Rencontre 3.7
+* Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mail_regular_global.php
+* Call : rencontre_filter.php => f_cron_on()
+* $u : ID, user_login, d_naissance, c_pays, c_ville, t_titre, name, age, title, link
+*/
+?>
+<?php $mailSubj = $blogName; ?>
+<div style='font-family:"Helvetica Neue",Helvetica;font-size:13px;text-align:left;margin:5px 5px 5px 10px;'>
+	<p><?php _e('Hello','rencontre'); ?>&nbsp;<?php echo $u->user_login; ?>,</p>
+<?php if(!empty($rencOpt['textmail'])) { ?>
+	<p><?php echo nl2br(stripslashes($rencOpt['textmail'])); ?></p>
+<?php } ?>
+<?php if(isset($action['visite'])) { ?>
+	<p style='font-weight:700;font-size:.9em;'><?php _e('Your profile has been visited','rencontre'); ?>&nbsp;
+		<span style='color:red;'><?php echo count($action['visite']); ?>&nbsp;<?php _e('time','rencontre'); ?></span>
+	</p>
+<?php } ?>	
+<?php if(!empty($selectionQuery)) { $c = 0; ?>
+	<p style='font-weight:700;font-size:.9em;'><?php _e('Here\'s a selection of members that may interest you','rencontre'); ?>&nbsp;:</p>
+	<table><tr>
+	<?php foreach($selectionQuery as $u1) { ++$c; ?>
+		<td><?php echo rencMailBox($u1,$rencDrap,$oo,$ii); ?></td>
+		<?php if($c>$mailPerline) { $c = 0; ?>
+		</tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>
+		<?php } ?>
+	<?php } ?>
+	</tr></table>
+<?php } ?>
+<?php if(isset($action['sourireIn']) && count($action['sourireIn']) && !empty($smileQuery)) { $c = 0; ?>
+	<p style='font-weight:700;font-size:.9em;'>
+	<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw4'])) { ?>
+		<?php echo stripslashes($rencCustom['smiw4']); ?>&nbsp;:
+	<?php } else { ?>
+		<?php _e('You have received a smile from','rencontre'); ?>&nbsp;:
+	<?php } ?>
+	<?php if(!empty($smileread)) { ?>
+		<i><?php echo $smileread; ?></i>
+	<?php } else { ?>
+	</p>
+	<table><tr>
+		<?php foreach($smileQuery as $u1) { ++$c; ?>
+		<td><?php echo rencMailBox($u1,$rencDrap,$oo,$ii); ?></td>
+			<?php if($c>$mailPerline) { $c = 0; ?>
+		</tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>
+			<?php } ?>
+		<?php } ?>
+	<?php } ?>
+	</tr></table>
+<?php } ?>
+<?php if(isset($action['contactIn']) && count($action['contactIn']) && !empty($contactQuery)) { $c = 0; ?>
+	<p style='font-weight:700;font-size:.9em;'><?php _e('You have received a contact request from','rencontre'); ?>&nbsp; :
+	<?php if(!empty($contread)) { ?>
+		<i><?php echo $contread; ?></i></p>
+	<?php } else { ?>
+	</p>
+	<table><tr>
+		<?php foreach($contactQuery as $u1) { ++$c; ?>
+		<td><?php echo rencMailBox($u1,$rencDrap,$oo,$ii); ?></td>
+			<?php if($c>$mailPerline) { $c = 0; ?>
+		</tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr>
+			<?php } ?>
+		<?php } ?>
+	<?php } ?>
+	</tr></table>
+<?php } ?>
+<?php if(!empty($nbMessage)) { ?>
+	<p style='font-weight:700;font-size:.9em;'><?php _e('You have','rencontre'); ?>&nbsp;
+		<span style='color:red;'><?php echo $nbMessage; ?>&nbsp;<?php echo (($nbMessage>1)?__('messages','rencontre'):__('message','rencontre')); ?>"</span>
+		&nbsp;<?php _e('in your inbox.','rencontre'); ?>
+	</p>
+<?php } ?>
+	<p><?php _e('Do not hesitate to send us your comments.','rencontre'); ?></p>
+	<br />
+	<?php _e('Regards,','rencontre'); ?>
+	<br />
+	<?php echo $blogName; ?>
+	<div style='margin:8px 0 0;'>
+		<a style='<?php echo $buttonCSS; ?>' onMouseOver='<?php echo $buttonHover; ?>' onMouseOut='<?php echo $buttonOut; ?>' href='<?php echo $buttonLink; ?>' target='_blank'> <?php _e('Login','rencontre'); ?></a>
+	</div>
+</div>

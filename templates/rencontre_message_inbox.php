@@ -4,6 +4,7 @@
  * Template : Message Inbox
  * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_inbox.php
+ * Call : rencontre_widget.php => widget()
  * $u0 : user_login
 */
 ?>

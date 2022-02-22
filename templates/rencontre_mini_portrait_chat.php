@@ -4,6 +4,7 @@
  * Template : Mini Portrait Chat - Chat only
  * Last Change : Rencontre 3.6.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait_chat.php
+ * Call : rencontre_widget.php => f_miniPortrait2()
  * $u : display_name, c_pays, c_ville, d_naissance, i_photo, t_titre 
 */
 ?>

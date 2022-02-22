@@ -47,17 +47,26 @@ function f_vignette(f,img){
 }
 function f_vignette_change(f,img){
 	f_vignette(f,img);
-	document.getElementById('changePhoto').innerHTML='';
-	document.getElementById('clickPhoto').style.display='block';
+	jQuery('#changePhoto .rencMain').hide();
+	jQuery('#changePhoto').hide();
+	jQuery('#clickPhoto').show();
 }
 function f_change_photo(f,g){
-	document.getElementById('changePhoto').innerHTML='<div><a href="javascript:void(0)" class="rencSupp" onClick="f_supp_photo('+f+')" title="'+rencobjet.supp_la_photo+'">'+rencobjet.supp_photo+'</a></div>';
-	if(g)document.getElementById('changePhoto').innerHTML+='<div><a href="javascript:void(0)" class="rencMain" onClick="f_main_photo('+f+')" title="'+rencobjet.main_photo+'">'+rencobjet.main_photo+'</a></div>';
-	document.getElementById('clickPhoto').style.display='none';
+	jQuery('#changePhoto').show();
+	if(g)jQuery('#changePhoto .rencMain').show();
+	jQuery('#clickPhoto').hide();
+	document.getElementById("changePhoto").setAttribute("data-photo",f);
 }
 function f_supp_photo(f){
 	var a=document.forms['portraitPhoto'];
 	a.elements['a1'].value='suppImg';
+	a.elements['a2'].value=f;
+	a.elements[(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
+	a.submit();
+}
+function f_rotate_photo(f,g){
+	var a=document.forms['portraitPhoto'];
+	a.elements['a1'].value=(g==0?'rotateLImg':'rotateRImg');
 	a.elements['a2'].value=f;
 	a.elements[(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.submit();
@@ -158,9 +167,9 @@ function f_sauv_profil(f){
 	a.elements[jrenc].value=jedit;
 	a.submit();
 }
-function f_fantome(){
-	jQuery('#rencFantome').remove();
-	document.cookie="rencfantome=yes";
+function f_titann(){
+	jQuery('#rencTitann').remove();
+	document.cookie="titann=yes";
 }
 function f_nouveau(f,e){
 	var a=0,d=0,c=document.forms['formNouveau'],b=c.elements,v;
@@ -396,9 +405,9 @@ function f_region_select(f,g,x){
 		});
 	});
 }
-function f_voir_msg(f,g,h,ho){
+function f_voir_msg(f,g,h){
 	jQuery(document).ready(function(){
-		jQuery.post(g,{'action':'voirMsg','idmsg':f,'alias':h,'ho':ho,'rencTok':rencTok},function(r){
+		jQuery.post(g,{'action':'voirMsg','idmsg':f,'alias':h,'rencTok':rencTok},function(r){
 			jQuery('#rencMsg').empty();
 			jQuery('#rencMsg').append(r.substring(0,r.length-1));
 		});

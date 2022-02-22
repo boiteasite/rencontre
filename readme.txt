@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
 Requires at least: 4.3
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 5.5
-Stable tag: 3.6.8
+Stable tag: 3.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,7 @@ The features are as follows :
 [**Kit Premium**](https://www.boiteasite.fr/rencontre-premium.html) :
 
 * Sophisticated **payment system** for members with numerous settings, restrictions and promotions - Compatible with WooCommerce gateways ;
+* Subscription system by duration or by purchase of points ;
 * Settings & access defined by gender ;
 * Photos and/or Videos **Private Gallery** ;
 * Proximity search on **map** by geolocation ;
@@ -73,9 +74,10 @@ Rencontre is currently translated in :
 * Japanese - thanks to Rorylouis
 * Norvegian - thanks to Steffen Madsen
 * Portuguese - thanks to Patricio Fernandes
+* Portuguese Brazil - thanks to César Ramos
 * Russian - thanks to Vetal Soft
 * Spanish - thanks to Sanjay Gandhi
-* Swahili - thanks to [Kenneth Longo Mlelwa](http://afrodate.africa/)
+* Swahili - thanks to Kenneth Longo Mlelwa
 * Swedish - thanks to WP Translation Team
 * Turkish - thanks to Cise Candarli
 
@@ -120,9 +122,9 @@ You need a WordPress Login/logout/Register link. Select one or more of these pos
 5. Install a specific plugin like [baw-login-logout-menu](https://wordpress.org/plugins/baw-login-logout-menu/).
 6. Use the widget from another plugin (BBPress has one).
 7. Add this small code in your header.php file (or other one...), next to the menu :
-`&lt;?php Rencontre::f_login(); ?&gt;`
+`<?php Rencontre::f_login(); ?>`
 or
-`&lt;?php Rencontre::f_login('fb'); ?&gt;`
+`<?php Rencontre::f_login('fb'); ?>`
 to have Facebook too.
  
 **Quarto**
@@ -222,9 +224,9 @@ After that, you can use the shortcode [rencontre_loginFB] or the PHP code in you
 * Framework for the [Facebook](https://developers.facebook.com/docs/plugins/like-button?locale=en_US#configurator) Like button : 
 
 `
-&lt;div id="fb-root">&lt;/div>
-&lt;script>(function(d, s, id) {var js,fjs=d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js=d.createElement(s);js.id=id;js.src="//connect.facebook.net/en_US/all.js#xfbml=1";fjs.parentNode.insertBefore(js, fjs);}(document,'script','facebook-jssdk'));&lt;/script>
-&lt;div class="fb-like" data-href="http://mysite.com" data-layout="button" data-action="like" data-show-faces="false" data-share="true">&lt;/div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {var js,fjs=d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js=d.createElement(s);js.id=id;js.src="//connect.facebook.net/en_US/all.js#xfbml=1";fjs.parentNode.insertBefore(js, fjs);}(document,'script','facebook-jssdk'));</script>
+<div class="fb-like" data-href="http://mysite.com" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
 `
 
 = How to use unconnected search =
@@ -234,10 +236,37 @@ For visitors not connected, you can add a tiny quick search form :
 
 *Method 2* : PHP in your theme (best solution for integrator) :
 
-`&lt;?php if(!is_user_logged_in()) Rencontre::f_rencontreSearch(0, array('nb'=>6) ); ?>`
+`<?php if(!is_user_logged_in()) Rencontre::f_rencontreSearch(0, array('nb'=>6) ); ?>`
 
 = How to use Rencontre Templates =
-Copy the files you have changed in your theme : /my_theme_folder/templates/. Don't copy unchanged files.
+** SIMPLEST METHOD **
+Copy the files you have changed in a templates folder of your theme : /my_theme_folder/templates/. Don't copy unchanged files.
+Prefer a child theme if you don't want to lose these files after a theme update.
+
+** BEST METHOD **
+Create a minimalist plugin just for that (and other filter/functions if you want...).  :
+
+*Plugin structure* : A folder "myPlugin" that contains "myPlugin.php" and a folder "templates".
+*myPlugin.php* :
+
+`
+<?php
+/*
+Plugin Name: My Plugin
+Description: My plugin to customize the templates.
+Version: 1.0
+Author: Its Me
+License: GPL
+Copyright: Its Me
+*/
+function myTplDir($arg) {
+	$arg['path'] = realpath(__DIR__).'/templates/';
+	$arg['url'] = plugins_url('myPlugin/templates/'); // name of your plugin !
+	return $arg;
+}
+add_filter('rencTemplateDir', 'myTplDir', 10, 1);
+// Others functions here
+`
 
 [More details](https://www.boiteasite.fr/site_rencontre_wordpress.html#Developpeurs)
 
@@ -245,20 +274,25 @@ Copy the files you have changed in your theme : /my_theme_folder/templates/. Don
 Add little flags in the header of your theme. On click, you create cookie with the right language. Then, the site changes language (back and front office) :
 
 `
-&lt;div id="lang">
-	&lt;a href="" title="Fran&ccedil;ais" onClick="javascript:document.cookie='lang=fr_FR;path=/'">
-		&lt;img src="&lt;?php echo plugins_url('rencontre/images/drapeaux/France.png'); ?&gt;" alt="Francais" />
-	&lt;/a>
-	&lt;a href="" title="English" onClick="javascript:document.cookie='lang=en_US;path=/'">
-		&lt;img src="&lt;?php echo plugins_url('rencontre/images/drapeaux/Royaume-Uni.png'); ?&gt;" alt="English" />
-	&lt;/a>
-&lt;/div>
+<div id="lang">
+	<a href="" title="Fran&ccedil;ais" onClick="javascript:document.cookie='lang=fr_FR;path=/'">
+		<img src="<?php echo plugins_url('rencontre/images/drapeaux/France.png'); ?>" alt="Francais" />
+	</a>
+	<a href="" title="English" onClick="javascript:document.cookie='lang=en_US;path=/'">
+		<img src="<?php echo plugins_url('rencontre/images/drapeaux/Royaume-Uni.png'); ?>" alt="English" />
+	</a>
+</div>
 `
 
 = How to customize translation =
 The best method is to use Poedit software to edit a rencontre-xx_YY.po file and create a rencontre-xx_YY.mo file.
 Then, put your po/mo files in wp-content/languages/plugins/ with the same name as the plugin (rencontre-xx_YY.mo).
 You can also email us your best version so that we insert it in the plugin.
+You can turn off the automatic download of translations in wp-content/languages/plugins/ by adding this filter :
+
+`
+add_filter('auto_update_translation', '__return_false');
+`
 
 = User role & user removed =
 All WordPress roles for the new Rencontre members are removed by this plugin to improve security and speed. That can be a conflict with other plugin.
@@ -338,6 +372,11 @@ It's better to limit the data size.
 * rencColor - args array() - return args array() : Add colors to $w3renc list - See "inc/rencontre_color.php"
 * rencNoFontawesome - remove Font Awesome css file if filter exists (no need function, only filter).
 * rencJsLang - args $lang array() - return $lang - Add or change values in rencontre/lang/rencontre-js-lang.php.
+* rencUserPost - args $post, $source - return $post : Allows to filter the data (_POST or _GET) entered by the user before saving or sending. $source : 'sauvProfil','updateMember','sendMsg','quickFind','find'
+* rencMailBirthday - args $u - send an email to $u->user_email. See rencontre_filter function f_cron_on().
+* rencMailRemind - args $u - send a registration remind email to $u->user_email. See rencontre_filter function f_cron_on().
+* rencMailInstant - args $u - send an instant email (One per hour) to $u->user_email. See rencontre_filter function f_cron_liste().
+* rencCron : Control the launch of the 2 functions f_cron_ (on & liste) of maintenance and sending of daily and immediate emails. See rencontre_filter.php function f_cron().
 
 [Howto](https://www.boiteasite.fr/site_rencontre_wordpress.html#Developpeurs)
 
@@ -353,6 +392,20 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+21/02/2022 : 3.7.1
+
+* Show-Hide unused buttons on portrait page. The template rencontre_portrait.php should be updated if you have customized it.
+* User can rotate images after upload. The **template rencontre_portrait_edit.php** must be updated if you have customized it !
+* Add portuguese (brazil) translation - thanks to César Ramos
+* Fix PHP 8.1 warning.
+
+04/01/2022 : 3.7
+
+* Add templates and filter to customize all Rencontre emails : templates/rencontre_mail_birthday.php & rencMailBirthday, templates/rencontre_mail_remind.php & rencMailRemind, templates/rencontre_mail_instant.php & rencMailInstant, templates/rencontre_mail_regular_global.php
+* Add rencUserPost filter (filter the data _POST or _GET entered by the user). See F.A.Q.
+* Code cleaning.
+* Fix somme bugs.
 
 27/11/2021 : 3.6.8
 

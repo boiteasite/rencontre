@@ -4,6 +4,7 @@
  * Template : Warning
  * Last Change : Rencontre 3.0
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_warning.php
+ * Call : rencontre_widget.php => widget(), plusImg(), f_quickFind(), f_trouver()
  * input : $warning
 */
 ?>
@@ -16,11 +17,3 @@
 	<script type="text/javascript">window.setTimeout(function(){jQuery("#rencWarning").remove()},<?php echo $timeout; ?>);</script>
 	<?php } ?>
 <?php } ?>
-
-<?php
-/* *** Used when/in :
- * Message sending
- * 
- * 
-*/
-?>
