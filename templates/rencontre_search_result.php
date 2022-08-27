@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search Result
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search_result.php
  * Call : rencontre_widget.php => f_quickFind(), f_trouver()
  * $u : user_login, user_id, d_naissance, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_annonce, t_profil, t_action, looking, forwhat, hidephoto, online, online_ago, miniPhoto, miniPhotoWebp
@@ -23,11 +23,11 @@
 								<picture <?php echo $u->thumb; ?>>
 									<source class="w3-circle" srcset="<?php echo $u->miniPhotoWebp; ?>" type="image/webp" alt="<?php echo $u->display_name; ?>">
 									<source class="w3-circle" srcset="<?php echo $u->miniPhoto; ?>" type="image/jpeg" alt="<?php echo $u->display_name; ?>"> 
-									<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" alt="<?php echo $u->display_name; ?>" />
+									<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" srcset="<?php echo $u->miniPhotoRetina; ?>" alt="<?php echo $u->display_name; ?>" />
 								</picture>
 							<?php } else { ?>
 			
-								<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" alt="<?php echo $u->display_name; ?>" <?php echo $u->thumb; ?> />
+								<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" srcset="<?php echo $u->miniPhotoRetina; ?>" alt="<?php echo $u->display_name; ?>" <?php echo $u->thumb; ?> />
 							<?php } ?>
 							<?php if(!empty($certified)) echo $certified; ?>
 								

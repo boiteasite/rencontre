@@ -73,21 +73,22 @@ class RencontreWidget extends WP_widget {
 		else if($Grencidfm!=='') $rencidfm = intval($Grencidfm);
 		$mid = $current_user->ID; // Mon id
 		$r = $rencDiv['basedir'].'/portrait';if(!is_dir($r)) mkdir($r);
-		if(!isset($rencDrap) || !$rencDrap) {
-			$q = $wpdb->get_results("SELECT
-					c_liste_categ,
-					c_liste_valeur,
-					c_liste_iso
-				FROM ".$wpdb->prefix."rencontre_liste 
-				WHERE 
-					c_liste_categ='d' or
-					(c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang3'],0,2)."') ");
-			$rencDrap = array(); $rencDrapNom = array();
-			foreach($q as $r) {
-				if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
-				else if($r->c_liste_categ=='p')$rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
-			}
+		//
+		$q = $wpdb->get_results("SELECT
+				c_liste_categ,
+				c_liste_valeur,
+				c_liste_iso
+			FROM ".$wpdb->prefix."rencontre_liste 
+			WHERE 
+				c_liste_categ='d' or
+				(c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang3'],0,2)."') ");
+		$rencDrap = array(); $rencDrapNom = array();
+		foreach($q as $r) {
+			if(!empty($rencOpt['nbr']['flagPng']) && $r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur; // PNG
+			else if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = 'svg/'.strtolower($r->c_liste_iso).'.svg'; // SVG
+			else if($r->c_liste_categ=='p')$rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
 		}
+		//
 		if($Pnouveau!=='' && $Pa1==$mid) {
 			if($Pnouveau=='update') self::f_updateMember($mid);
 			else self::f_registerMember($mid,$Pnouveau);
@@ -309,7 +310,7 @@ class RencontreWidget extends WP_widget {
 					ON P.user_id=U.ID
 				WHERE
 					U.ID=".$id."
-					and (R.i_status IN (0,2) or U.ID=".$mid.")
+					and (R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').") or U.ID=".$mid.")
 				LIMIT 1
 				");
 			if($id!=$mid) $u->online = self::f_enLigne($id,$u->d_session); // true : en ligne - false : hors ligne
@@ -400,13 +401,36 @@ class RencontreWidget extends WP_widget {
 				for($v=0;$v<$u->maxPhoto;++$v) {
 					if(($u->ID)*10+$v <= $u->i_photo) {
 						$a = Rencontre::f_img((($u->ID)*10+$v).'-mini');
-						$u->photo->mini[$v] = $a.'.jpg?r='.rand();
-						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.$a.'.webp')) $u->photo->miniWebp[$v] = Rencontre::f_img((($u->ID)*10+$v).'-mini').'.webp?r='.rand();
-						else $u->photo->miniWebp[$v] = false;
+						// Browser Caching Bypass
+						$b = 0;
+						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.$a.'.jpg')) $b = filemtime($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.$a.'.jpg');
+						$u->photo->mini[$v] = $a.'.jpg?'.$b;
+						// RETINA
+						$u->photo->miniRetina[$v] = '';
+						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.$a.'@2x.jpg')) $u->photo->miniRetina[$v] = $rencDiv['baseurl'].'/portrait/'.floor($u->ID/1000).'/'.$a.'@2x.jpg?'.$b.' 2x';
+						// WEBP
+						$u->photo->miniWebp[$v] = '';
+						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.$a.'.webp')) {
+							$u->photo->miniWebp[$v] = $a.'.webp?'.$b; // TPL : $u->photoUrl.$u->photo->miniWebp[$v]
+							if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.$a.'@2x.webp')) $u->photo->miniWebp[$v] .= ' 1x,'.$rencDiv['baseurl'].'/portrait/'.floor($u->ID/1000).'/'.$a.'@2x.webp?'.$b.' 2x';
+						}
+						//
 						if(empty($rencOpt['photoz']) || $u0->i_photo || $hob) {
-							$u->photo->grande[$v] = Rencontre::f_img((($u->ID)*10+$v).'-grande').'.jpg?r='.rand();
-							$u->photo->over[$v] = "f_vignette(".(($u->ID)*10+$v).",'".Rencontre::f_img((($u->ID)*10+$v)."-grande")."')";
-							$u->photo->full[$v] = Rencontre::f_img((($u->ID)*10+$v)).'.jpg?r='.rand();
+							$u->photo->grande[$v] = Rencontre::f_img((($u->ID)*10+$v).'-grande').'.jpg?'.$b;
+							$u->photo->full[$v] = Rencontre::f_img((($u->ID)*10+$v)).'.jpg?'.$b;
+							// RETINA
+							$u->photo->grandeRetina[$v] = '';
+							$u->photo->grandeRet[$v] = 0; // not exists (JS)
+							if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img((($u->ID)*10+$v).'-grande').'@2x.jpg')) {
+								$u->photo->grandeRetina[$v] = $rencDiv['baseurl'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img((($u->ID)*10+$v).'-grande').'@2x.jpg?'.$b.' 2x';
+								$u->photo->grandeRet[$v] = 1; // exists (JS)
+							}
+							$u->photo->fullRetina[$v] = '';
+							if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img(($u->ID)*10+$v).'@2x.jpg')) {
+								$u->photo->fullRetina[$v] = $rencDiv['baseurl'].'/portrait/'.floor($u->ID/1000).'/'.Rencontre::f_img(($u->ID)*10+$v).'@2x.jpg?'.$b.' 2x';
+							}
+							//
+							$u->photo->over[$v] = "f_vignetteRetina(".(($u->ID)*10+$v).",'".Rencontre::f_img((($u->ID)*10+$v)."-grande")."',".$u->photo->grandeRet[$v].",'".$b."')";
 						}
 						else $u->photo->over[$v] = "";
 					}
@@ -523,6 +547,7 @@ class RencontreWidget extends WP_widget {
 							c_lang='".substr($rencDiv['lang2'],0,2)."' and
 							c_categ!='' and
 							c_label!='' and
+							c_genre NOT LIKE '%:%' and
 							i_poids<5
 						"); // Ordre inutile (get_row)
 					if($q) {
@@ -531,7 +556,7 @@ class RencontreWidget extends WP_widget {
 						foreach($profil as $h) { // user profile
 							$i = $h['i']; // more simple
 							if(isset($l[$i])) {
-								if($l[$i]->c_genre==='0' || strpos($l[$i]->c_genre,','.$u->i_sex.',')!==false) {
+								if($l[$i]->c_genre==='0' || $r->c_genre===':' || strpos($l[$i]->c_genre,','.$u->i_sex.',')!==false) {
 									if($l[$i]->i_type<3) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = $h['v'];
 									else if($l[$i]->i_type==6) $u->profil[$l[$i]->c_categ][$l[$i]->c_label] = date_i18n(get_option('date_format'),strtotime($h['v']));
 									else {
@@ -609,11 +634,12 @@ class RencontreWidget extends WP_widget {
 				$in = array();
 				$p = json_decode($s->t_profil,true);
 				foreach($q as $r) {
-					if($r->c_genre==='0' || strpos($r->c_genre,','.$s->i_sex.',')!==false) {
+					if($r->c_genre==='0' || $r->c_genre===':' || strpos($r->c_genre,','.$s->i_sex.',')!==false) { // Check Sex
 						$in[$r->id][0] = $r->i_type;
 						$in[$r->id][1] = $r->c_categ;
 						$in[$r->id][2] = $r->c_label;
 						$in[$r->id][3] = $r->t_valeur;
+						$in[$r->id][4] = (($r->c_genre===':' || strpos($r->c_genre,',:,')!==false) ? 1 : 0); // Mandatory
 					}
 				}
 				self::sauvProfil($in,$mid);
@@ -642,12 +668,14 @@ class RencontreWidget extends WP_widget {
 			$obj = array();
 			$p = json_decode($u0->t_profil,true);
 			foreach($q as $r) {
-				if($r->c_genre==='0' || strpos($r->c_genre,','.$s->i_sex.',')!==false) {
+				if($r->c_genre==='0' || $r->c_genre===':' || strpos($r->c_genre,','.$s->i_sex.',')!==false) {
+					$m = (($r->c_genre===':'||strpos($r->c_genre,',:,')!==false)?1:0); // Mandatory Hidden field
 					$a = new StdClass();
 					$a->id = $r->id;
-					$a->label = $r->c_label;
+					$a->label = $r->c_label.($m?' *':'');
 					$a->type = $r->i_type;
 					$a->active = '';
+					$a->mandatory = $m;
 					if($r->i_type==3 || $r->i_type==4) $a->valeur = json_decode($r->t_valeur);
 					else if($r->i_type==5) {
 						$b = json_decode($r->t_valeur);
@@ -674,6 +702,7 @@ class RencontreWidget extends WP_widget {
 				}
 				$ho = false; if(has_filter('rencNbPhotoP')) $ho = apply_filters('rencNbPhotoP', $ho);
 				$u0->maxPhoto = ($ho!==false?min($ho,(isset($rencOpt['imnb']))?$rencOpt['imnb']:4):((isset($rencOpt['imnb']))?$rencOpt['imnb']:4));
+				// NO WEBP in PORTRAIT-EDIT
 				$u0->photoUrl = $rencDiv['baseurl'].'/portrait/'.floor($u0->ID/1000).'/';
 				$u0->photo = new StdClass();
 				$u0->photo->full = array();
@@ -682,14 +711,31 @@ class RencontreWidget extends WP_widget {
 				$u0->photo->over = array();
 				for($v=0;$v<(isset($rencOpt['imnb'])?$rencOpt['imnb']:4);++$v) {
 					if(($u0->ID)*10+$v <= $u0->i_photo) {
-						$u0->photo->mini[$v] = Rencontre::f_img((($u0->ID)*10+$v).'-mini').'.jpg?r='.rand();
-						$u0->photo->grande[$v] = Rencontre::f_img((($u0->ID)*10+$v).'-grande').'.jpg?r='.rand();
-						$u0->photo->over[$v] = "f_vignette_change(".($u0->ID*10+$v).",'".Rencontre::f_img((($u0->ID)*10+$v)."-grande")."')";
-						$u0->photo->full[$v] = Rencontre::f_img((($u0->ID)*10+$v)).'.jpg?r='.rand();
+						$a = Rencontre::f_img((($u0->ID)*10+$v).'-mini');
+						// Browser Caching Bypass
+						$b = 0;
+						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u0->ID/1000).'/'.$a.'.jpg')) $b = filemtime($rencDiv['basedir'].'/portrait/'.floor($u0->ID/1000).'/'.$a.'.jpg');
+						$u0->photo->mini[$v] = $a.'.jpg?'.$b;
+						// RETINA Mini
+						$u0->photo->miniRetina[$v] = '';
+						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u0->ID/1000).'/'.$a.'@2x.jpg')) $u0->photo->miniRetina[$v] = $rencDiv['baseurl'].'/portrait/'.floor($u0->ID/1000).'/'.$a.'@2x.jpg?'.$b.' 2x';
+						//
+						$a = Rencontre::f_img((($u0->ID)*10+$v).'-grande');
+						$u0->photo->grande[$v] = $a.'.jpg?'.$b;
+						// RETINA Grande
+						$u0->photo->grandeRetina[$v] = '';
+						$u0->photo->grandeRet[$v] = 0; // not exists (JS)
+						if(file_exists($rencDiv['basedir'].'/portrait/'.floor($u0->ID/1000).'/'.$a.'@2x.jpg')) {
+							$u0->photo->grandeRetina[$v] = $rencDiv['baseurl'].'/portrait/'.floor($u0->ID/1000).'/'.$a.'@2x.jpg?'.$b.' 2x';
+							$u0->photo->grandeRet[$v] = 1; // exists (JS)
+						}
+						//
+						$u0->photo->over[$v] = "f_vignetteRetina_change(".($u0->ID*10+$v).",'".$a."',".$u0->photo->grandeRet[$v].",'".$b."')";
+						$u0->photo->full[$v] = Rencontre::f_img((($u0->ID)*10+$v)).'.jpg?'.$b; // Not used
 					}
 				}
 				$onClick = array(
-					"add"=>"document.getElementById('rencPhotoPop').style.display='block'",
+					"add"=>"document.getElementById('rencPhotoPop').style.display='block';document.getElementById('changePhoto').style.display='none';",
 					"deleteAll"=>"f_suppAll_photo();return false;",
 					"sauv"=>"f_sauv_profil(".$u0->ID.")"
 					);
@@ -837,7 +883,7 @@ class RencontreWidget extends WP_widget {
 					INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 						ON P.user_id=R.user_id
 					WHERE 
-						R.i_status IN (0,2) 
+						R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').") 
 						".$sexQuery."
 						".((!isset($rencCustom['born']) && $zmax && $zmin)?"
 						and R.d_naissance>'".$zmax."' 
@@ -864,7 +910,7 @@ class RencontreWidget extends WP_widget {
 						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 							ON P.user_id=R.user_id
 						WHERE 
-							R.i_status IN (0,2)
+							R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 							".$sexQuery."
 							".((!isset($rencCustom['born']) && $zmax && $zmin)?"
 							and R.d_naissance>'".$zmax."' 
@@ -891,7 +937,7 @@ class RencontreWidget extends WP_widget {
 						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 							ON P.user_id=R.user_id
 						WHERE 
-							R.i_status IN (0,2)
+							R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 							".$sexQuery."
 							".((!isset($rencCustom['born']) && $zmax && $zmin)?"
 							and R.d_naissance>'".$zmax."' 
@@ -917,7 +963,7 @@ class RencontreWidget extends WP_widget {
 						INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 							ON P.user_id=R.user_id
 						WHERE 
-							R.i_status IN (0,2)
+							R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 							".$sexQuery."
 							".((!isset($rencCustom['born']) && $zmax2 && $zmin2)?"
 							and R.d_naissance>'".$zmax2."' 
@@ -943,7 +989,7 @@ class RencontreWidget extends WP_widget {
 							".$sexQuery."
 							".((!isset($rencCustom['born']) && $zmax2 && $zmin2)?"and R.d_naissance>'".$zmax2."' and R.d_naissance<'".$zmin2."'":"")."
 							and R.user_id!=".$mid."
-							and R.i_status IN (0,2)
+							and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 							".$myCountry."
 							".$qpause."
 						ORDER BY RAND() LIMIT ".(!empty($rencOpt['nbr']['birthday'])?$rencOpt['nbr']['birthday']:4));
@@ -964,7 +1010,7 @@ class RencontreWidget extends WP_widget {
 							R.user_id IN (".substr($tab,0,-1).") 
 							".$sexQuery."
 							and R.user_id!=".$mid."
-							and R.i_status IN (0,2)
+							and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 							".$myCountry."
 							".$qpause."
 						ORDER BY RAND() LIMIT ".(!empty($rencOpt['nbr']['online'])?$rencOpt['nbr']['online']:16)); // AND d_naissance>'".$zmax."' AND d_naissance<'".$zmin."' ?>
@@ -983,7 +1029,7 @@ class RencontreWidget extends WP_widget {
 					INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 						ON P.user_id=R.user_id
 					WHERE 
-						R.i_status IN (0,2)
+						R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 						".$sexQuery."
 						".((!isset($rencCustom['born']) && $zmax2 && $zmin2)?"and R.d_naissance>'".$zmax2."' and R.d_naissance<'".$zmin2."'":"")."
 						".(!empty($rencOpt['onlyphoto'])?" AND R.i_photo>0 ":" ")."
@@ -1129,8 +1175,19 @@ class RencontreWidget extends WP_widget {
 							$v->date = self::format_dateTime($v->date,1);
 							$v->type = 'msgin';
 							$b = '/portrait/'.floor(($v->user_id)/1000).'/'.Rencontre::f_img(($v->user_id*10).'-mini');
-							$v->miniPhoto = $rencDiv['baseurl'].$b.'.jpg?r='.rand();
-							if(file_exists($rencDiv['basedir'].$b.'.webp')) $v->miniPhotoWebp = $rencDiv['baseurl'].$b.'.webp?r='.rand();
+							// Browser Caching Bypass
+							$c = 0;
+							if(file_exists($rencDiv['basedir'].$b.'.jpg')) $c = filemtime($rencDiv['basedir'].$b.'.jpg');
+							$v->miniPhoto = $rencDiv['baseurl'].$b.'.jpg?'.$c;
+							// RETINA
+							$v->miniPhotoRetina = '';
+							if(file_exists($rencDiv['basedir'].$b.'@2x.jpg')) $v->miniPhotoRetina = $rencDiv['baseurl'].$b.'@2x.jpg?'.$c.' 2x';
+							// WEBP
+							$v->miniPhotoWebp = '';
+							if(file_exists($rencDiv['basedir'].$b.'.webp')) {
+								$v->miniPhotoWebp = $rencDiv['baseurl'].$b.'.webp?'.$c;
+								if(file_exists($rencDiv['basedir'].$b.'@2x.webp')) $v->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$b.'@2x.webp?'.$c.' 2x';
+							}
 							$inbox[] = $v;
 						}
 						else if($v->recipient!=$current_user->user_login && strpos($a,','.$v->recipient.',')===false) {
@@ -1140,8 +1197,19 @@ class RencontreWidget extends WP_widget {
 							$v->date = self::format_dateTime($v->date,1);
 							$v->type = 'msgout';
 							$b = '/portrait/'.floor(($v->user_id)/1000).'/'.Rencontre::f_img(($v->user_id*10).'-mini');
-							$v->miniPhoto = $rencDiv['baseurl'].$b.'.jpg?r='.rand();
-							if(file_exists($rencDiv['basedir'].$b.'.webp')) $v->miniPhotoWebp = $rencDiv['baseurl'].$b.'.webp?r='.rand();
+							// Browser Caching Bypass
+							$c = 0;
+							if(file_exists($rencDiv['basedir'].$b.'.jpg')) $c = filemtime($rencDiv['basedir'].$b.'.jpg');
+							$v->miniPhoto = $rencDiv['baseurl'].$b.'.jpg?'.$c;
+							// RETINA
+							$v->miniPhotoRetina = '';
+							if(file_exists($rencDiv['basedir'].$b.'@2x.jpg')) $v->miniPhotoRetina = $rencDiv['baseurl'].$b.'@2x.jpg?'.$c.' 2x';
+							// WEBP
+							$v->miniPhotoWebp = '';
+							if(file_exists($rencDiv['basedir'].$b.'.webp')) {
+								$v->miniPhotoWebp = $rencDiv['baseurl'].$b.'.webp?'.$c;
+								if(file_exists($rencDiv['basedir'].$b.'@2x.webp')) $v->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$b.'@2x.webp?'.$c.' 2x';
+							}
 							$inbox[] = $v;
 						}
 					}
@@ -1188,11 +1256,23 @@ class RencontreWidget extends WP_widget {
 						");
 					$u->user_id = $id;
 					$a = '/portrait/'.floor(($u->i_photo)/10000).'/'.Rencontre::f_img((floor(($u->i_photo)/10)*10).'-mini');
-					$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+					// Browser Caching Bypass
+					$b = 0;
+					if(file_exists($rencDiv['basedir'].$a.'.jpg')) $b = filemtime($rencDiv['basedir'].$a.'.jpg');
+					$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?'.$b;
 					$u->photo = $u->miniPhoto; // name before V3.6.2
+					// RETINA
+					$u->miniPhotoRetina = '';
+					if(file_exists($rencDiv['basedir'].$a.'@2x.jpg')) $u->miniPhotoRetina = $rencDiv['baseurl'].$a.'@2x.jpg?'.$b.' 2x';
+					// WEBP
+					$u->miniPhotoWebp = '';
+					if(file_exists($rencDiv['basedir'].$a.'.webp')) {
+						$u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?'.$b;
+						if(file_exists($rencDiv['basedir'].$a.'@2x.webp')) $u->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$a.'@2x.webp?'.$b.' 2x';
+					}
+					//
 					$m = (!empty($rencOpt['nbr']['lengthName'])?intval($rencOpt['nbr']['lengthName']):50);
 					$u->display_name = substr($u->display_name,0,$m);
-					if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
 					$noProfile = false; if(has_filter('rencLimitedActionP')) $noProfile = apply_filters('rencLimitedActionP', array('profil',0,$id));
 					$onClick = array(
 						'profile'=>($noProfile?"":"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lcard."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($id,0)."';document.forms['rencMenu'].submit();"),
@@ -1268,28 +1348,26 @@ class RencontreWidget extends WP_widget {
 		$size = rencPhotoSize();
 		global $rencDiv;
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
-		$a = array(); $a1 = array();
-		$a[] = Rencontre::f_img($im) . '.jpg';
-		$a1[] = Rencontre::f_img($im) . '.webp';
+		$typ = array('.jpg', '.webp', '@2x.jpg', '@2x.webp');
+		//
+		$a = array(); 
+		foreach($typ as $v) $a[] = Rencontre::f_img($im) . $v;
 		foreach($size as $s) {
-			$a[] = Rencontre::f_img($im.$s['label']) . '.jpg';
-			$a1[] = Rencontre::f_img($im.$s['label']) . '.webp';
+			foreach($typ as $v) $a[] = Rencontre::f_img($im.$s['label']) . $v;
 		}
 		foreach($a as $b) if(file_exists($r.$b)) unlink($r.$b);
-		foreach($a1 as $b) if(file_exists($r.$b)) unlink($r.$b);
+		//
 		global $wpdb;
 		$q = $wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$id."' LIMIT 1");
-		if(!$q || floor($q/10)*10==$q) $p=0; // plus de photo
-		else $p=$q-1;
+		if(!$q || floor($q/10)*10==$q) $p = 0; // plus de photo
+		else $p = $q-1;
 		$wpdb->update($wpdb->prefix.'rencontre_users', array('i_photo'=>$p), array('user_id'=>$id));
 		$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('d_modif'=>current_time("mysql")), array('user_id'=>$id));
-		$c=0;
+		$c = 0;
 		for($v=$im; $v<$q; ++$v) {
-			if(file_exists($r.Rencontre::f_img(($v+1)).'.jpg')) rename($r.Rencontre::f_img(($v+1)).'.jpg', $r.Rencontre::f_img($v).'.jpg');
-			if(file_exists($r.Rencontre::f_img(($v+1)).'.webp')) rename($r.Rencontre::f_img(($v+1)).'.webp', $r.Rencontre::f_img($v).'.webp');
+			foreach($typ as $w) if(file_exists($r.Rencontre::f_img(($v+1)).$w)) rename($r.Rencontre::f_img(($v+1)).$w, $r.Rencontre::f_img($v).$w);
 			foreach($size as $s) {
-				if(file_exists($r.Rencontre::f_img(($v+1).$s['label']).'.jpg')) rename($r.Rencontre::f_img(($v+1).$s['label']).'.jpg', $r.Rencontre::f_img($v.$s['label']).'.jpg');
-				if(file_exists($r.Rencontre::f_img(($v+1).$s['label']).'.webp')) rename($r.Rencontre::f_img(($v+1).$s['label']).'.webp', $r.Rencontre::f_img($v.$s['label']).'.webp');
+				foreach($typ as $w) if(file_exists($r.Rencontre::f_img(($v+1).$s['label']).$w)) rename($r.Rencontre::f_img(($v+1).$s['label']).$w, $r.Rencontre::f_img($v.$s['label']).$w);
 			}
 		}
 		if(has_filter('rencBlurDelP')) {
@@ -1314,33 +1392,34 @@ class RencontreWidget extends WP_widget {
 		$pos = $im - intval($id.'0');
 		global $rencDiv;
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
+		$typ = array('.jpg', '.webp', '@2x.jpg', '@2x.webp');
 		// 1. Future Main TMP name
-		$a = array(array(Rencontre::f_img($im).'.jpg',''));
-		$a1 = array(array(Rencontre::f_img($im).'.webp',''));
+		$a = array();
+		foreach($typ as $v) $a[] = array(Rencontre::f_img($im).$v, '', $v);
 		foreach($size as $s) {
-			$a[] = array(Rencontre::f_img($im.$s['label']).'.jpg', $s['label']);
-			$a1[] = array(Rencontre::f_img($im.$s['label']).'.webp', $s['label']);
+			foreach($typ as $v) $a[] = array(Rencontre::f_img($im.$s['label']).$v, $s['label'], $v);
 		}
-		foreach($a as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.$id.'main00'.$b[1].'.jpg'); // $im => tmp name
-		foreach($a1 as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.$id.'main00'.$b[1].'.webp');
+		foreach($a as $b) {
+			foreach($typ as $v) if(file_exists($r.$b[0])) rename($r.$b[0], $r.$id.'main00'.$b[1].$b[2]); // $im => tmp name
+		}
 		// 2. Current Main
-		$a = array(array(Rencontre::f_img($id.'0').'.jpg',''));
-		$a1 = array(array(Rencontre::f_img($id.'0').'.webp',''));
+		$a = array();
+		foreach($typ as $v) $a[] = array(Rencontre::f_img($id.'0').$v, '', $v);
 		foreach($size as $s) {
-			$a[] = array(Rencontre::f_img($id.'0'.$s['label']).'.jpg', $s['label']);
-			$a1[] = array(Rencontre::f_img($id.'0'.$s['label']).'.webp', $s['label']);
+			foreach($typ as $v) $a[] = array(Rencontre::f_img($id.'0'.$s['label']).$v, $s['label'], $v);
 		}
-		foreach($a as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.$pos.$b[1]).'.jpg'); // main => $im
-		foreach($a1 as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.$pos.$b[1]).'.webp');
+		foreach($a as $b) {
+			foreach($typ as $v) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.$pos.$b[1]).$b[2]); // main => $im
+		}
 		// 3. Future Main 
-		$a = array(array($id.'main00'.'.jpg',''));
-		$a1 = array(array($id.'main00'.'.wepb',''));
+		$a = array();
+		foreach($typ as $v) $a[] = array($id.'main00'.$v, '', $v);
 		foreach($size as $s) {
-			$a[] = array($id.'main00'.$s['label'].'.jpg', $s['label']);
-			$a1[] = array($id.'main00'.$s['label'].'.webp', $s['label']);
+			foreach($typ as $v) $a[] = array($id.'main00'.$s['label'].$v, $s['label'], $v);
 		}
-		foreach($a as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.'0'.$b[1]).'.jpg'); // tmp name => main
-		foreach($a1 as $b) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.'0'.$b[1]).'.webp');
+		foreach($a as $b) {
+			foreach($typ as $v) if(file_exists($r.$b[0])) rename($r.$b[0], $r.Rencontre::f_img($id.'0'.$b[1]).$b[2]); // tmp name => main
+		}
 		//
 		if(file_exists($rencDiv['basedir'].'/portrait/libre/libreIDs.json')) {
 			$j = file_get_contents($rencDiv['basedir'].'/portrait/libre/libreIDs.json');
@@ -1431,16 +1510,14 @@ class RencontreWidget extends WP_widget {
 		global $rencDiv;
 		$size = rencPhotoSize();
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
+		$typ = array('.jpg', '.webp', '@2x.jpg', '@2x.webp');
 		for($v=0;$v<=9;++$v) {
-			$a = array(); $a1 = array();
-			$a[] = Rencontre::f_img($id.$v) . '.jpg';
-			$a1[] = Rencontre::f_img($id.$v) . '.webp';
+			$a = array();
+			foreach($typ as $w) $a[] = Rencontre::f_img($id.$v) . $w;
 			foreach($size as $s) {
-				$a[] = Rencontre::f_img($id.$v.$s['label']) . '.jpg';
-				$a1[] = Rencontre::f_img($id.$v.$s['label']) . '.webp';
+				foreach($typ as $w) $a[] = Rencontre::f_img($id.$v.$s['label']) . $w;
 			}
 			foreach($a as $b) if(file_exists($r.$b)) unlink($r.$b);
-			foreach($a1 as $b) if(file_exists($r.$b)) unlink($r.$b);
 			if(has_filter('rencBlurDelP')) {
 				$ho = new StdClass();
 				$ho->id = $id;
@@ -1462,12 +1539,14 @@ class RencontreWidget extends WP_widget {
 	//
 	static function suppImgLib($id) {
 		global $rencDiv;
+		$typ = array('.jpg', '.webp', '@2x.jpg', '@2x.webp');
 		$photo = Rencontre::f_img(($id*10).'-libre',2); // ($id*10).'-libre';
-		if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg')) {
-			unlink($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg');
-			if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp')) unlink($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp');
-			renc_clear_cache_portrait();
+		$b = 0;
+		foreach($typ as $v) if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo . $v)) {
+			$b = 1;
+			unlink($rencDiv['basedir'].'/portrait/libre/'.$photo . $v);
 		}
+		if($b) renc_clear_cache_portrait();
 	}
 	//
 	static function sauvProfil($in,$id) {
@@ -1475,8 +1554,9 @@ class RencontreWidget extends WP_widget {
 		// sortie bdd : [{"i":10,"v":"Sur une ile deserte avec mon amoureux."},{"i":35,"v":0},{"i":53,"v":[0,4,6]}]
 		$post = (!empty($_POST)?$_POST:array());
 		if(has_filter('rencUserPost')) $post = apply_filters('rencUserPost', $post, 'sauvProfil');
-		$u = '';
+		$u = ''; $mandatory = 0;
 		if($in) foreach($in as $k=>$v) {
+			if(!empty($v[4])) $mandatory = 1; // in4 = 1 <=> mandatory && same sex
 			switch($v[0]) {
 				case 1:
 					if(!empty($post['text'.$k])) {
@@ -1539,11 +1619,27 @@ class RencontreWidget extends WP_widget {
 			$a = json_decode($j);
 			if(is_array($a) && in_array($id,$a)) renc_clear_cache_portrait();
 		}
-
+		// Check Mandatory field empty
+		$st = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$id."' LIMIT 1");
+		if($mandatory) {
+			foreach($in as $k=>$v) if(!empty($v[4]) && strpos($u, '{"i":'.$k.',"v":')===false) $mandatory++;
+			$m = rencistatus($st,3); // 3=>mandatory profil field empty
+			if($mandatory>1 && !$m) {
+				$rencDiv['istatus'] = rencistatusSet($st,3,1);
+				$wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>$rencDiv['istatus']), array('user_id'=>$id));
+			}
+			else if($mandatory==1 && $m) {
+				$rencDiv['istatus'] = rencistatusSet($st,3,0);
+				$wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>$rencDiv['istatus']), array('user_id'=>$id));
+			}
+		}
+		else if(rencistatus($st,3)) $wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>rencistatusSet($st,3,0)), array('user_id'=>$id)); // Cleaning
 	}
 	//
 	static function f_photo($im,$rim,$rot=0,$regen=0) {
 		// im : user_id *10 + numero de photo a partir de 0
+		// rim : Image Path
+		if(!file_exists($rim)) return;
 		global $rencOpt, $rencDiv;
 		$size = rencPhotoSize();
 		$fullSize = array(1280,960);
@@ -1583,17 +1679,24 @@ class RencontreWidget extends WP_widget {
 				}
 				$outW = intval($outW);
 				$outH = intval($outH);
-				$out[0] = imagecreatetruecolor ($outW, $outH); // max : 1280x960
+				$out[0] = imagecreatetruecolor($outW, $outH); // max : 1280x960
 				// imagecopyresampled(sortie, entree, position sur sortie X, Y, position entree X, Y, larg haut sur sortie, larg haut sur entree)
 				imagecopyresampled($out[0], $in, 0, 0, 0, 0, $outW, $outH, $sim[0], $sim[1]);
 				imagejpeg(self::f_imcopyright($out[0],$imco,$txco), $r."/".Rencontre::f_img($im).".jpg", $quality);
+				// RETINA @2x
+				if(!empty($rencOpt['nbr']['retina'])) {
+					$outret = imagecreatetruecolor(($outW*2), ($outH*2)); // max : 1280x960 x 2
+					imagecopyresampled($outret, $in, 0, 0, 0, 0, ($outW*2), ($outH*2), $sim[0], $sim[1]);
+					imagejpeg(self::f_imcopyright($outret,$imco,$txco), $r."/".Rencontre::f_img($im)."@2x.jpg", $quality);
+				}
 			}
 			else {
-				$out[0] = imagecreatetruecolor ($sim[0], $sim[1]);
+				$out[0] = imagecreatetruecolor($sim[0], $sim[1]);
 				imagecopyresampled($out[0], $in, 0, 0, 0, 0, $sim[0], $sim[1], $sim[0], $sim[1]);
+				// We do not create RETINA @2x if not exists previously
 			}
 			foreach($size as $k=>$v) {
-				$out[$k+1] = imagecreatetruecolor ($v['width'], $v['height']);
+				$out[$k+1] = imagecreatetruecolor($v['width'], $v['height']);
 				if(($v['height']/$v['width'])>($sim[1]/$sim[0])) { // new more verticale
 					$inW = intval($v['width']/$v['height']*$sim[1]);
 					$inH = $sim[1];
@@ -1609,8 +1712,18 @@ class RencontreWidget extends WP_widget {
 				imagecopyresampled($out[$k+1], $in, 0, 0, $inX, $inY, $v['width'], $v['height'], $inW, $inH); 
 				if(!$regen) imagejpeg(self::f_imcopyright($out[$k+1],$imco,$txco), $r."/".Rencontre::f_img($im.$v['label']).".jpg", (!empty($v['quality'])?$v['quality']:$quality));
 				else imagejpeg($out[$k+1], $r."/".Rencontre::f_img($im.$v['label']).".jpg", (!empty($v['quality'])?$v['quality']:$quality));
+				// WEBP
 				if($v['label']=='-mini' && function_exists('imagewebp')) { // V3.6.2 - currently only mini
 					imagewebp((!$regen?self::f_imcopyright($out[$k+1],$imco,$txco):$out[$k+1]), $r."/".Rencontre::f_img($im.$v['label']).".webp", (!empty($v['quality'])?$v['quality']:$quality));
+				}
+				// RETINA
+				if(!empty($rencOpt['nbr']['retina'])) {
+					$outret = imagecreatetruecolor (($v['width']*2), ($v['height']*2));
+					imagecopyresampled($outret, $in, 0, 0, $inX, $inY, ($v['width']*2), ($v['height']*2), $inW, $inH);
+					imagejpeg((!$regen?self::f_imcopyright($outret,$imco,$txco):$outret), $r."/".Rencontre::f_img($im.$v['label'])."@2x.jpg", (!empty($v['quality'])?$v['quality']:$quality));
+					if($v['label']=='-mini' && function_exists('imagewebp')) {
+						imagewebp((!$regen?self::f_imcopyright($outret,$imco,$txco):$outret), $r."/".Rencontre::f_img($im.$v['label'])."@2x.webp", (!empty($v['quality'])?$v['quality']:$quality));
+					}
 				}
 			}
 			if(has_filter('rencBlurCreaP')) {
@@ -1627,6 +1740,7 @@ class RencontreWidget extends WP_widget {
 			}
 			imagedestroy($in);
 			foreach($out as $v) imagedestroy($v);
+			if(!empty($outret)) imagedestroy($outret);
 		}
 		if(has_filter('rencModerP')) apply_filters('rencModerP', $im);
 	}
@@ -1735,7 +1849,7 @@ class RencontreWidget extends WP_widget {
 			INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 				ON P.user_id=U.ID
 			WHERE 
-				R.i_status IN (0,2)
+				R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 				and U.ID=".$user_id."
 			LIMIT 1
 			");
@@ -1763,8 +1877,20 @@ class RencontreWidget extends WP_widget {
 			$u->display_name = substr($u->display_name,0,$m);
 			$u->online = self::f_enLigne($user_id);
 			$a = '/portrait/'.floor(($user_id)/1000).'/'.Rencontre::f_img(($user_id*10).'-mini');
-			$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
-			if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
+			// Browser Caching Bypass
+			$b = 0;
+			if(file_exists($rencDiv['basedir'].$a.'.jpg')) $b = filemtime($rencDiv['basedir'].$a.'.jpg');
+			$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?'.$b;
+			// RETINA
+			$u->miniPhotoRetina = '';
+			if(file_exists($rencDiv['basedir'].$a.'@2x.jpg')) $u->miniPhotoRetina = $rencDiv['baseurl'].$a.'@2x.jpg?'.$b.' 2x';
+			// WEBP
+			$u->miniPhotoWebp = '';
+			if(file_exists($rencDiv['basedir'].$a.'.webp')) {
+				$u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?'.$b;
+				if(file_exists($rencDiv['basedir'].$a.'@2x.webp')) $u->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$a.'@2x.webp?'.$b.' 2x';
+			}
+			//
 			$certified = ''; if(has_filter('rencCertifiedP')) $certified = apply_filters('rencCertifiedP', array($u->ID, 2, $u->t_action));
 			$m = (!empty($rencOpt['nbr']['lengthTitle'])?intval($rencOpt['nbr']['lengthTitle']):30);
 			$u->t_titre = mb_substr(trim($u->t_titre),0,$m,'UTF-8').'...';
@@ -1907,9 +2033,20 @@ class RencontreWidget extends WP_widget {
 			$u->display_name = substr($a2[1],0,$m);
 			$u->i_photo = $ph2;
 			$a = '/portrait/'.floor(($ph2)/10000).'/'.Rencontre::f_img((floor(($ph2)/10)*10).'-mini');
-			$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
+			// Browser Caching Bypass
+			$b = 0;
+			if(file_exists($rencDiv['basedir'].$a.'.jpg')) $b = filemtime($rencDiv['basedir'].$a.'.jpg');
+			$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?'.$b;
 			$u->photo = $u->miniPhoto; // name before V3.6.2
-			if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
+			// RETINA
+			$u->miniPhotoRetina = '';
+			if(file_exists($rencDiv['basedir'].$a.'@2x.jpg')) $u->miniPhotoRetina = $rencDiv['baseurl'].$a.'@2x.jpg?'.$b.' 2x';
+			// WEBP
+			$u->miniPhotoWebp = '';
+			if(file_exists($rencDiv['basedir'].$a.'.webp')) {
+				$u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?'.$b;
+				if(file_exists($rencDiv['basedir'].$a.'@2x.webp')) $u->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$a.'@2x.webp?'.$b.' 2x';
+			}
 			//
 			$onClick = array(
 				'profile'=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lcard."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($id2,0)."';document.forms['rencMenu'].submit();",
@@ -2142,7 +2279,7 @@ class RencontreWidget extends WP_widget {
 			if($Gzsex!='' && !$Gline) {
 				$s = "SELECT
 						".$sel."
-					WHERE R.i_status IN (0,2)
+					WHERE R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 						and U.ID!=".$mid;
 				$s .= $qpause;
 				if($Gregion) $s.=" and R.c_region LIKE '".addslashes($wpdb->get_var("SELECT c_liste_valeur FROM ".$wpdb->prefix."rencontre_liste WHERE id='".$Gregion."' LIMIT 1"))."'";
@@ -2255,7 +2392,7 @@ class RencontreWidget extends WP_widget {
 									".$sel."
 								WHERE 
 									U.ID='".$r['i']."'
-									and R.i_status IN (0,2)
+									and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 									".$qpause."
 								LIMIT 1
 								");
@@ -2296,7 +2433,7 @@ class RencontreWidget extends WP_widget {
 									".$sel."
 								WHERE 
 									U.ID='".$r['i']."'
-									and R.i_status IN (0,2)
+									and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 									".$qpause."
 								LIMIT 1
 								");
@@ -2326,7 +2463,7 @@ class RencontreWidget extends WP_widget {
 									".$sel."
 								WHERE 
 									U.ID='".$r['i']."'
-									and R.i_status IN (0,2)
+									and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 									".$qpause."
 								LIMIT 1
 								");
@@ -2364,7 +2501,7 @@ class RencontreWidget extends WP_widget {
 									".$sel."
 								WHERE 
 									U.ID='".$r['i']."'
-									and R.i_status IN (0,2)
+									and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 									".$qpause."
 								LIMIT 1
 								");
@@ -2397,7 +2534,7 @@ class RencontreWidget extends WP_widget {
 									".$sel."
 								WHERE 
 									U.ID='".$r['i']."'
-									and R.i_status IN (0,2)
+									and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 									".$qpause."
 								LIMIT 1");
 							if($q[$c]) ++$n;
@@ -2426,7 +2563,7 @@ class RencontreWidget extends WP_widget {
 									".$sel."
 								WHERE 
 									U.ID='".$r['i']."'
-									and R.i_status IN (0,2)
+									and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 									".$qpause."
 								LIMIT 1
 								");
@@ -2466,7 +2603,7 @@ class RencontreWidget extends WP_widget {
 						U.ID IN (".substr($tab,0,-1).") 
 						".$sexQuery."
 						and U.ID!=".$mid."
-						and R.i_status IN (0,2)
+						and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 						".$qpause."
 					LIMIT ".($Gpagine*$limit).", ".($limit+1)); // LIMIT indice du premier, nombre de resultat
 				if($wpdb->num_rows<=$limit) $suiv=0;
@@ -2522,8 +2659,19 @@ class RencontreWidget extends WP_widget {
 					else $u->thumb = stripslashes($rencCustom['nophText']);
 				}
 				$a = '/portrait/'.floor(($u->user_id)/1000).'/'.Rencontre::f_img(($u->user_id*10).'-mini');
-				$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
-				if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
+				// Browser Caching Bypass
+				$b = 0;
+				if(file_exists($rencDiv['basedir'].$a.'.jpg')) $b = filemtime($rencDiv['basedir'].$a.'.jpg');
+				$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?'.$b;
+				// RETINA
+				$u->miniPhotoRetina = '';
+				if(file_exists($rencDiv['basedir'].$a.'@2x.jpg')) $u->miniPhotoRetina = $rencDiv['baseurl'].$a.'@2x.jpg?'.$b.' 2x';
+				// WEBP
+				$u->miniPhotoWebp = '';
+				if(file_exists($rencDiv['basedir'].$a.'.webp')) {
+					$u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?'.$b;
+					if(file_exists($rencDiv['basedir'].$a.'@2x.webp')) $u->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$a.'@2x.webp?'.$b.' 2x';
+				}
 				//
 				$searchAdd1 = ''; // not in quick search
 				//
@@ -2905,7 +3053,7 @@ class RencontreWidget extends WP_widget {
 					".$sexQuery."
 					".$qpause."
 					and R.user_id!=".$Gid."
-					and R.i_status IN (0,2)";
+					and R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")";
 			else {
 				$s = "SELECT 
 						U.user_login,
@@ -2936,7 +3084,7 @@ class RencontreWidget extends WP_widget {
 					INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 						ON P.user_id=U.ID
 					WHERE 
-						R.i_status IN (0,2)
+						R.i_status IN (0,2".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8,10').")
 						".$qpause."
 						and U.ID!=".$Gid;
 				$s .= $sexQuery;
@@ -3050,8 +3198,19 @@ class RencontreWidget extends WP_widget {
 						else $u->thumb = stripslashes($rencCustom['nophText']);
 					}
 					$a = '/portrait/'.floor(($u->user_id)/1000).'/'.Rencontre::f_img(($u->user_id*10).'-mini');
-					$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
-					if(file_exists($rencDiv['basedir'].$a.'.webp')) $u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
+					// Browser Caching Bypass
+					$b = 0;
+					if(file_exists($rencDiv['basedir'].$a.'.jpg')) $b = filemtime($rencDiv['basedir'].$a.'.jpg');
+					$u->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?'.$b;
+					// RETINA
+					$u->miniPhotoRetina = '';
+					if(file_exists($rencDiv['basedir'].$a.'@2x.jpg')) $u->miniPhotoRetina = $rencDiv['baseurl'].$a.'@2x.jpg?'.$b.' 2x';
+					// WEBP
+					$u->miniPhotoWebp = '';
+					if(file_exists($rencDiv['basedir'].$a.'.webp')) {
+						$u->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?'.$b;
+						if(file_exists($rencDiv['basedir'].$a.'@2x.webp')) $u->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$a.'@2x.webp?'.$b.' 2x';
+					}
 					//
 					$searchAdd1 = '';
 					if($hoastro && $u->score) { 				
@@ -3850,8 +4009,20 @@ class RencontreSidebarWidget extends WP_widget {
 		if(!empty($mem['zage_min'])) $u0->i_zage_min = $mem['zage_min'];
 		if(!empty($mem['zage_max'])) $u0->i_zage_max = $mem['zage_max'];
 		$a = '/portrait/'.floor(($u0->ID)/1000).'/'.Rencontre::f_img(($u0->ID*10).'-mini');
-		$u0->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?r='.rand();
-		if(file_exists($rencDiv['basedir'].$a.'.webp')) $u0->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?r='.rand();
+		// Browser Caching Bypass
+		$b = 0;
+		if(file_exists($rencDiv['basedir'].$a.'.jpg')) $b = filemtime($rencDiv['basedir'].$a.'.jpg');
+		$u0->miniPhoto = $rencDiv['baseurl'].$a.'.jpg?'.$b;
+		// RETINA
+		$u0->miniPhotoRetina = '';
+		if(file_exists($rencDiv['basedir'].$a.'@2x.jpg')) $u0->miniPhotoRetina = $rencDiv['baseurl'].$a.'@2x.jpg?'.$b.' 2x';
+		// WEBP
+		$u0->miniPhotoWebp = '';
+		if(file_exists($rencDiv['basedir'].$a.'.webp')) {
+			$u0->miniPhotoWebp = $rencDiv['baseurl'].$a.'.webp?'.$b;
+			if(file_exists($rencDiv['basedir'].$a.'@2x.webp')) $u0->miniPhotoWebp .= ' 1x,'.$rencDiv['baseurl'].$a.'@2x.webp?'.$b.' 2x';
+		}
+		//
 		$u0->pause = (strpos($u0->t_action,',pause2,')!==false?2:(strpos($u0->t_action,',pause1,')!==false?1:0));
 		$m = (!empty($rencOpt['nbr']['lengthName'])?intval($rencOpt['nbr']['lengthName']):50);
 		$u0->display_name = substr($u0->display_name,0,$m);
@@ -3886,8 +4057,9 @@ class RencontreSidebarWidget extends WP_widget {
 				");
 			$rencDrap = array(); $rencDrapNom = array();
 			foreach($q as $r) {
-				if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
-				else if($r->c_liste_categ=='p')$rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
+				if(!empty($rencOpt['nbr']['flagPng']) && $r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur; // PNG
+				else if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = 'svg/'.strtolower($r->c_liste_iso).'.svg'; // SVG
+				else if($r->c_liste_categ=='p') $rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
 			}
 		}
 		$u0->looking = '';

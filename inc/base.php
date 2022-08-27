@@ -279,6 +279,7 @@ function f_importCsv() {
 	return;
 }
 function rencRegeneratePhotos() {
+	// AJAX
 	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	global $rencDiv, $rencOpt, $wpdb;
 	// 1. GET DATAS
@@ -309,7 +310,7 @@ function rencRegeneratePhotos() {
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
 		if(($id*10)<=$ph && $ph-($id*10)<10) for($v=$id*10;$v<=$ph;++$v) {
 			$p = $r . Rencontre::f_img($v).'.jpg';
-			RencontreWidget::f_photo($v,$p,0,1);
+			if(file_exists($p)) RencontreWidget::f_photo($v,$p,0,1);
 		}
 		unset($a[$id]);
 		++$c;
@@ -362,7 +363,7 @@ function rencCleanupPhotos() {
 // **** ONGLET PROFIL
 // *****************************************
 function f_rencProfil() {
-	// Ajax - plus & edit profil
+	// Ajax (JS:f_Submit->PHP:profilA) - plus & edit profil
 	if(empty($_REQUEST['rencToka']) || !wp_verify_nonce($_REQUEST['rencToka'],'rencToka')) return;
 	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
 	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'int'):'');
@@ -373,20 +374,30 @@ function f_rencProfil() {
 	$Pg = (isset($_POST['g'])?rencSanit($_POST['g'],'numplus'):'');
 	if($Pa1=='edit') profil_edit($Pa2,$Pa3,$Pa4,$Pa5,$Pa6,$Pg);
 	else if($Pa1=='plus') profil_plus($Pa2,$Pa3,$Pa4,$Pa5);
+	rencSynchronise(1); // 1 : only mandatory
 }
 function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
-	// a2 : ID - a3 : colonne - a4 : valeur colonne - a5 : position (select ou check) - a6 : type - g : genre ",0,1,"
+	// a2 : ID - a3 : colonne - a4 : valeur colonne - a5 : position (select ou check) - a6 : type - g : genre/mandatory ",0,1,:,"
 	if(!current_user_can("administrator")) die;
 	global $wpdb, $rencCustom, $rencOpt, $rencDiv;
+	$m = 0;
 	if(!empty($rencCustom['sex']) && strpos($g,',')!==false) {
 		$g1 = explode(',',$g); $g = ',';
-		foreach($g1 as $r) if($r!='') $g .= (intval($r)+2).',';
+		foreach($g1 as $r) {
+			if($r!='' && $r!=':') $g .= (intval($r)+2).',';
+			else if($r==':') $m = 1;
+		}
+	}
+	else if(strpos($g,',:,')!==false){
+		$g = str_replace(',:,', ',', $g);
+		$m = 1;
 	}
 	$gdef = ',';
 	for($v=(!empty($rencCustom['sex'])?2:0);$v<(!empty($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) {
 		$gdef .= $v.',';
 	}
-	if($g==$gdef) $g = 0;
+	if($g==$gdef) $g = ($m?':':0);
+	else if($m) $g .= ':,';
 	$a4 = urldecode($a4); // stripslashes() a ajouter : fr=Un pays où j\'aimerais vivre&en=A country where I want to live&
 	$b4 = explode('&',substr($a4, 0, -1));
 	$c4 = Array();
@@ -481,7 +492,6 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 			}
 			$a[$a2] = array(); // [] : purge
 			file_put_contents($rencDiv['basedir'].'/portrait/rencontre_synchronise.json', json_encode($a));  // info modif
-			echo 'reload';
 		}
 	}
 	else if($a3=="t_valeur") {
@@ -563,7 +573,6 @@ function profil_plus($a2,$a3,$a4,$a5) {
 			}
 			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$lastid."',".$ic.",".($m+1).",'".addslashes($q)."','".$c4[$v]['b']."','',1,0,'".$c4[$v]['a']."')");
 		}
-		echo $lastid.'|'.$genreDef; // response needed to actualize display and events
 	}
 	else if($a3=="t_valeur") {
 		for($v=0;$v<count($c4);++$v) {
@@ -866,11 +875,30 @@ function liste_defaut() {
 	$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_liste (c_liste_categ, c_liste_valeur, c_liste_iso, c_liste_lang) VALUES ".$f);
 }
 //
-function rencSynchronise() {
+function rencSynchronise($f=0) {
+	// $f => only mandatory check
 	// Sur le compte de chaque utilisateur (rencontre_users_profil) : supprime les ID inexistants dans la colonne t_profil et reorganise les valeurs
 	if(!current_user_can("administrator")) die;
-	global $wpdb, $rencDiv;
-	if(file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) {
+	global $wpdb, $rencDiv,$rencOpt;
+	// PROFIL MANDATORY
+	$m = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_profil WHERE c_genre LIKE '%:%'  LIMIT 1");
+	$a = $rencOpt; $b = 0;
+	if(isset($a['for'])) unset($a['for']);
+	if(isset($a['iam'])) unset($a['iam']);
+	if($m) { // Every profil change and m => update time(). Need to check each user (in user part) before warning
+		$t = strtotime(current_time('mysql')); // = time() in local
+		$a['mandatory'] = $t; $rencOpt['mandatory'] = $t;
+		$a['blockmand'] = 1; $rencOpt['blockmand'] = 1;
+		$b = 1;
+	}
+	else if(!empty($a['mandatory'])) {
+		unset($a['mandatory']); unset($rencOpt['mandatory']);
+		unset($a['blockmand']); unset($rencOpt['blockmand']);
+		$b = 1;
+	}
+	if($b) update_option('rencontre_options',$a);
+	//
+	if(!$f && file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) {
 		$a = 0; $typ = array();
 		$q = file_get_contents($rencDiv['basedir'].'/portrait/rencontre_synchronise.json'); // {"14":[1,4,2,0],"24":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]}
 		$a = json_decode($q,true);
@@ -928,6 +956,15 @@ function rencSynchronise() {
 		unlink($rencDiv['basedir'].'/portrait/rencontre_synchronise.json');
 	}
 // SALLY : [{"i":24,"v":[0,5,11,14]},{"i":25,"v":[12,18,20]},{"i":26,"v":[2,11,26]},{"i":27,"v":[8,24,26]},{"i":6,"v":"sympa"},{"i":10,"v":"cool"},{"i":13,"v":4},{"i":1,"v":3},{"i":2,"v":0},{"i":3,"v":"en or"},{"i":5,"v":[1]}]
+}
+//
+function profilBlockMand($f) {
+	global $rencOpt;
+	$a = $rencOpt;
+	if(isset($a['for'])) unset($a['for']);
+	if(isset($a['iam'])) unset($a['iam']);
+	$a['blockmand'] = $f; $rencOpt['blockmand'] = $f;
+	update_option('rencontre_options',$a);
 }
 //
 // *****************************************
@@ -1650,7 +1687,8 @@ function rencMenuMembres() {
 	$q = $wpdb->get_results("SELECT c_liste_categ, c_liste_valeur, c_liste_iso FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang3'],0,2)."') ");
 	$rencDrap = array(); $rencDrapNom = array();
 	foreach($q as $r) {
-		if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
+		if(!empty($rencOpt['nbr']['flagPng']) && $r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur; // PNG
+		else if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = 'svg/'.strtolower($r->c_liste_iso).'.svg'; // SVG
 		else if($r->c_liste_categ=='p') $rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
 	}
 	$rencModerType = rencModerType(); // rencontre_filter.php
@@ -1866,7 +1904,7 @@ function rencMenuMembres() {
 				$block = $q1?rencistatus($q1->i_status,0):0; // ($q1?(($q1->i_status==1||$q1->i_status==3)?1:0):0); // weight : 1
 				$blockmail = $q1?rencistatus($q1->i_status,1):0; // ($q1?(($q1->i_status==2||$q1->i_status==3)?1:0):0); // weight : 2
 				$fastreg = $q1?rencistatus($q1->i_status,2):0; // ($q1?($q1->i_status==4?1:0):0);
-				echo '<tr>';
+				echo "\r\n".'<tr>';
 				// ID
 				echo '<td><a href="admin.php?page=rencmembers&id='.$s->ID.'" title="'.__('See','rencontre').'" onMouseover="f_bulleOn(this,\''.urlencode($s->t_annonce).'\')" onMouseout="f_bulleOff()">'.$s->ID.'</a></td>';
 				// Action
@@ -1907,7 +1945,7 @@ function rencMenuMembres() {
 				// Place
 				if(!isset($rencCustom['place'])) {
 					echo '<td>';
-					if(!isset($rencCustom['country']) && isset($rencDrapNom[$s->c_pays]) && $s->c_pays!="") echo '<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$s->c_pays].'" alt="'.$rencDrapNom[$s->c_pays].'" title="'.$rencDrapNom[$s->c_pays].'" /><br />';
+					if(!isset($rencCustom['country']) && isset($rencDrapNom[$s->c_pays]) && $s->c_pays!="") echo '<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$s->c_pays].'" height="22px" width="30px" alt="'.$rencDrapNom[$s->c_pays].'" title="'.$rencDrapNom[$s->c_pays].'" /><br />';
 					else if(!isset($rencCustom['country'])) echo $s->c_pays.'<br />';
 					if(!isset($rencCustom['region'])) echo $s->c_region.'<br />';
 					echo $s->c_ville.'</td>';
@@ -1940,7 +1978,7 @@ function rencMenuMembres() {
 					LIMIT 1
 					");
 				$ipays = (($geoip && isset($rencDrap[$geoip->country]) && $geoip->ip_end>=$c && $c!='127000000001' && $c!='127000000090')?$rencDrap[$geoip->country]:null);
-				echo '<td>'.$ip.(($ipays)?'<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$ipays.'" alt="'.$geoip->country.'" title="'.$geoip->country.'" />':'').'</td>';
+				echo '<td>'.$ip.(($ipays)?'<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$ipays.'" height="22px" width="30px" alt="'.$geoip->country.'" title="'.$geoip->country.'" />':'').'</td>';
 				// Hook IP
 				if($hoip) echo '<td>'.$hoip2.'</td>';
 				// Reporting
@@ -1993,11 +2031,12 @@ function rencMenuMembres() {
 			$sex = $wpdb->get_var("SELECT i_sex FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$id." LIMIT 1");
 			$in = array();
 			foreach($q as $r) {
-				if($r->c_genre==='0' || strpos($r->c_genre,','.$sex.',')!==false) {
+				if($r->c_genre==='0' || $r->c_genre===':' || strpos($r->c_genre,','.$sex.',')!==false) {
 					$in[$r->id][0] = $r->i_type;
 					$in[$r->id][1] = $r->c_categ;
 					$in[$r->id][2] = $r->c_label;
 					$in[$r->id][3] = $r->t_valeur;
+					$in[$r->id][4] = (($r->c_genre===':' || strpos($r->c_genre,',:,')!==false) ? 1 : 0); // Mandatory
 				}
 			}
 			if($Pa1 && !empty($_REQUEST['tok']) && wp_verify_nonce($_REQUEST['tok'],'rencToka')) {
@@ -2079,7 +2118,7 @@ function rencMenuMembres() {
 					<div class="grandeBox right">
 						<div class="rencBox">
 							<?php
-							if($s->c_pays!="") echo '<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$s->c_pays].'" alt="'.$rencDrapNom[$s->c_pays].'" title="'.$rencDrapNom[$s->c_pays].'" />'; ?>
+							if($s->c_pays!="") echo '<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$s->c_pays].'" height="22px" width="30px" alt="'.$rencDrapNom[$s->c_pays].'" title="'.$rencDrapNom[$s->c_pays].'" />'; ?>
 
 							<div class="grid_10">
 								<h3><?php echo $s->display_name; ?></h3>
@@ -2297,24 +2336,24 @@ function rencMenuMembres() {
 								++$c;
 							}
 							$c1 = 0;
+							$out2 .= '<tr'.($r1[4]?' style="background-color:#cbe2f7;"':'').'><td>'.$r1[2].($r1[4]?' *':'').'</td><td>';
 							switch($r1[0]) {
 								case 1:
-									$out2 .= '<tr><td>'.$r1[2].'</td><td><input type="text" name="text'.$r.'" value="'.(isset($out[$r])?$out[$r]:'').'" /></td></tr>'."\n";
+									$out2 .= '<input type="text" name="text'.$r.'" value="'.(isset($out[$r])?$out[$r]:'').'" />';
 								break;
 								case 2:
-									$out2 .= '<tr><td>'.$r1[2].'</td><td><textarea name="area'.$r.'" rows="4" cols="50">'.(isset($out[$r])?$out[$r]:'').'</textarea></td></tr>'."\n";
+									$out2 .= '<textarea name="area'.$r.'" rows="4" cols="50">'.(isset($out[$r])?$out[$r]:'').'</textarea>';
 								break;
 								case 3:
-									$out2 .= '<tr><td>'.$r1[2].'</td><td><select name="select'.$r.'"><option value="0">&nbsp;</option>';
+									$out2 .= '<select name="select'.$r.'"><option value="0">&nbsp;</option>';
 									$list = json_decode($r1[3]);
 									foreach($list as $r2) {
 										$out2 .= '<option value="'.($c1+1).'"'.((isset($out[$r]) && $c1===$out[$r])?' selected':'').'>'.$r2.'</option>';
 										++$c1;
 									}
-									$out2 .= '</select></td></tr>'."\n";
+									$out2 .= '</select>';
 								break;
 								case 4:
-									$out2 .= '<tr><td>'.$r1[2].'</td><td>';
 									$list = json_decode($r1[3]);
 									if(isset($out[$r])) $c3 = " ".implode(" ",$out[$r])." ";
 									else $c3 = "";
@@ -2322,21 +2361,21 @@ function rencMenuMembres() {
 										$out2 .= '<label>'.$r2.' : <input type="checkbox" name="check'.$r.'[]" value="'.$c1.'" '.((strstr($c3, " ".$c1." ")!=false)?'checked':'').' /></label>';
 										++$c1;
 									}
-									$out2 .= '</td></tr>'."\n";
 								break;
 								case 5:
-									$out2 .= '<tr><td>'.$r1[2].'</td><td><select name="ns'.$r.'"><option value="0">&nbsp;</option>';
+									$out2 .= '<select name="ns'.$r.'"><option value="0">&nbsp;</option>';
 									$list = json_decode($r1[3]);
 									for($v=$list[0]; $v<=$list[1]; $v+=$list[2]) {
 										$out2 .= '<option value="'.($c1+1).'"'.((isset($out[$r]) && $c1===$out[$r])?' selected':'').'>'.$v.' '.$list[3].'</option>';
 										++$c1;
 									}
-									$out2 .= '</select></td></tr>'."\n";
+									$out2 .= '</select>';
 								break;
 								case 6:
-									$out2 .= '<tr><td>'.$r1[2].'</td><td><input type="date" name="date'.$r.'" value="'.(isset($out[$r])?$out[$r]:'').'" /></td></tr>'."\n";
+									$out2 .= '<input type="date" name="date'.$r.'" value="'.(isset($out[$r])?$out[$r]:'').'" />';
 								break;
 							}
+							$out2 .= '</td></tr>'."\n";
 							$d = $r1[1];
 						}
 						$out2 .= '</table>'."\n";
@@ -2484,6 +2523,7 @@ function rencMenuProfil() {
 			else if($Pa1=='synchro') rencSynchronise(); // JS f_synchronise()
 			else if($Pa1=='profil') profil_defaut(); // this
 			else if($Pa1=='pays') liste_defaut();
+			else if($Pa1=='blockMand') profilBlockMand($Pa4);
 			$_SESSION['a2'] = $Pa2;
 			$_SESSION['a4'] = $Pa4;
 		}
@@ -2538,11 +2578,24 @@ function rencMenuProfil() {
 		</li>
 		<li>
 			<label><?php _e('Remove a language and all related content', 'rencontre'); ?>&nbsp;</label>&nbsp;
-			<select id="langsupp">
+			<select id="langsupp" name="langsupp">
 				<?php echo $ls; ?>
 			</select>
 			<a href='javascript:void(0)' class='button-primary' onClick='f_langsupp();'><?php _e('Remove a language', 'rencontre'); ?></a>
 		</li>
+		<?php if(!empty($rencOpt['blockmand'])) { ?>
+		
+		<br />
+		<li>
+			<label><?php _e('User blocking if a required field is missing', 'rencontre'); ?>&nbsp;</label>&nbsp;
+			<select id="blockMand" name ="blockMand">
+				<option value="1" <?php if($rencOpt['blockmand']==1) echo 'selected'; ?>><?php _e('Just show a warning','rencontre') ?></option>
+				<option value="2" <?php if($rencOpt['blockmand']==2) echo 'selected'; ?>><?php _e('Block this member','rencontre') ?> (<?php _e('Profile hidden','rencontre') ?>)</option>
+			</select>
+			<a href='javascript:void(0)' class='button-primary' onClick='f_blockMand(document.getElementById("blockMand"));'><?php _e('Save','rencontre') ?></a>
+		</li>
+		<?php } ?>
+		
 	</ul>
 	<br />
 	<div style='margin:8px 12px 12px;'>
@@ -2554,15 +2607,26 @@ function rencMenuProfil() {
 	$q = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$loc."' ORDER BY i_categ, i_label");
 	$categ = ""; $label = 0;
 	foreach($q as $r) {
-		$g = $genreDef;
+		$g = $genreDef; $g1 = '';
 		if(strpos($r->c_genre,',')!==false) {
 			$g = '';
 			$a = explode(',',$r->c_genre);
 			foreach($genre as $k=>$v) {
-				if(strpos($r->c_genre,','.$k.',')!==false) $g .= $genre[$k]['v'].'=1&'; // men=1&girl=1&
+				if(strpos($r->c_genre,','.$k.',')!==false) {
+					$g .= $genre[$k]['v'].'=1&'; // men=1&girl=1&
+					$g1 .= ' '.$genre[$k]['v'].',';
+				}
 				else $g .= $genre[$k]['v'].'=0&';
 			}
 		}
+		if($g==$genreDef) $g1 = '';
+		else $g1 = ' - <span style="color:brown">'.str_replace('_',' ',substr($g1,0,-1)).'</span>';
+		$m = '';
+		if($r->c_genre==':' || strpos($r->c_genre,',:,')!==false) {
+			$g .= 'm=1&';
+			$m = ' - <span style="color:orange">'.__('Required field (hidden)','rencontre').'</span>';
+		}
+		//
 		$q1 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$r->id."' and c_lang!='".$loc."' ORDER BY c_lang"); // multilangue
 		if($categ!=$r->c_categ) { // nouvelle categorie
 			if($label) echo '</div><!-- .label -->'."\r\n";
@@ -2608,17 +2672,17 @@ function rencMenuProfil() {
 		// VALEUR
 		switch($r->i_type) {
 			case 1 :
-			echo '<div class="rencValeur rencType">'.__('A line of text (TEXT)','rencontre').'</div>'."\r\n";
+			echo '<div class="rencValeur rencType">'.__('A line of text (TEXT)','rencontre').$m.$g1.'</div>'."\r\n";
 			break;
 			// *******
 			case 2 :
-			echo '<div class="rencValeur rencType">'.__('Large text box (TEXTAREA)','rencontre').'</div>'."\r\n";
+			echo '<div class="rencValeur rencType">'.__('Large text box (TEXTAREA)','rencontre').$m.$g1.'</div>'."\r\n";
 			break;
 			// *******
 			case 3 :
 			echo '<div class="rencValeur" id="rencValeur'.$r->id.'">'."\r\n";
 			echo '<a href="javascript:void(0)" class="rencPlus" onClick="f_plus(this,'.$r->id.',\'t_valeur\',\'\',\''.$loc2.'\');" title="'.__('Add Value','rencontre').'"></a>';
-			echo '<span class="rencType" onClick="f_profil_hideshow(1,'.$r->id.')">'.__('Single choice list (SELECT)','rencontre').'</span>';
+			echo '<span class="rencType" onClick="f_profil_hideshow(1,'.$r->id.')">'.__('Single choice list (SELECT)','rencontre').$m.$g1.'</span>';
 			echo '<div id="rencValeurHide'.$r->id.'" style="display:none;">';
 			$s = json_decode($r->t_valeur);
 			$s1=Array(); $s2=Array(); foreach($q1 as $r1) { $s1[] = json_decode($r1->t_valeur); $s2[] = $r1->c_lang; }
@@ -2646,7 +2710,7 @@ function rencMenuProfil() {
 			case 4 :
 			echo '<div class="rencValeur" id="rencValeur'.$r->id.'">';
 			echo '<a href="javascript:void(0)" class="rencPlus" onClick="f_plus(this,'.$r->id.',\'t_valeur\',\'\',\''.$loc2.'\');" title="'.__('Add Value','rencontre').'"></a>';
-			echo '<span class="rencType" onClick="f_profil_hideshow(1,'.$r->id.')">'.__('Multiple choice list (CHECKBOX)','rencontre').'</span>';
+			echo '<span class="rencType" onClick="f_profil_hideshow(1,'.$r->id.')">'.__('Multiple choice list (CHECKBOX)','rencontre').$m.$g1.'</span>';
 			echo '<div id="rencValeurHide'.$r->id.'" style="display:none;">';
 			$s = json_decode($r->t_valeur);
 			$s1=Array(); $s2=Array(); foreach($q1 as $r1) { $s1[] = json_decode($r1->t_valeur); $s2[] = $r1->c_lang; }
@@ -2673,7 +2737,7 @@ function rencMenuProfil() {
 			// *******
 			case 5 :
 			echo '<div class="rencValeur" id="rencValeur'.$r->id.'">'."\r\n";
-			echo '<span class="rencType" onClick="f_profil_hideshow(1,'.$r->id.')">'.__('Numeric choice list (SELECT)','rencontre').'</span>';
+			echo '<span class="rencType" onClick="f_profil_hideshow(1,'.$r->id.')">'.__('Numeric choice list (SELECT)','rencontre').$m.$g1.'</span>';
 			echo '<div id="rencValeurHide'.$r->id.'" style="display:none;">';
 			$s = json_decode($r->t_valeur);
 			echo '<div class="valeur">';
@@ -2687,7 +2751,7 @@ function rencMenuProfil() {
 			break;
 			// *******
 			case 6 :
-			echo '<div class="rencValeur rencType">'.__('A date (DATE)','rencontre').'</div>'."\r\n";
+			echo '<div class="rencValeur rencType">'.__('A date (DATE)','rencontre').$m.$g1.'</div>'."\r\n";
 			break;
 		}
 		?>
@@ -2736,7 +2800,8 @@ function rencMenuPays() {
 	$q = $wpdb->get_results("SELECT c_liste_categ, c_liste_valeur, c_liste_iso FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang3'],0,2)."') ");
 	$rencDrap = array(); $rencDrapNom = array();
 	foreach($q as $r) {
-		if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
+		if(!empty($rencOpt['nbr']['flagPng']) && $r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur; // PNG
+		else if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = 'svg/'.strtolower($r->c_liste_iso).'.svg'; // SVG
 		else if($r->c_liste_categ=='p')$rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
 	}
 	$loc = substr(get_locale(),0,2); $loc2 = $loc."&";
@@ -2850,11 +2915,11 @@ function rencMenuPays() {
 			$a4 .= $r1->c_liste_lang . '=' . $r1->c_liste_valeur . '&';
 		}
 		$out .= '</div>';
-		echo '<div class="rencLabel">';
+		echo '<div class="rencLabel" style="min-height:50px">';
 		echo '<a href="javascript:void(0)" class="rencEdit" onClick="f_liste_edit(\''.$r->c_liste_iso.'\',\'p\',\''.urlencode($a4).'\');" title="'.__('Change the name or type','rencontre').'"></a>';
 		echo '<a href="javascript:void(0)" class="rencSupp" onClick="f_liste_supp(\''.$r->c_liste_iso.'\',\'p\',0);" title="'.__('Remove','rencontre').'"></a>';
 		echo '<span class="rencLabel'.$r->c_liste_iso.'" onClick="f_country_hideshow(0,\''.$r->c_liste_iso.'\')">'.$out1.'</span>&nbsp;('.$r->c_liste_iso.')<br />';
-		if(isset($rencDrap[$r->c_liste_iso])) echo '<img style="position:absolute;width:30px;height:20px;" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$r->c_liste_iso].'" />';
+		if(isset($rencDrap[$r->c_liste_iso])) echo '<img style="position:absolute;width:30px;height:22px;" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$r->c_liste_iso].'" />';
 		echo $out . '</div><div style="height:5px;"></div>';
 		echo '<div class="rencValeur">';
 		echo '<a href="javascript:void(0)" class="rencPlus" onClick="f_liste_plus(\''.$r->c_liste_iso.'\',\'r\',\'\',\''.$loc2.'\');" title="'.__('Add Value','rencontre').'"></a>';
@@ -3315,6 +3380,7 @@ function rencTabSea() {
 							WHERE
 								c_lang='".substr($rencDiv['lang2'],0,2)."'
 								and i_type IN (3,4,5,6)
+								and c_genre NOT LIKE '%:%'
 							ORDER BY i_categ,i_label
 							");
 						if($p3) foreach($p3 as $r) {
@@ -3557,6 +3623,21 @@ function rencTabTem() {
 			</tr>
 			<tr valign="top">
 				<th scope="row">
+					<label><?php _e('Modal warning background color', 'rencontre'); ?><br /><i style="font-size:90%;color:#999;">.w3-renc-wmbg</i></label>
+				</th>
+				<td>
+					<div id="wmbgdiv" style="display:inline-block;margin-left:10px;width:30px;height:22px;vertical-align:middle;background-color:<?php echo (!empty($rencCustom['wmbg'])&&!empty($w3renc[$rencCustom['wmbg']])?$w3renc[$rencCustom['wmbg']]:$w3renc[$w3rencDef['wmbg']]); ?>"></div>
+					<select name="wmbg" onChange="document.getElementById(this.name+'div').style.backgroundColor=this.options[this.selectedIndex].getAttribute('data-css');">
+						<option value="" data-css="<?php echo $w3rencDef['wmbg']; ?>">-</option>';
+						<?php foreach($w3renc as $k=>$v) {
+							if(substr($k,-1)!='T') echo '<option value="'.$k.'" data-css="'.$v.'" '.((isset($rencCustom['wmbg']) && $rencCustom['wmbg']==$k)?' selected':'').'>'.$k.'</option>';
+						}
+						?>
+					</select>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row">
 					<label><?php _e('Message sent background color', 'rencontre'); ?><br /><i style="font-size:90%;color:#999;">.w3-renc-msbs</i></label>
 				</th>
 				<td>
@@ -3652,6 +3733,7 @@ function rencTabTem() {
 								<button class="w3-button w3-renc-mebt w3-renc-mebo">Vitae</button>
 							</div>
 							<div class="w3-panel w3-renc-wabg">Warning : Nulla nec felis sed !</div>
+							<div class="w3-panel w3-renc-wmbg" style="margin: 0 70px 0 -70px">Modal warning : Morbi vel erat non mauris convallis vehicula !</div>
 						</div>
 					</div><!-- .w3-row -->
 				</div>
@@ -3848,6 +3930,7 @@ function f_update_custom($P) {
 		if(!empty($P['inbg'])) $a['inbg'] = rencSanit($P['inbg'],'alphanum'); else unset($a['inbg']);
 		if(!empty($P['sebg'])) $a['sebg'] = rencSanit($P['sebg'],'alphanum'); else unset($a['sebg']);
 		if(!empty($P['wabg'])) $a['wabg'] = rencSanit($P['wabg'],'alphanum'); else unset($a['wabg']);
+		if(!empty($P['wmbg'])) $a['wmbg'] = rencSanit($P['wmbg'],'alphanum'); else unset($a['wmbg']);
 		if(!empty($P['msbs'])) $a['msbs'] = rencSanit($P['msbs'],'alphanum'); else unset($a['msbs']);
 		if(!empty($P['msbr'])) $a['msbr'] = rencSanit($P['msbr'],'alphanum'); else unset($a['msbr']);
 		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
@@ -3871,10 +3954,12 @@ function sauvProfilAdm($in,$id) {
 	// Copie de la fonction dans rencontre_widget
 	// entree : Sauvegarde du profil
 	// sortie bdd : [{"i":10,"v":"Sur une ile deserte avec mon amoureux."},{"i":35,"v":0},{"i":53,"v":[0,4,6]}]
+	// in[][4] : 0/1 - Mandatory
 	if(!current_user_can("administrator")) die;
 	if(empty($_REQUEST['tok']) || !wp_verify_nonce($_REQUEST['tok'],'rencToka')) return;
-	$u = "";
+	$u = "";  $mandatory = 0;
 	if($in) foreach($in as $k=>$v) {
+		if(!empty($v[4])) $mandatory = 1; // in4 = 1 <=> mandatory && same sex
 		switch($v[0]) {
 			case 1:
 				if(!empty($_POST['text'.$k])) {
@@ -3993,32 +4078,20 @@ function sauvProfilAdm($in,$id) {
 		$wpdb->delete($wpdb->base_prefix.'usermeta', array('user_id'=>$id, 'meta_key'=>'rencontre_confirm_email'));
 	}
 	$wpdb->update($wpdb->prefix.'rencontre_users', $a, array('user_id'=>$id));
-	// *********** Patch install before V1.7 : Remove double (miss UNIQUE in table creation) *************
-	$q = $wpdb->get_results("SELECT user_id FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$id);
-	if(count($q)>1) {
-		$q = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$id." LIMIT 1");
-		$wpdb->delete($wpdb->prefix.'rencontre_users', array('user_id'=>$id));
-		$wpdb->insert($wpdb->prefix.'rencontre_users', array(
-			'user_id'=>$id,
-			'c_ip'=>($q->c_ip?$q->c_ip:'127.0.0.1'),
-			'c_pays'=>$q->c_pays,
-			'c_region'=>$q->c_region,
-			'c_ville'=>$q->c_ville,
-			'e_lat'=>$q->e_lat,
-			'e_lon'=>$q->e_lon,
-			'i_sex'=>$q->i_sex,
-			'd_naissance'=>$q->d_naissance,
-			'i_taille'=>$q->i_taille,
-			'i_poids'=>$q->i_poids,
-			'i_zsex'=>$q->i_zsex,
-			'i_zage_min'=>$q->i_zage_min,
-			'i_zage_max'=>$q->i_zage_max,
-			'i_zrelation'=>$q->i_zrelation,
-			'i_photo'=>$q->i_photo,
-			'd_session'=>$q->d_session)
-			);
+	// Check Mandatory field empty
+	if($mandatory) {
+		foreach($in as $k=>$v) if(!empty($v[4]) && strpos($u, '{"i":'.$k.',"v":')===false) $mandatory++;
+		$st = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$id."' LIMIT 1");
+		$m = rencistatus($st,3); // 3=>mandatory profil field empty
+		if($mandatory>1 && !$m) {
+			$st = rencistatusSet($st,3,1);
+			$wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>$st), array('user_id'=>$id));
+		}
+		else if($mandatory==1 && $m) {
+			$st = rencistatusSet($st,3,0);
+			$wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>$st), array('user_id'=>$id));
+		}
 	}
-	// ****************************************************************
 }
 function renc_encodeImg($f=1) {
 	// Encode or Decode all img
@@ -4039,8 +4112,10 @@ function renc_encodeImg($f=1) {
 				if($r0!="" && ctype_digit(substr($r0,0,-1))) { // only numeric folder
 					$c = (strpos($r,'.webp')===false?'.jpg':'.webp');
 					$r1 = substr($r,strrpos($r,'/')+1,($c=='.webp'?-5:-4)); // name
+					// retina
+					if($d=strpos($r1,'@2x')!==false) $r1 = substr($r1,0,-3);
 					$r2 = Rencontre::f_img($r1,1); // encoded name
-					if(copy($rencDiv['basedir'].'/portrait/'.$r, $rencDiv['basedir'].'/portrait/'.$r0.$r2.$c)) unlink($rencDiv['basedir'].'/portrait/'.$r);
+					if(copy($rencDiv['basedir'].'/portrait/'.$r, $rencDiv['basedir'].'/portrait/'.$r0.$r2.($d!==false?'@2x':'').$c)) unlink($rencDiv['basedir'].'/portrait/'.$r);
 				}
 			}
 		}
@@ -4064,6 +4139,15 @@ function renc_encodeImg($f=1) {
 					if(file_exists($c.'.webp')) {
 						if($b) unlink($c.'.webp');
 						else if(copy($c.'.webp', $rencDiv['basedir'].'/portrait/'.$r0.(($v*10)+$w).$s.'.webp')) unlink($c.'.webp');
+					}
+					// retina
+					if(file_exists($c.'@2x.jpg')) {
+						if($b) unlink($c.'@2x.jpg');
+						else if(copy($c.'@2x.jpg', $rencDiv['basedir'].'/portrait/'.$r0.(($v*10)+$w).$s.'@2x.jpg')) unlink($c.'@2x.jpg');
+					}
+					if(file_exists($c.'@2x.webp')) {
+						if($b) unlink($c.'@2x.webp');
+						else if(copy($c.'@2x.webp', $rencDiv['basedir'].'/portrait/'.$r0.(($v*10)+$w).$s.'@2x.webp')) unlink($c.'@2x.webp');
 					}
 				}
 			}

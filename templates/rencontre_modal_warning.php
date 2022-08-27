@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Modal Warning
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_modal_warning.php
  * Call : rencontre_widget.php => widget()
 */
@@ -11,7 +11,7 @@
 	<?php if(isset($_GET[$Lidf]) && $_GET[$Lidf]=='rencfastreg') { ?>
 	
 		<div id="rencTitann" class="w3-modal w3-show w3-animate-opacity">
-			<div class="w3-modal-content w3-card-4" style="max-width:600px;">
+			<div class="w3-modal-content w3-card-4 w3-renc-wmbg" style="max-width:600px;">
 				<div class="w3-container">
 					<div class="w3-button w3-display-topright w3-large w3-renc-mebo" onClick="f_titann();">&times;</div>
 					<div class="w3-padding-48">
@@ -21,11 +21,11 @@
 				</div>
 			</div>
 		</div><!-- .w3-modal -->
-	<?php }	else if(empty($rencDiv['titann']) && !isset($_COOKIE["titann"]) && !current_user_can("administrator"))	{ ?>
+	<?php }	else if(empty($rencDiv['titann']) && !isset($_COOKIE["titann"]) && !current_user_can("administrator")) { ?>
 		<?php if(isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) { ?>
 		
 		<div id="rencTitann" class="w3-modal w3-show w3-animate-opacity">
-			<div class="w3-modal-content w3-card-4" style="max-width:600px;">
+			<div class="w3-modal-content w3-card-4 w3-renc-wmbg" style="max-width:600px;">
 				<div class="w3-container">
 					<div class="w3-button w3-display-topright w3-large w3-renc-mebo" onClick="f_titann();">&times;</div>
 					<div class="w3-padding-48">
@@ -39,7 +39,7 @@
 		<?php } else { ?>
 		
 		<div id="rencTitann" class="w3-modal w3-show w3-animate-opacity">
-			<div class="w3-modal-content w3-card-4" style="max-width:600px;">
+			<div class="w3-modal-content w3-card-4 w3-renc-wmbg" style="max-width:600px;">
 				<div class="w3-container">
 					<div class="w3-button w3-display-topright w3-large w3-renc-mebo" onClick="f_titann();">&times;</div>
 					<div class="w3-padding-48">
@@ -51,10 +51,24 @@
 			</div>
 		</div><!-- .w3-modal -->
 		<?php } ?>
+	<?php }	else if(!current_user_can("administrator") && !empty($rencOpt['mandatory']) && rencistatus($rencDiv['istatus'],3)) { ?>
+
+		<div id="rencTitann" class="w3-modal w3-show w3-animate-opacity">
+			<div class="w3-modal-content w3-card-4 w3-renc-wmbg" style="max-width:600px;">
+				<div class="w3-container">
+					<div class="w3-button w3-display-topright w3-large w3-renc-mebo" onClick="f_titann();">&times;</div>
+					<div class="w3-padding-48">
+					<?php _e('Some required fields in your profile are incomplete. Thank you to fill them in.','rencontre'); ?>
+					
+					</div>
+				</div>
+			</div>
+		</div><!-- .w3-modal -->
 	<?php } ?>
 
+
 		<div id="modalWarn" class="w3-modal w3-animate-opacity">
-			<div class="w3-modal-content w3-card-4 w3-renc-wabg" style="max-width:600px;">
+			<div class="w3-modal-content w3-card-4 w3-renc-wmbg" style="max-width:600px;">
 				<div class="w3-container">
 					<div class="w3-button w3-display-topright w3-large w3-renc-mebo" onClick="document.getElementById('modalWarn').style.display='none'">&times;</div>
 					<div id="modalWarnContent" class="w3-padding-48 w3-center">

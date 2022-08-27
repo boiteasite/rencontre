@@ -56,6 +56,7 @@ table.tem th,table.tem td{padding:4px 6px;vertical-align:middle;}
 .compte span{font-weight:700;}
 .compte select{height:auto;}
 .compte input[type="checkbox"]{width:auto;}
+.profil .categ{padding-top:4px;border-top:1px solid #c3c4c7;}
 
 .bouton{display:-moz-inline-box;display:inline-block;background-color:#e5d4ac;border:1px solid #555;border-radius:4px;margin:3px;padding:5px;font-size:90%;}
 .bouton:hover{cursor:pointer;background-color:#bfb190;}

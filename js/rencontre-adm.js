@@ -208,9 +208,13 @@ function f_edit(f,a2,a3,a4,a5,g){
 	if(a3!='t_valeur'){
 		n=document.createElement("div");
 		n.id="profilGenre";
+		n.style.marginTop='15px';
 		a6=g.split("&");
 		for(v=0;v<a6.length-1;++v){
+			if(a6[v].substring(0,3)=='m=1')continue;
 			n0=document.createElement("label");
+			if(v!=0)n0.style.paddingLeft='5px';
+			n0.style.paddingRight='5px';
 			n0.innerHTML=a6[v].substring(0,a6[v].search("="));
 			n1=document.createElement("input");
 			n1.id="profilLabel"+v;
@@ -218,12 +222,26 @@ function f_edit(f,a2,a3,a4,a5,g){
 			n1.setAttribute('name','genre'+v);
 			if(a6[v].substring(a6[v].search("=")+1)==1)n1.checked=true;
 			n.appendChild(n0);n.appendChild(n1);
-			m.appendChild(n);
 		}
+		m.appendChild(n);
+		n=document.createElement("div");
+		n.style.marginTop='15px';
+		n0=document.createElement("label");
+		n0.style.paddingRight='5px';
+		n0.innerHTML=rencobjet.adminMandatory;
+		n1=document.createElement("input");
+		n1.id="profilLabelM";
+		n1.setAttribute('type','checkbox');
+		n1.setAttribute('name','mandatory');
+		if(g.indexOf('&m=1')!=-1)n1.checked=true;
+		n.appendChild(n0);n.appendChild(n1);
+		m.appendChild(n);
 	}
 	//
 	n=document.createElement("div");
 	n0=document.createElement("input");
+	n0.style.marginTop='15px';
+	n0.className='button-primary';
 	n0.setAttribute('type','button');
 	n0.setAttribute('value',rencobjet.sauvegarde);
 	n0.setAttribute('onClick','f_Submit("edit","'+a2+'","'+a3+'","'+a5+'");return false;');
@@ -327,6 +345,10 @@ function f_Submit(a1,a2,a3,a5){
 				h+='=0&';
 			}
 		});
+		if(document.getElementById('profilLabelM')&&document.getElementById('profilLabelM').checked){
+			g+=':,';
+			h+='m=1&';
+		}
 	}
 	else if(a1=='plus'){
 		a=b0.substring(0,2)+'='+document.getElementById('profilLabel0').value+'&';
@@ -339,73 +361,7 @@ function f_Submit(a1,a2,a3,a5){
 	a4=encodeURIComponent(a);
 	if(b6==1)a6=document.getElementById('profilSelect').value; // (edit c_label)
 	jQuery.post('admin-ajax.php',{'action':'profilA','a1':a1,'a2':a2,'a3':a3,'a4':a4,'a5':a5,'a6':a6,'g':g,'rencToka':rencToka},function(r){
-		if(a3=='c_categ'||r.substr(0,6)=='reload')location.reload(true);
-		else{
-			document.getElementById('editProfil').remove();
-			if(a1=='edit'&&a3=='c_label'){
-				jQuery('#rencLabel'+a2).find('span').each(function(){;
-					this.innerHTML=(c!=0?this.className.substring(9)+' : ':'')+t[this.className.substring(9)];
-					++c;
-				});
-				jQuery('#rencLabel'+a2+' .rencEdit').attr('onclick','f_edit(this,'+a2+',"c_label","'+a4+'",'+a6+',"'+h+'")');
-			}
-			else if(a1=='edit'&&a5=='ns'){ // t_valeur in case 5 (numeric select)
-				jQuery('#rencValeur'+a2+' .valeur .rencEdit').attr('onclick','f_edit(this,'+a2+',"t_valeur","'+a4+'","ns",0)');
-				a=a.split('&');
-				jQuery('#rencValeur'+a2).find('.valeur').children('span').each(function(){
-					if(c==0)this.innerHTML='['+a[0]+' ; '+a[1]+']';
-					else if(c==1)this.innerHTML=' : '+a[2];
-					else if(c==2)this.innerHTML=' : '+a[3];
-					++c;
-				});
-			}
-			else if(a1=='edit'&&a3=='t_valeur'){
-				jQuery('#rencValeur'+a2+' .valeur:eq('+(a5-1)+')').children('span').each(function(){
-					this.innerHTML=(c!=0?this.className.substring(10)+' : ':'')+t[this.className.substring(10)];
-					++c;
-				});
-				jQuery('#rencValeur'+a2+' .valeur:eq('+(a5-1)+') .rencEdit').attr('onclick','f_edit(this,'+a2+',"t_valeur","'+a4+'",0,0)');
-			}
-			else if(a1=='plus'&&a3=='c_label'){ // r : "newID|a_man=1&a_woman=1&"
-				c=r.split('|');
-				t=a4.split('%26');
-				a='<div class="label"><div class="rencLabel" id="rencLabel'+c[0]+'">';
-				a+='<a href="javascript:void(0)" class="rencUp" onClick="f_rencUp('+c[0]+',\'c_label\',this);"></a>';
-				a+='<a href="javascript:void(0)" class="rencDown" onClick="f_rencDown('+c[0]+',\'c_label\',this);"></a>';
-				a+='<a href="javascript:void(0)" class="rencEdit" onClick="f_edit(this,'+c[0]+',\'c_label\',\''+a4+'\',1,\''+c[1].substr(0,c[1].length-1)+'\');"></a>';
-				a+='<a href="javascript:void(0)" class="rencSupp" onClick="f_supp('+c[0]+',\'c_label\',this);"></a>';
-				jQuery.each(t,function(k,v){
-					v=v.split('%3D');
-					if(typeof v[1]!=='undefined'){
-						if(k==0)a+='<span class="rencLabel'+v[0]+'">'+decodeURI(v[1])+'</span><br />';
-						else a+='<span style="margin:0 0 0 37px;color:#777;" class="rencLabel'+v[0]+'">'+v[0]+' : '+decodeURI(v[1])+'</span><br />';
-					}
-				});
-				a+='</div><div style="height:5px;"></div><div class="rencValeur rencType">(TEXT)</div><br style="clear:left;"/></div>';
-				jQuery('#rencLabel'+a2).parent().parent().append(a);
-			}
-			else if(a1=='plus'&&a3=='t_valeur'){
-				jQuery('#rencValeur'+a2).children('div').each(function(){
-					a=this.id.split('-');
-					if(typeof a[1]!=='undefined'&&a[1]>c)c=a[1]; // search max
-				});
-				t=a4.split('%26');
-				a='<div class="valeur"><br />';
-				a+='<a href="javascript:void(0)" class="rencUp" onClick="f_rencUp('+a2+',\'t_valeur\',this);"></a>';
-				a+='<a href="javascript:void(0)" class="rencDown" onClick="f_rencDown('+a2+',\'t_valeur\',this);"></a>';
-				a+='<a href="javascript:void(0)" class="rencEdit" onClick="f_edit(this,'+a2+',\'t_valeur\',\''+a4+'\',this,0);"></a>';
-				a+='<a href="javascript:void(0)" class="rencSupp" onClick="f_supp('+a2+',\'t_valeur\',this);"></a>';
-				jQuery.each(t,function(k,v){
-					v=v.split('%3D');
-					if(typeof v[1]!=='undefined'){
-						if(k==0)a+='<span class="rencValeur'+v[0]+'">'+decodeURI(v[1])+'</span><br />';
-						else a+='<span style="margin:0 0 0 37px;color:#777;" class="rencValeur'+v[0]+'">'+v[0]+' : '+decodeURI(v[1])+'</span><br />';
-					}
-				});
-				a+='</div>';
-				jQuery('#rencValeur'+a2).append(a);
-			}
-		}
+		location.reload();
 	});
 }
 function f_supp(a2,a3,t){
@@ -473,7 +429,8 @@ function f_profil_hideshow(f,id){
 function f_synchronise(){
 	document.forms["menu_profil"].elements["a1"].value="synchro";
 	document.forms["menu_profil"].elements["a6"].value="1";
-	document.forms["menu_profil"].submit();}
+	document.forms["menu_profil"].submit();
+}
 function f_langplus(){
 	document.forms["menu_profil"].elements["a1"].value="langplus";
 	f=document.getElementsByName("langplus")[0].value;
@@ -485,6 +442,11 @@ function f_langsupp(){
 	f=document.getElementById("langsupp");
 	document.forms["menu_profil"].elements["a4"].value=f.options[f.selectedIndex].value;
 	if (confirm(rencobjet.supprimer+' '+f.options[f.selectedIndex].value+' ?'))document.forms["menu_profil"].submit();
+}
+function f_blockMand(f){
+	document.forms["menu_profil"].elements["a1"].value="blockMand";
+	document.forms["menu_profil"].elements["a4"].value=f.options[f.selectedIndex].value;
+	document.forms["menu_profil"].submit();
 }
 // ****************************************
 // ONGLET REGION

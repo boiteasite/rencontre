@@ -41,18 +41,29 @@ function f_onglet(f){
 	}
 	rencLast=f;
 }
-function f_vignette(f,img){
-	ff=rencBaseurl+"/portrait/"+Math.floor((f)/10000)+"/"+img+".jpg?r="+Math.random();
+function f_vignette(f,img){ // before V 3.8.1
+	var ff=rencBaseurl+"/portrait/"+Math.floor((f)/10000)+"/"+img+".jpg?r="+Math.random();
 	document.getElementById('portraitGrande').src=ff;
 }
-function f_vignette_change(f,img){
+function f_vignetteRetina(f,img,ret,b){
+	var ff=rencBaseurl+"/portrait/"+Math.floor((f)/10000)+"/"+img;
+	document.getElementById('portraitGrande').src=ff+".jpg?"+b;
+	if(ret)document.getElementById('portraitGrande').srcset=ff+"@2x.jpg?"+b+" 2x";
+}
+function f_vignette_change(f,img){ // before V 3.8.1
 	f_vignette(f,img);
 	jQuery('#changePhoto .rencMain').hide();
-	jQuery('#changePhoto').hide();
+	document.getElementById('changePhoto').style.display='none';
+	jQuery('#clickPhoto').show();
+}
+function f_vignetteRetina_change(f,img,ret,b){
+	f_vignetteRetina(f,img,ret,b);
+	jQuery('#changePhoto .rencMain').hide();
+	document.getElementById('changePhoto').style.display='none';
 	jQuery('#clickPhoto').show();
 }
 function f_change_photo(f,g){
-	jQuery('#changePhoto').show();
+	document.getElementById('changePhoto').style.display='block';
 	if(g)jQuery('#changePhoto .rencMain').show();
 	jQuery('#clickPhoto').hide();
 	document.getElementById("changePhoto").setAttribute("data-photo",f);

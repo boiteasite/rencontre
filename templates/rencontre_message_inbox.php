@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Message Inbox
- * Last Change : Rencontre 3.6.2
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_inbox.php
  * Call : rencontre_widget.php => widget()
  * $u0 : user_login
@@ -38,11 +38,11 @@
 							<picture>
 								<source class="w3-circle w3-image" srcset="<?php echo $m->miniPhotoWebp; ?>" type="image/webp" alt="<?php echo $m->member; ?>">
 								<source class="w3-circle w3-image" srcset="<?php echo $m->miniPhoto; ?>" type="image/jpeg" alt="<?php echo $m->member; ?>"> 
-								<img class="w3-circle w3-image" src="<?php echo $m->miniPhoto; ?>" alt="<?php echo $m->member; ?>" />
+								<img class="w3-circle w3-image" src="<?php echo $m->miniPhoto; ?>" srcset="<?php echo $m->miniPhotoRetina; ?>" alt="<?php echo $m->member; ?>" />
 							</picture>
 							<?php } else { ?>
 			
-							<img class="w3-circle w3-image" src="<?php echo $m->miniPhoto; ?>" alt="<?php echo $m->member; ?>" />
+							<img class="w3-circle w3-image" src="<?php echo $m->miniPhoto; ?>" srcset="<?php echo $m->miniPhotoRetina; ?>" alt="<?php echo $m->member; ?>" />
 							<?php } ?>
 						<?php } else { ?>
 

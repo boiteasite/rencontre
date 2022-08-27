@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.7.1
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * Call : rencontre_widget.php => widget()
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
@@ -25,7 +25,7 @@
 				<div class="w3-card w3-renc-blbg">
 				<?php if(!empty($u->photo->grande[0])) { ?>
 				
-					<img id="portraitGrande" alt="" src="<?php echo $u->photoUrl.$u->photo->grande[0]; ?>" <?php echo $onClick['thumb']; ?> title="<?php echo $title['thumb']; ?>" />
+					<img id="portraitGrande" alt="" src="<?php echo $u->photoUrl.$u->photo->grande[0]; ?>" srcset="<?php echo $u->photo->grandeRetina[0]; ?>" <?php echo $onClick['thumb']; ?> loading="lazy" title="<?php echo $title['thumb']; ?>" />
 				<?php } else { ?>
 
 					<img id="portraitGrande" alt="" src="<?php echo plugins_url('rencontre/images/no-photo600.jpg'); ?>" <?php echo $onClick['thumb']; ?> title="<?php echo $title['thumb']; ?>" />
@@ -51,24 +51,24 @@
 								<picture onMouseOver="<?php echo $u->photo->over[$v]; ?>" title="<?php echo $title['thumb']; ?>">
 									<source class="w3-show-inline-block" srcset="<?php echo $u->photoUrl.$u->photo->miniWebp[$v]; ?>" type="image/webp">
 									<source class="w3-show-inline-block" srcset="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" type="image/jpeg"> 
-									<img class="w3-show-inline-block" src="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" />
+									<img class="w3-show-inline-block" src="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" srcset="<?php echo $u->photo->miniRetina[$v]; ?>" />
 								</picture>
 							<?php } else { ?>
 
-								<img class="w3-show-inline-block" onMouseOver="<?php echo $u->photo->over[$v]; ?>" src="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" alt="" title="<?php echo $title['thumb']; ?>" />
+								<img class="w3-show-inline-block" onMouseOver="<?php echo $u->photo->over[$v]; ?>" src="<?php echo $u->photoUrl.$u->photo->mini[$v]; ?>" srcset="<?php echo $u->photo->miniRetina[$v]; ?>" alt="" title="<?php echo $title['thumb']; ?>" />
 							<?php } ?>
 							
 							</a>
 							<?php if(!empty($u->photo->grande[$v])) { ?>
 							
-							<img style="display:none;" src="<?php echo $u->photoUrl.$u->photo->grande[$v]; ?>" alt="" />
+							<img id="portraitGrande<?php echo $v; ?>" style="display:none;" src="<?php echo $u->photoUrl.$u->photo->grande[$v]; ?>" srcset="<?php echo $u->photo->grandeRetina[$v]; ?>" loading="lazy" alt="" />
 							<?php } ?>
 							<?php if(!empty($u->photo->full[$v])) { ?>
 							
 							<div id="rencPhoto<?php echo $v; ?>" class="w3-modal" onclick="this.style.display='none'">
 								<span class="w3-button w3-display-topright w3-large w3-renc-mebo">&times;</span>
 								<div class="w3-modal-content w3-animate-zoom w3-transparent" style="width:90%">
-									<img style="max-width:100%;max-height:85vh" src="<?php echo $u->photoUrl.$u->photo->full[$v]; ?>" alt="" />
+									<img style="max-width:100%;max-height:85vh" src="<?php echo $u->photoUrl.$u->photo->full[$v]; ?>" srcset="<?php echo $u->photo->fullRetina[$v]; ?>" loading="lazy" alt="" />
 								</div>
 							</div>
 							<?php } ?>
@@ -135,7 +135,7 @@
 							<?php if($u->c_pays!="" && empty($rencCustom['country']) && empty($rencCustom['place'])) { ?>
 				
 							<div class="w3-display-bottomright">
-								<img src="<?php echo plugins_url('rencontre/images/drapeaux/').$rencDrap[$u->c_pays]; ?>" style="margin-bottom:4px" alt="<?php echo $rencDrapNom[$u->c_pays]; ?>" title="<?php echo $rencDrapNom[$u->c_pays]; ?>" />
+								<img src="<?php echo plugins_url('rencontre/images/drapeaux/').$rencDrap[$u->c_pays]; ?>" height="22px" width="30px" style="margin-bottom:4px" alt="<?php echo $rencDrapNom[$u->c_pays]; ?>" title="<?php echo $rencDrapNom[$u->c_pays]; ?>" />
 							</div>
 							<?php } ?>
 							

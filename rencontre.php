@@ -6,11 +6,11 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.7.1
+Version: 3.8.1
 Author URI: https://www.boiteasite.fr
 */
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.7.1';
+$rencVersion = '3.8.1';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'],'theme-editor.php')) return;
@@ -343,16 +343,30 @@ class Rencontre {
 				else if(substr($Grencidfm,0,1)=='s') $_SESSION['rencontre'] = 'card,menu,sourire';
 				else if(substr($Grencidfm,0,1)=='r') $_SESSION['rencontre'] = 'msg,accueil,menu';
 			}
-			$ip = $wpdb->get_var("SELECT c_ip FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$current_user->ID."' LIMIT 1");
+			$q = $wpdb->get_row("SELECT
+					R.c_ip,
+					R.i_status,
+					P.d_modif,
+					P.t_action
+				FROM ".$wpdb->prefix."rencontre_users R
+				INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+					ON P.user_id=R.user_id
+				WHERE
+					R.user_id=".$current_user->ID."
+				LIMIT 1
+				");
+			$ip = ($q?$q->c_ip:0);
 			// rencDiv USER VAR
-			$rencDiv['action'] = $wpdb->get_var("SELECT t_action FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$current_user->ID."' LIMIT 1");
+			$rencDiv['action'] = ($q?$q->t_action:0);
+			$rencDiv['istatus'] = ($q?$q->i_status:0);
+			if($q && !empty($rencOpt['mandatory']) && $rencOpt['mandatory']>strtotime($q->d_modif)) rencUserCheckMandatory($current_user->ID);
+			$rencDiv['rencBlock'] = ($q?rencistatus($rencDiv['istatus'],0):0); // (($rencDiv['istatus']==1 || $rencDiv['istatus']==3)?1:0); // blocked
+			if($q && isset($rencOpt['blockmand']) && $rencOpt['blockmand']==2 && rencistatus($rencDiv['istatus'],3)) $rencDiv['rencBlock'] = 1; // Mandatory fiel empty => ON
 			$rencDiv['mpause'] = '';
 			if(empty($rencOpt['paus'])) {
 				if(strpos($rencDiv['action'],',pause2,')!==false) $rencDiv['mpause'] = 'pause2';
 				else if(strpos($rencDiv['action'],',pause1,')!==false) $rencDiv['mpause'] = 'pause1';
 			}
-			$rencDiv['istatus'] = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$current_user->ID." LIMIT 1");
-			$rencDiv['rencBlock'] = rencistatus($rencDiv['istatus'],0); // (($rencDiv['istatus']==1 || $rencDiv['istatus']==3)?1:0); // blocked
 			$rencDiv['pacam'] = false;
 			$rencDiv['pacas'] = false;
 			$rencDiv['titann'] = $wpdb->get_var("SELECT
@@ -654,7 +668,7 @@ class Rencontre {
 					INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 						ON P.user_id=U.ID
 					WHERE 
-						R.i_status=0 
+						R.i_status IN (0".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8').") 
 						and R.i_photo!=0 
 						and R.i_sex=0 
 						and TO_DAYS(NOW())-TO_DAYS(U.user_registered)>=".(isset($rencOpt['jlibre'])?$rencOpt['jlibre']:0)." 
@@ -682,7 +696,7 @@ class Rencontre {
 					INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 						ON P.user_id=U.ID
 					WHERE 
-						R.i_status=0 
+						R.i_status IN (0".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8').") 
 						and R.i_photo!=0 
 						and R.i_sex=1 
 						and TO_DAYS(NOW())-TO_DAYS(U.user_registered)>=".(isset($rencOpt['jlibre'])?$rencOpt['jlibre']:0)." 
@@ -728,7 +742,7 @@ class Rencontre {
 					INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 						ON P.user_id=U.ID
 					WHERE 
-						R.i_status=0 
+						R.i_status IN (0".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8').") 
 						and R.i_photo!=0 
 						and TO_DAYS(NOW())-TO_DAYS(U.user_registered)>=".(isset($rencOpt['jlibre'])?$rencOpt['jlibre']:0)." 
 						and CHAR_LENGTH(P.t_titre)>4 
@@ -780,6 +794,11 @@ class Rencontre {
 				else if($u->i_sex==0 && $u->i_zsex==0) $u->genre='gaymen';
 				if(!file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg') && file_exists($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'.jpg')) {
 					@copy($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'.jpg', $rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg');
+					// RETINA
+					if(!empty($rencOpt['nbr']['retina']) && file_exists($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'@2x.jpg')) {
+						@copy($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'@2x.jpg', $rencDiv['basedir'].'/portrait/libre/'.$photo.'@2x.jpg');
+					}
+					// WEBP
 					if(function_exists('imagewebp')) {
 						$imgJ = imagecreatefromjpeg($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'.jpg');
 						$imgX = imagesx($imgJ);
@@ -789,9 +808,31 @@ class Rencontre {
 						imagewebp($imgP, $rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp', 75);
 						imagedestroy($imgJ);
 						imagedestroy($imgP);
+						// WEBP RETINA
+						if(!empty($rencOpt['nbr']['retina']) && file_exists($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'@2x.jpg')) {
+							$imgJ = imagecreatefromjpeg($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'@2x.jpg');
+							$imgX = imagesx($imgJ);
+							$imgY = imagesy($imgJ);
+							$imgP = imagecreatetruecolor($imgX, $imgY);
+							imagecopy($imgP, $imgJ, 0, 0, 0, 0, $imgX, $imgY);
+							imagewebp($imgP, $rencDiv['basedir'].'/portrait/libre/'.$photo.'@2x.webp', 75);
+							imagedestroy($imgJ);
+							imagedestroy($imgP);
+						}
 					}
 				}
-				if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp')) $u->librePhotoWebp = $rencDiv['baseurl'].'/portrait/libre/'.$photo.'.webp';
+				// Browser Caching Bypass
+				$a = filemtime($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg');
+				$u->librePhoto .= '?' . $a;
+				// RETINA
+				$u->librePhotoRetina = '';
+				if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'@2x.jpg')) $u->librePhotoRetina = $rencDiv['baseurl'].'/portrait/libre/'.$photo.'@2x.jpg?'.$a.' 2x';
+				// WEBP
+				$u->librePhotoWebp = '';
+				if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp')) {
+					$u->librePhotoWebp = $rencDiv['baseurl'].'/portrait/libre/'.$photo.'.webp' . '?' . $a;
+					if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'@2x.webp')) $u->librePhotoWebp .= ' 1x,'.$rencDiv['baseurl'].'/portrait/libre/'.$photo.'@2x.webp?'.$a.' 2x';
+				}
 				if(!isset($rencCustom['librePhoto'])) {
 					if($u->c_pays!="" && !isset($rencCustom['country']) && !isset($rencCustom['place']) && (!isset($rencCustom['libreFlag']) || !$rencCustom['libreFlag'])) {
 						$pays = strtr(utf8_decode($u->c_pays), 'ÁÀÂÄÃÅÇÉÈÊËÍÏÎÌÑÓÒÔÖÕÚÙÛÜÝ', 'AAAAAACEEEEEIIIINOOOOOUUUUY');
@@ -873,7 +914,7 @@ class Rencontre {
 				INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
 					ON P.user_id=U.ID
 				WHERE 
-					R.i_status=0 
+					R.i_status IN (0".((isset($rencOpt['blockmand'])&&$rencOpt['blockmand']==2)?'':',8').")
 					and R.i_photo!=0 
 					and R.i_sex=".$Gzsex."
 					and CHAR_LENGTH(P.t_titre)>4 

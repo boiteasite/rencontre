@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait.php
  * Call : rencontre_widget.php => f_miniPortrait()
  * $u : ID, display_name, c_pays, c_ville, d_naissance, i_photo, t_titre, online, miniPhoto, miniPhotoWebp
@@ -25,11 +25,11 @@
 							<picture <?php echo $title['thumb']; ?>>
 								<source class="w3-circle" srcset="<?php echo $u->miniPhotoWebp; ?>" type="image/webp" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>">
 								<source class="w3-circle" srcset="<?php echo $u->miniPhoto; ?>" type="image/jpeg" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>"> 
-								<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>" />
+								<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" srcset="<?php echo $u->miniPhotoRetina; ?>" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>" />
 							</picture>
 						<?php } else { ?>
 			
-							<img class="w3-circle" style="width:<?php echo $photoWidth; ?>px;" src="<?php echo $u->miniPhoto; ?>" alt="<?php echo $u->display_name; ?>" <?php echo $title['thumb']; ?> />
+							<img class="w3-circle" src="<?php echo $u->miniPhoto; ?>" srcset="<?php echo $u->miniPhotoRetina; ?>" style="width:<?php echo $photoWidth; ?>px;" alt="<?php echo $u->display_name; ?>" <?php echo $title['thumb']; ?> />
 						<?php } ?>
 						
 					<?php if(!empty($onClick['profile'])) { ?>

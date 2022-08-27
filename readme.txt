@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
 Requires at least: 4.3
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 3.7.1
+Stable tag: 3.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,7 @@ The features are as follows :
 * **Private messaging** between members ;
 * **Extended and customizable profile** (free composition, checkbox, date event...) ;
 * **Advanced Search** including in profile elements ;
+* Image format adapted to retina-ready screens ;
 * Private Members **chat with webcam** ;
 * Sending smiles and contact requests ;
 * Reporting of non-compliant member profiles ;
@@ -393,11 +394,24 @@ It's better to limit the data size.
 
 == Changelog ==
 
+19/08/2022 : 3.8.1
+
+* Flag in SVG. Add Filter "rencNumber['flagPng']" to force old PNG mode.
+* Members' photos are now available in retina-ready X2. Add Filter "rencNumber['retina']" to disable retina creation.
+* Browser images cache optimisation.
+* Images loading optimisation to reduce page load time and data consumption.
+* Fix issues.
+
+12/04/2022 : 3.8
+
+* Ability to create mandatory profile fields that are only visible in the back-office (invisible to other members).
+* Enhanced profile manager.
+
 21/02/2022 : 3.7.1
 
 * Show-Hide unused buttons on portrait page. The template rencontre_portrait.php should be updated if you have customized it.
 * User can rotate images after upload. The **template rencontre_portrait_edit.php** must be updated if you have customized it !
-* Add portuguese (brazil) translation - thanks to César Ramos
+* Add portuguese (Brazil) translation - thanks to César Ramos
 * Fix PHP 8.1 warning.
 
 04/01/2022 : 3.7

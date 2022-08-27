@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Libre Portrait
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_portrait.php
  * Call : rencontre.php => f_ficheLibre()
  * $u : ID, display_name, user_registered, i_sex, i_zsex, c_pays, c_ville, d_naissance, i_photo, t_titre, t_annonce, titre, annonce, libreID, librePhoto, genre
@@ -23,11 +23,11 @@
 				<picture class="w3-hover-grayscale">
 					<source srcset="<?php echo $u->librePhotoWebp; ?>" type="image/webp" style="width:100%" alt="<?php echo $u->display_name; ?>">
 					<source srcset="<?php echo $u->librePhoto; ?>" type="image/jpeg" style="width:100%" alt="<?php echo $u->display_name; ?>"> 
-					<img src="<?php echo $u->librePhoto; ?>" style="width:100%" alt="<?php echo $u->display_name; ?>" />
+					<img src="<?php echo $u->librePhoto; ?>" srcset="<?php echo $u->librePhotoRetina; ?>" style="width:100%" loading="lazy" alt="<?php echo $u->display_name; ?>" />
 				</picture>
 			<?php } else { ?>
 			
-				<img class="w3-hover-grayscale" src="<?php echo $u->librePhoto; ?>" style="width:100%" alt="<?php echo $u->display_name; ?>" />
+				<img class="w3-hover-grayscale" src="<?php echo $u->librePhoto; ?>" srcset="<?php echo $u->librePhotoRetina; ?>" style="width:100%" loading="lazy" alt="<?php echo $u->display_name; ?>" />
 			<?php } ?>
 			<?php if(empty($rencCustom['librePhoto'])) { ?>
 

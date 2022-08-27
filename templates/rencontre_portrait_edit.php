@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.7.1
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
  * Call : rencontre_widget.php => widget()
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
@@ -31,7 +31,7 @@
 					<div class="w3-card w3-renc-blbg">
 					<?php if($u0->i_photo) { ?>
 						
-						<img id="portraitGrande" src="<?php echo $u0->photoUrl.$u0->photo->grande[0]; ?>" alt="" />
+						<img id="portraitGrande" src="<?php echo $u0->photoUrl.$u0->photo->grande[0]; ?>" srcset="<?php echo $u0->photo->grandeRetina[$v]; ?>" loading="lazy" alt="" />
 					<?php } else { ?>
 
 						<img id="portraitGrande" src="<?php echo plugins_url('rencontre/images/no-photo600.jpg'); ?>" alt="" />
@@ -44,9 +44,9 @@
 							<?php if($u0->i_photo >= $u0->ID*10+$v) { ?>
 							
 							<a href="javascript:void(0)" onClick="<?php echo $onClick['change'.$v]; ?>">
-								<img class="portraitMini w3-show-inline-block" onMouseOver="<?php echo $u0->photo->over[$v]; ?>" src="<?php echo $u0->photoUrl.$u0->photo->mini[$v]; ?>" alt="<?php _e('Click the photo','rencontre'); ?>" title="<?php _e('Click the photo','rencontre'); ?>" />
+								<img class="portraitMini w3-show-inline-block" onMouseOver="<?php echo $u0->photo->over[$v]; ?>" src="<?php echo $u0->photoUrl.$u0->photo->mini[$v]; ?>" srcset="<?php echo $u0->photo->miniRetina[$v]; ?>" alt="<?php _e('Click the photo','rencontre'); ?>" title="<?php _e('Click the photo','rencontre'); ?>" />
 							</a>
-							<img style="display:none;" src="<?php echo $u0->photoUrl.$u0->photo->grande[$v]; ?>" />
+							<img style="display:none;" src="<?php echo $u0->photoUrl.$u0->photo->grande[$v]; ?>" srcset="<?php echo $u0->photo->grandeRetina[$v]; ?>" loading="lazy" />
 							<?php } else {  ?>
 								<?php if($v < $u0->maxPhoto) { ?>
 								
@@ -126,8 +126,10 @@
 							<div class="w3-section">
 							<?php foreach($value as $v) { ?>
 							
-								<div class="w3-row w3-padding-small">
-									<div class="w3-quarter"><?php echo $v->label; ?></div>
+								<div class="w3-row w3-padding-small<?php if(!empty($v->mandatory)) echo ' w3-renc-msbs'; ?>">
+									<div class="w3-quarter"><?php echo $v->label; ?><?php if(!empty($v->mandatory)) {
+										?><a href="javascript:void(0)" onClick="f_modalWarn('<?php echo addslashes(__('Required field (hidden)','rencontre')); ?>')">&nbsp;&nbsp;<i class="fas fa-info-circle w3-opacity-max"></i></a><?php
+									} ?></div>
 									<div class="w3-threequarter">
 									<?php if($v->type==1) { ?>
 										

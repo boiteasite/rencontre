@@ -7,6 +7,7 @@ $lang = array(
 	'supprimer'=>__('Remove','rencontre'),
 	'categ'=>__('Category','rencontre'),
 	'valeur'=>__('Value','rencontre'),
+	'adminMandatory'=>__('Required field (hidden)','rencontre'),
 	'nouvelit'=>__('New Item','rencontre'),
 	'ajoute'=>__('Add','rencontre'),
 	'pays'=>__('Country','rencontre'),

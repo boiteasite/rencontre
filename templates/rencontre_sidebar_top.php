@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Top
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_top.php
  * Call : rencontre_widget.php => RencontreSidebarWidget::widget()
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, miniPhoto, miniPhotoWebp, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, age, agemin, agemax, pause
@@ -26,11 +26,11 @@
 					<picture>
 						<source class="w3-circle" srcset="<?php echo $u0->miniPhotoWebp; ?>" type="image/webp" alt="<?php echo $u0->display_name; ?>">
 						<source class="w3-circle" srcset="<?php echo $u0->miniPhoto; ?>" type="image/jpeg" alt="<?php echo $u0->display_name; ?>"> 
-						<img class="w3-circle" src="<?php echo $u0->miniPhoto; ?>" alt="<?php echo $u0->display_name; ?>" />
+						<img class="w3-circle" src="<?php echo $u0->miniPhoto; ?>" srcset="<?php echo $u0->miniPhotoRetina; ?>" alt="<?php echo $u0->display_name; ?>" />
 					</picture>
 				<?php } else { ?>
 				
-					<img class="w3-circle" src="<?php echo $u0->miniPhoto; ?>" alt="<?php echo $u0->display_name; ?>" />
+					<img class="w3-circle" src="<?php echo $u0->miniPhoto; ?>" srcset="<?php echo $u0->miniPhotoRetina; ?>" alt="<?php echo $u0->display_name; ?>" />
 				<?php } ?>
 				
 				</div>

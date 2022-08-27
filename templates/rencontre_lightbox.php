@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Lightbox
- * Last Change : Rencontre 3.4
+ * Last Change : Rencontre 3.8.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_lightbox.php
  * Call : templates/rencontre_portrait.php
 */
@@ -12,7 +12,7 @@
 	<div class="w3-modal-content w3-black" style="height:92vh;">
 	<?php for($v=0;$v<$u->maxPhoto;++$v) { if(($u->ID)*10+$v > $u->i_photo) break; ?>
 	
-		<img class="lightboxSlide w3-animate-opacity w3-display-middle" src="<?php echo $u->photoUrl.$u->photo->full[$v]; ?>" style="max-width:100%;max-height:90vh" />
+		<img class="lightboxSlide w3-animate-opacity w3-display-middle" src="<?php echo $u->photoUrl.$u->photo->full[$v]; ?>" srcset="<?php echo $u->photo->fullRetina[$v]; ?>" style="max-width:100%;max-height:90vh" />
 	<?php } ?>
 		<button class="w3-button w3-black w3-xlarge w3-display-topright" onclick="f_lightboxClose()">&#10005;</button>
 		<button class="w3-button w3-black w3-display-left" onclick="f_lightboxPrevNext(-1)">&#10094;</button>
