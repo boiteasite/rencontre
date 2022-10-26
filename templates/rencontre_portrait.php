@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.8.1
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * Call : rencontre_widget.php => widget()
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
@@ -201,10 +201,10 @@
 				<?php if(empty($rencCustom['smile'])) { ?>
 					<?php if(!$disable['smile']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['smile']); ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['smile']); ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(empty($rencCustom['creq'])) { ?>

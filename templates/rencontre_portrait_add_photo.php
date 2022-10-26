@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait add photo
- * Last Change : Rencontre 3.4.2
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_add_photo.php
  * Call : rencontre_widget.php => widget() 2X
  * $u0 : i_photo
@@ -22,7 +22,7 @@
 					<?php } ?>
 						<input type="hidden" name="a1" value="" />
 						<input type="hidden" name="a2" value="" />
-						<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
+						<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
 						<input type="hidden" name="rotate" value="" />
 						<div style="margin:0 auto;text-align:center"></div>
 						<input type="file" name="plusPhoto" size="18" accept="image/*" onchange="f_photoPop_display(this)">

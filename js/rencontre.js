@@ -72,21 +72,21 @@ function f_supp_photo(f){
 	var a=document.forms['portraitPhoto'];
 	a.elements['a1'].value='suppImg';
 	a.elements['a2'].value=f;
-	a.elements[(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
+	a.elements['P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.submit();
 }
 function f_rotate_photo(f,g){
 	var a=document.forms['portraitPhoto'];
 	a.elements['a1'].value=(g==0?'rotateLImg':'rotateRImg');
 	a.elements['a2'].value=f;
-	a.elements[(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
+	a.elements['P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.submit();
 }
 function f_main_photo(f){
 	var a=document.forms['portraitPhoto'];
 	a.elements['a1'].value='mainImg';
 	a.elements['a2'].value=f;
-	a.elements[(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
+	a.elements['P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc')].value=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.submit();
 }
 function f_photoPop_display(f){
@@ -152,7 +152,7 @@ function f_exifOrientation(f,g){
 }
 function f_plus_photoPop_submit(f){
 	var a=document.forms['portraitPhotoPop'],
-		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jrenc='P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
 		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	if(a.elements['plusPhoto'].value=='')return;
 	a.elements['a1'].value='plusImg';
@@ -163,7 +163,7 @@ function f_plus_photoPop_submit(f){
 }
 function f_suppAll_photo(){
 	var a=document.forms['portraitPhoto'],
-		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jrenc='P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
 		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.elements['a1'].value='suppImgAll';
 	a.elements[jrenc].value=jedit;
@@ -171,7 +171,7 @@ function f_suppAll_photo(){
 }
 function f_sauv_profil(f){
 	var a=document.forms['portraitChange'],
-		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+		jrenc='P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
 		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
 	a.elements['a1'].value='sauvProfil';
 	a.elements['a2'].value=f;
@@ -275,8 +275,8 @@ function f_mod_nouveau(f){
 function f_fin(f){
 	if(confirm(rencobjet.conf_supp_compte)){
 		var a=document.forms['formFin'],
-			jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
-			jid=(typeof lbl.id!="undefined"?lbl.id:'id'),
+			jrenc='P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
+			jid='P'+(typeof lbl.id!="undefined"?lbl.id:'id'),
 			jfin=(typeof lbl.fin!="undefined"?lbl.fin:'fin');
 		a.elements[jrenc].value=jfin;
 		a.elements[jid].value=f;

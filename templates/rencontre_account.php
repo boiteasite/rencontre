@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.6
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
  * Call : rencontre_widget.php => f_compte()
  * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert, pause
@@ -27,8 +27,8 @@
 					<div class="w3-section">
 						<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Change password','rencontre');?></div>
 						<form name="formPass" method="post" action="">
-							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
-							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
+							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
+							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
 							<div>
 								<label><?php _e('Former','rencontre');?></label>
 								<input name="pass0" type="password" class="w3-input w3-renc-inbg" />
@@ -302,7 +302,7 @@
 					<div class="w3-section">
 						<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Profile visibility','rencontre'); ?></div>
 						<form name="formPause" method="post" action="">
-							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="pause" />
+							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="pause" />
 							<div>
 								<select name="pause" class="w3-select w3-border w3-renc-sebg">
 									<option value="0" <?php if(!$u0->pause) echo ' selected'; ?>><?php _e('Profile visible','rencontre'); ?></option>

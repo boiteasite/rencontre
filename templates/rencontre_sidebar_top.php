@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Top
- * Last Change : Rencontre 3.8.1
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_top.php
  * Call : rencontre_widget.php => RencontreSidebarWidget::widget()
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, miniPhoto, miniPhotoWebp, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, age, agemin, agemax, pause
@@ -71,7 +71,7 @@
 
 				<div>
 					<a href="javascript:void(0)" onClick="<?php echo $onClick['sourireIn']; ?>">
-						<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']);
+						<?php if($t=rencTranslate('smiw1')) echo $t;
 						else _e('Smile','rencontre'); ?>
 						<?php if(count($u0->sourireIn)>49) { ?>
 						
@@ -87,7 +87,7 @@
 				
 				<div>
 					<a href="javascript:void(0)" onClick="<?php echo $onClick['visite']; ?>">
-						<?php if(!empty($rencCustom['loow']) && !empty($rencCustom['loow1'])) echo stripslashes($rencCustom['loow1']);
+						<?php if($t=rencTranslate('loow1')) echo $t;
 						else _e('Look','rencontre'); ?>
 						<?php if(count($u0->visite)>49) { ?>
 						
@@ -122,7 +122,7 @@
 				
 				<div>
 					<a href="javascript:void(0)" onClick="<?php echo $onClick['sourireOut']; ?>">
-						<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw2'])) echo stripslashes($rencCustom['smiw2']);
+						<?php if($t=rencTranslate('smiw2')) echo $t;
 						else _e('Who I smiled ?','rencontre'); ?>
 						
 					</a>

@@ -55,6 +55,7 @@ $w3rencDef = array(
 	'inbg' => 'light-grey',
 	'sebg' => 'dark-grey',
 	'wabg' => 'orange',
+	'wmbg' => 'blue-grey-d2',
 	'msbs' => 'pale-green',
 	'msbr' => 'white'
 	);

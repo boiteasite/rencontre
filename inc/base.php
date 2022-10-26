@@ -192,6 +192,11 @@ function f_importCsv() {
 								'meta_key'=>$wpdb->prefix.'capabilities',
 								'meta_value'=>maybe_serialize(array('subscriber'=>true))
 								)); // multisite
+							$wpdb->insert($wpdb->base_prefix.'usermeta',array(
+								'user_id'=>$id,
+								'meta_key'=>'nickname',
+								'meta_value'=>$a[0]
+								)); // mandatory
 							$isex = ((isset($a[8])&&in_array($a[8],$sex))?array_search($a[8],$sex):0);
 							$izsex = ((isset($a[12])&&in_array($a[12],$sex))?array_search($a[12],$sex):0);
 							$s1 = $wpdb->insert($wpdb->prefix.'rencontre_users',array(
@@ -1036,10 +1041,21 @@ function liste_langsupp($a4) {
 function update_rencontre_options($P) {
 	if(!current_user_can("administrator")) die;
 	if(empty($_REQUEST['tok']) || !wp_verify_nonce($_REQUEST['tok'],'rencToka')) return;
-	global $rencOpt, $rencDiv;
+	global $rencOpt, $rencDiv, $wpdb;
 	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
 	if(empty($Grenctab)) {
-		if(!empty($P['home'])) $rencOpt['home'] = rencSanit($P['home'],'url'); else unset($rencOpt['home']);
+		if(!empty($P['home'])) {
+			$rencOpt['home'] = rencSanit($P['home'],'url');
+			// Update menu if exists
+			$q = $wpdb->get_results("SELECT post_id
+				FROM ".$wpdb->prefix."postmeta 
+				WHERE
+					meta_key='_menu_item_classes'
+					and meta_value LIKE '%rencHome%'
+				");
+			if(!empty($q)) foreach($q as $r) $wpdb->update($wpdb->prefix.'postmeta', array('meta_value'=>$rencOpt['home']), array('post_id'=>$r->post_id, 'meta_key'=>'_menu_item_url'));
+		}
+		else unset($rencOpt['home']);
 		if(!empty($P['pays'])) $rencOpt['pays'] = rencSanit($P['pays'],'AZ'); else unset($rencOpt['pays']);
 		if(!empty($P['prison'])) $rencOpt['prison'] = rencSanit($P['prison'],'int'); else unset($rencOpt['prison']);
 		if(!empty($P['avatar'])) $rencOpt['avatar'] = 1; else unset($rencOpt['avatar']);
@@ -1105,7 +1121,6 @@ function update_rencontre_options($P) {
 	}
 	if(isset($rencOpt['page_id'])) unset($rencOpt['page_id']);
 	if(isset($rencOpt['for'])) unset($rencOpt['for']);
-	if(!isset($rencOpt['custom'])) $rencOpt['custom'] = '';
 	update_option('rencontre_options',$rencOpt);
 	}
 //
@@ -1251,7 +1266,6 @@ function rencMenuGeneral() {
 						</select>
 					</td>
 				</tr>
-				<?php $oldzz = __('Framework for the Facebook Like button', 'rencontre'); ?>
 				<tr valign="top">
 					<th scope="row"><label><?php _e('Do not remove WP roles', 'rencontre'); ?><strong style="color:#500"> *</strong></label></th>
 					<td><input type="checkbox" name="rol" value="1" <?php if(!empty($rencOpt['rol'])) echo 'checked'; ?> onClick="document.getElementById('blocRolu').style.display=((this.checked==true)?'table-row':'none')"></td>
@@ -1504,8 +1518,9 @@ function rencTabDis() {
 }
 function rencTabMel() {
 	if(!current_user_can("administrator")) die;
-	global $rencOpt, $rencDiv, $rencCustom;
+	global $rencOpt, $rencDiv, $rencCustom, $wpdb;;
 	$rencToka = wp_create_nonce('rencToka');
+	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
 	?>
 	
 	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel&tok=<?php echo $rencToka; ?>">
@@ -1589,6 +1604,7 @@ function rencTabMel() {
 				<td><input type="checkbox" name="mailfo" value="1" <?php if(!empty($rencOpt['mailfo'])) echo 'checked'; ?>></td>
 			</tr>
 		</table>
+		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?> <strong>WPLANG : <span style="color:#D54E21;"><?php echo $WPLANG; ?></span></strong></p>
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save','rencontre') ?>" />
 		</p>
@@ -1934,8 +1950,8 @@ function rencMenuMembres() {
 				if(empty($rencCustom['weight'])) echo '<td>'.(empty($rencCustom['weightu'])?$s->i_poids.' '.__('kg','rencontre'):($s->i_poids*2+10).' '.__('lbs','rencontre')).'</td>';
 				// Search
 				echo '<td>';
-				if(empty($rencOpt['paus']) && strpos($s->t_action, ',pause2,')!==false) echo '<div class="pause">'.__('Profile switched off','rencontre').'</div>';
-				else if(empty($rencOpt['paus']) && strpos($s->t_action, ',pause1,')!==false) echo '<div class="pause">'.__('Profile hidden','rencontre').'</div>';
+				if(empty($rencOpt['paus']) && !empty($s->t_action) && strpos($s->t_action, ',pause2,')!==false) echo '<div class="pause">'.__('Profile switched off','rencontre').'</div>';
+				else if(empty($rencOpt['paus']) && !empty($s->t_action) && strpos($s->t_action, ',pause1,')!==false) echo '<div class="pause">'.__('Profile hidden','rencontre').'</div>';
 				if(isset($rencOpt['for'][$s->i_zrelation])) echo $rencOpt['for'][$s->i_zrelation]; 
 				else if($s->i_zrelation==99) _e('multiple choice','rencontre');
 				else echo $s->i_zrelation;
@@ -3019,6 +3035,12 @@ function rencMenuCustom() {
 			<a href="admin.php?page=renccustom&renctab=wor" class="nav-tab<?php if($Grenctab=='wor') echo ' nav-tab-active'; ?>"><?php _e('Words', 'rencontre'); ?></a>
 			<a href="admin.php?page=renccustom&renctab=sea" class="nav-tab<?php if($Grenctab=='sea') echo ' nav-tab-active'; ?>"><?php _e('Search', 'rencontre'); ?></a>
 			<a href="admin.php?page=renccustom&renctab=tem" class="nav-tab<?php if($Grenctab=='tem') echo ' nav-tab-active'; ?>"><?php _e('Templates', 'rencontre'); ?></a>
+		<?php $hoCT = false;
+		if(has_filter('rencCustomTranslateP')) $hoCT = apply_filters('rencCustomTranslateP', 1);
+		if($hoCT) { ?>
+			
+			<a href="admin.php?page=renccustom&renctab=tra" class="nav-tab<?php if($Grenctab=='tra') echo ' nav-tab-active'; ?>"><?php _e('Translate', 'rencontre'); ?></a>
+		<?php } ?>
 		</h2>
 	<?php if(!empty($Grenctab)) {
 		if($Grenctab=='wor') rencTabWor();
@@ -3128,6 +3150,10 @@ function rencMenuCustom() {
 				<tr valign="top">
 					<th scope="row"><label><?php _e('No sidebar (I put it with widget)', 'rencontre'); ?></label></th>
 					<td><input type="checkbox" name="side" value="1" <?php if(isset($rencCustom['side']))echo 'checked'; ?>></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label><?php _e('Fit portraits width in home page', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="fitw" value="1" <?php if(isset($rencCustom['fitw']))echo 'checked'; ?>></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row"><label><?php _e('No ads on logged out plugin homepage', 'rencontre'); ?></label></th>
@@ -3671,12 +3697,6 @@ function rencTabTem() {
 			if($ho) echo $ho;
 			?>
 			
-			<tr valign="top">
-				<th scope="row">
-					<label><?php _e('Fit portraits width in home page', 'rencontre'); ?></label>
-				</th>
-				<td><input type="checkbox" name="fitw" value="1" <?php if(isset($rencCustom['fitw']))echo 'checked'; ?>></td>
-			</tr>
 		</table>
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save','rencontre') ?>" />
@@ -3856,6 +3876,7 @@ function f_update_custom($P) {
 		if(!empty($P['emot'])) $a['emot'] = 1; else unset($a['emot']);
 		if(!empty($P['menu'])) $a['menu'] = 1; else unset($a['menu']);
 		if(!empty($P['side'])) $a['side'] = 1; else unset($a['side']);
+		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
 		if(!empty($P['libreAd'])) $a['libreAd'] = 1; else unset($a['libreAd']);
 		if(!empty($P['librePhoto'])) $a['librePhoto'] = 1; else unset($a['librePhoto']);
 		if(!empty($P['relation'])) $a['relation'] = 1; else unset($a['relation']);
@@ -3933,7 +3954,6 @@ function f_update_custom($P) {
 		if(!empty($P['wmbg'])) $a['wmbg'] = rencSanit($P['wmbg'],'alphanum'); else unset($a['wmbg']);
 		if(!empty($P['msbs'])) $a['msbs'] = rencSanit($P['msbs'],'alphanum'); else unset($a['msbs']);
 		if(!empty($P['msbr'])) $a['msbr'] = rencSanit($P['msbr'],'alphanum'); else unset($a['msbr']);
-		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
 		if(has_filter('rencCustomColorSP')) $a = apply_filters('rencCustomColorSP', $P, $a);
 	}
 	$rencOpt['custom'] = json_encode($a);
@@ -4273,7 +4293,7 @@ function rencMetaMenuContent() {
 	//$u = 'http://'.$_SERVER['HTTP_HOST']; $u1 = explode("?",$_SERVER['REQUEST_URI']); $u .= $u1[0];
 	//$u = (!empty($rencOpt['home'])?$rencOpt['home']:$u);
 	$a = array(	// title, url, CSS class, sub-level
-		"-1"=>array(__('My homepage','rencontre'),$rencOpt['home'],'',0),
+		"-1"=>array(__('My homepage','rencontre'),$rencOpt['home'],'rencHome',0),
 		"-2"=>array(__('My card','rencontre'),'#rencnav#card#','',1),
 		"-3"=>array(__('Edit My Profile','rencontre'),'#rencnav#edit#','',1),
 		"-4"=>array(__('Messaging','rencontre'),'#rencnav#msg#','',1),

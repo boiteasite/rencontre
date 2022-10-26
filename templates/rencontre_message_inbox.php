@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Message Inbox
- * Last Change : Rencontre 3.8.1
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_inbox.php
  * Call : rencontre_widget.php => widget()
  * $u0 : user_login
@@ -17,8 +17,8 @@
 				<input type="hidden" name="page_id" value="<?php echo $rencOpt['page_id']; ?>" />
 			<?php } ?>
 			
-				<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
-				<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
+				<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
+				<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
 				<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['msg'])?$rencOpt['lbl']['msg']:'msg'); ?>" value="" />
 			</form>
 			<div id="rencMsg" class="w3-card w3-renc-blbg">

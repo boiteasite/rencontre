@@ -2,10 +2,10 @@
 Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
-Requires at least: 4.3
-Tested up to: 6.0
+Requires at least: 4.6
+Tested up to: 6.1
 Requires PHP: 5.5
-Stable tag: 3.8.1
+Stable tag: 3.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,20 +63,20 @@ The features are as follows :
 
 Rencontre is currently translated in :
 
-* English (main language)
+* English (main language) and WP Translation Team
 * French - thanks to me :-)
 * Chinese - thanks to Lucien Huang
 * Czech - thanks to Libor and WP Translation Team
 * Danish - thanks to [C-FR](http://www.C-FR.net/)
-* Dutch - thanks to Martin Zaagman
+* Dutch - thanks to Martin Zaagman and WP Translation Team
 * German (front office) - thanks to Stefan Wolfarth
 * Hungarian - thanks to FunnelXpert
-* Italian - thanks to Gaelle Dozzi
+* Italian - thanks to Gaelle Dozzi and WP Translation Team
 * Japanese - thanks to Rorylouis
-* Norvegian - thanks to Steffen Madsen
+* Norvegian - thanks to Steffen Madsen and WP Translation Team
 * Portuguese - thanks to Patricio Fernandes
 * Portuguese Brazil - thanks to César Ramos
-* Russian - thanks to Vetal Soft
+* Russian - thanks to Vetal Soft and WP Translation Team
 * Spanish - thanks to Sanjay Gandhi
 * Swahili - thanks to Kenneth Longo Mlelwa
 * Swedish - thanks to WP Translation Team
@@ -176,6 +176,7 @@ Expect some difficulties. It's a little more than plug and play. Do not wait for
 * WP GeoNames : Insert all or part of the global GeoNames database in your WordPress base - Suggest city to members.
 * Email Templates : Send beautiful emails with the WordPress Email Templates plugin.
 * Theme My Login : Creates a page to use in place of wp-login.php, using a page template from your theme.
+* Polylang : Use Rencontre in a multilingual environment.
 
 = Conditions to appear in un-logged homepage =
 * Wait few days (or reset in admin) ;
@@ -240,11 +241,13 @@ For visitors not connected, you can add a tiny quick search form :
 `<?php if(!is_user_logged_in()) Rencontre::f_rencontreSearch(0, array('nb'=>6) ); ?>`
 
 = How to use Rencontre Templates =
-** SIMPLEST METHOD **
+
+**SIMPLEST METHOD**
+
 Copy the files you have changed in a templates folder of your theme : /my_theme_folder/templates/. Don't copy unchanged files.
 Prefer a child theme if you don't want to lose these files after a theme update.
 
-** BEST METHOD **
+**BEST METHOD**
 Create a minimalist plugin just for that (and other filter/functions if you want...).  :
 
 *Plugin structure* : A folder "myPlugin" that contains "myPlugin.php" and a folder "templates".
@@ -272,18 +275,28 @@ add_filter('rencTemplateDir', 'myTplDir', 10, 1);
 [More details](https://www.boiteasite.fr/site_rencontre_wordpress.html#Developpeurs)
 
 = How to set the plugin multilingual =
-Add little flags in the header of your theme. On click, you create cookie with the right language. Then, the site changes language (back and front office) :
+
+**SIMPLEST METHOD**
+
+* Install [Polylang](https://wordpress.org/plugins/polylang/).
+* Add the Rencontre shortcode(s) on all local homepages (home, home-FR, home-ES, home-DK...).
+* If you add Rencontre items to your WP menu, it will be necessary to create a specific WP menu for each language. For languages other than 'default', you will have to fill in the URLs manually for the 'home' page.
+
+**LIGHTEST METHOD**
+
+Add text or little flags in the header of your theme. On click, you create cookie with the right language. Then, the site changes language (back and front office) :
 
 `
 <div id="lang">
-	<a href="" title="Fran&ccedil;ais" onClick="javascript:document.cookie='lang=fr_FR;path=/'">
-		<img src="<?php echo plugins_url('rencontre/images/drapeaux/France.png'); ?>" alt="Francais" />
-	</a>
-	<a href="" title="English" onClick="javascript:document.cookie='lang=en_US;path=/'">
-		<img src="<?php echo plugins_url('rencontre/images/drapeaux/Royaume-Uni.png'); ?>" alt="English" />
-	</a>
+	<a href="" title="Francais" onClick="javascript:document.cookie='lang=fr_FR;path=/'">Francais</a>
+	&nbsp;
+	<a href="" title="English" onClick="javascript:document.cookie='lang=en_US;path=/'">English</a>
 </div>
 `
+
+If you prefer an image flag, replace the content of tag A (English) with something like this :
+
+`<img src="<?php echo plugins_url('rencontre/images/drapeaux/svg/gb.png'); ?>" style="width:36px;" alt="English" />`
 
 = How to customize translation =
 The best method is to use Poedit software to edit a rencontre-xx_YY.po file and create a rencontre-xx_YY.mo file.
@@ -393,6 +406,16 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+26/10/2022 : 3.8.2
+
+* Add option to set background color for modal warning. Rencontre > Custom > Templates.
+* Fix variable mismatch detection.
+* Fix a width issue in unconnected home page images.
+* Fix menu issue when changing plugin page URL.
+* Fix a slowness issue.
+* Fix Polylang plugin issue and improves multilingual use.
+* Remove nl_NL, it_IT and ru_RU language. They have been taken into account by the WordPress community and will be loaded automatically.
 
 19/08/2022 : 3.8.1
 

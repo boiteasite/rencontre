@@ -2,7 +2,7 @@
 /*
 * Plugin : Rencontre
 * Template : Mail Regular global
-* Last Change : Rencontre 3.7
+* Last Change : Rencontre 3.8.2
 * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mail_regular_global.php
 * Call : rencontre_filter.php => f_cron_on()
 * $u : ID, user_login, d_naissance, c_pays, c_ville, t_titre, name, age, title, link
@@ -11,9 +11,7 @@
 <?php $mailSubj = $blogName; ?>
 <div style='font-family:"Helvetica Neue",Helvetica;font-size:13px;text-align:left;margin:5px 5px 5px 10px;'>
 	<p><?php _e('Hello','rencontre'); ?>&nbsp;<?php echo $u->user_login; ?>,</p>
-<?php if(!empty($rencOpt['textmail'])) { ?>
-	<p><?php echo nl2br(stripslashes($rencOpt['textmail'])); ?></p>
-<?php } ?>
+<?php if($t=rencTranslate('textmail')) echo '<p>'.nl2br($t).'</p>'; ?>
 <?php if(isset($action['visite'])) { ?>
 	<p style='font-weight:700;font-size:.9em;'><?php _e('Your profile has been visited','rencontre'); ?>&nbsp;
 		<span style='color:red;'><?php echo count($action['visite']); ?>&nbsp;<?php _e('time','rencontre'); ?></span>
@@ -32,9 +30,8 @@
 <?php } ?>
 <?php if(isset($action['sourireIn']) && count($action['sourireIn']) && !empty($smileQuery)) { $c = 0; ?>
 	<p style='font-weight:700;font-size:.9em;'>
-	<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw4'])) { ?>
-		<?php echo stripslashes($rencCustom['smiw4']); ?>&nbsp;:
-	<?php } else { ?>
+	<?php if($t=rencTranslate('smiw4')) echo $t.'&nbsp;:';
+	else { ?>
 		<?php _e('You have received a smile from','rencontre'); ?>&nbsp;:
 	<?php } ?>
 	<?php if(!empty($smileread)) { ?>

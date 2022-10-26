@@ -1,10 +1,12 @@
 <?php
 $rencOpt = get_option('rencontre_options');
+$rencWidg = 0; // Sidebar widget ON/OFF
 if(empty($rencOpt) || !is_array($rencOpt)) $rencOpt = array();
 // Filtres / Action : General
 add_filter('show_admin_bar' , 'rencAdminBar'); // Visualisation barre admin
 add_action('init', 'rencPreventAdminAccess', 0); // bloque acces au tableau de bord
 add_action('init', 'rencInLine', 1); // session
+add_action('plugins_loaded', 'rencTextdomain'); // lang
 add_action('wp_logout', 'rencOutLine'); // session
 add_filter('login_redirect', 'rencLogRedir', 10, 3); // redirection after login
 add_filter('wp_authenticate_user', 'rencUserLogin',10,2);
@@ -34,7 +36,6 @@ function f_shortcode_rencontre() { // shortcode : [rencontre]
 function f_shortcode_rencontre_login() {return Rencontre::f_login(0,1);} // shortcode : [rencontre_login]
 function f_shortcode_rencontre_loginFB() {return Rencontre::f_loginFB(1);} // shortcode : [rencontre_loginFB]
 function f_shortcode_rencontre_imreg($a) {if(!is_user_logged_in()) return Rencontre::f_rencontreImgReg($a);} // shortcode : [rencontre_imgreg title= selector='.site-header .wp-custom-header img' left=20 top=20] - left & top in purcent
-if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 'set_locale2'); function set_locale2() { return $_COOKIE['lang']; }
 // Mail
 //add_filter ('retrieve_password_message', 'retrieve_password_message2', 10, 2);
 // AJAX
@@ -157,6 +158,9 @@ function set_html_content_type(){ return 'text/html'; }
 function f_cron_on($cronBis=0) {
 	// NETTOYAGE QUOTIDIEN
 	global $wpdb, $rencOpt, $rencDiv, $rencCustom, $rencBenchmark;
+	$CURLANG = get_locale();
+	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
+	if($CURLANG!=$WPLANG) switch_to_locale($WPLANG); // Multilang : emails in ADMIN default Lang
 	if(!empty($rencBenchmark)) { $rencBenchmark .= 'F_CRON_ON: '.microtime(true).' - '.PHP_EOL; $rbm = microtime(true); }
 	clearstatcache();
 	$Loo = (!empty($rencOpt['lbl']['rencoo'])?$rencOpt['lbl']['rencoo']:'rencoo');
@@ -722,6 +726,7 @@ function f_cron_on($cronBis=0) {
 	}
 	@unlink($rencDiv['basedir'].'/portrait/cache/rencontre_cronOn.txt');
 	@unlink($rencDiv['basedir'].'/portrait/cache/rencontre_cronListeOn.txt');
+	if($CURLANG!=$WPLANG) echo '<script>document.location.reload(true);</script>'; // restore previous locale after switch_to_locale($WPLANG);
 	clearstatcache();
 	if(!empty($rencBenchmark)) wp_mail( get_option('admin_email'), 'RENCONTRE-FILTER BenchMark', $rencBenchmark );
 }
@@ -729,6 +734,9 @@ function f_cron_on($cronBis=0) {
 function f_cron_liste($d2) {
 	// Envoi Mail Horaire en respectant quota
 	global $wpdb, $rencOpt, $rencDiv, $rencCustom;
+	$CURLANG = get_locale();
+	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
+	if($CURLANG!=$WPLANG) switch_to_locale($WPLANG); // Multilang : emails in ADMIN default Lang
 	$Loo = (!empty($rencOpt['lbl']['rencoo'])?$rencOpt['lbl']['rencoo']:'rencoo');
 	$Lii = (!empty($rencOpt['lbl']['rencii'])?$rencOpt['lbl']['rencii']:'rencii');
 	$Lidf = (!empty($rencOpt['lbl']['rencidfm'])?$rencOpt['lbl']['rencidfm']:'rencidfm');
@@ -911,6 +919,7 @@ function f_cron_liste($d2) {
 	$t=@fopen($d2,'w'); @fwrite($t,max(($u2+0),$cm)); @fclose($t);
 	@unlink($rencDiv['basedir'].'/portrait/cache/rencontre_cronListeOn.txt');
 	@unlink($rencDiv['basedir'].'/portrait/cache/rencontre_cronOn.txt');
+	if($CURLANG!=$WPLANG) echo '<script>document.location.reload(true);</script>'; // restore previous locale after switch_to_locale($WPLANG);
 	clearstatcache();
 }
 //
@@ -959,6 +968,42 @@ function rencMailBox($u,$rencDrap,$oo,$ii) {
 	$o = preg_replace('/^\s+|\n|\r|\s+$/m', '', $o); // remove line break
 	return $o;
 }
+//
+function rencTextdomain() { // Hook at 'init'
+	if(!load_plugin_textdomain('rencontre', false, dirname(plugin_basename( __FILE__ )).'/lang/')) { // language
+		$a = get_locale();
+		$lo = array(
+			'en_AU'=>'en_US',
+			'en_CA'=>'en_US',
+			'en_GB'=>'en_US',
+			'en_NZ'=>'en_US',
+			'en_ZA'=>'en_US',
+			'es_AR'=>'es_ES',
+			'es_CL'=>'es_ES',
+			'es_CO'=>'es_ES',
+			'es_ES'=>'es_ES',
+			'es_GT'=>'es_ES',
+			'es_MX'=>'es_ES',
+			'es_PE'=>'es_ES',
+			'es_PR'=>'es_ES',
+			'es_VE'=>'es_ES',
+			'fr_BE'=>'fr_FR',
+			'fr_CA'=>'fr_FR',
+			'fr_FR'=>'fr_FR',
+			'nl_BE'=>'nl_NL',
+			'pt_AO'=>'pt_PT',
+			'pt_BR'=>'pt_PT',
+			'zh_CN'=>'zh_CN',
+			'zh_HK'=>'zh_CN',
+			'zh_TW'=>'zh_CN');
+		if(isset($lo[$a])) {
+			$a = $lo[$a];
+			$b = load_textdomain('rencontre',WP_LANG_DIR.'/plugins/rencontre-'.$a.'.mo');
+			if(!$b) load_textdomain('rencontre',WP_PLUGIN_DIR.'/rencontre/lang/rencontre-'.$a.'.mo');
+		}
+	}
+}
+//
 function rencSanit($f,$g) {
 	// Sanitize / Validate POST && GET datas
 	$a = '';
@@ -1780,6 +1825,35 @@ function renc_ajax_rencGeoDataCity() {
 			LIMIT 6");
 	}
 	echo json_encode($result);
+}
+function rencTranslate($f) {
+	global $rencCustom, $rencOpt;
+	$o = $ho = false;
+	// CUSTOM > WORDS
+	if($f=='newText' && isset($rencCustom['new']) && !empty($rencCustom['newText'])) $o = $rencCustom['newText'];
+	else if($f=='blockedText' && isset($rencCustom['blocked']) && !empty($rencCustom['blockedText'])) $o = $rencCustom['blockedText'];
+	else if($f=='emptyText' && isset($rencCustom['empty']) && !empty($rencCustom['emptyText'])) $o = $rencCustom['emptyText'];
+	else if($f=='jailText' && isset($rencCustom['jail']) && !empty($rencCustom['jailText'])) $o = $rencCustom['jailText'];
+	else if($f=='nophText' && isset($rencCustom['noph']) && !empty($rencCustom['nophText'])) $o = $rencCustom['nophText'];
+	else if($f=='relancText' && isset($rencCustom['relanc']) && !empty($rencCustom['relancText'])) $o = $rencCustom['relancText'];
+	else if($f=='smiw1' && isset($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) $o = $rencCustom['smiw1'];
+	else if($f=='smiw2' && isset($rencCustom['smiw']) && !empty($rencCustom['smiw2'])) $o = $rencCustom['smiw2'];
+	else if($f=='smiw3' && isset($rencCustom['smiw']) && !empty($rencCustom['smiw3'])) $o = $rencCustom['smiw3'];
+	else if($f=='smiw4' && isset($rencCustom['smiw']) && !empty($rencCustom['smiw4'])) $o = $rencCustom['smiw4'];
+	else if($f=='smiw5' && isset($rencCustom['smiw']) && !empty($rencCustom['smiw5'])) $o = $rencCustom['smiw5'];
+	else if($f=='smiw6' && isset($rencCustom['smiw']) && !empty($rencCustom['smiw6'])) $o = $rencCustom['smiw6'];
+	else if($f=='smiw7' && isset($rencCustom['smiw']) && !empty($rencCustom['smiw7'])) $o = $rencCustom['smiw7'];
+	else if($f=='loow1' && isset($rencCustom['loow']) && !empty($rencCustom['loow1'])) $o = $rencCustom['loow1'];
+	else if($f=='loow2' && isset($rencCustom['loow']) && !empty($rencCustom['loow2'])) $o = $rencCustom['loow2'];
+	// CUSTOM > FEATURES (Relation & Gender)
+	else if(isset($rencCustom['relation']) && substr($f,0,9)=='relationL' && !empty($rencCustom[$f])) $o = $rencCustom[$f];
+	else if(isset($rencCustom['sex']) && substr($f,0,4)=='sexL' && !empty($rencCustom[$f])) $o = $rencCustom[$f];
+	// GENERAL > EMAILS
+	else if($f=='textmail' && !empty($rencOpt['textmail'])) $o = $rencOpt['textmail'];
+	else if($f=='textanniv' && !empty($rencOpt['textanniv'])) $o = $rencOpt['textanniv'];
+	//
+	if(!empty($o) && has_filter('rencTranslate')) $ho = apply_filters('rencTranslate', $f);
+	return (!empty($ho)?$ho:(!empty($o)?stripslashes($o):''));
 }
 function renc_clear_cache_portrait() {
 	global $rencDiv, $rencOpt;

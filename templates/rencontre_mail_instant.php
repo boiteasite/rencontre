@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mail Instant
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mail_instant.php
  * Call : rencontre_filter.php => f_cron_liste()
  * $u : ID, user_login, user_email
@@ -26,9 +26,8 @@
 	<?php } ?>
 <?php } ?>
 <?php if(!empty($smile)) { ?>
-	<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw4'])) { ?>
-	<p><?php echo stripslashes($rencCustom['smiw4']); ?></p>
-	<?php } else { ?>
+	<?php if($t=rencTranslate('smiw4')) echo '<p>'.$t.'</p>';
+	else { ?>
 	<p><?php _e('You have received a smile from','rencontre'); ?></p>
 	<?php } ?>
 	<?php if(!empty($smilread)) { ?>

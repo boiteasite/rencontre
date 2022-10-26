@@ -43,8 +43,8 @@
 				<div class="w3-container">
 					<div class="w3-button w3-display-topright w3-large w3-renc-mebo" onClick="f_titann();">&times;</div>
 					<div class="w3-padding-48">
-					<?php if(!isset($rencCustom['empty']) || empty($rencCustom['emptyText'])) _e('Your profile is empty. To take advantage of the site and being more visible, thank you to complete it.','rencontre');
-					else echo stripslashes($rencCustom['emptyText']); ?>
+					<?php if($t=rencTranslate('emptyText')) echo $t;
+					else _e('Your profile is empty. To take advantage of the site and being more visible, thank you to complete it.','rencontre'); ?>
 					
 					</div>
 				</div>

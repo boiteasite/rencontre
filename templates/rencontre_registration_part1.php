@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 1/3 and 1/2
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part1.php
  * Call : rencontre_widget.php => widget()
  * Filter : do_action('rencontre_registration', $f, $g) - see below
@@ -26,10 +26,8 @@
 			<div class="w3-container w3-renc-txtc">
 				<div class="w3-section">
 					<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Hello','rencontre'); ?>&nbsp;<?php echo $current_user->user_login; ?>,&nbsp;<?php _e('welcome to the site','rencontre'); ?>&nbsp;<?php echo bloginfo('name'); ?></div>
-				<?php if(isset($rencCustom['new']) && !empty($rencCustom['newText'])) { ?>
-					
-					<div><?php echo stripslashes($rencCustom['newText']); ?></div>
-				<?php } else { ?>
+				<?php if($t=rencTranslate('newText')) echo '<div>'.$t.'</div>';
+				else { ?>
 					
 					<div>
 						<?php _e('You will access all the possibilities offered by the site in few minutes.','rencontre'); ?>

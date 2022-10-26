@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mail Regular
- * Last Change : Rencontre 3.0
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mail_regular.php
  * Call : rencontre_filter.php => rencMailBox()
  * $u : ID, user_login, d_naissance, c_pays, c_ville, t_titre, name, age, title, link
@@ -26,7 +26,7 @@
 		</div>
 		<div style='padding-top:4px'>
 			<a style='<?php echo $buttonCSS; ?>' onMouseOver='<?php echo $buttonHover; ?>' onMouseOut='<?php echo $buttonOut; ?>' href='<?php echo $u->link->smile; ?>' target='_blank'>
-				&nbsp;<?php if(!empty($rencCustom['smiw']) && !empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']);
+				&nbsp;<?php if($t=rencTranslate('smiw1')) echo $t;
 					else _e('Smile','rencontre'); ?>
 			</a>
 		</div>

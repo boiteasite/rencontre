@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Message Write
- * Last Change : Rencontre 3.8.1
+ * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_write.php
  * Call : rencontre_widget.php => widget()
  * $u : user_id, user_login, display_name, i_photo, miniPhoto, miniPhotoWebp
@@ -66,8 +66,8 @@
 							<input type="hidden" name="page_id" value="<?php echo $rencOpt['page_id']; ?>" />
 						<?php } ?>
 						
-							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
-							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
+							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
+							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
 							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['msg'])?$rencOpt['lbl']['msg']:'msg'); ?>" value="" />
 							<label><?php _e('Send a message to','rencontre'); ?>&nbsp;<span style="text-transform:capitalize;"><?php echo $u->display_name; ?></span></label>
 							<textarea name="contenu" class="w3-input w3-renc-inbg" rows="8"></textarea>
