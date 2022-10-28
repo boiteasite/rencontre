@@ -1604,7 +1604,7 @@ function rencTabMel() {
 				<td><input type="checkbox" name="mailfo" value="1" <?php if(!empty($rencOpt['mailfo'])) echo 'checked'; ?>></td>
 			</tr>
 		</table>
-		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?> <strong>WPLANG : <span style="color:#D54E21;"><?php echo $WPLANG; ?></span></strong></p>
+		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?><br /><strong>WPLANG : <span style="color:#D54E21;"><?php echo $WPLANG; ?></span></strong></p>
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save','rencontre') ?>" />
 		</p>
@@ -3046,6 +3046,7 @@ function rencMenuCustom() {
 		if($Grenctab=='wor') rencTabWor();
 		else if($Grenctab=='sea') rencTabSea();
 		else if($Grenctab=='tem') rencTabTem();
+		else if($Grenctab=='tra') rencTabTra();
 	?>
 		
 	</div>
@@ -3848,6 +3849,12 @@ function rencTabTem() {
 	
 	</table>
 <?php
+}
+function rencTabTra() {
+	if(!current_user_can("administrator")) die;
+	$ho = false;
+	if(has_filter('rencCustomTranslateP')) $ho = apply_filters('rencCustomTranslateP', 0);
+	if($ho) echo $ho;
 }
 //
 // *****************************************
