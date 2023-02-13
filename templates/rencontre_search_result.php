@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search Result
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.8.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search_result.php
  * Call : rencontre_widget.php => f_quickFind(), f_trouver()
  * $u : user_login, user_id, d_naissance, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_annonce, t_profil, t_action, looking, forwhat, hidephoto, online, online_ago, miniPhoto, miniPhotoWebp
@@ -81,7 +81,7 @@
 						<?php } ?>
 						<?php if($u->online) { ?>
 						
-						<div class="rencDate w3-right-align w3-opacity"><span style="text-transform:capitalize;"><?php _e('online','rencontre'); ?></span>&nbsp;:&nbsp;<?php echo $u->online_ago; ?></div>
+						<div class="rencDate w3-right-align w3-opacity"><span style="text-transform:capitalize;"><?php _e('online','rencontre'); ?></span><?php echo __(': ','rencontre').$u->online_ago; ?></div>
 						<?php } ?>
 					<?php } ?>
 

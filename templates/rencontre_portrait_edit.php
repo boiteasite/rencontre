@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.9
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
  * Call : rencontre_widget.php => widget()
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
@@ -28,7 +28,7 @@
 			<div class="w3-row w3-margin-bottom">
 				<div class="w3-col w3-mobile" style="width:<?php echo $photoWidth;?>px">
 					<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Edit My Profile','rencontre');?></div>
-					<div class="w3-card w3-renc-blbg">
+					<div class="w3-card w3-renc-blbg w3-center">
 					<?php if($u0->i_photo) { ?>
 						
 						<img id="portraitGrande" src="<?php echo $u0->photoUrl.$u0->photo->grande[0]; ?>" srcset="<?php echo $u0->photo->grandeRetina[$v]; ?>" loading="lazy" alt="" />
@@ -38,7 +38,7 @@
 					<?php } ?>
 						
 					</div>
-					<div class="w3-card w3-renc-blbg w3-margin-top" style="width:<?php echo $photoWidth;?>px">
+					<div class="w3-card w3-renc-blbg w3-margin-top w3-mobile" style="width:<?php echo $photoWidth;?>px">
 						<div class="rencBlocimg w3-center" style="font-size:0;">
 						<?php for($v=0;$v<$rencOpt['imnb'];++$v) { ?>
 							<?php if($u0->i_photo >= $u0->ID*10+$v) { ?>
@@ -157,7 +157,7 @@
 									<?php } else if($v->type==5) { ?>
 										
 										<select name="ns<?php echo $v->id; ?>" class="w3-select w3-border w3-renc-line w3-renc-sebg">
-											<option value="0">&nbsp;</option>';
+											<option value="0">&nbsp;</option>
 										<?php $j = 0; foreach($v->valeur as $valeur) { ?>
 											
 											<option value="<?php echo ($j+1); ?>"<?php if($v->active===$j) echo ' selected'; ?>><?php echo $valeur; ?></option>

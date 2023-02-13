@@ -2,7 +2,7 @@
 /*
 * Plugin : Rencontre
 * Template : Mail Regular global
-* Last Change : Rencontre 3.8.2
+* Last Change : Rencontre 3.8.3
 * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mail_regular_global.php
 * Call : rencontre_filter.php => f_cron_on()
 * $u : ID, user_login, d_naissance, c_pays, c_ville, t_titre, name, age, title, link
@@ -18,7 +18,7 @@
 	</p>
 <?php } ?>	
 <?php if(!empty($selectionQuery)) { $c = 0; ?>
-	<p style='font-weight:700;font-size:.9em;'><?php _e('Here\'s a selection of members that may interest you','rencontre'); ?>&nbsp;:</p>
+	<p style='font-weight:700;font-size:.9em;'><?php _e('Here\'s a selection of members that may interest you','rencontre'); _e(': ','rencontre'); ?></p>
 	<table><tr>
 	<?php foreach($selectionQuery as $u1) { ++$c; ?>
 		<td><?php echo rencMailBox($u1,$rencDrap,$oo,$ii); ?></td>
@@ -30,9 +30,9 @@
 <?php } ?>
 <?php if(isset($action['sourireIn']) && count($action['sourireIn']) && !empty($smileQuery)) { $c = 0; ?>
 	<p style='font-weight:700;font-size:.9em;'>
-	<?php if($t=rencTranslate('smiw4')) echo $t.'&nbsp;:';
+	<?php if($t=rencTranslate('smiw4')) echo $t.__(': ','rencontre');
 	else { ?>
-		<?php _e('You have received a smile from','rencontre'); ?>&nbsp;:
+		<?php _e('You have received a smile from','rencontre'); _e(': ','rencontre'); ?>
 	<?php } ?>
 	<?php if(!empty($smileread)) { ?>
 		<i><?php echo $smileread; ?></i>
@@ -49,7 +49,7 @@
 	</tr></table>
 <?php } ?>
 <?php if(isset($action['contactIn']) && count($action['contactIn']) && !empty($contactQuery)) { $c = 0; ?>
-	<p style='font-weight:700;font-size:.9em;'><?php _e('You have received a contact request from','rencontre'); ?>&nbsp; :
+	<p style='font-weight:700;font-size:.9em;'><?php _e('You have received a contact request from','rencontre'); _e(': ','rencontre'); ?>
 	<?php if(!empty($contread)) { ?>
 		<i><?php echo $contread; ?></i></p>
 	<?php } else { ?>

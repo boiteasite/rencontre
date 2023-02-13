@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.9
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * Call : rencontre_widget.php => widget()
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
@@ -22,7 +22,7 @@
 
 		<div class="w3-row w3-margin-bottom">
 			<div class="w3-col w3-mobile" style="width:<?php echo $photoWidth;?>px">
-				<div class="w3-card w3-renc-blbg">
+				<div class="w3-card w3-renc-blbg w3-center">
 				<?php if(!empty($u->photo->grande[0])) { ?>
 				
 					<img id="portraitGrande" alt="" src="<?php echo $u->photoUrl.$u->photo->grande[0]; ?>" srcset="<?php echo $u->photo->grandeRetina[0]; ?>" <?php echo $onClick['thumb']; ?> loading="lazy" title="<?php echo $title['thumb']; ?>" />
@@ -32,7 +32,7 @@
 				<?php } ?>
 					
 				</div>
-				<div class="w3-card w3-renc-blbg w3-margin-top" style="width:<?php echo $photoWidth;?>px">
+				<div class="w3-card w3-renc-blbg w3-margin-top w3-mobile" style="width:<?php echo $photoWidth;?>px">
 					<div class="rencBlocimg w3-center" style="font-size:0;">
 					<?php for($v=0;$v<$u->maxPhoto;++$v) { ?>
 						<?php if(($u->ID)*10+$v <= $u->i_photo) { ?>
@@ -128,7 +128,7 @@
 							<?php } ?>
 							<?php if($u->blocked->me) { ?>
 						
-								<div class="w3-text-deep-orange"><?php _e('You are blocked !','rencontre'); ?></div>
+								<div class="w3-text-deep-orange"><?php _e('You are blocked!','rencontre'); ?></div>
 							<?php } ?>
 
 							</div>
@@ -151,7 +151,7 @@
 						<?php echo $portraitAdd1; ?>
 					<?php if(!empty($u->session) && $u0->ID!=$u->ID && !$u->online) { ?>
 					
-						<div class="rencDate w3-right w3-opacity"><?php _e('online','rencontre'); ?>&nbsp;:&nbsp;<?php echo $u->session_ago; ?></div>
+						<div class="rencDate w3-right w3-opacity"><?php echo __('online','rencontre').__(': ','rencontre').$u->session_ago; ?></div>
 					<?php } ?>
 
 					</div>
@@ -241,10 +241,10 @@
 				<?php } ?>
 				<?php if(!$disable['favori']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['favoriAdd']; ?>" title="<?php _e('Add to my favorites','rencontre'); ?>"><i class="far fa-star"></i>&nbsp;<?php _e('Favorite','rencontre'); ?>&nbsp;(+)</button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['favoriAdd']; ?>" title="<?php _e('Add to my favorites','rencontre'); ?>"><i class="far fa-star"></i>&nbsp;<?php _e('Favorite','rencontre'); ?>&nbsp;&nbsp;<i class="fas fa-user-plus"></i></button> 
 				<?php } else { ?>
 
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['favoriDel']; ?>" title="<?php _e('Delete from my favorites','rencontre'); ?>"><i class="far fa-star"></i>&nbsp;<?php _e('Favorite','rencontre'); ?>&nbsp;(-)</button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebc" onClick="<?php echo $onClick['favoriDel']; ?>" title="<?php _e('Delete from my favorites','rencontre'); ?>"><i class="far fa-star"></i>&nbsp;<?php _e('Favorite','rencontre'); ?>&nbsp;&nbsp;<i class="fas fa-user-slash"></i></button> 
 				<?php } ?>
 				<?php if(!empty($buttonPlus)) echo $buttonPlus; ?>
 				

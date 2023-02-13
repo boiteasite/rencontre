@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Account Delete
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.8.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account_delete.php
  * Call : rencontre_widget.php => f_compte()
 */
@@ -19,7 +19,7 @@
 							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
 							<div class="w3-border w3-renc-line w3-padding">
 								<div><?php _e('This action will result in the complete deletion of your account and everything about you from our server. We do not keep historical accounts.','rencontre');?></div>
-								<div style="font-weight:bold"><?php _e('Please note that this action is irreversible !','rencontre');?></div>
+								<div style="font-weight:bold"><?php _e('Please note that this action is irreversible!','rencontre');?></div>
 							</div>
 							<div class="w3-section w3-right-align">
 								<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['delete']; ?>"><?php _e('Delete Account','rencontre');?></button>

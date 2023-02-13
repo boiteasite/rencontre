@@ -5,7 +5,7 @@ Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social,
 Requires at least: 4.6
 Tested up to: 6.1
 Requires PHP: 5.5
-Stable tag: 3.8.2
+Stable tag: 3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -299,8 +299,9 @@ If you prefer an image flag, replace the content of tag A (English) with somethi
 `<img src="<?php echo plugins_url('rencontre/images/drapeaux/svg/gb.png'); ?>" style="width:36px;" alt="English" />`
 
 = How to customize translation =
-The best method is to use Poedit software to edit a rencontre-xx_YY.po file and create a rencontre-xx_YY.mo file.
-Then, put your po/mo files in wp-content/languages/plugins/ with the same name as the plugin (rencontre-xx_YY.mo).
+The best method is to use 'Loco Translate' plugin to edit a rencontre-xx_YY.po file and create a rencontre-xx_YY.mo file.
+Then, copy the po/mo created files from wp-content/plugins/rencontre/lang to wp-content/languages/plugins/.
+You can use POEDIT if you prefer.
 You can also email us your best version so that we insert it in the plugin.
 You can turn off the automatic download of translations in wp-content/languages/plugins/ by adding this filter :
 
@@ -406,6 +407,19 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+12/02/2023 : 3.9
+
+* The maintenance period and the email sending period are done in the background with Ajax. No more slowdown for the visitor.
+* Fix 'home' var warning.
+
+16/12/2022 : 3.8.3
+
+* Fix typo mismatch with ':', '?' and '!' in some language.
+* Add badge in the sidebar with number of message in box when menu disabled.
+* Add new custom color for actived button (favorite for example).
+* Change 'Favorite' button style and background color.
+* ADMIN ref lang is WPLANG.
 
 26/10/2022 : 3.8.2
 

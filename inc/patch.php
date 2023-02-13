@@ -79,6 +79,14 @@ if($tpl=rencTpl('rencontre_portrait_add_photo.php')) {
 	file_put_contents($tpl, $a);
 }
 //
+// V3.9 - Cron update
+//
+if(file_exists($upl['basedir'].'/portrait/cache/cron_liste/')) rename($upl['basedir'].'/portrait/cache/cron_liste/', $upl['basedir'].'/portrait/cache/cron_list/');
+if(file_exists($upl['basedir'].'/portrait/cache/rencontre_cronListe.txt')) unlink($upl['basedir'].'/portrait/cache/rencontre_cronListe.txt');
+if(file_exists($upl['basedir'].'/portrait/cache/rencontre_cronListeOn.txt')) unlink($upl['basedir'].'/portrait/cache/rencontre_cronListeOn.txt');
+if(file_exists($upl['basedir'].'/portrait/cache/rencontre_cronBis.txt')) unlink($upl['basedir'].'/portrait/cache/rencontre_cronBis.txt');
+file_put_contents($upl['basedir'].'/portrait/cache/rencontre_cron.txt','');
+//
 // *******************************************************************************************************************
 
 //

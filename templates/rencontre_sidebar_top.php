@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Top
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.8.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_top.php
  * Call : rencontre_widget.php => RencontreSidebarWidget::widget()
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, miniPhoto, miniPhotoWebp, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, age, agemin, agemax, pause
@@ -56,6 +56,10 @@
 			
 			<div class="w3-panel w3-renc-wabg w3-center"><?php echo ($u0->pause==1?__('Profile hidden','rencontre'):__('Profile switched off','rencontre')); ?></div>
 			<?php } ?>
+			<?php if(!empty($rencCustom['menu']) && $nbmsg=RencontreWidget::f_count_inbox($current_user->user_login)!=0) { ?>
+			<div class="w3-section"><span class="w3-badge w3-renc-mebc" style="margin-right:4px"><?php echo $nbmsg; ?></span><?php _e(($nbmsg>1?'messages':'message'),'rencontre'); ?></div>
+
+			<?php } ?>
 			
 			<div class="myAction w3-medium w3-border-bottom w3-renc-line">
 				<div class="firstMaj">
@@ -71,15 +75,8 @@
 
 				<div>
 					<a href="javascript:void(0)" onClick="<?php echo $onClick['sourireIn']; ?>">
-						<?php if($t=rencTranslate('smiw1')) echo $t;
-						else _e('Smile','rencontre'); ?>
-						<?php if(count($u0->sourireIn)>49) { ?>
-						
-						:&nbsp;>50
-						<?php } else { ?>
-						
-						:&nbsp;<?php echo count($u0->sourireIn); ?>
-						<?php } ?>
+						<?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); _e(': ','rencontre'); ?>
+						<?php if(count($u0->sourireIn)>49) echo '>50'; else echo count($u0->sourireIn); ?>
 						
 					</a>
 				</div>
@@ -87,15 +84,8 @@
 				
 				<div>
 					<a href="javascript:void(0)" onClick="<?php echo $onClick['visite']; ?>">
-						<?php if($t=rencTranslate('loow1')) echo $t;
-						else _e('Look','rencontre'); ?>
-						<?php if(count($u0->visite)>49) { ?>
-						
-						:&nbsp;>50
-						<?php } else { ?>
-						
-						:&nbsp;<?php echo count($u0->visite); ?>
-						<?php } ?>
+						<?php if($t=rencTranslate('loow1')) echo $t; else _e('Look','rencontre'); _e(': ','rencontre'); ?>
+						<?php if(count($u0->visite)>49) echo '>50'; else echo count($u0->visite); ?>
 						
 					</a>
 				</div>
@@ -103,14 +93,8 @@
 				
 				<div>
 					<a href="javascript:void(0)" onClick="<?php echo $onClick['contactIn']; ?>">
-						<?php _e('Contact requests','rencontre'); ?>
-						<?php if(count($u0->contactIn)>49) { ?>
-						
-						:&nbsp;>50
-						<?php } else { ?>
-						
-						:&nbsp;<?php echo count($u0->contactIn); ?>
-						<?php } ?>
+						<?php _e('Contact requests','rencontre'); _e(': ','rencontre'); ?>
+						<?php if(count($u0->contactIn)>49) echo '>50'; else echo count($u0->contactIn); ?>
 						
 					</a>
 				</div>
@@ -122,8 +106,7 @@
 				
 				<div>
 					<a href="javascript:void(0)" onClick="<?php echo $onClick['sourireOut']; ?>">
-						<?php if($t=rencTranslate('smiw2')) echo $t;
-						else _e('Who I smiled ?','rencontre'); ?>
+						<?php if($t=rencTranslate('smiw2')) echo $t; else _e('Who I smiled?','rencontre'); ?>
 						
 					</a>
 				</div>
@@ -131,12 +114,12 @@
 				<?php if(empty($rencCustom['creq'])) { ?>
 
 				<div>
-					<a href="javascript:void(0)" onClick="<?php echo $onClick['contactOut']; ?>"><?php _e('Who I asked for a contact ?','rencontre');?></a>
+					<a href="javascript:void(0)" onClick="<?php echo $onClick['contactOut']; ?>"><?php _e('Who I asked for a contact?','rencontre');?></a>
 				</div>
 				<?php } ?>
 
 				<div>
-					<a href="javascript:void(0)" onClick="<?php echo $onClick['bloque']; ?>"><?php _e('Who I\'ve blocked ?','rencontre');?></a>
+					<a href="javascript:void(0)" onClick="<?php echo $onClick['bloque']; ?>"><?php _e('Who I\'ve blocked?','rencontre');?></a>
 				</div>
 			</div>
 			

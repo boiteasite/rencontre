@@ -142,7 +142,7 @@ function f_importCsv() {
 			$t = fopen($d,'r');
 			if($t)while(($a=fgetcsv($t,3000,"\t"))!==false) ++$c;
 			fclose($t);
-			if($c) echo ' : '.$c.'&nbsp;'.__('lines','rencontre');
+			if($c) echo __(': ','rencontre').$c.'&nbsp;'.__('lines','rencontre');
 		break;
 		// Next opening : read
 		case 2:
@@ -362,7 +362,7 @@ function rencCleanupPhotos() {
 			}
 		}
 	}
-	return __('Done!','rencontre').'&nbsp;:&nbsp;'.$c.'&nbsp;'.__('photo','rencontre');
+	return __('Done!','rencontre').__(': ','rencontre').$c.'&nbsp;'.__('photo','rencontre');
 }
 // *****************************************
 // **** ONGLET PROFIL
@@ -1153,7 +1153,7 @@ function rencMenuGeneral() {
 		</form>
 		<p>
 			<a href='javascript:void(0)' class='button-primary' onClick='f_synchronise();'><?php _e('Update member profile', 'rencontre'); ?></a>
-			&nbsp;:&nbsp;<span style="color:red;font-weight:700;"><?php _e('You have made changes. Remember to update when you\'re done.', 'rencontre'); ?></span>
+			<?php _e(': ','rencontre'); ?><span style="color:red;font-weight:700;"><?php _e('You have made changes. Remember to update when you\'re done.', 'rencontre'); ?></span>
 		</p>
 		<?php } ?>
 		
@@ -1198,7 +1198,7 @@ function rencMenuGeneral() {
 							<?php if(empty($rencOpt['home'])) echo '<option value="">-</option>'; ?>
 							<?php $pages = get_pages(); $tmp = '';
 							foreach($pages as $page) {
-								$tmp .= '<option value="'.get_page_link($page->ID).'" '.($rencOpt['home']==get_page_link($page->ID)?'selected':'').'>'.$page->post_title.'</option>';
+								$tmp .= '<option value="'.get_page_link($page->ID).'" '.((isset($rencOpt['home'])&&$rencOpt['home']==get_page_link($page->ID))?'selected':'').'>'.$page->post_title.'</option>';
 							}
 							echo $tmp; ?>
 
@@ -1277,8 +1277,8 @@ function rencMenuGeneral() {
 				<tr>
 					<td colspan = "2">
 						<strong style="color:#500">* </strong>
-						<em> - <?php echo __('Unchecked : WP roles will be destroyed. Users who are not in Rencontre will be destroyed. This is the best mode for a big and exclusive dating site.', 'rencontre'); ?></em><br />
-						<em> - <?php echo __('Checked : Better choice to test this plugin or to use with other one (forum...). Over time, the site will be slower with numerous abandoned account.', 'rencontre'); ?></em>
+						<em> - <?php echo __('Unchecked: WP roles will be destroyed. Users who are not in Rencontre will be destroyed. This is the best mode for a big and exclusive dating site.', 'rencontre'); ?></em><br />
+						<em> - <?php echo __('Checked: Better choice to test this plugin or to use with other one (forum...). Over time, the site will be slower with numerous abandoned account.', 'rencontre'); ?></em>
 					</td>
 				</tr>
 				<tr valign="top">
@@ -1521,6 +1521,7 @@ function rencTabMel() {
 	global $rencOpt, $rencDiv, $rencCustom, $wpdb;;
 	$rencToka = wp_create_nonce('rencToka');
 	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
+	$mph = get_option('rencontre_mailPerHour');
 	?>
 	
 	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel&tok=<?php echo $rencToka; ?>">
@@ -1538,10 +1539,8 @@ function rencTabMel() {
 						<option value="2" <?php if(isset($rencOpt['mailmois']) && $rencOpt['mailmois']==2) echo 'selected'; ?>><?php _e('Fortnightly', 'rencontre'); ?></option>
 						<option value="3" <?php if(isset($rencOpt['mailmois']) && $rencOpt['mailmois']==3) echo 'selected'; ?>><?php _e('Weekly', 'rencontre'); ?></option>
 					</select>
-					<?php 
-					$d2 = $rencDiv['basedir'].'/portrait/cache/rencontre_cron.txt';
-					if(file_exists($d2)) echo "<p style='color:#D54E21;'>".__('Up this week', 'rencontre')."&nbsp;:&nbsp;<span style='color:#111;font-weight:700;'>".file_get_contents($d2)."</span>&nbsp;".__('mail/hour', 'rencontre')."<br />(".__('sent during maintenance', 'rencontre').")</p>";
-					?>
+					<?php if(isset($mph[0])) echo '<p style="color:#D54E21;">'.__('Up this week', 'rencontre').__(': ','rencontre').'<span style="color:#111;font-weight:700;">'.$mph[0].'</span>&nbsp;'.__('mail/hour', 'rencontre').'<br />('.__('sent during maintenance', 'rencontre').')</p>'; ?>
+
 				</td>
 			</tr>
 			<tr valign="top">
@@ -1588,11 +1587,8 @@ function rencTabMel() {
 							else $v+=99999;
 						} ?>
 					</select>
-					
-					<?php 
-					$d2 = $rencDiv['basedir'].'/portrait/cache/rencontre_cronListe.txt';
-					if(file_exists($d2)) echo "<p style='color:#D54E21;'>".__('Up this week', 'rencontre')."&nbsp;:&nbsp;<span style='color:#111;font-weight:700;'>".file_get_contents($d2)."</span>&nbsp;".__('mail/hour', 'rencontre')."<br />(".__('except during maintenance', 'rencontre').")</p>";
-					?>
+					<?php if(isset($mph[1])) echo '<p style="color:#D54E21;">'.__('Up this week', 'rencontre').__(': ','rencontre').'<span style="color:#111;font-weight:700;">'.$mph[1].'</span>&nbsp;'.__('mail/hour', 'rencontre').'<br />('.__('except during maintenance', 'rencontre').')</p>'; ?>
+
 				</td>
 			</tr>
 			<tr valign="top">
@@ -1604,7 +1600,7 @@ function rencTabMel() {
 				<td><input type="checkbox" name="mailfo" value="1" <?php if(!empty($rencOpt['mailfo'])) echo 'checked'; ?>></td>
 			</tr>
 		</table>
-		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?><br /><strong>WPLANG : <span style="color:#D54E21;"><?php echo $WPLANG; ?></span></strong></p>
+		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?><br /><strong>WPLANG<?php _e(': ','rencontre'); ?><span style="color:#D54E21;"><?php echo $WPLANG; ?></span></strong></p>
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save','rencontre') ?>" />
 		</p>
@@ -1664,7 +1660,7 @@ function rencTabCsv() {
 	<form name='rencCsv' action="<?php echo plugins_url('rencontre/inc/upload_csv.php'); ?>" method="post" enctype="multipart/form-data" target="uplFrame" onSubmit="startUpload();">
 		<input type="hidden" name="d" value="<?php echo $rencDiv['basedir'].'/tmp/'; ?>" />
 		<div>
-			<label><?php _e('CSV or ZIP File','rencontre') ?> : <label>
+			<label><?php _e('CSV or ZIP File','rencontre'); _e(': ','rencontre') ?><label>
 			<input id="fileCsv" name="fileCsv" type="file" />
 			<img id="loadingCsv" src="<?php echo plugins_url('rencontre/images/loading.gif'); ?>" style="margin:0 0 -10px 20px;display:none;" />
 		</div>
@@ -1677,7 +1673,7 @@ function rencTabCsv() {
 			<span id="impCsv3" style="margin:0 10px;display:none;"><?php _e('Import data','rencontre');?>...</span>
 			<span id="impCsv4" style="display:none;"><?php _e('completed','rencontre');?></span>
 			<br /><span style="padding-left:130px">&nbsp;</span>
-			<span id="impCsv5" style="margin:0 10px;display:none;"><?php _e('Photos Import','rencontre');?> : </span>
+			<span id="impCsv5" style="margin:0 10px;display:none;"><?php _e('Photos Import','rencontre'); _e(': ','rencontre')?></span>
 			<span id="impCsv6" style="margin-left:-5px;"></span>
 			<span id="impCsv7" style="margin:0 10px;display:none;"><?php _e('Import completed','rencontre');?></span>
 		</div>
@@ -1736,9 +1732,9 @@ function rencMenuMembres() {
 				while(($file = readdir($dh))!==false) if($file!='.' && $file!='..' && filemtime($d.$file)>time()-180) ++$nl;
 				closedir($dh);
 			}
-			echo '<p style="color:#D54E21;">'.__('Number of registered members','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$nm.'</span></p>';
-			echo '<p style="color:#D54E21;">'.__('Number of members with profile and photo','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$np.'</span></p>';
-			echo '<p style="color:#D54E21;">'.__('Online now','rencontre').'&nbsp;:&nbsp;<span style="color:#111;font-weight:700;">'.$nl.'</span>';
+			echo '<p style="color:#D54E21;">'.__('Number of registered members','rencontre').__(': ','rencontre').'<span style="color:#111;font-weight:700;">'.$nm.'</span></p>';
+			echo '<p style="color:#D54E21;">'.__('Number of members with profile and photo','rencontre').__(': ','rencontre').'<span style="color:#111;font-weight:700;">'.$np.'</span></p>';
+			echo '<p style="color:#D54E21;">'.__('Online now','rencontre').__(': ','rencontre').'<span style="color:#111;font-weight:700;">'.$nl.'</span>';
 			$ng = false; if(has_filter('rencNbGeoP')) $ng = apply_filters('rencNbGeoP', $nm); if($ng) echo $ng;
 			echo '</p>';
 			echo "\r\n".'<script src="'.plugins_url('rencontre/js/jquery.flot.min.js').'"></script>'."\r\n";
@@ -1769,7 +1765,7 @@ function rencMenuMembres() {
 			} ?>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" />
 		<form name="rencPseu" method="post" action="">
-			<label><?php _e('Alias or email or ID', 'rencontre'); ?> : </label>
+			<label><?php _e('Alias or email or ID', 'rencontre'); _e(': ','rencontre')?></label>
 			<input type="text" name="pseu" />
 			<input type="submit" class="button-primary" value="<?php _e('Find', 'rencontre'); ?>" />
 			<input type="hidden" name="tok" value="<?php echo $rencToka; ?>" />
@@ -1870,7 +1866,7 @@ function rencMenuMembres() {
 						echo '<div class="w3-container"><form name="popModer"><div class="w3-section">';
 						echo '<input type="hidden" name="tok" value="'.$rencToka.'" />';
 						foreach($moderTyp as $k=>$v) {
-							echo '<input type="radio" name="modertyp" class="w3-input" value="'.$k.'" /> : <label>'.$v.'</label><br />';
+							echo '<input type="radio" name="modertyp" class="w3-input" value="'.$k.'" />'.__(': ','rencontre').'<label>'.$v.'</label><br />';
 						}
 						echo '</div><div class="w3-section w3-right-align"><input type="button" class="button-primary" onClick="document.forms[\'listUser\'].elements[\'moder\'].value=document.forms[\'popModer\'].elements[\'modertyp\'].value+1;document.forms[\'listUser\'].submit();" value="'.__('Send','rencontre').'" /></div></form></div>';
 					} ?>
@@ -2331,7 +2327,10 @@ function rencMenuMembres() {
 							if($ho) echo '<div class="compte">'.$ho.'</div>';
 						?>
 						
+							
+		<div class="button" style="margin:30px 20px"><span onClick="f_sauv_profil(<?php echo $id; ?>)"><?php _e('Save profile','rencontre');?></span></div>
 							<div style="clear:both;"></div>
+
 						</div>
 					</div>
 					<div class="pleineBox portraitProfil">
@@ -2374,7 +2373,7 @@ function rencMenuMembres() {
 									if(isset($out[$r])) $c3 = " ".implode(" ",$out[$r])." ";
 									else $c3 = "";
 									foreach($list as $r2) {
-										$out2 .= '<label>'.$r2.' : <input type="checkbox" name="check'.$r.'[]" value="'.$c1.'" '.((strstr($c3, " ".$c1." ")!=false)?'checked':'').' /></label>';
+										$out2 .= '<label>'.$r2.__(': ','rencontre').'<input type="checkbox" name="check'.$r.'[]" value="'.$c1.'" '.((strstr($c3, " ".$c1." ")!=false)?'checked':'').' /></label>';
 										++$c1;
 									}
 								break;
@@ -2500,7 +2499,9 @@ function rencMenuProfil() {
 	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'int'):'');
 	$Pa4 = (isset($_POST['a4'])?rencSanit($_POST['a4'],'words'):'');
 	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
-	$loc = substr(get_locale(),0,2); $loc2 = $loc."&";
+	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
+	$loc = ($WPLANG?substr($WPLANG,0,2):substr(get_locale(),0,2));
+	$loc2 = $loc."&";
 	$rencToka = wp_create_nonce('rencToka');
 	$q2 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$loc."' LIMIT 1");
 	if(!$q2) {
@@ -2572,14 +2573,14 @@ function rencMenuProfil() {
 	if(file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) { ?>
 	<p>
 		<a href='javascript:void(0)' class='button-primary' onClick='f_synchronise();'><?php _e('Update member profile', 'rencontre'); ?></a>
-		&nbsp;:&nbsp;<span style="color:red;font-weight:700;"><?php _e('You have made changes. Remember to update when you\'re done.', 'rencontre'); ?></span>
+		<?php _e(': ','rencontre'); ?><span style="color:red;font-weight:700;"><?php _e('You have made changes. Remember to update when you\'re done.', 'rencontre'); ?></span>
 	</p><?php } ?>
 	
 	<p><?php _e('You can create, rename and delete items from the profile.', 'rencontre'); ?></p>
 	<p>
 		<?php _e('Warning, this is not without consequences. The changes will be applied to the member profiles that can offend. Caution !', 'rencontre'); ?>&nbsp;
 	</p>
-	<h3><?php _e('Ref language', 'rencontre'); echo ' : <span style="color:#700;">'.$loc.'</span> --- ' . __('Other', 'rencontre').'&nbsp;:&nbsp;';
+	<h3><?php _e('Ref language', 'rencontre'); echo ' (WPLANG)'.__(': ','rencontre').'<span style="color:#700;">'.$loc.'</span> &nbsp;-&nbsp; ' . __('Other', 'rencontre').__(': ','rencontre');
 	$ls = '';
 	foreach($q2 as $r2) if($r2->c_lang!=$loc) {
 		$ls .= '<option value="'.$r2->c_lang.'">'.$r2->c_lang.'</option>';
@@ -2653,7 +2654,7 @@ function rencMenuProfil() {
 			$a4 = $r->c_lang . '=' . $r->c_categ . '&';
 			$out = '<div style="margin:-15px 0 10px 37px;color:#777;">';
 			foreach($q1 as $r1) {
-				$out .= $r1->c_lang.' : '.$r1->c_categ. ' -- ';
+				$out .= $r1->c_lang.__(': ','rencontre').$r1->c_categ. ' -- ';
 				$a4 .= $r1->c_lang . '=' . $r1->c_categ . '&';
 			}
 			echo '<div class="categ">'."\r\n";
@@ -2671,7 +2672,7 @@ function rencMenuProfil() {
 		$out = '<div id="rencLabelHide'.$r->id.'" style="display:none;">';
 		$a4 = $r->c_lang . '=' . $r->c_label . '&';
 		foreach($q1 as $r1) {
-			$out .= '<span style="margin:0 0 0 37px;color:#777;" class="rencLabel'.$r1->c_lang.'">'.$r1->c_lang.' : '.$r1->c_label. '</span><br />';
+			$out .= '<span style="margin:0 0 0 37px;color:#777;" class="rencLabel'.$r1->c_lang.'">'.$r1->c_lang.__(': ','rencontre').$r1->c_label. '</span><br />';
 			$a4 .= $r1->c_lang . '=' . $r1->c_label . '&';
 		}
 		$out .= '</div>';
@@ -2708,7 +2709,7 @@ function rencMenuProfil() {
 				$t = '';
 				for($v=0; $v<count($s1); ++$v) {
 					$a4 .= $s2[$v] . '=' . str_replace('&','|',$s1[$v][$c]) . '&';
-					$t .= ($v!=0?'<br />':''). '<span style="margin:0 0 0 37px;color:#777;" class="rencValeur'.$s2[$v].'">'.$s2[$v].' : '.$s1[$v][$c]. '</span>';
+					$t .= ($v!=0?'<br />':''). '<span style="margin:0 0 0 37px;color:#777;" class="rencValeur'.$s2[$v].'">'.$s2[$v].__(': ','rencontre').$s1[$v][$c]. '</span>';
 				}
 				echo '<div class="valeur">';
 				echo '<br />';
@@ -2736,7 +2737,7 @@ function rencMenuProfil() {
 				$t = '';
 				for($v=0; $v<count($s1); ++$v) {
 					$a4 .= $s2[$v] . '=' . str_replace('&','|',$s1[$v][$c]) . '&';
-					$t .= ($v!=0?'<br />':''). '<span style="margin:0 0 0 37px;color:#777;" class="rencValeur'.$s2[$v].'">'.$s2[$v].' : '.$s1[$v][$c]. '</span>';
+					$t .= ($v!=0?'<br />':''). '<span style="margin:0 0 0 37px;color:#777;" class="rencValeur'.$s2[$v].'">'.$s2[$v].__(': ','rencontre').$s1[$v][$c]. '</span>';
 				}
 				echo '<div class="valeur">'."\r\n";
 				echo '<br />';
@@ -2760,8 +2761,8 @@ function rencMenuProfil() {
 			echo '<br />';
 			echo '<a href="javascript:void(0)" class="rencEdit" onClick="f_edit(this,'.$r->id.',\'t_valeur\',\''.urlencode($s[0].'&'.$s[1].'&'.$s[2].'&'.$s[3].'&').'\',\'ns\',0);" title="'.__('Change','rencontre').'"></a>';
 			echo '<span>['.$s[0].' ; '.$s[1].']</span><br />';
-			echo '<q style="margin:0 0 0 18px;color:blue;">'.__('Step','rencontre').'</q><span> : '.$s[2].'</span><br />';
-			echo '<q style="margin:0 0 0 18px;color:blue;">'.__('Unit','rencontre').'</q><span> : '.$s[3].'</span>';
+			echo '<q style="margin:0 0 0 18px;color:blue;">'.__('Step','rencontre').'</q><span>'.__(': ','rencontre').$s[2].'</span><br />';
+			echo '<q style="margin:0 0 0 18px;color:blue;">'.__('Unit','rencontre').'</q><span>'.__(': ','rencontre').$s[3].'</span>';
 			echo '</div><!-- .valeur -->'."\r\n";
 			echo '</div></div><!-- .rencValeur -->'."\r\n";
 			break;
@@ -2820,7 +2821,9 @@ function rencMenuPays() {
 		else if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = 'svg/'.strtolower($r->c_liste_iso).'.svg'; // SVG
 		else if($r->c_liste_categ=='p')$rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
 	}
-	$loc = substr(get_locale(),0,2); $loc2 = $loc."&";
+	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
+	$loc = ($WPLANG?substr($WPLANG,0,2):substr(get_locale(),0,2));
+	$loc2 = $loc."&";
 	$q2 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".$loc."' LIMIT 1");
 	if(!$q2) {
 		$loc = 'en'; $loc2 = 'en&';
@@ -2887,7 +2890,7 @@ function rencMenuPays() {
 	} ?>
 	
 	<p><?php _e('You can create, rename and delete countries and regions.', 'rencontre'); ?></p>
-	<h3><?php _e('Ref language', 'rencontre'); echo ' : <span style="color:#700;">'.$loc.'</span> --- ' . __('Other', 'rencontre').'&nbsp;:&nbsp;';
+	<h3><?php _e('Ref language', 'rencontre'); echo ' (WPLANG)'.__(': ','rencontre').'<span style="color:#700;">'.$loc.'</span> &nbsp;-&nbsp; ' . __('Other', 'rencontre').__(': ','rencontre');
 	$ls = '';
 	foreach($q2 as $r2) {
 		if($r2->c_liste_lang!=$loc) {
@@ -2927,7 +2930,7 @@ function rencMenuPays() {
 		$out1 = ''; $a4 = '';
 		foreach($q1 as $r1) {
 			if($r1->c_liste_lang==$loc) $out1 = $r1->c_liste_valeur;
-			else $out .= '<span style="margin:0 0 0 37px;color:#777;">'.$r1->c_liste_lang.' : '.$r1->c_liste_valeur. '</span><br />';
+			else $out .= '<span style="margin:0 0 0 37px;color:#777;">'.$r1->c_liste_lang.__(': ','rencontre').$r1->c_liste_valeur. '</span><br />';
 			$a4 .= $r1->c_liste_lang . '=' . $r1->c_liste_valeur . '&';
 		}
 		$out .= '</div>';
@@ -2964,7 +2967,7 @@ function rencTabCle() {
 	<form method="post" name="customForm" action="admin.php?page=renccountry&renctab=cle&tok=<?php echo $rencToka; ?>">
 		<input type="hidden" name="a1" value="cleaner" />
 		<input type="hidden" name="a2" value="" />
-		<label><?php _e('Missing regions', 'rencontre'); ?> :</label><br />
+		<label><?php _e('Missing regions', 'rencontre'); _e(': ','rencontre') ?></label><br />
 		<select name="misreg">
 	<?php
 	$q = $wpdb->get_results("SELECT DISTINCT R.c_region AS re, R.c_pays AS pa
@@ -2984,7 +2987,7 @@ function rencTabCle() {
 	?>
 	
 		</select><br /><br />
-		<label><?php _e('Existing regions', 'rencontre'); ?> :</label><br />
+		<label><?php _e('Existing regions', 'rencontre'); _e(': ','rencontre')?></label><br />
 		<select name="curreg">
 	<?php
 	$q1 = $wpdb->get_results("SELECT c_liste_valeur AS re, c_liste_iso AS pa
@@ -3324,8 +3327,8 @@ function rencTabWor() {
 						<input type="text" class="smiwF" id="smiw1" name="smiw1" placeholder="<?php echo __('Smile','rencontre'); ?>" value="<?php if(!empty($rencCustom['smiw1'])) echo stripslashes($rencCustom['smiw1']); ?>" <?php if(!isset($rencCustom['smiw'])) echo 'style="display:none"'; ?> />
 					</p>
 					<p>
-						<span class="smiwT" style="font-size:.8em;<?php if(isset($rencCustom['smiw'])) echo 'display:none'; ?>"><?php echo __('Who I smiled ?','rencontre'); ?></span>
-						<input type="text" class="smiwF" id="smiw2" name="smiw2" placeholder="<?php echo __('Who I smiled ?','rencontre'); ?>" value="<?php if(!empty($rencCustom['smiw2'])) echo stripslashes($rencCustom['smiw2']); ?>" <?php if(!isset($rencCustom['smiw'])) echo 'style="display:none"'; ?> />
+						<span class="smiwT" style="font-size:.8em;<?php if(isset($rencCustom['smiw'])) echo 'display:none'; ?>"><?php echo __('Who I smiled?','rencontre'); ?></span>
+						<input type="text" class="smiwF" id="smiw2" name="smiw2" placeholder="<?php echo __('Who I smiled?','rencontre'); ?>" value="<?php if(!empty($rencCustom['smiw2'])) echo stripslashes($rencCustom['smiw2']); ?>" <?php if(!isset($rencCustom['smiw'])) echo 'style="display:none"'; ?> />
 					</p>
 					<p>
 						<span class="smiwT" style="font-size:.8em;<?php if(isset($rencCustom['smiw'])) echo 'display:none'; ?>"><?php echo __('I smiled at','rencontre'); ?></span>
@@ -3412,10 +3415,10 @@ function rencTabSea() {
 							");
 						if($p3) foreach($p3 as $r) {
 							if($r->i_type==6) {
-								echo '<option value="da'.$r->id.'" '.((isset($rencCustom['profilQS1']) && $rencCustom['profilQS1']=='da'.$r->id)?' selected':'').'>'.$r->c_categ.' : '.$r->c_label.' (> Date)</option>';
-								echo '<option value="db'.$r->id.'" '.((isset($rencCustom['profilQS1']) && $rencCustom['profilQS1']=='db'.$r->id)?' selected':'').'>'.$r->c_categ.' : '.$r->c_label.' (< Date)</option>';
+								echo '<option value="da'.$r->id.'" '.((isset($rencCustom['profilQS1']) && $rencCustom['profilQS1']=='da'.$r->id)?' selected':'').'>'.$r->c_categ.__(': ','rencontre').$r->c_label.' (> Date)</option>';
+								echo '<option value="db'.$r->id.'" '.((isset($rencCustom['profilQS1']) && $rencCustom['profilQS1']=='db'.$r->id)?' selected':'').'>'.$r->c_categ.__(': ','rencontre').$r->c_label.' (< Date)</option>';
 							}
-							else echo '<option value="'.$r->id.'" '.((isset($rencCustom['profilQS1']) && $rencCustom['profilQS1']==$r->id)?' selected':'').'>'.$r->c_categ.' : '.$r->c_label.' ('.($r->i_type==3?'select':($r->i_type==4?'check':'num select')).')</option>';
+							else echo '<option value="'.$r->id.'" '.((isset($rencCustom['profilQS1']) && $rencCustom['profilQS1']==$r->id)?' selected':'').'>'.$r->c_categ.__(': ','rencontre').$r->c_label.' ('.($r->i_type==3?'select':($r->i_type==4?'check':'num select')).')</option>';
 						}
 						?>
 					</select>
@@ -3428,10 +3431,10 @@ function rencTabSea() {
 						<?php echo '<option value="" '.((isset($rencCustom['profilQS2']) && $rencCustom['profilQS2']=='')?'selected':'').'>-&nbsp;'.__('No', 'rencontre').'&nbsp;-</option>';
 						if($p3) foreach($p3 as $r) {
 							if($r->i_type==6) {
-								echo '<option value="da'.$r->id.'" '.((isset($rencCustom['profilQS2']) && $rencCustom['profilQS2']=='da'.$r->id)?' selected':'').'>'.$r->c_categ.' : '.$r->c_label.' (> Date)</option>';
-								echo '<option value="db'.$r->id.'" '.((isset($rencCustom['profilQS2']) && $rencCustom['profilQS2']=='db'.$r->id)?' selected':'').'>'.$r->c_categ.' : '.$r->c_label.' (< Date)</option>';
+								echo '<option value="da'.$r->id.'" '.((isset($rencCustom['profilQS2']) && $rencCustom['profilQS2']=='da'.$r->id)?' selected':'').'>'.$r->c_categ.__(': ','rencontre').$r->c_label.' (> Date)</option>';
+								echo '<option value="db'.$r->id.'" '.((isset($rencCustom['profilQS2']) && $rencCustom['profilQS2']=='db'.$r->id)?' selected':'').'>'.$r->c_categ.__(': ','rencontre').$r->c_label.' (< Date)</option>';
 							}
-							else echo '<option value="'.$r->id.'" '.((isset($rencCustom['profilQS2']) && $rencCustom['profilQS2']==$r->id)?' selected':'').'>'.$r->c_categ.' : '.$r->c_label.' ('.($r->i_type==3?'select':($r->i_type==4?'check':'num select')).')</option>';
+							else echo '<option value="'.$r->id.'" '.((isset($rencCustom['profilQS2']) && $rencCustom['profilQS2']==$r->id)?' selected':'').'>'.$r->c_categ.__(': ','rencontre').$r->c_label.' ('.($r->i_type==3?'select':($r->i_type==4?'check':'num select')).')</option>';
 						}
 						?>
 					</select>
@@ -3443,7 +3446,7 @@ function rencTabSea() {
 			else { ?>
 			<tr>
 				<td colspan=2>
-					<em><?php _e('Add also numerous profile elements in search ? Get the kit Premium.', 'rencontre'); ?></em>
+					<em><?php _e('Add also numerous profile elements in search? Get the kit Premium.', 'rencontre'); ?></em>
 				</td>
 			</tr>
 			<?php } ?>
@@ -3508,6 +3511,21 @@ function rencTabTem() {
 						<option value="" data-css="<?php echo $w3rencDef['mebw']; ?>">-</option>';
 						<?php foreach($w3renc as $k=>$v) {
 							if(substr($k,-1)!='T') echo '<option value="'.$k.'" data-css="'.$v.'" '.((isset($rencCustom['mebw']) && $rencCustom['mebw']==$k)?' selected':'').'>'.$k.'</option>';
+						}
+						?>
+					</select>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row">
+					<label><?php _e('Menu buttons color', 'rencontre'); ?>&nbsp;(<?php _e('checked', 'rencontre'); ?>)<br /><i style="font-size:90%;color:#999;">.w3-renc-mebc</i></label>
+				</th>
+				<td>
+					<div id="mebcdiv" style="display:inline-block;margin-left:10px;width:30px;height:22px;vertical-align:middle;background-color:<?php echo (!empty($rencCustom['mebc'])&&!empty($w3renc[$rencCustom['mebc']])?$w3renc[$rencCustom['mebc']]:$w3renc[$w3rencDef['mebc']]); ?>"></div>
+					<select name="mebc" onChange="document.getElementById(this.name+'div').style.backgroundColor=this.options[this.selectedIndex].getAttribute('data-css');">
+						<option value="" data-css="<?php echo $w3rencDef['mebc']; ?>">-</option>';
+						<?php foreach($w3renc as $k=>$v) {
+							if(substr($k,-1)!='T') echo '<option value="'.$k.'" data-css="'.$v.'" '.((isset($rencCustom['mebc']) && $rencCustom['mebc']==$k)?' selected':'').'>'.$k.'</option>';
 						}
 						?>
 					</select>
@@ -3753,8 +3771,13 @@ function rencTabTem() {
 							<div class="w3-section w3-right-align">
 								<button class="w3-button w3-renc-mebt w3-renc-mebo">Vitae</button>
 							</div>
-							<div class="w3-panel w3-renc-wabg">Warning : Nulla nec felis sed !</div>
-							<div class="w3-panel w3-renc-wmbg" style="margin: 0 70px 0 -70px">Modal warning : Morbi vel erat non mauris convallis vehicula !</div>
+							<div class="w3-panel w3-renc-wabg">Warning<?php _e(': ','rencontre'); ?>Nulla nec felis sed !</div>
+							<div class="w3-panel w3-renc-wmbg" style="margin: 0 70px 0 -70px">Modal warning<?php _e(': ','rencontre'); ?>Morbi vel erat non mauris convallis vehicula !</div>
+							<div class="w3-section">
+								<button class="w3-button w3-renc-mebt w3-renc-mebw">Warn!</button>
+								<button class="w3-button w3-renc-mebt w3-renc-mebc">Checked</button>
+								<button class="w3-button w3-renc-mebt w3-disabled">Off</button>
+							</div>
 						</div>
 					</div><!-- .w3-row -->
 				</div>
@@ -3950,6 +3973,7 @@ function f_update_custom($P) {
 		if(!empty($P['mebt'])) $a['mebt'] = rencSanit($P['mebt'],'alphanum'); else unset($a['mebt']);
 		if(!empty($P['mebw'])) $a['mebw'] = rencSanit($P['mebw'],'alphanum'); else unset($a['mebw']);
 		if(!empty($P['mebo'])) $a['mebo'] = rencSanit($P['mebo'],'alphanum'); else unset($a['mebo']);
+		if(!empty($P['mebc'])) $a['mebc'] = rencSanit($P['mebc'],'alphanum'); else unset($a['mebc']);
 		if(!empty($P['blbg'])) $a['blbg'] = rencSanit($P['blbg'],'alphanum'); else unset($a['blbg']);
 		if(!empty($P['titc'])) $a['titc'] = rencSanit($P['titc'],'alphanum'); else unset($a['titc']);
 		if(!empty($P['txtc'])) $a['txtc'] = rencSanit($P['txtc'],'alphanum'); else unset($a['txtc']);

@@ -47,6 +47,7 @@ $w3rencDef = array(
 	'mebt' => 'blue-grey-d4',
 	'mebw' => 'orange',
 	'mebo' => 'blue-grey-l2',
+	'mebc' => 'green',
 	'blbg' => 'white',
 	'titc' => 'black',
 	'txtc' => 'black',

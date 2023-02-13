@@ -274,8 +274,15 @@ class RencontreWidget extends WP_widget {
 				$a = $wpdb->get_var("SELECT user_id FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id='".$id."' and t_action REGEXP ',pause1,|,pause2,' LIMIT 1");
 				if($a || $rencDiv['mpause']) $id = $mid;
 			}
-			if(strstr($_SESSION['rencontre'],'favoriAdd')) self::f_favori($id,2);
-			else if(strstr($_SESSION['rencontre'],'favoriDel')) self::f_favori($id,1);
+			$favori = 0;
+			if(strstr($_SESSION['rencontre'],'favoriAdd')) {
+				self::f_favori($id,2);
+				$favori = 2;
+			}
+			else if(strstr($_SESSION['rencontre'],'favoriDel')) {
+				self::f_favori($id,1);
+				$favori = 1;
+			}
 			$u0 = new StdClass();
 			$u0->ID = $mid;
 			if($Pa1=='plusImg') {
@@ -374,7 +381,7 @@ class RencontreWidget extends WP_widget {
 					"chat"=>0,
 					"block"=>0,
 					"report"=>0,
-					"favori"=>self::f_favori($id,0)
+					"favori"=>($favori?($favori==1?0:1):self::f_favori($id,0))
 					);
 				$onClick = array(
 					"thumb"=>"",
@@ -587,7 +594,7 @@ class RencontreWidget extends WP_widget {
 				foreach($size as $s) if($s['label']=='-grande') $photoWidth = $s['width'];
 				$buttonPlus = ''; if($mid!=$id && has_filter('rencMyPortraitPlusBtnP')) $buttonPlus = apply_filters('rencMyPortraitPlusBtnP', $u);
 				$portraitPlus = ''; if(has_filter('rencMyPortraitPlusP')) $portraitPlus = apply_filters('rencMyPortraitPlusP', $u);
-				$head = __('You have no photo on your profile ?','rencontre');
+				$head = __('You have no photo on your profile?','rencontre');
 				if($t=rencTranslate('nophText')) $info = $t;
 				else $info = __('To be more visible and to view photos of other members, you should add one to your profile.','rencontre');
 				$certified = ''; if(has_filter('rencCertifiedP')) $certified = apply_filters('rencCertifiedP', array($u->ID, 3, $u->t_action));
@@ -2165,9 +2172,9 @@ class RencontreWidget extends WP_widget {
 			// msg in db
 			$wpdb->insert($wpdb->prefix.'rencontre_msg', array('content'=>$Pcontenu, 'sender'=>$f, 'recipient'=>$a->user_login, 'date'=>current_time('mysql'), 'read'=>0, 'deleted'=>0));
 			// memo pour mail CRON
-			if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_liste/');
-			if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$Pid.'.txt')) {
-				$t=fopen($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$Pid.'.txt', 'w');
+			if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_list/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_list/');
+			if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_list/'.$Pid.'.txt')) {
+				$t=fopen($rencDiv['basedir'].'/portrait/cache/cron_list/'.$Pid.'.txt', 'w');
 				fclose($t);
 			}
 			$warning = __('Message sent','rencontre');
@@ -3235,11 +3242,11 @@ class RencontreWidget extends WP_widget {
 					//
 					$searchAdd1 = '';
 					if($hoastro && $u->score) { 				
-						$searchAdd1 = '<div class="affinity">'.__('Astrological affinity','rencontre').'&nbsp;:&nbsp;<span>'.$u->score.' / 5</span>';
+						$searchAdd1 = '<div class="affinity">'.__('Astrological affinity','rencontre').__(': ','rencontre').'<span>'.$u->score.' / 5</span>';
 						$searchAdd1 .= '<img style="margin:-5px 0 0 5px;" src="'.plugins_url($hoastro.'/img/astro'.$u->score.'.png').'" alt="astro" /></div>';
 					}
 					else if($hoprofil && $u->score) {
-						$searchAdd1 = '<div class="affinity">'.__('Affinity with my profile','rencontre').'&nbsp;:&nbsp;<span>'.$u->score.'</span>&nbsp;'.__('points','rencontre').'.</div>';
+						$searchAdd1 = '<div class="affinity">'.__('Affinity with my profile','rencontre').__(': ','rencontre').'<span>'.$u->score.'</span>&nbsp;'.__('points','rencontre').'.</div>';
 					}
 					//
 					if($u->i_zsex!=99) { 
@@ -3687,10 +3694,10 @@ class RencontreWidget extends WP_widget {
 		$out = json_encode($action);
 		$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$f));
 		// memo pour mail CRON
-		if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_liste/');
-		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$f.'.txt') && !empty($rencOpt['mailsmile'])) {
+		if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_list/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_list/');
+		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_list/'.$f.'.txt') && !empty($rencOpt['mailsmile'])) {
 			if($mephoto || empty($rencOpt['mailph'])) {
-				$t=fopen($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$f.'.txt', 'w');
+				$t=fopen($rencDiv['basedir'].'/portrait/cache/cron_list/'.$f.'.txt', 'w');
 				fclose($t);
 			}
 		}
@@ -3749,10 +3756,10 @@ class RencontreWidget extends WP_widget {
 		$out = json_encode($action);
 		$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$f));
 		// memo pour mail CRON
-		if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_liste/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_liste/');
-		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$f.'.txt')) {
+		if(!is_dir($rencDiv['basedir'].'/portrait/cache/cron_list/')) mkdir($rencDiv['basedir'].'/portrait/cache/cron_list/');
+		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cron_list/'.$f.'.txt')) {
 			if($mephoto || empty($rencOpt['mailph'])) {
-				$t=fopen($rencDiv['basedir'].'/portrait/cache/cron_liste/'.$f.'.txt', 'w');
+				$t=fopen($rencDiv['basedir'].'/portrait/cache/cron_list/'.$f.'.txt', 'w');
 				fclose($t);
 			}
 		}

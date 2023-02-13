@@ -14,7 +14,7 @@
 				<div class="w3-container">
 					<div class="w3-section">
 
-						<div class="w3-xlarge w3-renc-titc w3-section">Hello World !</div>
+						<div class="w3-xlarge w3-renc-titc w3-section">Hello World!</div>
 	
 					</div>
 				</div>

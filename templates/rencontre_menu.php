@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Menu
- * Last Change : Rencontre 3.8
+ * Last Change : Rencontre 3.8.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_menu.php
  * Call : rencontre_widget.php => widget()
 */
@@ -26,7 +26,7 @@
 			
 		<a id="rencMenuMsg" class="rencMenuMsg w3-bar-item w3-button w3-padding-large w3-renc-mebo w3-display-container" href="javascript:void(0)" title="<?php _e('Messaging','rencontre'); ?>">
 			<i class="far fa-envelope"></i>
-			<span class="w3-badge w3-small w3-green w3-display-topright" style="margin:4px"><?php echo RencontreWidget::f_count_inbox($current_user->user_login); ?></span>
+			<span class="w3-badge w3-small w3-renc-mebc w3-display-topright" style="margin:4px"><?php echo RencontreWidget::f_count_inbox($current_user->user_login); ?></span>
 		</a>
 			<?php } ?>
 			<?php if(empty($blockSearch)) { ?>

@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.8.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search.php
  * Call : rencontre_widget.php => f_cherchePlus()
  * $u0 : ID, cryptID, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, e_lat, e_lon, zsex, c_pays, country, age, agemin, agemax
@@ -28,7 +28,7 @@
 					<?php if(!isset($rencCustom['born'])) { ?>
 
 						<div>
-							<label><?php _e('Age','rencontre');?>&nbsp;:&nbsp;<?php _e('min','rencontre');?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
+							<label><?php echo __('Age','rencontre').__(': ','rencontre').__('min','rencontre'); ?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
 							<div class="w3-row">
 								<div class="w3-half">
 									<select name="<?php echo (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemin']; ?>">
@@ -50,7 +50,7 @@
 					<?php if(!isset($rencCustom['size'])) { ?>
 
 						<div>
-							<label><?php _e('Height','rencontre');?>&nbsp;:&nbsp;<?php _e('min','rencontre');?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
+							<label><?php echo __('Height','rencontre').__(': ','rencontre').__('min','rencontre'); ?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
 							<div class="w3-row">
 								<div class="w3-half">
 									<select name="<?php echo (!empty($rencOpt['lbl']['tailleMin'])?$rencOpt['lbl']['tailleMin']:'tailleMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['sizemin']; ?>">
@@ -76,7 +76,7 @@
 					<?php if(!isset($rencCustom['weight'])) { ?>
 
 						<div>
-							<label><?php _e('Weight','rencontre');?>&nbsp;:&nbsp;<?php _e('min','rencontre');?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
+							<label><?php echo __('Weight','rencontre').__(': ','rencontre').__('min','rencontre'); ?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
 							<div class="w3-row">
 								<div class="w3-half">
 									<select name="<?php echo (!empty($rencOpt['lbl']['poidsMin'])?$rencOpt['lbl']['poidsMin']:'poidsMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['weightmin']; ?>">
