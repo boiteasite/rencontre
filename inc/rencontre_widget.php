@@ -3924,18 +3924,18 @@ class RencontreWidget extends WP_widget {
 		return;
 	}
 	static function f_menage_action($f,$action) {
-		// fait le menage dans le json action - limite a 50 elements par item
+		// Clean up json action - Limited to 50 elements per item
 		global $rencOpt;
 		$m = (!empty($rencOpt['nbr']['action'])?$rencOpt['nbr']['action']:50);
 		$a = array("sourireIn","sourireOut","contactIn","contactOut","visite","bloque","favori");
-		for($v=0; $v<count($a); ++$v) {
+		for($v=0; $v<count($a); ++$v) if(!empty($action[$a[$v]])) {
 			$c = count($action[$a[$v]]);
 			for($w=0; $w<$c-$m; ++$w) {
 				unset($action[$a[$v]][$w]['i']);
 				unset($action[$a[$v]][$w]['d']);
 			}
 			if(!empty($action[$a[$v]])) $action[$a[$v]]=array_filter($action[$a[$v]]);
-			if(!empty($action[$a[$v]])) $action[$a[$v]]=array_splice($action[$a[$v]],0); // remise en ordre avec de nouvelles clefs
+			if(!empty($action[$a[$v]])) $action[$a[$v]]=array_splice($action[$a[$v]],0); // Put in order with new keys
 		}
 		// old action - V3.7
 		if(isset($action['msg'])) unset($action['msg']);
@@ -4103,6 +4103,8 @@ class RencontreSidebarWidget extends WP_widget {
 			$u0->forwhat = substr($as,0,-2);
 		}
 		$find = array( "class"=>"w3-button w3-renc-mebt w3-renc-mebo", "title"=>""); // VAR $find no longer used since V3.6.5
+		$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
+		$Lmsg = (!empty($rencOpt['lbl']['msg'])?$rencOpt['lbl']['msg']:'msg');
 		$onClick = array(
 			"edit"=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Ledit."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId($u0->ID,0)."';document.forms['rencMenu'].submit();",
 			"sourireIn"=>"document.forms['rencMenu'].elements['".$Lrenc."'].value='".$Lqsearch."';document.forms['rencMenu'].elements['".$Lid."'].value='".rencGetId('sourireIn',0)."';document.forms['rencMenu'].submit();",
@@ -4115,7 +4117,8 @@ class RencontreSidebarWidget extends WP_widget {
 			"agemax"=>"f_max(parseInt(this.options[this.selectedIndex].value),'formMonAccueil','".$Lagemin."','".$Lagemax."');",
 			"country"=>"f_region_select(this.options[this.selectedIndex].value,'".admin_url('admin-ajax.php')."','regionSelectSide');",
 			"find"=>"f_quickTrouve();",
-			"hideSide"=>"f_hideSideMobile();");
+			"hideSide"=>"f_hideSideMobile();",
+			"msg"=>$rencOpt['home']."?".$Lrenc."=".$Lmsg);
 		$smilread = false; $contread = false;
 		if(has_filter('rencLimitedActionP')) {
 			$smilread = apply_filters('rencLimitedActionP', array('smilread',0,0));

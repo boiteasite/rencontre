@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.9
+Version: 3.9.1
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -14,7 +14,7 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 });
 //
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.9';
+$rencVersion = '3.9.1';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'],'theme-editor.php')) return;
@@ -185,11 +185,11 @@ class Rencontre {
 		$rencOpt['page_id'] = (!empty($rencOpt['home']) && strpos($rencOpt['home'],'page_id')!==false)?substr($rencOpt['home'],strpos($rencOpt['home'],'page_id')+8):get_the_id();
 		$rencCustom = (isset($rencOpt['custom'])?json_decode($rencOpt['custom'],true):array());
 		if(!isset($rencOpt['for'])) $rencOpt['for'] = array();
-		$rencOpt['for'][0] = __('Serious relationship','rencontre');
-		$rencOpt['for'][1] = __('Open relationship','rencontre');
-		$rencOpt['for'][2] = __('Friendship','rencontre');
 		add_action('init', function() { // Hook already loaded...
 			global $rencOpt, $rencCustom;
+			$rencOpt['for'][0] = __('Serious relationship','rencontre');
+			$rencOpt['for'][1] = __('Open relationship','rencontre');
+			$rencOpt['for'][2] = __('Friendship','rencontre');
 			if(isset($rencCustom['relation'])) {
 				$c = 0;
 				while(isset($rencCustom['relationL'.$c])) {

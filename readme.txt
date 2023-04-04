@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
 Requires at least: 4.6
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 5.5
-Stable tag: 3.9
+Stable tag: 3.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -407,6 +407,8 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+01/04/2023 : 3.9.1 -  Fix some issues.
 
 12/02/2023 : 3.9
 

@@ -57,7 +57,7 @@
 			<div class="w3-panel w3-renc-wabg w3-center"><?php echo ($u0->pause==1?__('Profile hidden','rencontre'):__('Profile switched off','rencontre')); ?></div>
 			<?php } ?>
 			<?php if(!empty($rencCustom['menu']) && $nbmsg=RencontreWidget::f_count_inbox($current_user->user_login)!=0) { ?>
-			<div class="w3-section"><span class="w3-badge w3-renc-mebc" style="margin-right:4px"><?php echo $nbmsg; ?></span><?php _e(($nbmsg>1?'messages':'message'),'rencontre'); ?></div>
+			<div class="w3-section"><span class="w3-badge w3-renc-mebc" style="margin-right:4px"><?php echo $nbmsg; ?></span><a href="<?php echo $onClick['msg']; ?>" /><?php _e(($nbmsg>1?'messages':'message'),'rencontre'); ?></a></div>
 
 			<?php } ?>
 			

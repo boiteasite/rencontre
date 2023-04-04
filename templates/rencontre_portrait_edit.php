@@ -31,7 +31,7 @@
 					<div class="w3-card w3-renc-blbg w3-center">
 					<?php if($u0->i_photo) { ?>
 						
-						<img id="portraitGrande" src="<?php echo $u0->photoUrl.$u0->photo->grande[0]; ?>" srcset="<?php echo $u0->photo->grandeRetina[$v]; ?>" loading="lazy" alt="" />
+						<img id="portraitGrande" src="<?php echo $u0->photoUrl.$u0->photo->grande[0]; ?>" srcset="<?php echo $u0->photo->grandeRetina[0]; ?>" loading="lazy" alt="" />
 					<?php } else { ?>
 
 						<img id="portraitGrande" src="<?php echo plugins_url('rencontre/images/no-photo600.jpg'); ?>" alt="" />

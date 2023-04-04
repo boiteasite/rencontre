@@ -703,7 +703,7 @@ function f_cron_list() {
 				if(!empty($rencBenchmark)) $rencBenchmark .= ' Mail'.$ct;
 				if(isset($action['contactIn']) && count($action['contactIn'])) {
 					$v = count($action['contactIn'])-1;
-					if(isset($action['contactIn'][$v]['d']) && strtotime($action['contactIn'][$v]['d'])>current_time('timestamp',0)-64800) { // 18h
+					if(isset($action['contactIn'][$v]['d']) && strtotime($action['contactIn'][$v]['d'])>current_time('timestamp',0)-108000) { // 30h
 						$r = $wpdb->get_row("SELECT
 								U.ID,
 								U.user_login,
@@ -732,7 +732,7 @@ function f_cron_list() {
 				//
 				if(isset($action['sourireIn']) && count($action['sourireIn'])) {
 					$v = count($action['sourireIn'])-1;
-					if(isset($action['sourireIn'][$v]['d']) && strtotime($action['sourireIn'][$v]['d'])>current_time('timestamp',0)-64800) { // 18h
+					if(isset($action['sourireIn'][$v]['d']) && strtotime($action['sourireIn'][$v]['d'])>current_time('timestamp',0)-108000) { // 30h
 						$r = $wpdb->get_row("SELECT
 								U.ID,
 								U.user_login,
