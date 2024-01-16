@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.9
+ * Last Change : Rencontre 3.10.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * Call : rencontre_widget.php => widget()
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
@@ -92,7 +92,7 @@
 							<?php } ?>
 							</div>
 							<div>
-							<?php if(empty($rencCustom['born']) && strpos($u->d_naissance,'0000')===false) echo '<span id="userAge">'.Rencontre::f_age($u->d_naissance).'&nbsp;'.__('years','rencontre').'</span>'; ?>
+							<?php if(empty($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) echo '<span id="userAge">'.Rencontre::f_age($u->d_naissance).'&nbsp;'.__('years','rencontre').'</span>'; ?>
 							<?php if(!isset($rencCustom['size'])) { ?>
 							
 							<span id="userSize">&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo (empty($rencCustom['sizeu'])?$u->i_taille.' '.__('cm','rencontre'):floor($u->i_taille/24-1.708).' '.__('ft','rencontre').' '.round(((($u->i_taille/24-1.708)-floor($u->i_taille/24-1.708))*12),1).' '.__('in','rencontre')); ?></span>
@@ -121,10 +121,10 @@
 							<div class="w3-right-align">
 							<?php if($u->online) { ?>
 								
-								<div class="rencInline w3-text-teal"><?php _e('online','rencontre'); ?></div>
+								<div class="rencInline w3-renc-inlc"><span class="dotInline"></span><?php _e('online','rencontre'); ?></div>
 							<?php } else { ?>
 								
-								<div class="rencOutline w3-opacity"><?php _e('offline','rencontre'); ?></div>
+								<div class="rencOutline w3-opacity"><span class="dotOutline"></span><?php _e('offline','rencontre'); ?></div>
 							<?php } ?>
 							<?php if($u->blocked->me) { ?>
 						

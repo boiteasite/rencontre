@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search Result
- * Last Change : Rencontre 3.8.3
+ * Last Change : Rencontre 3.10.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search_result.php
  * Call : rencontre_widget.php => f_quickFind(), f_trouver()
  * $u : user_login, user_id, d_naissance, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_annonce, t_profil, t_action, looking, forwhat, hidephoto, online, online_ago, miniPhoto, miniPhotoWebp
@@ -40,7 +40,7 @@
 						<?php } ?>
 							<div class="w3-cell w3-cell-middle w3-padding-small" style="text-transform:capitalize;">
 								<div class="w3-large"><?php echo $u->display_name; ?></div>
-								<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance,'0000')===false) { ?>
+								<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) { ?>
 
 								<div>
 									<?php if(isset($rencCustom['sex']) && isset($rencOpt['iam'][$u->i_sex])) echo $rencOpt['iam'][$u->i_sex].' - '; ?>
@@ -79,9 +79,12 @@
 						
 						<div class="rencDate w3-right-align w3-opacity" style="text-transform:capitalize;"><?php _e('The','rencontre'); ?>&nbsp;<?php echo $u->date; ?></div>
 						<?php } ?>
-						<?php if($u->online) { ?>
+						<?php if($u->online===true) { ?>
 						
-						<div class="rencDate w3-right-align w3-opacity"><span style="text-transform:capitalize;"><?php _e('online','rencontre'); ?></span><?php echo __(': ','rencontre').$u->online_ago; ?></div>
+						<div class="rencInline w3-right-align"><span class="dotInline"></span><span class="w3-renc-inlc" style="text-transform:capitalize;"><?php _e('online','rencontre'); ?></span></div>
+						<?php } else if($u->online_ago) { ?>
+						
+						<div class="rencOutline w3-right-align w3-opacity"><span class="dotOutline"></span><span style="text-transform:capitalize;"><?php _e('online','rencontre'); ?></span><?php echo __(': ','rencontre').$u->online_ago; ?></div>
 						<?php } ?>
 					<?php } ?>
 

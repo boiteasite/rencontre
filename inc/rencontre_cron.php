@@ -247,12 +247,15 @@ function f_cron_on($part=1) {
 				while (($file = readdir($h))!==false) {
 					$ext = explode('.',$file);
 					$ext = $ext[count($ext)-1];
-					if($ext=='csv' && $file!='.' && $file!='..' && strpos($file,"rencontre")!==false) $a[] = $rencDiv['basedir']."/tmp/".$file;
+					if($ext=='csv' && $file!='.' && $file!='..' && strpos($file.'-',"rencontre")!==false) $a[] = $rencDiv['basedir']."/tmp/".$file;
 				}
 				closedir($h);
 			}
 			// ************************
 			if(is_array($a)) array_map('unlink', $a);
+		}
+		if(is_dir($rencDiv['basedir'].'/tmp/md/')) {
+			foreach (glob($rencDiv['basedir'].'/tmp/md/*.*') as $file) if(is_file($file)) unlink($file);
 		}
 		// 10. Sortie de prison
 		if(!empty($rencBenchmark)) { $rencBenchmark .= 'F_CRON-10: '.(microtime(true)-$rbm).' - '.PHP_EOL; $rbm = microtime(true); }
@@ -305,6 +308,10 @@ function f_cron_on($part=1) {
 		break;
 		// ********************************************************************************************
 		case 4:
+		if(has_filter('rencCronMailPart4')) { // Surpass the following part
+			apply_filters('rencCronMailPart4', 0);
+			return;
+		}
 		// 13. Mail vers les membres et nettoyage des comptes actions (suppression comptes inexistants)
 		if(!empty($rencBenchmark)) { $rencBenchmark .= 'F_CRON-13: '.(microtime(true)-$rbm).' - '.PHP_EOL; $rbm = microtime(true); }
 		$hcron = (isset($rencOpt['hcron'])?$rencOpt['hcron']+0:3);
@@ -392,7 +399,7 @@ function f_cron_on($part=1) {
 		if($q) foreach($q as $u) {
 			++$ct;
 			$melCountry = (!empty($rencOpt['melctry'])&&!empty($u->c_pays)&&empty($rencCustom['country'])&&empty($rencCustom['place'])?"and R.c_pays='".$u->c_pays."'":"");
-			$action = json_decode($u->t_action,true);
+			$action = json_decode((empty($u->t_action)?'{}':$u->t_action),true);
 			if(!empty($rencOpt['mailmois']) && $ct<=$max) {
 				$b = 0;
 				// Connect_link
@@ -614,7 +621,11 @@ function f_cron_on($part=1) {
 }
 //
 function f_cron_list() {
-	// Envoi Mail Horaire en respectant quota
+	// Hourly mailings within quotas
+	if(has_filter('rencCronList')) { // Surpass this function f_cron_list()
+		apply_filters('rencCronList', 0);
+		return;
+	}
 	global $wpdb, $rencOpt, $rencDiv, $rencCustom, $rencBenchmark;
 	if(!empty($rencBenchmark)) { $rencBenchmark .= 'F_CRONLIST_ON: '.microtime(true).' - '.PHP_EOL; $rbm = microtime(true); }
 	$CURLANG = get_locale();
@@ -693,7 +704,7 @@ function f_cron_list() {
 			else {
 				$b = 0; $smile = 0; $contact = 0; $inbox = 0;
 				if(function_exists('openssl_encrypt')) $oo = base64_encode(openssl_encrypt($u->ID.'|'.$u->user_login.'|'.time(), 'AES-256-CBC', substr(AUTH_KEY,0,32), OPENSSL_RAW_DATA, $iv));
-				$action= json_decode($u->t_action,true);
+				$action= json_decode((empty($u->t_action)?'{}':$u->t_action),true);
 				//
 				$smilread = false; $contread = false;
 				if(has_filter('rencLimitedActionP')) {

@@ -29,7 +29,7 @@ else if(empty($WPLANG->option_value) && $locale) $wpdb->update($wpdb->prefix.'op
 	foreach($ps as $p) {
 		$b = 0;
 		foreach($a as $k=>$v) {
-			if(strpos($p->post_content,$k)!==false) {
+			if(strpos($p->post_content.'-',$k)!==false) {
 				$p->post_content = str_replace($k, $v, $p->post_content);
 				$b = 1;
 				var_dump($p);
@@ -92,7 +92,7 @@ file_put_contents($upl['basedir'].'/portrait/cache/rencontre_cron.txt','');
 //
 // PERMANENT : Update DBIP
 //
-$versionDBIP = "202110"; // new version with this update
+$versionDBIP = "202310"; // new version with this update
 $a = get_option('rencontre_dbip');
 $b = $wpdb->get_var("SELECT ip_end FROM ".$wpdb->base_prefix."rencontre_dbip LIMIT 1"); // empty ?
 if(file_exists(dirname(__FILE__).'/dbip-country.csv.gz') && (!$a || intval($a)<intval($versionDBIP) || !$b)) {

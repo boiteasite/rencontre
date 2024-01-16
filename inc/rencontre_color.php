@@ -52,6 +52,8 @@ $w3rencDef = array(
 	'titc' => 'black',
 	'txtc' => 'black',
 	'lblc' => 'black',
+	'inlc' => 'green',
+	'inlb' => '',
 	'line' => 'dark-grey',
 	'inbg' => 'light-grey',
 	'sebg' => 'dark-grey',
@@ -60,4 +62,16 @@ $w3rencDef = array(
 	'msbs' => 'pale-green',
 	'msbr' => 'white'
 	);
+if(has_filter('rencDefColor')) $w3rencDef = apply_filters('rencDefColor', $w3rencDef);
+//
+// Other colors
+$w3rencPlus = array(
+	'highway-brown' => '#633517', 'highway-brownT' => '#fff',
+	'highway-red' => '#a6001a', 'highway-redT' => '#fff',
+	'highway-orange' => '#e06000', 'highway-orangeT' => '#fff',
+	'highway-schoolbus' => '#ee9600', 'highway-schoolbusT' => '#fff',
+	'highway-yellow' => '#ffab00', 'highway-yellowT' => '#fff',
+	'highway-green' => '#004d33', 'highway-greenT' => '#fff',
+	'highway-blue' => '#00477e', 'highway-blueT' => '#fff'
+);
 ?>

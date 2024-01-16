@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait add photo
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.11
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_add_photo.php
  * Call : rencontre_widget.php => widget() 2X
  * $u0 : i_photo
@@ -27,11 +27,6 @@
 						<div style="margin:0 auto;text-align:center"></div>
 						<input type="file" name="plusPhoto" size="18" accept="image/*" onchange="f_photoPop_display(this)">
 					</div>
-				<?php if(!empty($rencOpt['fblog']) && strlen($rencOpt['fblog'])>2) { ?>
-					<div class="w3-section">
-						<div class="w3-button w3-renc-mebt w3-renc-mebo w3-margin" onClick="f_FBLogin(<?php echo $u0->i_photo; ?>);"><?php echo addslashes(__('Facebook Profile Photo','rencontre')); ?></div>
-					</div>
-				<?php } ?>
 					<div class="w3-section w3-border-top w3-renc-line w3-cell-row">
 						<div id="popPhoto" class="w3-cell w3-padding"></div>
 						<div class="w3-cell">
@@ -41,12 +36,4 @@
 				</form>
 			</div>
 		</div>
-	<?php if(!empty($rencOpt['fblog']) && strlen($rencOpt['fblog'])>2) { ?>
-	
-		<script type="text/javascript">
-		(function(d){var js,id='facebook-jssdk',ref=d.getElementsByTagName('script')[0];if(d.getElementById(id))return;js=d.createElement('script');js.id=id;js.async=true;js.src="https://connect.facebook.net/en_US/sdk.js";ref.parentNode.insertBefore(js,ref);}(document,'script','facebook-jssdk'));
-		window.fbAsyncInit=function(){FB.init({appId:'<?php echo $rencOpt['fblog']; ?>',status:true,cookie:true,xfbml:true,version:'v3.2'});};
-		</script>
-	<?php } ?>
-	
 	</div><!-- .w3-modal -->

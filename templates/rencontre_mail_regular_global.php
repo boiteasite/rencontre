@@ -4,7 +4,7 @@
 * Template : Mail Regular global
 * Last Change : Rencontre 3.8.3
 * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mail_regular_global.php
-* Call : rencontre_filter.php => f_cron_on()
+* Call : rencontre_cron.php => f_cron_on()
 * $u : ID, user_login, d_naissance, c_pays, c_ville, t_titre, name, age, title, link
 */
 ?>

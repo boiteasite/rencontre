@@ -1,6 +1,6 @@
 /*
  * Plugin : Rencontre
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.11
  * Custom or don't want to load this original file ? : create wp-content/themes/name-of-my-theme/templates/rencontre.css
 */
 /* General */
@@ -9,6 +9,7 @@
 .rencOneLine{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rencCam, .rencCam2{position:fixed;bottom:10px;right:320px;visibility:hidden;overflow:hidden;z-index:999;margin:0;padding:0;width:300px;height:225px;border:1px solid #444;border-radius:4px;box-shadow:0px 0px 5px rgba(0, 0, 0, 0.5);background-color:#fff;}
 .rcOnOff{display:inline-block;cursor:pointer;width:16px;height:12px;vertical-align:middle;background:url('../images/onoff.png') no-repeat 0px -24px;}
+img.pop-photo{image-orientation:none;}
 
 /* Labelauty */
 .rencLabelauty{display:none;}

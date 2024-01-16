@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rencontre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-16 18:51+0100\n"
+"POT-Creation-Date: 2023-10-24 18:41+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: malgrange <jacques.malgrange@gmail.com>\n"
+"Last-Translator: Jacques Malgrange <contacter@boiteasite.fr>\n"
 "Language-Team: boiteasite.fr <contacter@boiteasite.fr>\n"
 "Language: da_DK\n"
 "MIME-Version: 1.0\n"
@@ -13,29 +13,33 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../inc/base.php:145 ../inc/base.php:365 ../inc/base.php:1156
-#: ../inc/base.php:1543 ../inc/base.php:1594 ../inc/base.php:1607
-#: ../inc/base.php:1667 ../inc/base.php:1680 ../inc/base.php:1739
-#: ../inc/base.php:1740 ../inc/base.php:1741 ../inc/base.php:1772
-#: ../inc/base.php:1873 ../inc/base.php:2380 ../inc/base.php:2580
-#: ../inc/base.php:2587 ../inc/base.php:2661 ../inc/base.php:2679
-#: ../inc/base.php:2716 ../inc/base.php:2744 ../inc/base.php:2768
-#: ../inc/base.php:2769 ../inc/base.php:2897 ../inc/base.php:2937
-#: ../inc/base.php:2974 ../inc/base.php:2994 ../inc/base.php:3422
-#: ../inc/base.php:3423 ../inc/base.php:3425 ../inc/base.php:3438
-#: ../inc/base.php:3439 ../inc/base.php:3441 ../inc/base.php:3778
-#: ../inc/base.php:3779 ../inc/rencontre_don.php:72
-#: ../inc/rencontre_widget.php:3245 ../inc/rencontre_widget.php:3249
+#: ../inc/base.php:145 ../inc/base.php:365 ../inc/base.php:1157
+#: ../inc/base.php:1547 ../inc/base.php:1595 ../inc/base.php:1608
+#: ../inc/base.php:1668 ../inc/base.php:1681 ../inc/base.php:1740
+#: ../inc/base.php:1741 ../inc/base.php:1742 ../inc/base.php:1773
+#: ../inc/base.php:1874 ../inc/base.php:2381 ../inc/base.php:2581
+#: ../inc/base.php:2588 ../inc/base.php:2662 ../inc/base.php:2680
+#: ../inc/base.php:2717 ../inc/base.php:2745 ../inc/base.php:2769
+#: ../inc/base.php:2770 ../inc/base.php:2898 ../inc/base.php:2938
+#: ../inc/base.php:2975 ../inc/base.php:2995 ../inc/base.php:3423
+#: ../inc/base.php:3424 ../inc/base.php:3427 ../inc/base.php:3428
+#: ../inc/base.php:3430 ../inc/base.php:3443 ../inc/base.php:3444
+#: ../inc/base.php:3447 ../inc/base.php:3448 ../inc/base.php:3450
+#: ../inc/base.php:3820 ../inc/base.php:3821 ../inc/rencontre_don.php:74
+#: ../inc/rencontre_widget.php:3272 ../inc/rencontre_widget.php:3276
 #: ../templates/rencontre_mail_regular_global.php:21
 #: ../templates/rencontre_mail_regular_global.php:33
 #: ../templates/rencontre_mail_regular_global.php:35
 #: ../templates/rencontre_mail_regular_global.php:52
 #: ../templates/rencontre_portrait.php:154 ../templates/rencontre_search.php:31
 #: ../templates/rencontre_search.php:53 ../templates/rencontre_search.php:79
-#: ../templates/rencontre_search_result.php:84
+#: ../templates/rencontre_search_result.php:87
+#: ../templates/rencontre_sidebar_top.php:78
+#: ../templates/rencontre_sidebar_top.php:87
+#: ../templates/rencontre_sidebar_top.php:96
 msgid ": "
 msgstr ": "
 
@@ -43,11 +47,11 @@ msgstr ": "
 msgid "lines"
 msgstr "linjer"
 
-#: ../inc/base.php:365 ../inc/base.php:1365
+#: ../inc/base.php:365 ../inc/base.php:1370
 msgid "Done!"
 msgstr "Færdig!"
 
-#: ../inc/base.php:365 ../inc/rencontre_filter.php:1878
+#: ../inc/base.php:365 ../inc/rencontre_filter.php:1120
 msgid "photo"
 msgstr "Foto"
 
@@ -55,47 +59,47 @@ msgstr "Foto"
 msgid "TO CHANGE"
 msgstr "ÆNDRER"
 
-#: ../inc/base.php:476 ../inc/base.php:2769
+#: ../inc/base.php:476 ../inc/base.php:2770
 #: ../lang/rencontre-js-admin-lang.php:34
 msgid "Unit"
 msgstr "Enhed"
 
-#: ../inc/base.php:1155 ../inc/base.php:2579
+#: ../inc/base.php:1156 ../inc/base.php:2580
 msgid "Update member profile"
 msgstr "Opdater profil"
 
-#: ../inc/base.php:1156 ../inc/base.php:2580
+#: ../inc/base.php:1157 ../inc/base.php:2581
 msgid "You have made changes. Remember to update when you're done."
 msgstr ""
 "Du har foretaget &aelig;ndringer, husk at gemme n&aring;r du er f&aelig;rdig"
 
-#: ../inc/base.php:1161 ../rencontre.php:224
+#: ../inc/base.php:1162 ../rencontre.php:224
 msgid "General"
 msgstr "Generelt"
 
-#: ../inc/base.php:1162 ../templates/rencontre_mail_instant.php:55
+#: ../inc/base.php:1163 ../templates/rencontre_mail_instant.php:55
 #: ../templates/rencontre_mail_regular_global.php:79
 #: ../templates/rencontre_mail_remind.php:20
 msgid "Login"
 msgstr "Log på"
 
-#: ../inc/base.php:1163
+#: ../inc/base.php:1164
 msgid "Display"
 msgstr "Visning"
 
-#: ../inc/base.php:1164
+#: ../inc/base.php:1165
 msgid "E-mails"
 msgstr "E-mails"
 
-#: ../inc/base.php:1165
+#: ../inc/base.php:1166
 msgid "CSV"
 msgstr "CSV"
 
-#: ../inc/base.php:1170
+#: ../inc/base.php:1171
 msgid "Premium"
 msgstr "Premium"
 
-#: ../inc/base.php:1191
+#: ../inc/base.php:1192
 msgid ""
 "OpenSSL doesn't seem to be working. Some features of this plugin will not be "
 "available."
@@ -103,78 +107,78 @@ msgstr ""
 "OpenSSL ikke ud til at virke. Nogle funktioner på denne plugin vil ikke være "
 "tilgængelig."
 
-#: ../inc/base.php:1195
+#: ../inc/base.php:1196
 msgid "Plugin page"
 msgstr "Plugin side"
 
-#: ../inc/base.php:1209
+#: ../inc/base.php:1210
 msgid "Country selected by default"
 msgstr "Land valgt som standard"
 
-#: ../inc/base.php:1217
+#: ../inc/base.php:1218
 msgid "Number of days in jail (deleted account)"
 msgstr "Dage i f&aelig;ngsel ( slettede profiler )"
 
-#: ../inc/base.php:1230
+#: ../inc/base.php:1231
 msgid "Use member's picture as WordPress avatar"
 msgstr "Brug medlemmets billede som WordPress avatar"
 
-#: ../inc/base.php:1234
+#: ../inc/base.php:1235
 msgid "Old messages deleted during maintenance (recommended)"
 msgstr "Gamle meddelelser slettes under vedligeholdelse (anbefales)"
 
-#: ../inc/base.php:1237 ../inc/base.php:1249 ../inc/base.php:1378
-#: ../inc/base.php:1478 ../inc/base.php:1536 ../inc/base.php:3407
-#: ../inc/base.php:3435
+#: ../inc/base.php:1238 ../inc/base.php:1250 ../inc/base.php:1383
+#: ../inc/base.php:1483 ../inc/base.php:1542 ../inc/base.php:3408
+#: ../inc/base.php:3440
 msgid "No"
 msgstr "Ingen"
 
-#: ../inc/base.php:1238 ../inc/base.php:1537
+#: ../inc/base.php:1239 ../inc/base.php:1543
 msgid "Monthly"
 msgstr "Månedlige"
 
-#: ../inc/base.php:1239
+#: ../inc/base.php:1240
 msgid "Quarterly"
 msgstr "Kvartalsvis"
 
-#: ../inc/base.php:1240
+#: ../inc/base.php:1241
 msgid "Biannual"
 msgstr "Halvårlig"
 
-#: ../inc/base.php:1241
+#: ../inc/base.php:1242
 msgid "Annual"
 msgstr "Årligt"
 
-#: ../inc/base.php:1246
+#: ../inc/base.php:1247
 msgid "Inactive users deleted during maintenance"
 msgstr "Inaktive brugere slettet under vedligeholdelse"
 
-#: ../inc/base.php:1250
+#: ../inc/base.php:1251
 msgid "Year"
 msgstr "år"
 
-#: ../inc/base.php:1251 ../inc/base.php:1252 ../inc/base.php:1253
-#: ../inc/base.php:1254
+#: ../inc/base.php:1252 ../inc/base.php:1253 ../inc/base.php:1254
+#: ../inc/base.php:1255
 msgid "Years"
 msgstr "flere år"
 
-#: ../inc/base.php:1259
+#: ../inc/base.php:1260
 msgid "Hour maintenance tasks (off peak)"
 msgstr "Tid for vedligeholdesopgaver"
 
-#: ../inc/base.php:1264
+#: ../inc/base.php:1265
 msgid "hours"
 msgstr "timer"
 
-#: ../inc/base.php:1270
+#: ../inc/base.php:1271
 msgid "Do not remove WP roles"
 msgstr "Fjern ikke WP roller"
 
-#: ../inc/base.php:1274
+#: ../inc/base.php:1275
 msgid "Do not remove user in WP when remove in Rencontre"
 msgstr "Fjern ikke bruger i WP, når fjerne i Rencontre"
 
-#: ../inc/base.php:1280
+#: ../inc/base.php:1281
 msgid ""
 "Unchecked: WP roles will be destroyed. Users who are not in Rencontre will "
 "be destroyed. This is the best mode for a big and exclusive dating site."
@@ -183,7 +187,7 @@ msgstr ""
 "blive ødelagt. Dette er den bedste indstilling for en stor og eksklusiv "
 "dating site."
 
-#: ../inc/base.php:1281
+#: ../inc/base.php:1282
 msgid ""
 "Checked: Better choice to test this plugin or to use with other one "
 "(forum...). Over time, the site will be slower with numerous abandoned "
@@ -192,70 +196,74 @@ msgstr ""
 "On : Bedre valg for at teste dette plugin eller til at bruge med andre en "
 "(forum ...). Over tid, vil siden være langsommere med talrige forladte konto."
 
-#: ../inc/base.php:1285
+#: ../inc/base.php:1286
 msgid "Clean-up when uninstall"
 msgstr "Oprydning når afinstallere"
 
-#: ../inc/base.php:1290 ../inc/base.php:1352 ../inc/base.php:1514
-#: ../inc/base.php:1609 ../inc/base.php:2616 ../inc/base.php:3239
-#: ../inc/base.php:3375 ../inc/base.php:3460 ../inc/base.php:3725
-#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:289
-#: ../templates/rencontre_account.php:315
+#: ../inc/base.php:1291 ../inc/base.php:1357 ../inc/base.php:1519
+#: ../inc/base.php:1610 ../inc/base.php:2617 ../inc/base.php:3240
+#: ../inc/base.php:3376 ../inc/base.php:3469 ../inc/base.php:3764
+#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:292
+#: ../templates/rencontre_account.php:318
 #: ../templates/rencontre_registration_part1.php:143
 #: ../templates/rencontre_registration_part2.php:59
 #: ../templates/rencontre_registration_part3.php:110
 msgid "Save"
 msgstr "Gem"
 
-#: ../inc/base.php:1295
+#: ../inc/base.php:1296
 msgid "Images names"
 msgstr "Billeder navne"
 
-#: ../inc/base.php:1296
+#: ../inc/base.php:1297
 msgid "Be careful, all pictures of the members will have another name."
 msgstr "Vær forsigtig, vil alle billeder af medlemmerne har et andet navn."
 
-#: ../inc/base.php:1303
+#: ../inc/base.php:1304
 msgid "Images names are encoded"
 msgstr "Images navne er kodet"
 
-#: ../inc/base.php:1304
+#: ../inc/base.php:1305
 msgid "Images names are not encoded"
 msgstr "Billeder navne er ikke kodet"
 
-#: ../inc/base.php:1305
+#: ../inc/base.php:1306
 msgid "I don't know if it's encoded or not"
 msgstr "Jeg ved ikke, om det er kodet eller ikke"
 
-#: ../inc/base.php:1312
+#: ../inc/base.php:1313
 msgid "Encode all images names"
 msgstr "Encode alle billeder navne"
 
-#: ../inc/base.php:1313
+#: ../inc/base.php:1314
 msgid "Decode all images names"
 msgstr "Decode alle billeder navne"
 
-#: ../inc/base.php:1315
+#: ../inc/base.php:1316
 msgid "Cleanup abandoned images"
 msgstr "Oprydning afladte billeder"
 
-#: ../inc/base.php:1331
+#: ../inc/base.php:1332
 msgid "AppID for Facebook login (empty if not installed)"
 msgstr "AppID for Facebook-forbindelse (tom hvis ikke installeret)"
 
-#: ../inc/base.php:1335
+#: ../inc/base.php:1336
 msgid "Redirect to the plugin page after login"
 msgstr "Omdiriger til plugin side efter login"
 
-#: ../inc/base.php:1339
+#: ../inc/base.php:1340
 msgid "Enable rapid registration"
 msgstr "Aktiver hurtig registrering"
 
-#: ../inc/base.php:1343
+#: ../inc/base.php:1344
 msgid "Do not request a new password after registration"
 msgstr "Du må ikke anmode om en ny adgangskode efter registrering"
 
-#: ../inc/base.php:1347
+#: ../inc/base.php:1348
+msgid "Do not allow password change in -my account-"
+msgstr "Tillad ikke ændring af adgangskode på -min konto-"
+
+#: ../inc/base.php:1352
 msgid ""
 "Obligation to choose a city in the wp_Geonames list during registration (if "
 "plugin installed)"
@@ -263,154 +271,154 @@ msgstr ""
 "Forpligtelse til at vælge en by på wp_Geonames -listen under registrering "
 "(hvis plugin er installeret)"
 
-#: ../inc/base.php:1375
+#: ../inc/base.php:1380
 msgid "Display a different name than login"
 msgstr "Vis et andet navn end login"
 
-#: ../inc/base.php:1379
+#: ../inc/base.php:1384
 msgid "Uneditable after registration"
 msgstr "Ubehandlet efter registrering"
 
-#: ../inc/base.php:1380
+#: ../inc/base.php:1385
 msgid "Editable in \"my account\""
 msgstr "Redigerbar i \"min konto\""
 
-#: ../inc/base.php:1385
+#: ../inc/base.php:1390
 msgid "Number of portrait on logged out plugin homepage"
 msgstr "Antal portræt i usammenhængende hjemmeside"
 
-#: ../inc/base.php:1390
+#: ../inc/base.php:1395
 msgid "Update now"
 msgstr "Opdater nu"
 
-#: ../inc/base.php:1395
+#: ../inc/base.php:1400
 msgid "Min width of portrait on logged out plugin homepage"
 msgstr "Min bredde af portræt i usammenhængende hjemmeside"
 
-#: ../inc/base.php:1401
+#: ../inc/base.php:1406
 msgid "Min width of portrait on logged out plugin homepage on small screen"
 msgstr "Min bredde af portræt i usammenhængende hjemmeside på lille skærm"
 
-#: ../inc/base.php:1406
+#: ../inc/base.php:1411
 msgid "Number of days to wait before presence homepage"
 msgstr "Antal dage f&oslash;r hjemmesiden vises"
 
-#: ../inc/base.php:1414
+#: ../inc/base.php:1419
 msgid "Max number of results per search"
 msgstr "Max antal resultater der kan vises per s&oslash;gning"
 
-#: ../inc/base.php:1426
+#: ../inc/base.php:1431
 msgid "Dynamic loading of search results"
 msgstr "Dynamisk indlæsning af søgeresultater"
 
-#: ../inc/base.php:1430
+#: ../inc/base.php:1435
 msgid "Display profiles searched in a new tab"
 msgstr "Visningsprofiler søgte i en ny fane"
 
-#: ../inc/base.php:1436
+#: ../inc/base.php:1441
 msgid "Only members from the same country on the logged on plugin homepage"
 msgstr "Kun mit land på min hjemmeside"
 
-#: ../inc/base.php:1442 ../templates/rencontre_my_home.php:33
+#: ../inc/base.php:1447 ../templates/rencontre_my_home.php:33
 msgid "Today's birthday"
 msgstr "De har f&oslash;dselsdag i dag"
 
-#: ../inc/base.php:1446
+#: ../inc/base.php:1451
 msgid "Profiles currently online"
 msgstr "Profiler der er online"
 
-#: ../inc/base.php:1450
+#: ../inc/base.php:1455
 msgid "Enable chat"
 msgstr "Tilf&oslash;j Chat"
 
-#: ../inc/base.php:1454
+#: ../inc/base.php:1459
 msgid "Chat thread down (Android)"
 msgstr "Chat -tråd ned (Android)"
 
-#: ../inc/base.php:1458
+#: ../inc/base.php:1463
 msgid "Geolocation"
 msgstr "Geolocation"
 
-#: ../inc/base.php:1462
+#: ../inc/base.php:1467
 msgid "Number of photos"
 msgstr "Antallet af billeder"
 
-#: ../inc/base.php:1470
+#: ../inc/base.php:1475
 msgid "Regenerate all photos"
 msgstr "Regenerere alle fotos"
 
-#: ../inc/base.php:1475
+#: ../inc/base.php:1480
 msgid "View a discrete copyright on photos"
 msgstr "S&aelig;t en diskret copyright p&aring; billeder"
 
-#: ../inc/base.php:1479
+#: ../inc/base.php:1484
 msgid "Upwardly inclined"
 msgstr "Vippes op"
 
-#: ../inc/base.php:1480
+#: ../inc/base.php:1485
 msgid "Downwardly inclined"
 msgstr "Skrå nedadgående"
 
-#: ../inc/base.php:1485
+#: ../inc/base.php:1490
 msgid "Copyright text on pictures. Empty => Site URL."
 msgstr "Copyright tekst på billeder. Tom => site URL."
 
-#: ../inc/base.php:1489
+#: ../inc/base.php:1494
 msgid "Lightbox Image Gallery"
 msgstr "Lightbox Billedgalleri"
 
-#: ../inc/base.php:1493
+#: ../inc/base.php:1498
 msgid "Members without photo are less visible"
 msgstr "Medlemmer uden foto er mindre synlige"
 
-#: ../inc/base.php:1497
+#: ../inc/base.php:1502
 msgid "Members without photo cannot zoom other members"
 msgstr "Medlemmer uden foto kan ikke zoome andre medlemmer"
 
-#: ../inc/base.php:1501 ../inc/rencontre_widget.php:482
-#: ../inc/rencontre_widget.php:2096 ../inc/rencontre_widget.php:2743
-#: ../inc/rencontre_widget.php:3293
+#: ../inc/base.php:1506 ../inc/rencontre_widget.php:482
+#: ../inc/rencontre_widget.php:2097 ../inc/rencontre_widget.php:2773
+#: ../inc/rencontre_widget.php:3320
 msgid "Members without photo, attention-catcher and ad cannot send message"
 msgstr "Medlemmer uden foto, krog og ad kan ikke sende besked"
 
-#: ../inc/base.php:1505 ../inc/rencontre_widget.php:504
+#: ../inc/base.php:1510 ../inc/rencontre_widget.php:504
 msgid "Members without photo, attention-catcher and ad cannot make a report"
 msgstr "Medlemmer uden foto, krog og ad kan ikke lave en rapport"
 
-#: ../inc/base.php:1509
+#: ../inc/base.php:1514
 msgid "Members cannot hide their profile"
 msgstr "Medlemmer kan ikke skjule deres profil"
 
-#: ../inc/base.php:1529
+#: ../inc/base.php:1535
 msgid "Send an email to the user whose account is deleted"
 msgstr "Send e-mail til bruger n&aring;r profilen er slettet"
 
-#: ../inc/base.php:1533
+#: ../inc/base.php:1539
 msgid "Automatic sending a summary email to members (shared daily)"
 msgstr ""
 "Automatisk sende en email resumé til medlemmerne (distribueret hver dag)"
 
-#: ../inc/base.php:1538
+#: ../inc/base.php:1544
 msgid "Fortnightly"
 msgstr "Hver fjortende dag"
 
-#: ../inc/base.php:1539
+#: ../inc/base.php:1545
 msgid "Weekly"
 msgstr "Ugentlig"
 
-#: ../inc/base.php:1543 ../inc/base.php:1594
+#: ../inc/base.php:1547 ../inc/base.php:1595
 msgid "Up this week"
 msgstr "I alt denne uge"
 
-#: ../inc/base.php:1543 ../inc/base.php:1594
+#: ../inc/base.php:1547 ../inc/base.php:1595
 msgid "mail/hour"
 msgstr "e-mail/timer"
 
-#: ../inc/base.php:1543
+#: ../inc/base.php:1547
 msgid "sent during maintenance"
 msgstr "sendes under vedligeholdelse"
 
-#: ../inc/base.php:1548
+#: ../inc/base.php:1552
 msgid ""
 "Introductory text for the summary email (After hello login - Before the "
 "smiles and contact requests)"
@@ -418,39 +426,39 @@ msgstr ""
 "Indledende tekst til den m&aring;nedlige e-mail (Efter goddag login - "
 "F&oslash;r smil, anmodninger og kontaktoplysninger)"
 
-#: ../inc/base.php:1554
+#: ../inc/base.php:1558
 msgid "Only my country in summary email"
 msgstr "Kun mit land i kortfattet email"
 
-#: ../inc/base.php:1561
+#: ../inc/base.php:1565
 msgid "Also send an email for a smile"
 msgstr "Også sende en e-mail for et smil"
 
-#: ../inc/base.php:1567
+#: ../inc/base.php:1571
 msgid "Automatically sending an email happy birthday members"
 msgstr "Send automatisk e-mail til profiler der har f&oslash;dselsdag"
 
-#: ../inc/base.php:1571
+#: ../inc/base.php:1575
 msgid "Full text for the birthday mail (After hello pseudo)"
 msgstr "F&oslash;dselsdags tekst til e-mail, efter Hej og profilnavnet"
 
-#: ../inc/base.php:1575
+#: ../inc/base.php:1579
 msgid "Max number of mails sent per hour"
 msgstr "Max antal e-mails der kan sende per time"
 
-#: ../inc/base.php:1594
+#: ../inc/base.php:1595
 msgid "except during maintenance"
 msgstr "undtagen i forbindelse med vedligeholdelse"
 
-#: ../inc/base.php:1599
+#: ../inc/base.php:1600
 msgid "No members without photo in automatic mails"
 msgstr "Ingen medlemmer uden foto i automatiske mails"
 
-#: ../inc/base.php:1603
+#: ../inc/base.php:1604
 msgid "Force HTML mode (mail not readable)"
 msgstr "Kraft HTML-tilstand (mail ikke læses)"
 
-#: ../inc/base.php:1607
+#: ../inc/base.php:1608
 msgid ""
 "The language used for emails is the one of your ADMIN interface (hardcoded "
 "in DB)."
@@ -458,55 +466,55 @@ msgstr ""
 "Det sprog, der bruges til e-mails, er det sprog, der bruges i din ADMIN-"
 "grænseflade (hardkodet i DB)."
 
-#: ../inc/base.php:1630
+#: ../inc/base.php:1631
 msgid "Export members in CSV"
 msgstr "Eksport medlemmer i CSV"
 
-#: ../inc/base.php:1634
+#: ../inc/base.php:1635
 msgid "All members"
 msgstr "Alle medlemmer"
 
-#: ../inc/base.php:1635
+#: ../inc/base.php:1636
 msgid "Active last month"
 msgstr "Aktive sidste måned"
 
-#: ../inc/base.php:1636
+#: ../inc/base.php:1637
 msgid "Active last 2 months"
 msgstr "Aktive sidste 2 måneder"
 
-#: ../inc/base.php:1637
+#: ../inc/base.php:1638
 msgid "Active last 6 months"
 msgstr "Aktive sidste 6 måneder"
 
-#: ../inc/base.php:1638
+#: ../inc/base.php:1639
 msgid "Active last 12 months"
 msgstr "Aktive sidste 12 måneder"
 
-#: ../inc/base.php:1642
+#: ../inc/base.php:1643
 msgid "Only members with photo"
 msgstr "Kun medlemmer med foto"
 
-#: ../inc/base.php:1645
+#: ../inc/base.php:1646
 msgid "Only members with attention-catcher and ad"
 msgstr "Kun medlemmer med titel og annonce"
 
-#: ../inc/base.php:1647
+#: ../inc/base.php:1648
 msgid "Export in CSV"
 msgstr "Eksport i CSV"
 
-#: ../inc/base.php:1650
+#: ../inc/base.php:1651
 msgid "Get back photos by FTP in wp-content/uploads/tmp/"
 msgstr "Kom tilbage billeder via FTP i wp-content/uploads/tmp/"
 
-#: ../inc/base.php:1653
+#: ../inc/base.php:1654
 msgid "Import members in CSV"
 msgstr "Importer medlemmer i CSV"
 
-#: ../inc/base.php:1654
+#: ../inc/base.php:1655
 msgid "Manual method"
 msgstr "Manuel metode"
 
-#: ../inc/base.php:1656
+#: ../inc/base.php:1657
 msgid ""
 "Put members photos in wp-content/uploads/tmp/photo_import/ by FTP before the "
 "start (right RW - no sub folder - .jpg - no zip)."
@@ -514,15 +522,15 @@ msgstr ""
 "Put medlemmernes billeder i wp-content/uploads/tmp/photo_import/ via FTP før "
 "start (højre RW - ingen undermappe - .jpg - ingen zip)."
 
-#: ../inc/base.php:1657
+#: ../inc/base.php:1658
 msgid "Select your CSV file (.csv - no zip)."
 msgstr "Vælg din CSV-fil (.csv - ingen zip)."
 
-#: ../inc/base.php:1658 ../inc/base.php:1674
+#: ../inc/base.php:1659 ../inc/base.php:1675
 msgid "Import in CSV"
 msgstr "Import i CSV"
 
-#: ../inc/base.php:1660
+#: ../inc/base.php:1661
 msgid ""
 "Make an export and look at it to get the right format (The first line is not "
 "treated)."
@@ -530,11 +538,11 @@ msgstr ""
 "Foretag en eksport og se på det for at få det rigtige format (første linje "
 "ikke behandles)."
 
-#: ../inc/base.php:1661
+#: ../inc/base.php:1662
 msgid "Zip package"
 msgstr "ZIP-pakke"
 
-#: ../inc/base.php:1662
+#: ../inc/base.php:1663
 msgid ""
 "Create a zip file containing a .csv file and a \"photo_import\" folder with "
 "the members' photos in .jpg."
@@ -542,11 +550,11 @@ msgstr ""
 "Opret en zip-fil, der indeholder en .csv-fil og en \"photo_import\" -mappe "
 "med medlemmernes fotos i .jpg."
 
-#: ../inc/base.php:1667
+#: ../inc/base.php:1668
 msgid "CSV or ZIP File"
 msgstr "CSV- eller ZIP-fil"
 
-#: ../inc/base.php:1671
+#: ../inc/base.php:1672
 msgid ""
 "In case of interruption during the import of photos, restart the procedure. "
 "Doubloons are killed."
@@ -554,326 +562,326 @@ msgstr ""
 "I tilfælde af afbrydelse under import af billeder, begynde forfra "
 "proceduren. Dubloner bliver dræbt."
 
-#: ../inc/base.php:1675
+#: ../inc/base.php:1676
 msgid "File loaded"
 msgstr "indlæst"
 
-#: ../inc/base.php:1676
+#: ../inc/base.php:1677
 msgid "Error !"
 msgstr "Fejl !"
 
-#: ../inc/base.php:1677
+#: ../inc/base.php:1678
 msgid "Import data"
 msgstr "Importer data"
 
-#: ../inc/base.php:1678
+#: ../inc/base.php:1679
 msgid "completed"
 msgstr "afsluttet"
 
-#: ../inc/base.php:1680
+#: ../inc/base.php:1681
 msgid "Photos Import"
 msgstr "Billeder Import"
 
-#: ../inc/base.php:1682
+#: ../inc/base.php:1683
 msgid "Import completed"
 msgstr "import afsluttet"
 
-#: ../inc/base.php:1730 ../inc/base.php:2104 ../rencontre.php:225
+#: ../inc/base.php:1731 ../inc/base.php:2105 ../rencontre.php:225
 #: ../rencontre.php:233
 msgid "Members"
 msgstr "Profiler"
 
-#: ../inc/base.php:1739
+#: ../inc/base.php:1740
 msgid "Number of registered members"
 msgstr "Antal af registerede profiler"
 
-#: ../inc/base.php:1740
+#: ../inc/base.php:1741
 msgid "Number of members with profile and photo"
 msgstr "Antal af profiler med foto"
 
-#: ../inc/base.php:1741 ../inc/rencontre_widget.php:2607
+#: ../inc/base.php:1742 ../inc/rencontre_widget.php:2640
 #: ../templates/rencontre_my_home.php:49 ../templates/rencontre_my_home.php:51
 msgid "Online now"
 msgstr "Online nu"
 
-#: ../inc/base.php:1747
+#: ../inc/base.php:1748
 msgid "Statistic"
 msgstr "Statistik"
 
-#: ../inc/base.php:1768
+#: ../inc/base.php:1769
 msgid "Add new from WordPress"
 msgstr "Nyt medlem fra WordPress"
 
-#: ../inc/base.php:1772
+#: ../inc/base.php:1773
 msgid "Alias or email or ID"
 msgstr "Alias eller e-mail eller ID"
 
-#: ../inc/base.php:1774 ../templates/rencontre_search.php:179
+#: ../inc/base.php:1775 ../templates/rencontre_search.php:179
 #: ../templates/rencontre_search.php:182
-#: ../templates/rencontre_sidebar_quick_search.php:112
-#: ../templates/rencontre_sidebar_quick_search.php:115
+#: ../templates/rencontre_sidebar_quick_search.php:133
+#: ../templates/rencontre_sidebar_quick_search.php:136
 msgid "Find"
 msgstr "S&oslash;g"
 
-#: ../inc/base.php:1795 ../inc/rencontre_filter.php:1874 ../rencontre.php:425
+#: ../inc/base.php:1796 ../inc/rencontre_filter.php:1116 ../rencontre.php:427
 #: ../templates/rencontre_account_delete.php:16
 msgid "Account deletion"
 msgstr "Sletning af profil og konto"
 
-#: ../inc/base.php:1796 ../inc/rencontre_filter.php:1875 ../rencontre.php:426
+#: ../inc/base.php:1797 ../inc/rencontre_filter.php:1117 ../rencontre.php:428
 msgid "Your account has been deleted"
 msgstr "Din konto er slettet"
 
-#: ../inc/base.php:1869
+#: ../inc/base.php:1870
 msgid "Reason for this action"
 msgstr "Årsag til denne handling"
 
-#: ../inc/base.php:1875 ../templates/rencontre_message_write.php:82
+#: ../inc/base.php:1876 ../templates/rencontre_message_write.php:82
 msgid "Send"
 msgstr "Send"
 
-#: ../inc/base.php:1887 ../inc/base.php:1888 ../inc/base.php:1890
-#: ../inc/base.php:1892 ../inc/base.php:1897 ../inc/base.php:1898
-#: ../inc/base.php:1899 ../inc/base.php:1901 ../inc/base.php:2471
-#: ../inc/base.php:2472 ../inc/base.php:2473 ../inc/base.php:2475
+#: ../inc/base.php:1888 ../inc/base.php:1889 ../inc/base.php:1891
+#: ../inc/base.php:1893 ../inc/base.php:1898 ../inc/base.php:1899
+#: ../inc/base.php:1900 ../inc/base.php:1902 ../inc/base.php:2472
+#: ../inc/base.php:2473 ../inc/base.php:2474 ../inc/base.php:2476
 msgid "Sort"
 msgstr "Sortere"
 
-#: ../inc/base.php:1888
+#: ../inc/base.php:1889
 msgid "Action"
 msgstr "Handling"
 
-#: ../inc/base.php:1889
+#: ../inc/base.php:1890
 msgid "Photo"
 msgstr "Foto"
 
-#: ../inc/base.php:1890 ../templates/rencontre_search.php:169
+#: ../inc/base.php:1891 ../templates/rencontre_search.php:169
 msgid "Alias"
 msgstr "Alias"
 
-#: ../inc/base.php:1890 ../inc/rencontre_filter.php:1587
-#: ../templates/rencontre_account.php:65 ../templates/rencontre_imgreg.php:33
+#: ../inc/base.php:1891 ../inc/rencontre_filter.php:827
+#: ../templates/rencontre_account.php:68 ../templates/rencontre_imgreg.php:33
 msgid "My name"
 msgstr "Mit navn"
 
-#: ../inc/base.php:1891
+#: ../inc/base.php:1892
 msgid "Sex"
 msgstr "køn"
 
-#: ../inc/base.php:1892 ../templates/rencontre_search.php:31
+#: ../inc/base.php:1893 ../templates/rencontre_search.php:31
 msgid "Age"
 msgstr "Alder"
 
-#: ../inc/base.php:1893 ../templates/rencontre_search.php:53
+#: ../inc/base.php:1894 ../templates/rencontre_search.php:53
 msgid "Height"
 msgstr "Højde"
 
-#: ../inc/base.php:1894 ../templates/rencontre_search.php:79
+#: ../inc/base.php:1895 ../templates/rencontre_search.php:79
 msgid "Weight"
 msgstr "V&aelig;gt"
 
-#: ../inc/base.php:1895 ../inc/base.php:3043 ../inc/base.php:4335
+#: ../inc/base.php:1896 ../inc/base.php:3044 ../inc/base.php:4401
 #: ../templates/rencontre_libre_search.php:65
 #: ../templates/rencontre_menu.php:34 ../templates/rencontre_menu.php:37
 #: ../templates/rencontre_search.php:16
 msgid "Search"
 msgstr "S&oslash;gning"
 
-#: ../inc/base.php:1896
+#: ../inc/base.php:1897
 msgid "Hang"
 msgstr "Hang"
 
-#: ../inc/base.php:1897
+#: ../inc/base.php:1898
 msgid "Place"
 msgstr "Sted"
 
-#: ../inc/base.php:1898
+#: ../inc/base.php:1899
 msgid "Ad (change)"
 msgstr "Annonce &aelig;ndring"
 
-#: ../inc/base.php:1898
+#: ../inc/base.php:1899
 msgid "Registered"
 msgstr "Anbefalet"
 
-#: ../inc/base.php:1899 ../inc/base.php:2473
+#: ../inc/base.php:1900 ../inc/base.php:2474
 msgid "IP address"
 msgstr "IP adresse"
 
-#: ../inc/base.php:1901
+#: ../inc/base.php:1902
 msgid "Reporting"
 msgstr "Rapportering"
 
-#: ../inc/base.php:1925 ../inc/base.php:1937
+#: ../inc/base.php:1926 ../inc/base.php:1938
 msgid "See"
 msgstr "Se"
 
-#: ../inc/base.php:1929
+#: ../inc/base.php:1930
 msgid "Unblock this member"
 msgstr "fjerne blokeringen af dette medlem"
 
-#: ../inc/base.php:1929 ../inc/base.php:2614
+#: ../inc/base.php:1930 ../inc/base.php:2615
 msgid "Block this member"
 msgstr "Bloker denne bruger"
 
-#: ../inc/base.php:1930
+#: ../inc/base.php:1931
 msgid "Allow sending message"
 msgstr "Tillad at sende besked"
 
-#: ../inc/base.php:1930
+#: ../inc/base.php:1931
 msgid "Prohibit contact"
 msgstr "Forbyd kontakt"
 
-#: ../inc/base.php:1932
+#: ../inc/base.php:1933
 msgid "New fast account not completed"
 msgstr "Ny hurtig konto ikke gennemført"
 
-#: ../inc/base.php:1933
+#: ../inc/base.php:1934
 msgid "Remove - Black list email"
 msgstr "Fjerne - Blacklist email"
 
-#: ../inc/base.php:1948 ../inc/base.php:2220
-#: ../templates/rencontre_account.php:162
+#: ../inc/base.php:1949 ../inc/base.php:2221
+#: ../templates/rencontre_account.php:165
 #: ../templates/rencontre_portrait.php:98
 #: ../templates/rencontre_registration_part1.php:111
 #: ../templates/rencontre_search.php:59 ../templates/rencontre_search.php:68
 msgid "cm"
 msgstr "cm"
 
-#: ../inc/base.php:1948 ../inc/base.php:2221
-#: ../templates/rencontre_account.php:165
+#: ../inc/base.php:1949 ../inc/base.php:2222
+#: ../templates/rencontre_account.php:168
 #: ../templates/rencontre_portrait.php:98
 #: ../templates/rencontre_registration_part1.php:114
 #: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
 msgid "ft"
 msgstr "ft"
 
-#: ../inc/base.php:1948 ../inc/base.php:2221
-#: ../templates/rencontre_account.php:165
+#: ../inc/base.php:1949 ../inc/base.php:2222
+#: ../templates/rencontre_account.php:168
 #: ../templates/rencontre_portrait.php:98
 #: ../templates/rencontre_registration_part1.php:114
 #: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
 msgid "in"
 msgstr "in"
 
-#: ../inc/base.php:1950 ../inc/base.php:2233
-#: ../templates/rencontre_account.php:181
+#: ../inc/base.php:1951 ../inc/base.php:2234
+#: ../templates/rencontre_account.php:184
 #: ../templates/rencontre_portrait.php:102
 #: ../templates/rencontre_registration_part1.php:129
 #: ../templates/rencontre_search.php:85 ../templates/rencontre_search.php:94
 msgid "kg"
 msgstr "kg"
 
-#: ../inc/base.php:1950 ../inc/base.php:2234
-#: ../templates/rencontre_account.php:184
+#: ../inc/base.php:1951 ../inc/base.php:2235
+#: ../templates/rencontre_account.php:187
 #: ../templates/rencontre_portrait.php:102
 #: ../templates/rencontre_registration_part1.php:132
 #: ../templates/rencontre_search.php:86 ../templates/rencontre_search.php:95
 msgid "lbs"
 msgstr "lbs"
 
-#: ../inc/base.php:1953 ../inc/base.php:2324 ../inc/rencontre_widget.php:1082
+#: ../inc/base.php:1954 ../inc/base.php:2325 ../inc/rencontre_widget.php:1082
 #: ../inc/rencontre_widget.php:1242 ../inc/rencontre_widget.php:1885
-#: ../inc/rencontre_widget.php:2758 ../inc/rencontre_widget.php:3308
-#: ../templates/rencontre_account.php:310
+#: ../inc/rencontre_widget.php:2788 ../inc/rencontre_widget.php:3335
+#: ../templates/rencontre_account.php:313
 #: ../templates/rencontre_sidebar_top.php:57
 msgid "Profile switched off"
 msgstr "Profilen er slået fra"
 
-#: ../inc/base.php:1954 ../inc/base.php:2323 ../inc/base.php:2614
+#: ../inc/base.php:1955 ../inc/base.php:2324 ../inc/base.php:2615
 #: ../inc/rencontre_widget.php:1081 ../inc/rencontre_widget.php:1885
-#: ../inc/rencontre_widget.php:2107 ../inc/rencontre_widget.php:2758
-#: ../inc/rencontre_widget.php:3308 ../templates/rencontre_account.php:309
+#: ../inc/rencontre_widget.php:2108 ../inc/rencontre_widget.php:2788
+#: ../inc/rencontre_widget.php:3335 ../templates/rencontre_account.php:312
 #: ../templates/rencontre_sidebar_top.php:57
 msgid "Profile hidden"
 msgstr "Profil skjult"
 
-#: ../inc/base.php:1956
+#: ../inc/base.php:1957
 msgid "multiple choice"
 msgstr "Multi liste"
 
-#: ../inc/base.php:1958
+#: ../inc/base.php:1959
 msgid "to"
 msgstr "til"
 
-#: ../inc/base.php:2104
+#: ../inc/base.php:2105
 msgid "Change a Profile"
 msgstr "ændre en profil"
 
-#: ../inc/base.php:2105 ../inc/rencontre_widget.php:2787
-#: ../inc/rencontre_widget.php:3338
+#: ../inc/base.php:2106 ../inc/rencontre_widget.php:2817
+#: ../inc/rencontre_widget.php:3365
 msgid "Previous page"
 msgstr "Forige side"
 
-#: ../inc/base.php:2113 ../inc/base.php:2335
+#: ../inc/base.php:2114 ../inc/base.php:2336
 #: ../templates/rencontre_portrait_edit.php:105
 #: ../templates/rencontre_portrait_edit.php:183
 msgid "Save profile"
 msgstr "Gem profil"
 
-#: ../inc/base.php:2123
+#: ../inc/base.php:2124
 msgid "Click to delete"
 msgstr "Klik for at slette"
 
-#: ../inc/base.php:2126 ../templates/rencontre_portrait_edit.php:54
+#: ../inc/base.php:2127 ../templates/rencontre_portrait_edit.php:54
 msgid "Click to add a photo"
 msgstr "Klik for at tilf&oslash;je billede"
 
-#: ../inc/base.php:2131 ../templates/rencontre_portrait_edit.php:74
+#: ../inc/base.php:2132 ../templates/rencontre_portrait_edit.php:74
 msgid "Delete all photos"
 msgstr "Slet alle billeder"
 
-#: ../inc/base.php:2142 ../templates/rencontre_portrait_edit.php:96
+#: ../inc/base.php:2143 ../templates/rencontre_portrait_edit.php:96
 msgid "My attention-catcher"
 msgstr "Min karakter"
 
-#: ../inc/base.php:2144 ../templates/rencontre_portrait_edit.php:100
+#: ../inc/base.php:2145 ../templates/rencontre_portrait_edit.php:100
 msgid "My ad"
 msgstr "Min annonce"
 
-#: ../inc/base.php:2152 ../templates/rencontre_account.php:71
+#: ../inc/base.php:2153 ../templates/rencontre_account.php:74
 #: ../templates/rencontre_registration_part1.php:59
 msgid "I am"
 msgstr "Om mig"
 
-#: ../inc/base.php:2162 ../templates/rencontre_account.php:85
+#: ../inc/base.php:2163 ../templates/rencontre_account.php:88
 #: ../templates/rencontre_registration_part1.php:71
 msgid "Born"
 msgstr "F&oslash;dt den"
 
-#: ../inc/base.php:2184 ../templates/rencontre_account.php:125
+#: ../inc/base.php:2185 ../templates/rencontre_account.php:128
 #: ../templates/rencontre_registration_part2.php:30
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:17
 msgid "My country"
 msgstr "Mit land"
 
-#: ../inc/base.php:2195 ../templates/rencontre_account.php:136
+#: ../inc/base.php:2196 ../templates/rencontre_account.php:139
 #: ../templates/rencontre_registration_part2.php:41
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:25
 msgid "My region"
 msgstr "Min region"
 
-#: ../inc/base.php:2206 ../templates/rencontre_account.php:146
+#: ../inc/base.php:2207 ../templates/rencontre_account.php:149
 #: ../templates/rencontre_registration_part2.php:50
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:31
 msgid "My city"
 msgstr "Min by"
 
-#: ../inc/base.php:2209
+#: ../inc/base.php:2210
 msgid "Reset GPS"
 msgstr "Nulstil GPS"
 
-#: ../inc/base.php:2216 ../templates/rencontre_account.php:157
+#: ../inc/base.php:2217 ../templates/rencontre_account.php:160
 #: ../templates/rencontre_registration_part1.php:106
 msgid "My height"
 msgstr "Min højde"
 
-#: ../inc/base.php:2229 ../templates/rencontre_account.php:176
+#: ../inc/base.php:2230 ../templates/rencontre_account.php:179
 #: ../templates/rencontre_registration_part1.php:124
 msgid "My weight"
 msgstr "Min v&aelig;gt"
 
-#: ../inc/base.php:2241 ../inc/rencontre_filter.php:1592
-#: ../templates/rencontre_account.php:195 ../templates/rencontre_imgreg.php:39
+#: ../inc/base.php:2242 ../inc/rencontre_filter.php:832
+#: ../templates/rencontre_account.php:198 ../templates/rencontre_imgreg.php:39
 #: ../templates/rencontre_libre_search.php:30
 #: ../templates/rencontre_portrait.php:150
 #: ../templates/rencontre_registration_part3.php:33
@@ -882,14 +890,14 @@ msgstr "Min v&aelig;gt"
 msgid "I'm looking for"
 msgstr "Jeg s&oslash;ger efter"
 
-#: ../inc/base.php:2257 ../templates/rencontre_account.php:224
+#: ../inc/base.php:2258 ../templates/rencontre_account.php:227
 #: ../templates/rencontre_registration_part3.php:60
 msgid "Age min/max"
 msgstr "Alder min/max"
 
-#: ../inc/base.php:2262 ../inc/base.php:2269 ../inc/rencontre_widget.php:537
-#: ../templates/rencontre_account.php:230
-#: ../templates/rencontre_account.php:239
+#: ../inc/base.php:2263 ../inc/base.php:2270 ../inc/rencontre_widget.php:537
+#: ../templates/rencontre_account.php:233
+#: ../templates/rencontre_account.php:242
 #: ../templates/rencontre_libre_search.php:46
 #: ../templates/rencontre_libre_search.php:56
 #: ../templates/rencontre_mini_portrait.php:54
@@ -900,112 +908,114 @@ msgstr "Alder min/max"
 #: ../templates/rencontre_search.php:36 ../templates/rencontre_search.php:43
 #: ../templates/rencontre_search_result.php:47
 #: ../templates/rencontre_search_result.php:67
-#: ../templates/rencontre_sidebar_quick_search.php:32
-#: ../templates/rencontre_sidebar_quick_search.php:40
+#: ../templates/rencontre_sidebar_quick_search.php:33
+#: ../templates/rencontre_sidebar_quick_search.php:41
 #: ../templates/rencontre_sidebar_top.php:47
 msgid "years"
 msgstr "&aring;rig"
 
-#: ../inc/base.php:2277 ../templates/rencontre_account.php:249
+#: ../inc/base.php:2278 ../templates/rencontre_account.php:252
 #: ../templates/rencontre_registration_part3.php:85
 msgid "For"
 msgstr "Til"
 
-#: ../inc/base.php:2292
+#: ../inc/base.php:2293
 msgid "Reset"
 msgstr "Nulstil"
 
-#: ../inc/base.php:2294
+#: ../inc/base.php:2295
 msgid "Actions (contact request...)"
 msgstr "Handlinger (kontakt anmodning...)"
 
-#: ../inc/base.php:2295
+#: ../inc/base.php:2296
 msgid "Reports"
 msgstr "Rapporter"
 
-#: ../inc/base.php:2298
+#: ../inc/base.php:2299
 msgid "no mail"
 msgstr "ingen email"
 
-#: ../inc/base.php:2304 ../inc/rencontre_widget.php:371
+#: ../inc/base.php:2305 ../inc/rencontre_widget.php:371
+#: ../templates/rencontre_mini_portrait.php:68
 #: ../templates/rencontre_portrait.php:124
 #: ../templates/rencontre_portrait.php:154
 #: ../templates/rencontre_search_result.php:84
+#: ../templates/rencontre_search_result.php:87
 msgid "online"
 msgstr "online"
 
-#: ../inc/base.php:2311 ../inc/rencontre_filter.php:1693
+#: ../inc/base.php:2312 ../inc/rencontre_filter.php:933
 #: ../templates/rencontre_mail_fastreg_confirm.php:11
 msgid "Confirmation email"
 msgstr "Bekræftelsesmail"
 
-#: ../inc/base.php:2313 ../lang/rencontre-js-admin-lang.php:5
+#: ../inc/base.php:2314 ../lang/rencontre-js-admin-lang.php:5
 msgid "Confirm"
 msgstr "Bekr&aelig;ft"
 
-#: ../inc/base.php:2319 ../templates/rencontre_account.php:303
+#: ../inc/base.php:2320 ../templates/rencontre_account.php:306
 msgid "Profile visibility"
 msgstr "Profilsynlighed"
 
-#: ../inc/base.php:2322 ../templates/rencontre_account.php:308
+#: ../inc/base.php:2323 ../templates/rencontre_account.php:311
 msgid "Profile visible"
 msgstr "Profilen er synlig"
 
-#: ../inc/base.php:2404 ../inc/rencontre_widget.php:642
+#: ../inc/base.php:2405 ../inc/rencontre_widget.php:642
 msgid "Done"
 msgstr "F&aelig;rdig"
 
-#: ../inc/base.php:2436 ../rencontre.php:226 ../rencontre.php:234
+#: ../inc/base.php:2437 ../rencontre.php:226 ../rencontre.php:234
 msgid "Jail"
 msgstr "F&aelig;ngsel"
 
-#: ../inc/base.php:2437
+#: ../inc/base.php:2438
 msgid ""
 "List of members removed by Admin. They are blacklisted. Subscription blocked"
 msgstr ""
 "Liste over medlemmer fjernet af Admin. De er sortlistet. Abonnement blokeret"
 
-#: ../inc/base.php:2437
+#: ../inc/base.php:2438
 msgid "days"
 msgstr "dage"
 
-#: ../inc/base.php:2471
+#: ../inc/base.php:2472
 msgid "Date"
 msgstr "Dato"
 
-#: ../inc/base.php:2472
+#: ../inc/base.php:2473
 msgid "Email address"
 msgstr "E-mail adresse"
 
-#: ../inc/base.php:2474
+#: ../inc/base.php:2475
 msgid "End"
 msgstr "Slut"
 
-#: ../inc/base.php:2475
+#: ../inc/base.php:2476
 msgid "Banning"
 msgstr "Forbyde"
 
-#: ../inc/base.php:2483
+#: ../inc/base.php:2484
 msgid "Release"
 msgstr "Frigivet"
 
-#: ../inc/base.php:2484
+#: ../inc/base.php:2485
 msgid "Only email"
 msgstr "Kun email"
 
-#: ../inc/base.php:2484
+#: ../inc/base.php:2485
 msgid "Only IP"
 msgstr "Kun IP"
 
-#: ../inc/base.php:2484
+#: ../inc/base.php:2485
 msgid "Email and IP"
 msgstr "Email og IP"
 
-#: ../inc/base.php:2489
+#: ../inc/base.php:2490
 msgid "Banning IP is a Premium feature."
 msgstr "Forbyde IP er en Premium funktion."
 
-#: ../inc/base.php:2533
+#: ../inc/base.php:2534
 msgid ""
 "The profiles are not all translated into the language of the site. Users "
 "will see the character \"?\"."
@@ -1013,17 +1023,17 @@ msgstr ""
 "Profilerne er ikke alle oversat til webstedets sprog. Brugere vil se tegnet "
 "\"?\"."
 
-#: ../inc/base.php:2569 ../rencontre.php:227
+#: ../inc/base.php:2570 ../rencontre.php:227
 #: ../templates/rencontre_mail_regular.php:40
 #: ../templates/rencontre_message_write.php:49
 #: ../templates/rencontre_mini_portrait.php:66
-#: ../templates/rencontre_mini_portrait.php:69
-#: ../templates/rencontre_search_result.php:114
+#: ../templates/rencontre_mini_portrait.php:74
 #: ../templates/rencontre_search_result.php:117
+#: ../templates/rencontre_search_result.php:120
 msgid "Profile"
 msgstr "Profil"
 
-#: ../inc/base.php:2572
+#: ../inc/base.php:2573
 msgid ""
 "It does not appear to be any profile. You can load the default profile if "
 "you wish."
@@ -1031,15 +1041,15 @@ msgstr ""
 "Der er ikke nogen profil. Du kan indl&aelig;se en standard profil, hvis du "
 "&oslash;nsker det."
 
-#: ../inc/base.php:2574
+#: ../inc/base.php:2575
 msgid "Load profiles"
 msgstr "Vis profiler"
 
-#: ../inc/base.php:2583
+#: ../inc/base.php:2584
 msgid "You can create, rename and delete items from the profile."
 msgstr "Du kan oprette, omd&oslash;be og slette indhold fra profilen."
 
-#: ../inc/base.php:2585
+#: ../inc/base.php:2586
 msgid ""
 "Warning, this is not without consequences. The changes will be applied to "
 "the member profiles that can offend. Caution !"
@@ -1047,131 +1057,131 @@ msgstr ""
 "Advarsel, dette er ikke uden konsekvenser. &aelig;ndringerne vil blive "
 "anvendt til medlemslandene profiler, der kan chokere. Forsigtig!"
 
-#: ../inc/base.php:2587 ../inc/base.php:2897
+#: ../inc/base.php:2588 ../inc/base.php:2898
 msgid "Ref language"
 msgstr "Refererende sprog"
 
-#: ../inc/base.php:2587 ../inc/base.php:2897
+#: ../inc/base.php:2588 ../inc/base.php:2898
 msgid "Other"
 msgstr "Andre"
 
-#: ../inc/base.php:2596 ../inc/base.php:2908
+#: ../inc/base.php:2597 ../inc/base.php:2909
 msgid "Add Language (2 lowercase letters comply with country code)"
 msgstr ""
 "Tilf&oslash;j sprog (2 sm&aring; bogstaver i overensstemmelse med landekode)"
 
-#: ../inc/base.php:2598 ../inc/base.php:2910
+#: ../inc/base.php:2599 ../inc/base.php:2911
 msgid "Add a language"
 msgstr "Tilf&oslash;j et sprog"
 
-#: ../inc/base.php:2601 ../inc/base.php:2913
+#: ../inc/base.php:2602 ../inc/base.php:2914
 msgid "Remove a language and all related content"
 msgstr "Slet sprog og relateret indhold"
 
-#: ../inc/base.php:2605 ../inc/base.php:2917
+#: ../inc/base.php:2606 ../inc/base.php:2918
 msgid "Remove a language"
 msgstr "Slet sprog"
 
-#: ../inc/base.php:2611
+#: ../inc/base.php:2612
 msgid "User blocking if a required field is missing"
 msgstr "Brugerblokering, hvis et påkrævet felt mangler"
 
-#: ../inc/base.php:2613
+#: ../inc/base.php:2614
 msgid "Just show a warning"
 msgstr "Bare vis en advarsel"
 
-#: ../inc/base.php:2624
+#: ../inc/base.php:2625
 msgid "Add category"
 msgstr "Tilf&oslash;j kategori"
 
-#: ../inc/base.php:2648 ../lang/rencontre-js-admin-lang.php:10
+#: ../inc/base.php:2649 ../lang/rencontre-js-admin-lang.php:10
 #: ../templates/rencontre_portrait_edit.php:131
 msgid "Required field (hidden)"
 msgstr "Påkrævet felt (skjult)"
 
-#: ../inc/base.php:2666 ../inc/base.php:2686 ../inc/base.php:2720
-#: ../inc/base.php:2748
+#: ../inc/base.php:2667 ../inc/base.php:2687 ../inc/base.php:2721
+#: ../inc/base.php:2749
 msgid "Move Up"
 msgstr "Mount"
 
-#: ../inc/base.php:2667 ../inc/base.php:2687 ../inc/base.php:2721
-#: ../inc/base.php:2749
+#: ../inc/base.php:2668 ../inc/base.php:2688 ../inc/base.php:2722
+#: ../inc/base.php:2750
 msgid "Move Down"
 msgstr "Komme ned"
 
-#: ../inc/base.php:2668
+#: ../inc/base.php:2669
 msgid "Change the name"
 msgstr "Skift navn"
 
-#: ../inc/base.php:2669
+#: ../inc/base.php:2670
 msgid "Remove the category"
 msgstr "Slet kategorien"
 
-#: ../inc/base.php:2673 ../inc/base.php:2674
+#: ../inc/base.php:2674 ../inc/base.php:2675
 msgid "Add value to this category"
 msgstr "Tilf&oslash;j v&aelig;rdi til kategori"
 
-#: ../inc/base.php:2688 ../inc/base.php:2942
+#: ../inc/base.php:2689 ../inc/base.php:2943
 msgid "Change the name or type"
 msgstr "Skift navn og type"
 
-#: ../inc/base.php:2689 ../inc/base.php:2723 ../inc/base.php:2751
-#: ../inc/base.php:2943 ../inc/base.php:2954 ../inc/base.php:3186
-#: ../inc/base.php:3207 ../lang/rencontre-js-admin-lang.php:7
+#: ../inc/base.php:2690 ../inc/base.php:2724 ../inc/base.php:2752
+#: ../inc/base.php:2944 ../inc/base.php:2955 ../inc/base.php:3187
+#: ../inc/base.php:3208 ../lang/rencontre-js-admin-lang.php:7
 msgid "Remove"
 msgstr "Slet"
 
-#: ../inc/base.php:2696
+#: ../inc/base.php:2697
 msgid "A line of text (TEXT)"
 msgstr "Enkelt tekst linje"
 
-#: ../inc/base.php:2700
+#: ../inc/base.php:2701
 msgid "Large text box (TEXTAREA)"
 msgstr "Stor tekst boks ( skrivefelt )"
 
-#: ../inc/base.php:2705 ../inc/base.php:2733 ../inc/base.php:2948
-#: ../inc/base.php:3187 ../inc/base.php:3208
+#: ../inc/base.php:2706 ../inc/base.php:2734 ../inc/base.php:2949
+#: ../inc/base.php:3188 ../inc/base.php:3209
 msgid "Add Value"
 msgstr "Tilf&oslash;j v&aelig;rdi"
 
-#: ../inc/base.php:2706
+#: ../inc/base.php:2707
 msgid "Single choice list (SELECT)"
 msgstr "Single list ( v&aelig;lg )"
 
-#: ../inc/base.php:2722 ../inc/base.php:2750 ../inc/base.php:2766
-#: ../inc/base.php:2953 ../templates/rencontre_account.php:47
+#: ../inc/base.php:2723 ../inc/base.php:2751 ../inc/base.php:2767
+#: ../inc/base.php:2954 ../templates/rencontre_account.php:48
 msgid "Change"
 msgstr "Skift"
 
-#: ../inc/base.php:2734
+#: ../inc/base.php:2735
 msgid "Multiple choice list (CHECKBOX)"
 msgstr "Multi liste ( brug checkbox )"
 
-#: ../inc/base.php:2761
+#: ../inc/base.php:2762
 msgid "Numeric choice list (SELECT)"
 msgstr "Numerisk liste valg ( v&aelig;lg )"
 
-#: ../inc/base.php:2768 ../lang/rencontre-js-admin-lang.php:34
+#: ../inc/base.php:2769 ../lang/rencontre-js-admin-lang.php:34
 msgid "Step"
 msgstr "Trin"
 
-#: ../inc/base.php:2775
+#: ../inc/base.php:2776
 msgid "A date (DATE)"
 msgstr "En dato (DATE)"
 
-#: ../inc/base.php:2811 ../inc/base.php:2889
+#: ../inc/base.php:2812 ../inc/base.php:2890
 msgid "Countries and Regions"
 msgstr "Lande og regioner"
 
-#: ../inc/base.php:2812
+#: ../inc/base.php:2813
 msgid "Cleaner"
 msgstr "Renere"
 
-#: ../inc/base.php:2871
+#: ../inc/base.php:2872
 msgid "Datas are old. You should delete all countries and load the new ones."
 msgstr "Datas er gamle. Du skal slette alle lande og indlæse de nye."
 
-#: ../inc/base.php:2880
+#: ../inc/base.php:2881
 msgid ""
 "If a country is loaded in wp-geonames, the regions list of this country will "
 "come from the wp-geonames base and not from here."
@@ -1179,7 +1189,7 @@ msgstr ""
 "Hvis et land er indlæst i wp-geonames, kommer regionens liste over dette "
 "land fra wp-geonames basis og ikke herfra."
 
-#: ../inc/base.php:2892
+#: ../inc/base.php:2893
 msgid ""
 "The country table is empty. You can load the countries and regions by "
 "default if you wish."
@@ -1187,183 +1197,183 @@ msgstr ""
 "Lande tabellen er tom. Du kan indl&aelig;se de lande og regioner du &oslash;"
 "nsker som standard."
 
-#: ../inc/base.php:2893
+#: ../inc/base.php:2894
 msgid "Load countries"
 msgstr "Vis lande"
 
-#: ../inc/base.php:2896
+#: ../inc/base.php:2897
 msgid "You can create, rename and delete countries and regions."
 msgstr "Du kan oprette, omd&oslash;be og slette lande og regioner"
 
-#: ../inc/base.php:2923 ../inc/base.php:2924
+#: ../inc/base.php:2924 ../inc/base.php:2925
 msgid "Add a country"
 msgstr "Tilf&oslash;j land"
 
-#: ../inc/base.php:2926 ../inc/base.php:2927
+#: ../inc/base.php:2927 ../inc/base.php:2928
 msgid "Delete all countries"
 msgstr "Slet alle lande"
 
-#: ../inc/base.php:2949
+#: ../inc/base.php:2950
 msgid "Regions"
 msgstr "Regioner"
 
-#: ../inc/base.php:2970
+#: ../inc/base.php:2971
 msgid "Cleaning missing regions in users data"
 msgstr "Rengøring af manglende regioner i brugerdata"
 
-#: ../inc/base.php:2974
+#: ../inc/base.php:2975
 msgid "Missing regions"
 msgstr "Manglende regioner"
 
-#: ../inc/base.php:2994
+#: ../inc/base.php:2995
 msgid "Existing regions"
 msgstr "Eksisterende regioner"
 
-#: ../inc/base.php:3006
+#: ../inc/base.php:3007
 msgid "Replace"
 msgstr "Erstatte"
 
-#: ../inc/base.php:3041
+#: ../inc/base.php:3042
 msgid "Features"
 msgstr "Egenskaber"
 
-#: ../inc/base.php:3042
+#: ../inc/base.php:3043
 msgid "Words"
 msgstr "Sætninger"
 
-#: ../inc/base.php:3044
+#: ../inc/base.php:3045
 msgid "Templates"
 msgstr "Templates"
 
-#: ../inc/base.php:3049
+#: ../inc/base.php:3050
 msgid "Translate"
 msgstr "Oversætte"
 
-#: ../inc/base.php:3073
+#: ../inc/base.php:3074
 msgid "No country"
 msgstr "Intet land"
 
-#: ../inc/base.php:3077
+#: ../inc/base.php:3078
 msgid "No region"
 msgstr "Ingen region"
 
-#: ../inc/base.php:3081
+#: ../inc/base.php:3082
 msgid "No localisation"
 msgstr "Ingen lokalisering"
 
-#: ../inc/base.php:3085
+#: ../inc/base.php:3086
 msgid "No birth date"
 msgstr "Ingen fødselsdato"
 
-#: ../inc/base.php:3089
+#: ../inc/base.php:3090
 msgid "Min age"
 msgstr "Minimumsalder"
 
-#: ../inc/base.php:3101
+#: ../inc/base.php:3102
 msgid "Max age"
 msgstr "Maksimal alder"
 
-#: ../inc/base.php:3113
+#: ../inc/base.php:3114
 msgid "No smiles"
 msgstr "Ingen smil"
 
-#: ../inc/base.php:3117
+#: ../inc/base.php:3118
 msgid "No contact request"
 msgstr "Ingen kontaktforespørgsel"
 
-#: ../inc/base.php:3121
+#: ../inc/base.php:3122
 msgid "No weight"
 msgstr "Ingen vægt"
 
-#: ../inc/base.php:3125
+#: ../inc/base.php:3126
 msgid "Weight unit"
 msgstr "Vægtenhed"
 
-#: ../inc/base.php:3128
+#: ../inc/base.php:3129
 msgid "Kilograms"
 msgstr "Kilogram"
 
-#: ../inc/base.php:3129
+#: ../inc/base.php:3130
 msgid "Pounds"
 msgstr "Pounds"
 
-#: ../inc/base.php:3134
+#: ../inc/base.php:3135
 msgid "No height"
 msgstr "Ingen højde"
 
-#: ../inc/base.php:3138
+#: ../inc/base.php:3139
 msgid "Height unit"
 msgstr "Højde enhed"
 
-#: ../inc/base.php:3141
+#: ../inc/base.php:3142
 msgid "Meter"
 msgstr "Måler"
 
-#: ../inc/base.php:3142
+#: ../inc/base.php:3143
 msgid "Feet and Inches"
 msgstr "Fod og Tommer"
 
-#: ../inc/base.php:3147
+#: ../inc/base.php:3148
 msgid "No report"
 msgstr "ingen rapport"
 
-#: ../inc/base.php:3151
+#: ../inc/base.php:3152
 msgid "No emoticon"
 msgstr "Ingen smiley"
 
-#: ../inc/base.php:3155
+#: ../inc/base.php:3156
 msgid "No menu (I use WordPress menu)"
 msgstr "Uden menu (jeg bruge menuen WordPress)"
 
-#: ../inc/base.php:3159
+#: ../inc/base.php:3160
 msgid "No sidebar (I put it with widget)"
 msgstr "Ingen sidebar (jeg sætte det med widget)"
 
-#: ../inc/base.php:3163
+#: ../inc/base.php:3164
 msgid "Fit portraits width in home page"
 msgstr "Tilpas portrætter bredde på hjemmesiden"
 
-#: ../inc/base.php:3167
+#: ../inc/base.php:3168
 msgid "No ads on logged out plugin homepage"
 msgstr "Ingen annonce i usammenhængende hjemmeside"
 
-#: ../inc/base.php:3171
+#: ../inc/base.php:3172
 msgid "Only photo on logged out plugin homepage"
 msgstr "Kun foto i usammenhængende hjemmeside"
 
-#: ../inc/base.php:3175
+#: ../inc/base.php:3176
 msgid "Change relation type"
 msgstr "Skift relation typen"
 
-#: ../inc/base.php:3196
+#: ../inc/base.php:3197
 msgid "Change sex values"
 msgstr "Skift køn"
 
-#: ../inc/base.php:3217
+#: ../inc/base.php:3218
 msgid "Allow multi choice in relation and sex"
 msgstr "Tillad multi valg i forhold og køn"
 
-#: ../inc/base.php:3221
+#: ../inc/base.php:3222
 msgid "No homosexual"
 msgstr "Ingen homoseksuelle"
 
-#: ../inc/base.php:3225
+#: ../inc/base.php:3226
 msgid "No sex change"
 msgstr "Ingen kønsændring"
 
-#: ../inc/base.php:3229
+#: ../inc/base.php:3230
 msgid "Change register link on click a portrait"
 msgstr "Skift register link"
 
-#: ../inc/base.php:3229
+#: ../inc/base.php:3230
 msgid "(empty => default WP)"
 msgstr "(tom => standard WP)"
 
-#: ../inc/base.php:3233
+#: ../inc/base.php:3234
 msgid "No 'no email' button"
 msgstr "Ingen knappen 'ingen e-mail'"
 
-#: ../inc/base.php:3237
+#: ../inc/base.php:3238
 msgid ""
 "Be careful, already registered members will be in a category that no longer "
 "exists. They should update their account."
@@ -1371,22 +1381,22 @@ msgstr ""
 "Vær forsigtig, allerede registrerede medlemmer vil være i en kategori, der "
 "ikke længere eksisterer. De bør opdatere deres konto."
 
-#: ../inc/base.php:3258
+#: ../inc/base.php:3259
 msgid "Change welcome text for new user"
 msgstr "Skift velkomst tekst til ny bruger"
 
-#: ../inc/base.php:3262 ../templates/rencontre_registration_part1.php:33
+#: ../inc/base.php:3263 ../templates/rencontre_registration_part1.php:33
 msgid ""
 "You will access all the possibilities offered by the site in few minutes."
 msgstr ""
 "Du kan f&aring; adgang til alle de sp&aelig;mdende muligheder, i l&oslash;"
 "bet af et par minutter - s&aring; kom bare i gang !"
 
-#: ../inc/base.php:3263 ../templates/rencontre_registration_part1.php:34
+#: ../inc/base.php:3264 ../templates/rencontre_registration_part1.php:34
 msgid "Before that, you need to provide some information requested below."
 msgstr "Du er n&oslash;d til at udfylde alle oplysningerne nedenfor"
 
-#: ../inc/base.php:3264 ../templates/rencontre_registration_part1.php:38
+#: ../inc/base.php:3265 ../templates/rencontre_registration_part1.php:38
 msgid ""
 "We would like to inform you that we do not use your personal data outside of "
 "this site."
@@ -1394,13 +1404,13 @@ msgstr ""
 "Alle personlige oplysninger er underlagt person data loven, og bruges "
 "udelukkende fortroligt p&aring; denne side."
 
-#: ../inc/base.php:3265 ../templates/rencontre_registration_part1.php:39
+#: ../inc/base.php:3266 ../templates/rencontre_registration_part1.php:39
 msgid ""
 "Deleting your account on your part or ours, causes the deletion of all your "
 "data."
 msgstr "Sletning af din profil indeb&aelig;rer at alle data slettes"
 
-#: ../inc/base.php:3266 ../templates/rencontre_registration_part1.php:40
+#: ../inc/base.php:3267 ../templates/rencontre_registration_part1.php:40
 msgid ""
 "This also applies to messages that you have sent to other members as well as "
 "those they have sent to you."
@@ -1408,23 +1418,23 @@ msgstr ""
 "Dette g&aelig;lder ogs&aring; for meddelelser, du har sendt til andre "
 "medlemmer s&aring;vel som dem, der har sendt til dig."
 
-#: ../inc/base.php:3267 ../templates/rencontre_registration_part1.php:44
+#: ../inc/base.php:3268 ../templates/rencontre_registration_part1.php:44
 msgid "We wish you nice encounters."
 msgstr "Du &oslash;nskes held og lykke med din s&oslash;gning"
 
-#: ../inc/base.php:3273
+#: ../inc/base.php:3274
 msgid "Change warning account blocked"
 msgstr "Skift advarsel konto blokeret"
 
-#: ../inc/base.php:3277 ../inc/base.php:3279 ../inc/rencontre_widget.php:206
+#: ../inc/base.php:3278 ../inc/base.php:3280 ../inc/rencontre_widget.php:206
 msgid "Your account is blocked. You are invisible. Change your profile."
 msgstr "Din konto er blokeret. Du er usynlig. Ændrer din profil."
 
-#: ../inc/base.php:3283
+#: ../inc/base.php:3284
 msgid "Change warning empty profile"
 msgstr "Skift advarsel tom profil"
 
-#: ../inc/base.php:3287 ../inc/base.php:3289
+#: ../inc/base.php:3288 ../inc/base.php:3290
 #: ../templates/rencontre_modal_warning.php:47
 msgid ""
 "Your profile is empty. To take advantage of the site and being more visible, "
@@ -1433,22 +1443,22 @@ msgstr ""
 "Din profil er tom. At drage fordel af sitet og være mere synlige, tak til at "
 "fuldføre det."
 
-#: ../inc/base.php:3293
+#: ../inc/base.php:3294
 msgid "Change the quarantine warning"
 msgstr "Ændre karantæne advarsel"
 
-#: ../inc/base.php:3297 ../inc/base.php:3299 ../inc/rencontre_filter.php:1615
+#: ../inc/base.php:3298 ../inc/base.php:3300 ../inc/rencontre_filter.php:855
 #: ../templates/rencontre_registration_jail.php:17
 msgid "Your email address is currently in quarantine. Sorry"
 msgstr "Din e-mail adresse er ikke brugbar / er i karant&aelig;ne"
 
-#: ../inc/base.php:3303
+#: ../inc/base.php:3304
 msgid "Change the no-photo warning"
 msgstr "Skift no-foto advarsel"
 
-#: ../inc/base.php:3307 ../inc/base.php:3309 ../inc/rencontre_widget.php:411
+#: ../inc/base.php:3308 ../inc/base.php:3310 ../inc/rencontre_widget.php:411
 #: ../inc/rencontre_widget.php:599 ../inc/rencontre_widget.php:1893
-#: ../inc/rencontre_widget.php:2683 ../inc/rencontre_widget.php:3226
+#: ../inc/rencontre_widget.php:2713 ../inc/rencontre_widget.php:3253
 msgid ""
 "To be more visible and to view photos of other members, you should add one "
 "to your profile."
@@ -1456,11 +1466,11 @@ msgstr ""
 "For at være mere synlige og til at se billeder af andre medlemmer, skal du "
 "tilføje en til din profil."
 
-#: ../inc/base.php:3313
+#: ../inc/base.php:3314
 msgid "Change the follow-up email"
 msgstr "Skift opfølgende email"
 
-#: ../inc/base.php:3318 ../templates/rencontre_mail_remind.php:16
+#: ../inc/base.php:3319 ../templates/rencontre_mail_remind.php:16
 msgid ""
 "You registered on our website but you did not complete the procedure. You'll "
 "miss a date. That's too bad."
@@ -1468,219 +1478,256 @@ msgstr ""
 "Du er blevet registreret på vores hjemmeside, men du  mangler at færdiggøre "
 "din datingprofil. Du vil gå glip af en dates. Det er ærgeligt."
 
-#: ../inc/base.php:3319 ../templates/rencontre_mail_remind.php:17
+#: ../inc/base.php:3320 ../templates/rencontre_mail_remind.php:17
 msgid ""
 "Thus take two minutes to finish the registration. You should not be "
 "disappointed."
 msgstr ""
 "Det tager to minutter at afslutte registreringen. Du kan kun glæde dig ."
 
-#: ../inc/base.php:3320 ../templates/rencontre_mail_fastreg_confirm.php:16
+#: ../inc/base.php:3321 ../templates/rencontre_mail_fastreg_confirm.php:16
 #: ../templates/rencontre_mail_instant.php:52
 #: ../templates/rencontre_mail_regular_global.php:75
 #: ../templates/rencontre_mail_remind.php:18
 msgid "Regards,"
 msgstr "Hilsen"
 
-#: ../inc/base.php:3326
+#: ../inc/base.php:3327
 msgid "Change Smile word"
 msgstr "Skift Smile ord"
 
-#: ../inc/base.php:3326 ../inc/base.php:3360
+#: ../inc/base.php:3327 ../inc/base.php:3361
 msgid "(empty => no change)"
 msgstr "(tom => ingen ændring)"
 
-#: ../inc/base.php:3330 ../inc/base.php:3331
+#: ../inc/base.php:3331 ../inc/base.php:3332 ../inc/base.php:4408
 #: ../templates/rencontre_mail_regular.php:30
 #: ../templates/rencontre_portrait.php:204
 #: ../templates/rencontre_portrait.php:207
-#: ../templates/rencontre_search_result.php:106
 #: ../templates/rencontre_search_result.php:109
-#: ../templates/rencontre_sidebar_top.php:79
+#: ../templates/rencontre_search_result.php:112
+#: ../templates/rencontre_sidebar_top.php:78
 msgid "Smile"
 msgstr "smil"
 
-#: ../inc/base.php:3334 ../inc/base.php:3335
-#: ../templates/rencontre_sidebar_top.php:130
+#: ../inc/base.php:3335 ../inc/base.php:3336 ../inc/base.php:4411
+#: ../templates/rencontre_sidebar_top.php:109
 msgid "Who I smiled?"
 msgstr "Hvem jeg har sendt smil"
 
-#: ../inc/base.php:3338 ../inc/base.php:3339 ../inc/rencontre_widget.php:2405
+#: ../inc/base.php:3339 ../inc/base.php:3340 ../inc/rencontre_widget.php:2438
 msgid "I smiled at"
 msgstr "Jeg har sendt smil til"
 
-#: ../inc/base.php:3342 ../inc/base.php:3343
+#: ../inc/base.php:3343 ../inc/base.php:3344
 #: ../templates/rencontre_mail_instant.php:31
 #: ../templates/rencontre_mail_regular_global.php:35
 msgid "You have received a smile from"
 msgstr "Du har modtaget et smil fra"
 
-#: ../inc/base.php:3346 ../inc/base.php:3347 ../inc/rencontre_widget.php:3671
+#: ../inc/base.php:3347 ../inc/base.php:3348 ../inc/rencontre_widget.php:3698
 msgid "Smile already sent"
 msgstr "Smil er allerede sendt"
 
-#: ../inc/base.php:3350 ../inc/base.php:3351 ../inc/rencontre_widget.php:3706
+#: ../inc/base.php:3351 ../inc/base.php:3352 ../inc/rencontre_widget.php:3733
 msgid "Smile sent"
 msgstr "Smil er sendt"
 
-#: ../inc/base.php:3354 ../inc/base.php:3355 ../inc/rencontre_widget.php:2446
+#: ../inc/base.php:3355 ../inc/base.php:3356 ../inc/rencontre_widget.php:2479
 msgid "I got a smile from"
 msgstr "Jeg har f&aring;et smil fra"
 
-#: ../inc/base.php:3360
+#: ../inc/base.php:3361
 msgid "Change Look word"
 msgstr "Skift Look ord"
 
-#: ../inc/base.php:3364 ../inc/base.php:3365
-#: ../templates/rencontre_sidebar_top.php:95
+#: ../inc/base.php:3365 ../inc/base.php:3366 ../inc/base.php:4409
+#: ../templates/rencontre_sidebar_top.php:87
 msgid "Look"
 msgstr "Se her"
 
-#: ../inc/base.php:3368 ../inc/base.php:3369 ../inc/rencontre_widget.php:2547
+#: ../inc/base.php:3369 ../inc/base.php:3370 ../inc/rencontre_widget.php:2580
 msgid "I was watched by"
 msgstr "De har bes&oslash;gt min profil"
 
-#: ../inc/base.php:3392
+#: ../inc/base.php:3393
 msgid "No gender restriction in search"
 msgstr "Ingen kønsbegrænsning i søgning"
 
-#: ../inc/base.php:3396
+#: ../inc/base.php:3397
 msgid "Add relation type in quick search"
 msgstr "Tilføj relation skrive i hurtig søgning"
 
-#: ../inc/base.php:3400
+#: ../inc/base.php:3401
 msgid "No ad in search results"
 msgstr "Ingen annonce i søgeresultaterne"
 
-#: ../inc/base.php:3404 ../inc/base.php:3432
+#: ../inc/base.php:3405 ../inc/base.php:3437
 msgid "Add a profile element in quick search"
 msgstr "Tilføj en profil element i hurtig søgning"
 
-#: ../inc/base.php:3453
+#: ../inc/base.php:3462
 msgid "Add also numerous profile elements in search? Get the kit Premium."
 msgstr "Tilføj også mange profil elementer i søgning? Få sættet Premium."
 
-#: ../inc/base.php:3480
+#: ../inc/base.php:3489
 msgid "Menu color"
 msgstr "Menu farve"
 
-#: ../inc/base.php:3495 ../inc/base.php:3510 ../inc/base.php:3525
-#: ../inc/base.php:3540
+#: ../inc/base.php:3504 ../inc/base.php:3519 ../inc/base.php:3534
+#: ../inc/base.php:3549
 msgid "Menu buttons color"
 msgstr "Menuknapper farve"
 
-#: ../inc/base.php:3510
+#: ../inc/base.php:3519
 msgid "warning"
 msgstr "advarsel"
 
-#: ../inc/base.php:3525
+#: ../inc/base.php:3534
 msgid "checked"
 msgstr "Aktiveret"
 
-#: ../inc/base.php:3540
+#: ../inc/base.php:3549
 msgid "hover"
 msgstr "hover"
 
-#: ../inc/base.php:3555
+#: ../inc/base.php:3564
 msgid "Block background color"
 msgstr "Bloker baggrundsfarve"
 
-#: ../inc/base.php:3570
+#: ../inc/base.php:3579
 msgid "Title color"
 msgstr "Titelfarve"
 
-#: ../inc/base.php:3585
+#: ../inc/base.php:3594
 msgid "Text color"
 msgstr "Tekstfarve"
 
-#: ../inc/base.php:3600
+#: ../inc/base.php:3609
 msgid "Label color"
 msgstr "Etiket farve"
 
-#: ../inc/base.php:3615
+#: ../inc/base.php:3624
+msgid "Inline color"
+msgstr "Inline farve"
+
+#: ../inc/base.php:3639
+msgid "Inline badge color"
+msgstr "Inline badge farve"
+
+#: ../inc/base.php:3654
 msgid "Line and border color"
 msgstr "Linje og kantfarve"
 
-#: ../inc/base.php:3630
+#: ../inc/base.php:3669
 msgid "Input background color"
 msgstr "Input baggrundsfarve"
 
-#: ../inc/base.php:3645
+#: ../inc/base.php:3684
 msgid "Select background color"
 msgstr "Select baggrundsfarve"
 
-#: ../inc/base.php:3660
+#: ../inc/base.php:3699
 msgid "Warning bar background color"
 msgstr "Advarselslinje baggrundsfarve"
 
-#: ../inc/base.php:3675
+#: ../inc/base.php:3714
 msgid "Modal warning background color"
 msgstr "Modal advarsel baggrundsfarve"
 
-#: ../inc/base.php:3690
+#: ../inc/base.php:3729
 msgid "Message sent background color"
 msgstr "Meddelelse sendt baggrundsfarve"
 
-#: ../inc/base.php:3705
+#: ../inc/base.php:3744
 msgid "Message received background color"
 msgstr "Meddelelse modtaget baggrundsfarve"
 
-#: ../inc/base.php:3793
+#: ../inc/base.php:3835
+msgid "Color palette"
+msgstr "Farvepalet"
+
+#: ../inc/base.php:3859
 msgid "Custom templates in your theme"
 msgstr "Tilpassede templates i dit tema"
 
-#: ../inc/base.php:3796
+#: ../inc/base.php:3862
 msgid "Template file"
 msgstr "Template fil"
 
-#: ../inc/base.php:3797
+#: ../inc/base.php:3863
 msgid "Plugin version"
 msgstr "Version af plugin"
 
-#: ../inc/base.php:3798
+#: ../inc/base.php:3864
 msgid "Theme version"
 msgstr "Version af temaet"
 
-#: ../inc/base.php:4331 ../templates/rencontre_menu.php:13
+#: ../inc/base.php:4397 ../templates/rencontre_menu.php:13
 msgid "My homepage"
 msgstr "Start side"
 
-#: ../inc/base.php:4332 ../templates/rencontre_menu.php:14
+#: ../inc/base.php:4398 ../templates/rencontre_menu.php:14
 msgid "My card"
 msgstr "Mit kort"
 
-#: ../inc/base.php:4333 ../templates/rencontre_menu.php:17
+#: ../inc/base.php:4399 ../templates/rencontre_menu.php:17
 #: ../templates/rencontre_menu.php:20
 #: ../templates/rencontre_portrait_edit.php:30
 msgid "Edit My Profile"
 msgstr "&aelig;ndre min profil"
 
-#: ../inc/base.php:4334 ../templates/rencontre_menu.php:24
+#: ../inc/base.php:4400 ../templates/rencontre_menu.php:24
 #: ../templates/rencontre_menu.php:27
 msgid "Messaging"
 msgstr "Beskeder"
 
-#: ../inc/base.php:4336 ../templates/rencontre_account.php:57
+#: ../inc/base.php:4402 ../templates/rencontre_account.php:60
 #: ../templates/rencontre_menu.php:40
 msgid "My Account"
 msgstr "Min konto"
 
-#: ../inc/base.php:4339 ../inc/rencontre_filter.php:1243
+#: ../inc/base.php:4405 ../inc/rencontre_filter.php:483
 msgid "Log in"
 msgstr "Log på"
 
-#: ../inc/base.php:4340 ../inc/rencontre_filter.php:1250 ../rencontre.php:980
-#: ../rencontre.php:981 ../rencontre.php:1025
+#: ../inc/base.php:4406 ../inc/rencontre_filter.php:490 ../rencontre.php:999
+#: ../rencontre.php:1000 ../rencontre.php:1044
 msgid "Register"
 msgstr "Tilmeld"
 
-#: ../inc/base.php:4458
+#: ../inc/base.php:4410 ../templates/rencontre_sidebar_top.php:96
+msgid "Contact requests"
+msgstr "Kontakt anmodning"
+
+#: ../inc/base.php:4412 ../templates/rencontre_sidebar_top.php:117
+msgid "Who I asked for a contact?"
+msgstr "Hvem jeg har kontaktet?"
+
+#: ../inc/base.php:4413 ../templates/rencontre_sidebar_top.php:122
+msgid "Who I've blocked?"
+msgstr "Profiler jeg har blokeret?"
+
+#: ../inc/base.php:4531
 msgid ""
 "The gender of some members is not in accordance with the custom parameter "
 "'change sex values'. These members are not visible."
 msgstr ""
 "Nogle medlemmers køn er ikke i overensstemmelse med den brugerdefinerede "
 "parameter 'Skift kÃ¸n'. Disse medlemmer er ikke synlige."
+
+#: ../inc/rencontre_cron.php:218 ../templates/rencontre_mail_remind.php:11
+msgid "Registration"
+msgstr "Registrering"
+
+#: ../inc/rencontre_cron.php:293 ../templates/rencontre_mail_birthday.php:11
+#: ../templates/rencontre_mail_birthday.php:16
+msgid "Happy Birthday"
+msgstr "Tillykke med fødselsdagen"
+
+#: ../inc/rencontre_cron.php:804 ../templates/rencontre_mail_instant.php:11
+msgid "A member contact you"
+msgstr "En profil har kontaktet dig"
 
 #: ../inc/rencontre_don.php:4
 msgid "About This Plugin"
@@ -1756,13 +1803,23 @@ msgstr ""
 
 #: ../inc/rencontre_don.php:71
 msgid ""
+"If the menu tab is missing in appearance (theme full-site editing), install "
+"a classic theme (twenty-twenty-one) to create your menu. Then return to your "
+"theme and select the menu you've just created"
+msgstr ""
+"Hvis menufanen mangler i udseende (theme full-site editing), skal du "
+"installere et klassisk tema (twenty-twenty-one) for at oprette din menu. "
+"Vend derefter tilbage til dit tema og vælg den menu, du lige har oprettet"
+
+#: ../inc/rencontre_don.php:73
+msgid ""
 "Add a new subscriber member in WP. Login this member and go to the plugin "
 "page (1)."
 msgstr ""
 "Tilføj et nyt abonnentmedlem i WP. Log ind på dette medlem og gå til plugin-"
 "siden (1)."
 
-#: ../inc/rencontre_don.php:72
+#: ../inc/rencontre_don.php:74
 msgid ""
 "To facilitate the settings after installing, you can download and install "
 "via CSV (<a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>) "
@@ -1772,7 +1829,7 @@ msgstr ""
 "installere via CSV (<a href=\"admin.php?page=rencontre.php\"> Rencontre / "
 "General </a>) 20 testprofiler med foto"
 
-#: ../inc/rencontre_don.php:75
+#: ../inc/rencontre_don.php:77
 msgid ""
 "More details in the <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
 "target=\"_blank\">F.A.Q</a>."
@@ -1780,80 +1837,67 @@ msgstr ""
 "Flere detaljer i <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
 "target=\"_blank\">F.A.Q</a>."
 
-#: ../inc/rencontre_filter.php:356 ../templates/rencontre_mail_remind.php:11
-msgid "Registration"
-msgstr "Registrering"
-
-#: ../inc/rencontre_filter.php:431 ../templates/rencontre_mail_birthday.php:11
-#: ../templates/rencontre_mail_birthday.php:16
-msgid "Happy Birthday"
-msgstr "Tillykke med fødselsdagen"
-
-#: ../inc/rencontre_filter.php:905 ../templates/rencontre_mail_instant.php:11
-msgid "A member contact you"
-msgstr "En profil har kontaktet dig"
-
-#: ../inc/rencontre_filter.php:1219 ../rencontre.php:225 ../rencontre.php:233
+#: ../inc/rencontre_filter.php:459 ../rencontre.php:225 ../rencontre.php:233
 msgid "Rencontre - Members"
 msgstr "Dating - profiler"
 
-#: ../inc/rencontre_filter.php:1239
+#: ../inc/rencontre_filter.php:479
 msgid "Log out"
 msgstr "Log ud"
 
-#: ../inc/rencontre_filter.php:1328 ../inc/rencontre_filter.php:1345
+#: ../inc/rencontre_filter.php:568 ../inc/rencontre_filter.php:585
 #: ../inc/rencontre_widget.php:1806 ../inc/rencontre_widget.php:1828
 msgid "No matter"
 msgstr "Lige meget"
 
-#: ../inc/rencontre_filter.php:1583 ../templates/rencontre_imgreg.php:27
+#: ../inc/rencontre_filter.php:823 ../templates/rencontre_imgreg.php:27
 #: ../templates/rencontre_imgreg.php:66
 msgid "Password"
 msgstr "Adgangskode"
 
-#: ../inc/rencontre_filter.php:1603
+#: ../inc/rencontre_filter.php:843
 msgid "<strong>ERROR</strong>: Invalid password (6 characters min)."
 msgstr "<strong>FEJL</strong>: Ugyldig adgangskode (6 tegn min)."
 
-#: ../inc/rencontre_filter.php:1670
+#: ../inc/rencontre_filter.php:910
 msgid "Confirmation email already sent"
 msgstr "Bekræftelsesmail allerede sendt"
 
-#: ../inc/rencontre_filter.php:1696
+#: ../inc/rencontre_filter.php:936
 msgid "Confirmation email sent"
 msgstr "Bekræftelsesmail sendt"
 
-#: ../inc/rencontre_filter.php:1877 ../inc/rencontre_filter.php:1878
-#: ../inc/rencontre_filter.php:1879 ../inc/rencontre_filter.php:1880
-#: ../inc/rencontre_filter.php:1881
+#: ../inc/rencontre_filter.php:1119 ../inc/rencontre_filter.php:1120
+#: ../inc/rencontre_filter.php:1121 ../inc/rencontre_filter.php:1122
+#: ../inc/rencontre_filter.php:1123
 msgid "Fake"
 msgstr "Falsk"
 
-#: ../inc/rencontre_filter.php:1879
+#: ../inc/rencontre_filter.php:1121
 msgid "profile"
 msgstr "Profil"
 
-#: ../inc/rencontre_filter.php:1880
+#: ../inc/rencontre_filter.php:1122
 msgid "IP"
 msgstr "IP"
 
-#: ../inc/rencontre_filter.php:1881
+#: ../inc/rencontre_filter.php:1123
 msgid "email"
 msgstr "Email"
 
-#: ../inc/rencontre_filter.php:1882
+#: ../inc/rencontre_filter.php:1124
 msgid "Inadequate image"
 msgstr "Utilstrækkeligt billede"
 
-#: ../inc/rencontre_filter.php:1883
+#: ../inc/rencontre_filter.php:1125
 msgid "Inappropriate presentation"
 msgstr "Uheldig præsentation"
 
-#: ../inc/rencontre_filter.php:1884
+#: ../inc/rencontre_filter.php:1126
 msgid "Many reports"
 msgstr "Mange rapporter"
 
-#: ../inc/rencontre_filter.php:1885
+#: ../inc/rencontre_filter.php:1127
 msgid "Behavior on the site"
 msgstr "Adfærd på webstedet"
 
@@ -1869,8 +1913,8 @@ msgstr "Du er forbundet som ADMIN"
 msgid "You cannot use RENCONTRE as a user if you have ADMIN rights"
 msgstr "Du kan ikke bruge RENCONTRE som bruger, hvis du har ADMIN-rettigheder"
 
-#: ../inc/rencontre_widget.php:351 ../inc/rencontre_widget.php:2672
-#: ../inc/rencontre_widget.php:3215
+#: ../inc/rencontre_widget.php:351 ../inc/rencontre_widget.php:2705
+#: ../inc/rencontre_widget.php:3245
 #, php-format
 msgid "%s ago"
 msgstr "% siden"
@@ -1884,23 +1928,23 @@ msgstr "offline"
 msgid "(blocked)"
 msgstr "(blokeret)"
 
-#: ../inc/rencontre_widget.php:459 ../inc/rencontre_widget.php:2084
-#: ../inc/rencontre_widget.php:2726 ../inc/rencontre_widget.php:3276
+#: ../inc/rencontre_widget.php:459 ../inc/rencontre_widget.php:2085
+#: ../inc/rencontre_widget.php:2756 ../inc/rencontre_widget.php:3303
 msgid "You must first complete your registration."
 msgstr "Du skal først gennemføre din registrering."
 
-#: ../inc/rencontre_widget.php:463 ../inc/rencontre_widget.php:2088
-#: ../inc/rencontre_widget.php:2730 ../inc/rencontre_widget.php:3280
+#: ../inc/rencontre_widget.php:463 ../inc/rencontre_widget.php:2089
+#: ../inc/rencontre_widget.php:2760 ../inc/rencontre_widget.php:3307
 msgid "This member blocked you."
 msgstr "Dette medlem blokerede dig."
 
-#: ../inc/rencontre_widget.php:467 ../inc/rencontre_widget.php:2092
-#: ../inc/rencontre_widget.php:2734 ../inc/rencontre_widget.php:3284
+#: ../inc/rencontre_widget.php:467 ../inc/rencontre_widget.php:2093
+#: ../inc/rencontre_widget.php:2764 ../inc/rencontre_widget.php:3311
 msgid "You have been blocked by the moderator."
 msgstr "Du er blevet blokeret af moderatoren."
 
-#: ../inc/rencontre_widget.php:486 ../inc/rencontre_widget.php:2747
-#: ../inc/rencontre_widget.php:3297
+#: ../inc/rencontre_widget.php:486 ../inc/rencontre_widget.php:2777
+#: ../inc/rencontre_widget.php:3324
 msgid "You are no longer allowed to send messages."
 msgstr "Du abonnerer ikke længere,du har ikke lov til at sende beskeder."
 
@@ -1932,51 +1976,51 @@ msgstr "Du skal udfylde din profil og tilføje et foto til at sende beskeder."
 msgid "Add a photo"
 msgstr "Tilføj et foto"
 
-#: ../inc/rencontre_widget.php:2180
+#: ../inc/rencontre_widget.php:2181
 msgid "Message sent"
 msgstr "besked sendt"
 
-#: ../inc/rencontre_widget.php:2183
+#: ../inc/rencontre_widget.php:2184
 msgid "Not sent"
 msgstr "Ikke sendt"
 
-#: ../inc/rencontre_widget.php:2477
+#: ../inc/rencontre_widget.php:2510
 msgid "I asked a contact"
 msgstr "Jeg &oslash;nsker kontakt"
 
-#: ../inc/rencontre_widget.php:2515
+#: ../inc/rencontre_widget.php:2548
 msgid "I had a contact request from"
 msgstr "Jeg har modtaget kontakt anmodring fra"
 
-#: ../inc/rencontre_widget.php:2577
+#: ../inc/rencontre_widget.php:2610
 msgid "I locked"
 msgstr "De har blokeret mig"
 
-#: ../inc/rencontre_widget.php:2771 ../inc/rencontre_widget.php:3322
+#: ../inc/rencontre_widget.php:2801 ../inc/rencontre_widget.php:3349
 msgid "Sorry, but nothing matched your search terms."
 msgstr "Beklager, men intet matchede dine søgeord."
 
-#: ../inc/rencontre_widget.php:2792 ../inc/rencontre_widget.php:3343
+#: ../inc/rencontre_widget.php:2822 ../inc/rencontre_widget.php:3370
 msgid "Next Page"
 msgstr "Næste side"
 
-#: ../inc/rencontre_widget.php:3245
+#: ../inc/rencontre_widget.php:3272
 msgid "Astrological affinity"
 msgstr "Astrologisk affinitet"
 
-#: ../inc/rencontre_widget.php:3249
+#: ../inc/rencontre_widget.php:3276
 msgid "Affinity with my profile"
 msgstr "Tilknytning til min profil"
 
-#: ../inc/rencontre_widget.php:3249
+#: ../inc/rencontre_widget.php:3276
 msgid "points"
 msgstr "punkter"
 
-#: ../inc/rencontre_widget.php:3581
+#: ../inc/rencontre_widget.php:3608
 msgid "Region field is empty or outdated !"
 msgstr "Regionfelt er tomt eller forældet!"
 
-#: ../inc/rencontre_widget.php:3622
+#: ../inc/rencontre_widget.php:3649
 msgid ""
 "You are currently hidden to other members and you can't communicate because "
 "your account is not complete. You should promptly update this page otherwise "
@@ -1986,7 +2030,7 @@ msgstr ""
 "fordi din konto er ikke fuldstændig. Du bør straks opdatere denne side "
 "ellers din adgang vil blive annulleret."
 
-#: ../inc/rencontre_widget.php:3624
+#: ../inc/rencontre_widget.php:3651
 msgid ""
 "You also need to confirm your email address by clicking the link that you "
 "received. You have 24 hours. Do not delay."
@@ -1994,39 +2038,39 @@ msgstr ""
 "Du skal også bekræfte din e-mailadresse ved at klikke på det link, du har "
 "modtaget. Du har 24 timer. Må ikke forsinke."
 
-#: ../inc/rencontre_widget.php:3625
+#: ../inc/rencontre_widget.php:3652
 msgid "Email not received"
 msgstr "Email ikke modtaget"
 
-#: ../inc/rencontre_widget.php:3737
+#: ../inc/rencontre_widget.php:3764
 msgid "Contact already requested"
 msgstr "Kontakt allerede anmodet"
 
-#: ../inc/rencontre_widget.php:3766
+#: ../inc/rencontre_widget.php:3793
 msgid "Contact request sent"
 msgstr "Kontakt anmodning sendt"
 
-#: ../inc/rencontre_widget.php:3782
+#: ../inc/rencontre_widget.php:3809
 msgid "Reporting already done"
 msgstr "Rapportering er sket"
 
-#: ../inc/rencontre_widget.php:3789
+#: ../inc/rencontre_widget.php:3816
 msgid "Thank you for your report"
 msgstr "Tak for Din report"
 
-#: ../inc/rencontre_widget.php:3922
+#: ../inc/rencontre_widget.php:3949
 msgid "from my position"
 msgstr "fra min position"
 
-#: ../inc/rencontre_widget.php:3970
+#: ../inc/rencontre_widget.php:3997
 msgid "Yesterday"
 msgstr "I går"
 
-#: ../inc/rencontre_widget.php:3981
+#: ../inc/rencontre_widget.php:4008
 msgid "Widget to integrate the Rencontre sidebar in your theme sidebar"
 msgstr "Widget til at integrere Rencontre sidepanel i dit tema sidebar"
 
-#: ../inc/rencontre_widget.php:4141
+#: ../inc/rencontre_widget.php:4173
 msgid "Password changed !"
 msgstr "Password er &aelig;ndret"
 
@@ -2056,12 +2100,12 @@ msgstr "Tilf&oslash;j"
 
 #: ../lang/rencontre-js-admin-lang.php:13 ../rencontre.php:228
 #: ../templates/rencontre_search.php:127
-#: ../templates/rencontre_sidebar_quick_search.php:48
+#: ../templates/rencontre_sidebar_quick_search.php:49
 msgid "Country"
 msgstr "Land"
 
 #: ../lang/rencontre-js-admin-lang.php:14 ../templates/rencontre_search.php:138
-#: ../templates/rencontre_sidebar_quick_search.php:58
+#: ../templates/rencontre_sidebar_quick_search.php:59
 msgid "Region"
 msgstr "Region"
 
@@ -2208,15 +2252,15 @@ msgstr ""
 "chat, søgning ved profil og automatisk afsendelse af e-mail. Ingen "
 "tredjepart."
 
-#: ../rencontre.php:188
+#: ../rencontre.php:190
 msgid "Serious relationship"
 msgstr "K&aelig;reste dating"
 
-#: ../rencontre.php:189
+#: ../rencontre.php:191
 msgid "Open relationship"
 msgstr "Sex dating"
 
-#: ../rencontre.php:190
+#: ../rencontre.php:192
 msgid "Friendship"
 msgstr "Venskab"
 
@@ -2252,35 +2296,35 @@ msgstr "Rencontre - Custom"
 msgid "Custom"
 msgstr "Custom"
 
-#: ../templates/rencontre_account.php:28
+#: ../templates/rencontre_account.php:29
 msgid "Change password"
 msgstr "&aelig;ndre password"
 
-#: ../templates/rencontre_account.php:33
+#: ../templates/rencontre_account.php:34
 msgid "Former"
 msgstr "Tidligere"
 
-#: ../templates/rencontre_account.php:37
+#: ../templates/rencontre_account.php:38
 msgid "New"
 msgstr "Nyt"
 
-#: ../templates/rencontre_account.php:41
+#: ../templates/rencontre_account.php:42
 msgid "Retype the new"
 msgstr "Skriv igen"
 
-#: ../templates/rencontre_account.php:272
+#: ../templates/rencontre_account.php:275
 msgid "No beep on the chat"
 msgstr "Intet bip på chatten"
 
-#: ../templates/rencontre_account.php:279
+#: ../templates/rencontre_account.php:282
 msgid "No email from this site"
 msgstr "Ingen email fra dette websted"
 
-#: ../templates/rencontre_account.php:309
+#: ../templates/rencontre_account.php:312
 msgid "home page and search"
 msgstr "startside og søgning"
 
-#: ../templates/rencontre_account.php:310
+#: ../templates/rencontre_account.php:313
 msgid "home page, search and message"
 msgstr "startside, søgning og besked"
 
@@ -2369,8 +2413,8 @@ msgstr "Sp&oslash;rg om kontakt"
 #: ../templates/rencontre_mail_regular.php:35
 #: ../templates/rencontre_portrait.php:196
 #: ../templates/rencontre_portrait.php:199
-#: ../templates/rencontre_search_result.php:98
 #: ../templates/rencontre_search_result.php:101
+#: ../templates/rencontre_search_result.php:104
 msgid "Send a message"
 msgstr "Sende en meddelelse"
 
@@ -2532,7 +2576,7 @@ msgid "City"
 msgstr "By"
 
 #: ../templates/rencontre_search.php:154
-#: ../templates/rencontre_sidebar_quick_search.php:68
+#: ../templates/rencontre_sidebar_quick_search.php:69
 msgid "Relation"
 msgstr "Relation"
 
@@ -2548,39 +2592,37 @@ msgstr "Kun med foto"
 msgid "The"
 msgstr "Denne"
 
-#: ../templates/rencontre_sidebar_quick_search.php:15
+#: ../templates/rencontre_sidebar_quick_search.php:16
 msgid "Quick Search"
 msgstr "Kvik s&oslash;gning"
 
-#: ../templates/rencontre_sidebar_quick_search.php:29
+#: ../templates/rencontre_sidebar_quick_search.php:30
 msgid "From"
 msgstr "Fra"
 
-#: ../templates/rencontre_sidebar_quick_search.php:37
+#: ../templates/rencontre_sidebar_quick_search.php:38
 msgid "To"
 msgstr "Til"
 
-#: ../templates/rencontre_sidebar_quick_search.php:88
-#: ../templates/rencontre_sidebar_quick_search.php:103
+#: ../templates/rencontre_sidebar_quick_search.php:89
+#: ../templates/rencontre_sidebar_quick_search.php:114
 msgid "After"
 msgstr "Efter"
 
-#: ../templates/rencontre_sidebar_quick_search.php:88
-#: ../templates/rencontre_sidebar_quick_search.php:103
+#: ../templates/rencontre_sidebar_quick_search.php:89
+#: ../templates/rencontre_sidebar_quick_search.php:114
 msgid "Before"
 msgstr "Før"
 
-#: ../templates/rencontre_sidebar_top.php:110
-msgid "Contact requests"
-msgstr "Kontakt anmodning"
+#: ../templates/rencontre_sidebar_quick_search.php:95
+#: ../templates/rencontre_sidebar_quick_search.php:120
+msgid "Greater than"
+msgstr "Bedre end"
 
-#: ../templates/rencontre_sidebar_top.php:138
-msgid "Who I asked for a contact?"
-msgstr "Hvem jeg har kontaktet?"
-
-#: ../templates/rencontre_sidebar_top.php:143
-msgid "Who I've blocked?"
-msgstr "Profiler jeg har blokeret?"
+#: ../templates/rencontre_sidebar_quick_search.php:95
+#: ../templates/rencontre_sidebar_quick_search.php:120
+msgid "Less than"
+msgstr "Mindre end"
 
 #~ msgid "Change login name (after, it will not be possible)"
 #~ msgstr "Skift login navn ( kan derefter ikke rettes / &aelig;ndres mere )"

@@ -4,7 +4,7 @@
  * Template : Mail Regular
  * Last Change : Rencontre 3.8.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mail_regular.php
- * Call : rencontre_filter.php => rencMailBox()
+ * Call : rencontre_cron.php => rencMailBox()
  * $u : ID, user_login, d_naissance, c_pays, c_ville, t_titre, name, age, title, link
 */
 ?>

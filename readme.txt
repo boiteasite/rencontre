@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: date, dating, meet, meeting, love, chat, webcam, rencontre, match, social, members, friends, messaging
 Requires at least: 4.6
-Tested up to: 6.2
+Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 3.9.1
+Stable tag: 3.11.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,15 +20,13 @@ The features are as follows :
 * Login Required to access functionality ;
 * Home unconnected with overview of the latest registered members and tiny quick search ;
 * **Private messaging** between members ;
-* **Extended and customizable profile** (free composition, checkbox, date event...) ;
-* **Advanced Search** including in profile elements ;
+* **Extended and customizable profile** (free composition, checkbox, select, numeric select, date event...) ;
+* **Advanced Search** including in profile elements by value or value range (date, numeric select) ;
 * Image format adapted to retina-ready screens ;
 * Private Members **chat with webcam** ;
 * Sending smiles and contact requests ;
 * Reporting of non-compliant member profiles ;
-* Connecting with a **FaceBook** account ;
 * Rapid registration ;
-* Import photo from Facebook account ;
 * **Sending regular emails to members** in accordance with the quota server ;
 * Daily cleaning to maintain the level of performance ;
 * **Low resource**, optimized for shared web server ;
@@ -75,7 +73,7 @@ Rencontre is currently translated in :
 * Japanese - thanks to Rorylouis
 * Norvegian - thanks to Steffen Madsen and WP Translation Team
 * Portuguese - thanks to Patricio Fernandes
-* Portuguese Brazil - thanks to César Ramos
+* Portuguese Brazil - thanks to Cesar Ramos
 * Russian - thanks to Vetal Soft and WP Translation Team
 * Spanish - thanks to Sanjay Gandhi
 * Swahili - thanks to Kenneth Longo Mlelwa
@@ -118,15 +116,12 @@ You need a WordPress Login/logout/Register link. Select one or more of these pos
 
 1. In Appearance / Menus, in the Rencontre block, select 'Log in' and 'Register' and add to the menu. Save. If you don't see the Rencontre block, check "screen options" at the top right.
 2. Add the Rencontre registration form Shortcode `[rencontre_imgreg]` in your page content. (see FAQ).
-3. Add the shortcode `[rencontre_login]` in your page content. Add also `[rencontre_loginFB]` to have the Facebook button.
+3. Add the shortcode `[rencontre_login]` in your page content.
 4. Use the WordPress default widget 'Meta'.
 5. Install a specific plugin like [baw-login-logout-menu](https://wordpress.org/plugins/baw-login-logout-menu/).
 6. Use the widget from another plugin (BBPress has one).
 7. Add this small code in your header.php file (or other one...), next to the menu :
 `<?php Rencontre::f_login(); ?>`
-or
-`<?php Rencontre::f_login('fb'); ?>`
-to have Facebook too.
  
 **Quarto**
 
@@ -220,9 +215,6 @@ By default, geolocation only give the distance between you and another user (xx 
 With the Premium kit, Goelocation is needed to enable the proximity search with map result.
 
 = Facebook =
-* Facebook login : You need to create a Facebook application in your Facebook account. That will give you a ID. All details are in the Facebook documentation.
-Set this ID in the right field in Rencontre/ General / Connection .
-After that, you can use the shortcode [rencontre_loginFB] or the PHP code in your template Rencontre::f_login('fb');
 * Framework for the [Facebook](https://developers.facebook.com/docs/plugins/like-button?locale=en_US#configurator) Like button : 
 
 `
@@ -364,7 +356,6 @@ It's better to limit the data size.
    * nb: number of results
    * day: age of last connection
 * [rencontre_login] : link to login/logout/register
-* [rencontre_loginFB] : Display the button to log with Facebook
 * [rencontre_imgreg title= selector= left= top=] - Display registration form (See screenshots for example)
    * title='Register to ...'
    * selector='.site-header .wp-custom-header img' (jQuery selector of the image where you want to display the form - See Screenshots)
@@ -407,6 +398,49 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+15/01/2024 : 3.11.3 -  Fix dynamic search issue.
+
+08/01/2024 : 3.11.2
+
+* Fix Subscriber+ PHP Object Injection in search fonction - Thanks to Darius Sveikauskas.
+
+09/12/2023 : 3.11.1
+
+* Add max upload filesize value in CSV Tab.
+* Fix Chat launched when not required.
+* Fix some issues.
+* Add Premium hook.
+
+30/11/2023 : 3.11
+
+* Removes Facebook login. To keep this WordPress connection via Facebook (and add others), use a specific plugin.
+* Removes ability to import facebook profile photo.
+* Fix Unauthenticated Arbitrary File Upload in CSV Admin part - Thanks to Darius Sveikauskas.
+* Fix Subscriber+ PHP Object Injection in dynamic search - Thanks to Darius Sveikauskas.
+* Fix wrong orientation, in some cases, when uploading an image.
+
+24/10/2023 : 3.10.1
+
+* Add online notification in search result and home page.
+* The color of the online text and the color of the online badge can be set in the custom tab of the dashboard.
+* Add an option to disable password change in my account.
+
+13/10/2023 : 3.10
+
+* dbip-country update 2023-10.
+* Fix PHP 8.1 deprecated.
+* Fix "answer a message" issue.
+* Add Rencontre sidebar links (who i smile...) to WordPress menu creation in Rencontre meta-box.
+* Add filters 'rencCronMailPart4' and 'rencCronList' to fully take control of automatic emailing.
+* Add search by value range to "numeric select" profile fields.
+* Updated list of country regions. 
+
+01/05/2023 : 3.9.2
+
+* Fix search issue when city has space in name.
+* Remember also gender in search.
+* Fix PHP 8.2 deprecated.
 
 01/04/2023 : 3.9.1 -  Fix some issues.
 

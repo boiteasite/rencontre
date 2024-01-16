@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search
- * Last Change : Rencontre 3.8.3
+ * Last Change : Rencontre 3.9.2
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search.php
  * Call : rencontre_widget.php => f_cherchePlus()
  * $u0 : ID, cryptID, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, e_lat, e_lon, zsex, c_pays, country, age, agemin, agemax
@@ -107,7 +107,7 @@
 								<option value="">-</option>
 								<?php for($v=2;$v<count($rencOpt['iam']);++$v) {
 									if($v==$u0->i_sex && !empty($rencCustom['hetero'])) continue;
-								?><option value="<?php echo $v; ?>" <?php if(!empty($mem['zsex']) && $mem['zsex']==$v) echo 'selected'; ?>><?php echo $rencOpt['iam'][$v]; ?></option><?php } ?>
+								?><option value="<?php echo $v; ?>" <?php if(isset($mem['z2sex']) && $mem['z2sex']==$v) echo 'selected'; ?>><?php echo $rencOpt['iam'][$v]; ?></option><?php } ?>
 							
 							</select>
 						</div>
@@ -116,8 +116,8 @@
 							<label><?php _e('Gender','rencontre');?></label>
 							<select name="<?php echo (!empty($rencOpt['lbl']['z2sex'])?$rencOpt['lbl']['z2sex']:'z2sex'); ?>" class="w3-select w3-border w3-renc-sebg">
 								<option value="">-</option>
-								<option value="0" <?php if(isset($mem['zsex']) && $mem['zsex']!=='' && $mem['zsex']==0) echo 'selected'; ?>><?php echo $rencOpt['iam'][0]; ?></option>
-								<option value="1" <?php if(isset($mem['zsex']) && $mem['zsex']==1) echo 'selected'; ?>><?php echo $rencOpt['iam'][1]; ?></option>
+								<option value="0" <?php if(isset($mem['z2sex']) && $mem['z2sex']!=='' && $mem['z2sex']==0) echo 'selected'; ?>><?php echo $rencOpt['iam'][0]; ?></option>
+								<option value="1" <?php if(isset($mem['z2sex']) && $mem['z2sex']==1) echo 'selected'; ?>><?php echo $rencOpt['iam'][1]; ?></option>
 							</select>
 						</div>
 					<?php } ?>

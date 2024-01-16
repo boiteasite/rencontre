@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rencontre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-16 18:51+0100\n"
+"POT-Creation-Date: 2023-10-24 18:42+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: malgrange <jacques.malgrange@gmail.com>\n"
+"Last-Translator: Jacques Malgrange <contacter@boiteasite.fr>\n"
 "Language-Team: funnelxpert.com\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
@@ -13,29 +13,33 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-KeywordsList: _e;__\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../inc/base.php:145 ../inc/base.php:365 ../inc/base.php:1156
-#: ../inc/base.php:1543 ../inc/base.php:1594 ../inc/base.php:1607
-#: ../inc/base.php:1667 ../inc/base.php:1680 ../inc/base.php:1739
-#: ../inc/base.php:1740 ../inc/base.php:1741 ../inc/base.php:1772
-#: ../inc/base.php:1873 ../inc/base.php:2380 ../inc/base.php:2580
-#: ../inc/base.php:2587 ../inc/base.php:2661 ../inc/base.php:2679
-#: ../inc/base.php:2716 ../inc/base.php:2744 ../inc/base.php:2768
-#: ../inc/base.php:2769 ../inc/base.php:2897 ../inc/base.php:2937
-#: ../inc/base.php:2974 ../inc/base.php:2994 ../inc/base.php:3422
-#: ../inc/base.php:3423 ../inc/base.php:3425 ../inc/base.php:3438
-#: ../inc/base.php:3439 ../inc/base.php:3441 ../inc/base.php:3778
-#: ../inc/base.php:3779 ../inc/rencontre_don.php:72
-#: ../inc/rencontre_widget.php:3245 ../inc/rencontre_widget.php:3249
+#: ../inc/base.php:145 ../inc/base.php:365 ../inc/base.php:1157
+#: ../inc/base.php:1547 ../inc/base.php:1595 ../inc/base.php:1608
+#: ../inc/base.php:1668 ../inc/base.php:1681 ../inc/base.php:1740
+#: ../inc/base.php:1741 ../inc/base.php:1742 ../inc/base.php:1773
+#: ../inc/base.php:1874 ../inc/base.php:2381 ../inc/base.php:2581
+#: ../inc/base.php:2588 ../inc/base.php:2662 ../inc/base.php:2680
+#: ../inc/base.php:2717 ../inc/base.php:2745 ../inc/base.php:2769
+#: ../inc/base.php:2770 ../inc/base.php:2898 ../inc/base.php:2938
+#: ../inc/base.php:2975 ../inc/base.php:2995 ../inc/base.php:3423
+#: ../inc/base.php:3424 ../inc/base.php:3427 ../inc/base.php:3428
+#: ../inc/base.php:3430 ../inc/base.php:3443 ../inc/base.php:3444
+#: ../inc/base.php:3447 ../inc/base.php:3448 ../inc/base.php:3450
+#: ../inc/base.php:3820 ../inc/base.php:3821 ../inc/rencontre_don.php:74
+#: ../inc/rencontre_widget.php:3272 ../inc/rencontre_widget.php:3276
 #: ../templates/rencontre_mail_regular_global.php:21
 #: ../templates/rencontre_mail_regular_global.php:33
 #: ../templates/rencontre_mail_regular_global.php:35
 #: ../templates/rencontre_mail_regular_global.php:52
 #: ../templates/rencontre_portrait.php:154 ../templates/rencontre_search.php:31
 #: ../templates/rencontre_search.php:53 ../templates/rencontre_search.php:79
-#: ../templates/rencontre_search_result.php:84
+#: ../templates/rencontre_search_result.php:87
+#: ../templates/rencontre_sidebar_top.php:78
+#: ../templates/rencontre_sidebar_top.php:87
+#: ../templates/rencontre_sidebar_top.php:96
 msgid ": "
 msgstr ": "
 
@@ -43,11 +47,11 @@ msgstr ": "
 msgid "lines"
 msgstr "sorok száma"
 
-#: ../inc/base.php:365 ../inc/base.php:1365
+#: ../inc/base.php:365 ../inc/base.php:1370
 msgid "Done!"
 msgstr "Kész!"
 
-#: ../inc/base.php:365 ../inc/rencontre_filter.php:1878
+#: ../inc/base.php:365 ../inc/rencontre_filter.php:1120
 msgid "photo"
 msgstr "fotó"
 
@@ -55,46 +59,46 @@ msgstr "fotó"
 msgid "TO CHANGE"
 msgstr "Módosítandó"
 
-#: ../inc/base.php:476 ../inc/base.php:2769
+#: ../inc/base.php:476 ../inc/base.php:2770
 #: ../lang/rencontre-js-admin-lang.php:34
 msgid "Unit"
 msgstr "Mértékegység"
 
-#: ../inc/base.php:1155 ../inc/base.php:2579
+#: ../inc/base.php:1156 ../inc/base.php:2580
 msgid "Update member profile"
 msgstr "Profil frissítése"
 
-#: ../inc/base.php:1156 ../inc/base.php:2580
+#: ../inc/base.php:1157 ../inc/base.php:2581
 msgid "You have made changes. Remember to update when you're done."
 msgstr "Változtatás történt. Ne felejtsd el frissíteni, amikor kész."
 
-#: ../inc/base.php:1161 ../rencontre.php:224
+#: ../inc/base.php:1162 ../rencontre.php:224
 msgid "General"
 msgstr "Általános"
 
-#: ../inc/base.php:1162 ../templates/rencontre_mail_instant.php:55
+#: ../inc/base.php:1163 ../templates/rencontre_mail_instant.php:55
 #: ../templates/rencontre_mail_regular_global.php:79
 #: ../templates/rencontre_mail_remind.php:20
 msgid "Login"
 msgstr "Bejelentkezés"
 
-#: ../inc/base.php:1163
+#: ../inc/base.php:1164
 msgid "Display"
 msgstr "Megjelenítés"
 
-#: ../inc/base.php:1164
+#: ../inc/base.php:1165
 msgid "E-mails"
 msgstr "E-mailek"
 
-#: ../inc/base.php:1165
+#: ../inc/base.php:1166
 msgid "CSV"
 msgstr "CSV"
 
-#: ../inc/base.php:1170
+#: ../inc/base.php:1171
 msgid "Premium"
 msgstr "Prémium"
 
-#: ../inc/base.php:1191
+#: ../inc/base.php:1192
 msgid ""
 "OpenSSL doesn't seem to be working. Some features of this plugin will not be "
 "available."
@@ -102,78 +106,78 @@ msgstr ""
 "Úgy tűnik, hogy az OpenSSL nem működik. A bővítmény egyes szolgáltatásai nem "
 "lesznek elérhetőek."
 
-#: ../inc/base.php:1195
+#: ../inc/base.php:1196
 msgid "Plugin page"
 msgstr "Bővítmény oldala"
 
-#: ../inc/base.php:1209
+#: ../inc/base.php:1210
 msgid "Country selected by default"
 msgstr "Alapértelmezés szerinti ország"
 
-#: ../inc/base.php:1217
+#: ../inc/base.php:1218
 msgid "Number of days in jail (deleted account)"
 msgstr "Tiltásban eltöltött napok száma (törölt fiók)"
 
-#: ../inc/base.php:1230
+#: ../inc/base.php:1231
 msgid "Use member's picture as WordPress avatar"
 msgstr "Tag képének használata WordPress avatárként"
 
-#: ../inc/base.php:1234
+#: ../inc/base.php:1235
 msgid "Old messages deleted during maintenance (recommended)"
 msgstr "Régi üzenetek törlése karbantartás során (ajánlott)"
 
-#: ../inc/base.php:1237 ../inc/base.php:1249 ../inc/base.php:1378
-#: ../inc/base.php:1478 ../inc/base.php:1536 ../inc/base.php:3407
-#: ../inc/base.php:3435
+#: ../inc/base.php:1238 ../inc/base.php:1250 ../inc/base.php:1383
+#: ../inc/base.php:1483 ../inc/base.php:1542 ../inc/base.php:3408
+#: ../inc/base.php:3440
 msgid "No"
 msgstr "Nincs"
 
-#: ../inc/base.php:1238 ../inc/base.php:1537
+#: ../inc/base.php:1239 ../inc/base.php:1543
 msgid "Monthly"
 msgstr "Havonta"
 
-#: ../inc/base.php:1239
+#: ../inc/base.php:1240
 msgid "Quarterly"
 msgstr "Negyedévente"
 
-#: ../inc/base.php:1240
+#: ../inc/base.php:1241
 msgid "Biannual"
 msgstr "Félévente"
 
-#: ../inc/base.php:1241
+#: ../inc/base.php:1242
 msgid "Annual"
 msgstr "Évente"
 
-#: ../inc/base.php:1246
+#: ../inc/base.php:1247
 msgid "Inactive users deleted during maintenance"
 msgstr "Inaktív felhasználók törölve karbantartás során"
 
-#: ../inc/base.php:1250
+#: ../inc/base.php:1251
 msgid "Year"
 msgstr "év"
 
-#: ../inc/base.php:1251 ../inc/base.php:1252 ../inc/base.php:1253
-#: ../inc/base.php:1254
+#: ../inc/base.php:1252 ../inc/base.php:1253 ../inc/base.php:1254
+#: ../inc/base.php:1255
 msgid "Years"
 msgstr "év"
 
-#: ../inc/base.php:1259
+#: ../inc/base.php:1260
 msgid "Hour maintenance tasks (off peak)"
 msgstr "Óránkénti karbantartási feladatok (csúcsidőn kívül)"
 
-#: ../inc/base.php:1264
+#: ../inc/base.php:1265
 msgid "hours"
 msgstr "óra"
 
-#: ../inc/base.php:1270
+#: ../inc/base.php:1271
 msgid "Do not remove WP roles"
 msgstr "Ne távolítsuk el a WP szerepeket"
 
-#: ../inc/base.php:1274
+#: ../inc/base.php:1275
 msgid "Do not remove user in WP when remove in Rencontre"
 msgstr "Rencontre-ből eltávolításnál felhasználót a WP-ben megtartani"
 
-#: ../inc/base.php:1280
+#: ../inc/base.php:1281
 msgid ""
 "Unchecked: WP roles will be destroyed. Users who are not in Rencontre will "
 "be destroyed. This is the best mode for a big and exclusive dating site."
@@ -182,7 +186,7 @@ msgstr ""
 "felhasználók törlése. Ez a legjobb mód egy nagy és exkluzív társkereső "
 "oldalhoz."
 
-#: ../inc/base.php:1281
+#: ../inc/base.php:1282
 msgid ""
 "Checked: Better choice to test this plugin or to use with other one "
 "(forum...). Over time, the site will be slower with numerous abandoned "
@@ -192,70 +196,74 @@ msgstr ""
 "használatra (fórum...). Idővel a webhely lassabb lesz, ha számos elhagyott "
 "fiókkal van."
 
-#: ../inc/base.php:1285
+#: ../inc/base.php:1286
 msgid "Clean-up when uninstall"
 msgstr "Tisztítás eltávolításkor"
 
-#: ../inc/base.php:1290 ../inc/base.php:1352 ../inc/base.php:1514
-#: ../inc/base.php:1609 ../inc/base.php:2616 ../inc/base.php:3239
-#: ../inc/base.php:3375 ../inc/base.php:3460 ../inc/base.php:3725
-#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:289
-#: ../templates/rencontre_account.php:315
+#: ../inc/base.php:1291 ../inc/base.php:1357 ../inc/base.php:1519
+#: ../inc/base.php:1610 ../inc/base.php:2617 ../inc/base.php:3240
+#: ../inc/base.php:3376 ../inc/base.php:3469 ../inc/base.php:3764
+#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:292
+#: ../templates/rencontre_account.php:318
 #: ../templates/rencontre_registration_part1.php:143
 #: ../templates/rencontre_registration_part2.php:59
 #: ../templates/rencontre_registration_part3.php:110
 msgid "Save"
 msgstr "Mentés"
 
-#: ../inc/base.php:1295
+#: ../inc/base.php:1296
 msgid "Images names"
 msgstr "Képek elnevezése"
 
-#: ../inc/base.php:1296
+#: ../inc/base.php:1297
 msgid "Be careful, all pictures of the members will have another name."
 msgstr "Légy óvatos, a tagok összes képének megváltozik a neve."
 
-#: ../inc/base.php:1303
+#: ../inc/base.php:1304
 msgid "Images names are encoded"
 msgstr "A képek neve kódolva"
 
-#: ../inc/base.php:1304
+#: ../inc/base.php:1305
 msgid "Images names are not encoded"
 msgstr "A képek neve nincs kódolva"
 
-#: ../inc/base.php:1305
+#: ../inc/base.php:1306
 msgid "I don't know if it's encoded or not"
 msgstr "Nem tudom, hogy kódolt-e vagy sem"
 
-#: ../inc/base.php:1312
+#: ../inc/base.php:1313
 msgid "Encode all images names"
 msgstr "Az összes kép nevének kódolása"
 
-#: ../inc/base.php:1313
+#: ../inc/base.php:1314
 msgid "Decode all images names"
 msgstr "Az összes kép nevének dekódolása"
 
-#: ../inc/base.php:1315
+#: ../inc/base.php:1316
 msgid "Cleanup abandoned images"
 msgstr "Az elhagyott képek tisztítása"
 
-#: ../inc/base.php:1331
+#: ../inc/base.php:1332
 msgid "AppID for Facebook login (empty if not installed)"
 msgstr "AppID Facebook bejelentkezéshez (üres, ha nincs telepítve)"
 
-#: ../inc/base.php:1335
+#: ../inc/base.php:1336
 msgid "Redirect to the plugin page after login"
 msgstr "A bejelentkezés után átirányítás a bővítmény oldalra"
 
-#: ../inc/base.php:1339
+#: ../inc/base.php:1340
 msgid "Enable rapid registration"
 msgstr "Gyors regisztráció engedélyezése"
 
-#: ../inc/base.php:1343
+#: ../inc/base.php:1344
 msgid "Do not request a new password after registration"
 msgstr "A regisztráció után ne kérjünk új jelszót"
 
-#: ../inc/base.php:1347
+#: ../inc/base.php:1348
+msgid "Do not allow password change in -my account-"
+msgstr "Ne engedélyezzem a jelszó megváltoztatását a fiókomban"
+
+#: ../inc/base.php:1352
 msgid ""
 "Obligation to choose a city in the wp_Geonames list during registration (if "
 "plugin installed)"
@@ -263,155 +271,155 @@ msgstr ""
 "Kötelezettség, hogy a regisztráció során válasszon egy várost a wp_Geonames "
 "listából (ha a beépülő modul telepítve van)"
 
-#: ../inc/base.php:1375
+#: ../inc/base.php:1380
 msgid "Display a different name than login"
 msgstr "A login helyett más név megjelenítése"
 
-#: ../inc/base.php:1379
+#: ../inc/base.php:1384
 msgid "Uneditable after registration"
 msgstr "A regisztráció után nem szerkeszthető"
 
-#: ../inc/base.php:1380
+#: ../inc/base.php:1385
 msgid "Editable in \"my account\""
 msgstr "Szerkeszthető a \"Fiókom\"-ban"
 
-#: ../inc/base.php:1385
+#: ../inc/base.php:1390
 msgid "Number of portrait on logged out plugin homepage"
 msgstr "Portrék száma a kijelentkezett bővítmény oldalon"
 
-#: ../inc/base.php:1390
+#: ../inc/base.php:1395
 msgid "Update now"
 msgstr "Frissítés most"
 
-#: ../inc/base.php:1395
+#: ../inc/base.php:1400
 msgid "Min width of portrait on logged out plugin homepage"
 msgstr "A portré minimális szélessége a kijelentkezett plugin kezdőlapján"
 
-#: ../inc/base.php:1401
+#: ../inc/base.php:1406
 msgid "Min width of portrait on logged out plugin homepage on small screen"
 msgstr ""
 "A portré minimális szélessége a kijelentkezett plugin kezdőlapján kis "
 "képernyőn"
 
-#: ../inc/base.php:1406
+#: ../inc/base.php:1411
 msgid "Number of days to wait before presence homepage"
 msgstr "Kezdőlapos megjelenítés előtti várakozó napok száma"
 
-#: ../inc/base.php:1414
+#: ../inc/base.php:1419
 msgid "Max number of results per search"
 msgstr "Az eredmények max száma kereséskor"
 
-#: ../inc/base.php:1426
+#: ../inc/base.php:1431
 msgid "Dynamic loading of search results"
 msgstr "A keresési eredmények dinamikus betöltése"
 
-#: ../inc/base.php:1430
+#: ../inc/base.php:1435
 msgid "Display profiles searched in a new tab"
 msgstr "Keresett profilok új lapon való megjelenítése"
 
-#: ../inc/base.php:1436
+#: ../inc/base.php:1441
 msgid "Only members from the same country on the logged on plugin homepage"
 msgstr "Csak ugyanazon országbeli tagok a bejelentkezett bővítmény kezdőlapján"
 
-#: ../inc/base.php:1442 ../templates/rencontre_my_home.php:33
+#: ../inc/base.php:1447 ../templates/rencontre_my_home.php:33
 msgid "Today's birthday"
 msgstr "A mai születésnaposok"
 
-#: ../inc/base.php:1446
+#: ../inc/base.php:1451
 msgid "Profiles currently online"
 msgstr "Jelenleg online tagok"
 
-#: ../inc/base.php:1450
+#: ../inc/base.php:1455
 msgid "Enable chat"
 msgstr "Csevegés engedélyezése"
 
-#: ../inc/base.php:1454
+#: ../inc/base.php:1459
 msgid "Chat thread down (Android)"
 msgstr "Csevegő szál lefelé (Android) "
 
-#: ../inc/base.php:1458
+#: ../inc/base.php:1463
 msgid "Geolocation"
 msgstr "Helymeghatározás"
 
-#: ../inc/base.php:1462
+#: ../inc/base.php:1467
 msgid "Number of photos"
 msgstr "Fotók száma"
 
-#: ../inc/base.php:1470
+#: ../inc/base.php:1475
 msgid "Regenerate all photos"
 msgstr "Az összes fénykép újbóli létrehozása"
 
-#: ../inc/base.php:1475
+#: ../inc/base.php:1480
 msgid "View a discrete copyright on photos"
 msgstr "Diszkrét szerzői jogi szöveg a fényképeken"
 
-#: ../inc/base.php:1479
+#: ../inc/base.php:1484
 msgid "Upwardly inclined"
 msgstr "Felfelé irányban"
 
-#: ../inc/base.php:1480
+#: ../inc/base.php:1485
 msgid "Downwardly inclined"
 msgstr "Lefelé irányban"
 
-#: ../inc/base.php:1485
+#: ../inc/base.php:1490
 msgid "Copyright text on pictures. Empty => Site URL."
 msgstr "Szerzői jogi szöveg a képeken. Üres => Webhely URL-je."
 
-#: ../inc/base.php:1489
+#: ../inc/base.php:1494
 msgid "Lightbox Image Gallery"
 msgstr "Lightbox képgaléria"
 
-#: ../inc/base.php:1493
+#: ../inc/base.php:1498
 msgid "Members without photo are less visible"
 msgstr "A fotó nélküli tagok kevésbé láthatóak"
 
-#: ../inc/base.php:1497
+#: ../inc/base.php:1502
 msgid "Members without photo cannot zoom other members"
 msgstr "A fénykép nélküli tagok nem tudják nagyítani a többi tagot"
 
-#: ../inc/base.php:1501 ../inc/rencontre_widget.php:482
-#: ../inc/rencontre_widget.php:2096 ../inc/rencontre_widget.php:2743
-#: ../inc/rencontre_widget.php:3293
+#: ../inc/base.php:1506 ../inc/rencontre_widget.php:482
+#: ../inc/rencontre_widget.php:2097 ../inc/rencontre_widget.php:2773
+#: ../inc/rencontre_widget.php:3320
 msgid "Members without photo, attention-catcher and ad cannot send message"
 msgstr "Fotó, mottó és bemutatkozás nélkül a tagok nem küldhetnek üzenetet"
 
-#: ../inc/base.php:1505 ../inc/rencontre_widget.php:504
+#: ../inc/base.php:1510 ../inc/rencontre_widget.php:504
 msgid "Members without photo, attention-catcher and ad cannot make a report"
 msgstr "Fotó, mottó és bemutatkozás nélkül a tagok nem jelenthetnek"
 
-#: ../inc/base.php:1509
+#: ../inc/base.php:1514
 msgid "Members cannot hide their profile"
 msgstr "A tagok nem rejthetik el a profiljukat"
 
-#: ../inc/base.php:1529
+#: ../inc/base.php:1535
 msgid "Send an email to the user whose account is deleted"
 msgstr "E-mail küldése a törölt felhasználónak"
 
-#: ../inc/base.php:1533
+#: ../inc/base.php:1539
 msgid "Automatic sending a summary email to members (shared daily)"
 msgstr "Automatikus összefoglaló e-mail küldés a tagoknak (naponta)"
 
-#: ../inc/base.php:1538
+#: ../inc/base.php:1544
 msgid "Fortnightly"
 msgstr "Kétheti"
 
-#: ../inc/base.php:1539
+#: ../inc/base.php:1545
 msgid "Weekly"
 msgstr "Heti"
 
-#: ../inc/base.php:1543 ../inc/base.php:1594
+#: ../inc/base.php:1547 ../inc/base.php:1595
 msgid "Up this week"
 msgstr "Jelen hétig"
 
-#: ../inc/base.php:1543 ../inc/base.php:1594
+#: ../inc/base.php:1547 ../inc/base.php:1595
 msgid "mail/hour"
 msgstr "e-mail/óra"
 
-#: ../inc/base.php:1543
+#: ../inc/base.php:1547
 msgid "sent during maintenance"
 msgstr "karbantartás alatt elküldve"
 
-#: ../inc/base.php:1548
+#: ../inc/base.php:1552
 msgid ""
 "Introductory text for the summary email (After hello login - Before the "
 "smiles and contact requests)"
@@ -419,39 +427,39 @@ msgstr ""
 "Az összefoglaló e-mail bevezető szövege (Hello login után - A mosoly és a "
 "kapcsolatfelvétel kérése előtt)"
 
-#: ../inc/base.php:1554
+#: ../inc/base.php:1558
 msgid "Only my country in summary email"
 msgstr "Csak saját ország az összefoglaló e-mailben"
 
-#: ../inc/base.php:1561
+#: ../inc/base.php:1565
 msgid "Also send an email for a smile"
 msgstr "E-mail küldése mosoly esetén"
 
-#: ../inc/base.php:1567
+#: ../inc/base.php:1571
 msgid "Automatically sending an email happy birthday members"
 msgstr "Boldog születésnapot e-mailek automatikus küldése"
 
-#: ../inc/base.php:1571
+#: ../inc/base.php:1575
 msgid "Full text for the birthday mail (After hello pseudo)"
 msgstr "A születésnapi levél teljes szövege (hello pszeudo után)"
 
-#: ../inc/base.php:1575
+#: ../inc/base.php:1579
 msgid "Max number of mails sent per hour"
 msgstr "Az óránként küldött e-mailek maximális száma"
 
-#: ../inc/base.php:1594
+#: ../inc/base.php:1595
 msgid "except during maintenance"
 msgstr "kivéve karbantartás alatt"
 
-#: ../inc/base.php:1599
+#: ../inc/base.php:1600
 msgid "No members without photo in automatic mails"
 msgstr "Nincsenek fotó nélküli tagok az automatikus levelekben"
 
-#: ../inc/base.php:1603
+#: ../inc/base.php:1604
 msgid "Force HTML mode (mail not readable)"
 msgstr "HTML mód kényszerítése (az e-mail nem olvasható)"
 
-#: ../inc/base.php:1607
+#: ../inc/base.php:1608
 msgid ""
 "The language used for emails is the one of your ADMIN interface (hardcoded "
 "in DB)."
@@ -459,55 +467,55 @@ msgstr ""
 "Az e-mailekhez használt nyelv az ADMIN-kezelőfelület nyelve (a DB-ben kemény "
 "kódolású)."
 
-#: ../inc/base.php:1630
+#: ../inc/base.php:1631
 msgid "Export members in CSV"
 msgstr "Tagok CSV-be exportálása"
 
-#: ../inc/base.php:1634
+#: ../inc/base.php:1635
 msgid "All members"
 msgstr "Minden tag"
 
-#: ../inc/base.php:1635
+#: ../inc/base.php:1636
 msgid "Active last month"
 msgstr "Aktív a múlt hónapban"
 
-#: ../inc/base.php:1636
+#: ../inc/base.php:1637
 msgid "Active last 2 months"
 msgstr "Aktív az elmúlt 2 hónapban"
 
-#: ../inc/base.php:1637
+#: ../inc/base.php:1638
 msgid "Active last 6 months"
 msgstr "Aktív az elmúlt 6 hónapban"
 
-#: ../inc/base.php:1638
+#: ../inc/base.php:1639
 msgid "Active last 12 months"
 msgstr "Aktív az elmúlt 12 hónapban"
 
-#: ../inc/base.php:1642
+#: ../inc/base.php:1643
 msgid "Only members with photo"
 msgstr "Csak fényképes tagok"
 
-#: ../inc/base.php:1645
+#: ../inc/base.php:1646
 msgid "Only members with attention-catcher and ad"
 msgstr "Csak mottóval és bemutatkozással rendelkező tagok"
 
-#: ../inc/base.php:1647
+#: ../inc/base.php:1648
 msgid "Export in CSV"
 msgstr "CSV-be exportálás"
 
-#: ../inc/base.php:1650
+#: ../inc/base.php:1651
 msgid "Get back photos by FTP in wp-content/uploads/tmp/"
 msgstr "Fotók visszavétele FTP-n keresztül, wp-content/uploads/tmp/"
 
-#: ../inc/base.php:1653
+#: ../inc/base.php:1654
 msgid "Import members in CSV"
 msgstr "Tagok importálása CSV-ben"
 
-#: ../inc/base.php:1654
+#: ../inc/base.php:1655
 msgid "Manual method"
 msgstr "Manuális módszer"
 
-#: ../inc/base.php:1656
+#: ../inc/base.php:1657
 msgid ""
 "Put members photos in wp-content/uploads/tmp/photo_import/ by FTP before the "
 "start (right RW - no sub folder - .jpg - no zip)."
@@ -515,15 +523,15 @@ msgstr ""
 "Tagok fényképeit FTP-n keresztül a wp-content/uploads/tmp/photo_import/ "
 "mappába kezdés előtt (RW jog - nincs almappa - .jpg - nem ZIP)."
 
-#: ../inc/base.php:1657
+#: ../inc/base.php:1658
 msgid "Select your CSV file (.csv - no zip)."
 msgstr "CSV-fájl kiválasztása (.csv - nincs zip)."
 
-#: ../inc/base.php:1658 ../inc/base.php:1674
+#: ../inc/base.php:1659 ../inc/base.php:1675
 msgid "Import in CSV"
 msgstr "Importálás CSV-ben"
 
-#: ../inc/base.php:1660
+#: ../inc/base.php:1661
 msgid ""
 "Make an export and look at it to get the right format (The first line is not "
 "treated)."
@@ -531,11 +539,11 @@ msgstr ""
 "Exportálás és megtekintés a megfelelő formátum elérése érdekében (első sor "
 "kihagyva)."
 
-#: ../inc/base.php:1661
+#: ../inc/base.php:1662
 msgid "Zip package"
 msgstr "Zip csomag"
 
-#: ../inc/base.php:1662
+#: ../inc/base.php:1663
 msgid ""
 "Create a zip file containing a .csv file and a \"photo_import\" folder with "
 "the members' photos in .jpg."
@@ -543,337 +551,337 @@ msgstr ""
 "Hozz létre egy ZIP-fájlt, amely egy .csv fájlt és egy \"photo_import\" "
 "mappát tartalmaz a tagok képeivel .jpg formátumban."
 
-#: ../inc/base.php:1667
+#: ../inc/base.php:1668
 msgid "CSV or ZIP File"
 msgstr "CSV vagy ZIP fájl"
 
-#: ../inc/base.php:1671
+#: ../inc/base.php:1672
 msgid ""
 "In case of interruption during the import of photos, restart the procedure. "
 "Doubloons are killed."
 msgstr ""
 "Ha a fényképek importálása félbeszakad, eljárás újraindítása. Duplák törlése."
 
-#: ../inc/base.php:1675
+#: ../inc/base.php:1676
 msgid "File loaded"
 msgstr "Fájl feltöltve"
 
-#: ../inc/base.php:1676
+#: ../inc/base.php:1677
 msgid "Error !"
 msgstr "Hiba!"
 
-#: ../inc/base.php:1677
+#: ../inc/base.php:1678
 msgid "Import data"
 msgstr "Adat importálása"
 
-#: ../inc/base.php:1678
+#: ../inc/base.php:1679
 msgid "completed"
 msgstr "kész"
 
-#: ../inc/base.php:1680
+#: ../inc/base.php:1681
 msgid "Photos Import"
 msgstr "Fotók importálása"
 
-#: ../inc/base.php:1682
+#: ../inc/base.php:1683
 msgid "Import completed"
 msgstr "Import kész"
 
-#: ../inc/base.php:1730 ../inc/base.php:2104 ../rencontre.php:225
+#: ../inc/base.php:1731 ../inc/base.php:2105 ../rencontre.php:225
 #: ../rencontre.php:233
 msgid "Members"
 msgstr "Tagok"
 
-#: ../inc/base.php:1739
+#: ../inc/base.php:1740
 msgid "Number of registered members"
 msgstr "Regisztrált tagok száma"
 
-#: ../inc/base.php:1740
+#: ../inc/base.php:1741
 msgid "Number of members with profile and photo"
 msgstr "Profillal és fotóval rendelkező tagok száma"
 
-#: ../inc/base.php:1741 ../inc/rencontre_widget.php:2607
+#: ../inc/base.php:1742 ../inc/rencontre_widget.php:2640
 #: ../templates/rencontre_my_home.php:49 ../templates/rencontre_my_home.php:51
 msgid "Online now"
 msgstr "Jelenleg online"
 
-#: ../inc/base.php:1747
+#: ../inc/base.php:1748
 msgid "Statistic"
 msgstr "Statisztikák"
 
-#: ../inc/base.php:1768
+#: ../inc/base.php:1769
 msgid "Add new from WordPress"
 msgstr "Új hozzáadása WordPressből"
 
-#: ../inc/base.php:1772
+#: ../inc/base.php:1773
 msgid "Alias or email or ID"
 msgstr "Alias vagy e-mail vagy azonosító"
 
-#: ../inc/base.php:1774 ../templates/rencontre_search.php:179
+#: ../inc/base.php:1775 ../templates/rencontre_search.php:179
 #: ../templates/rencontre_search.php:182
-#: ../templates/rencontre_sidebar_quick_search.php:112
-#: ../templates/rencontre_sidebar_quick_search.php:115
+#: ../templates/rencontre_sidebar_quick_search.php:133
+#: ../templates/rencontre_sidebar_quick_search.php:136
 msgid "Find"
 msgstr "Keresés"
 
-#: ../inc/base.php:1795 ../inc/rencontre_filter.php:1874 ../rencontre.php:425
+#: ../inc/base.php:1796 ../inc/rencontre_filter.php:1116 ../rencontre.php:427
 #: ../templates/rencontre_account_delete.php:16
 msgid "Account deletion"
 msgstr "Fiók törlése"
 
-#: ../inc/base.php:1796 ../inc/rencontre_filter.php:1875 ../rencontre.php:426
+#: ../inc/base.php:1797 ../inc/rencontre_filter.php:1117 ../rencontre.php:428
 msgid "Your account has been deleted"
 msgstr "Fiókod töröltük"
 
-#: ../inc/base.php:1869
+#: ../inc/base.php:1870
 msgid "Reason for this action"
 msgstr "Akció oka"
 
-#: ../inc/base.php:1875 ../templates/rencontre_message_write.php:82
+#: ../inc/base.php:1876 ../templates/rencontre_message_write.php:82
 msgid "Send"
 msgstr "Küldés"
 
-#: ../inc/base.php:1887 ../inc/base.php:1888 ../inc/base.php:1890
-#: ../inc/base.php:1892 ../inc/base.php:1897 ../inc/base.php:1898
-#: ../inc/base.php:1899 ../inc/base.php:1901 ../inc/base.php:2471
-#: ../inc/base.php:2472 ../inc/base.php:2473 ../inc/base.php:2475
+#: ../inc/base.php:1888 ../inc/base.php:1889 ../inc/base.php:1891
+#: ../inc/base.php:1893 ../inc/base.php:1898 ../inc/base.php:1899
+#: ../inc/base.php:1900 ../inc/base.php:1902 ../inc/base.php:2472
+#: ../inc/base.php:2473 ../inc/base.php:2474 ../inc/base.php:2476
 msgid "Sort"
 msgstr "Rendezés"
 
-#: ../inc/base.php:1888
+#: ../inc/base.php:1889
 msgid "Action"
 msgstr "Művelet"
 
-#: ../inc/base.php:1889
+#: ../inc/base.php:1890
 msgid "Photo"
 msgstr "Fotó"
 
-#: ../inc/base.php:1890 ../templates/rencontre_search.php:169
+#: ../inc/base.php:1891 ../templates/rencontre_search.php:169
 msgid "Alias"
 msgstr "Alias"
 
-#: ../inc/base.php:1890 ../inc/rencontre_filter.php:1587
-#: ../templates/rencontre_account.php:65 ../templates/rencontre_imgreg.php:33
+#: ../inc/base.php:1891 ../inc/rencontre_filter.php:827
+#: ../templates/rencontre_account.php:68 ../templates/rencontre_imgreg.php:33
 msgid "My name"
 msgstr "Nevem"
 
-#: ../inc/base.php:1891
+#: ../inc/base.php:1892
 msgid "Sex"
 msgstr "Nem"
 
-#: ../inc/base.php:1892 ../templates/rencontre_search.php:31
+#: ../inc/base.php:1893 ../templates/rencontre_search.php:31
 msgid "Age"
 msgstr "Kor"
 
-#: ../inc/base.php:1893 ../templates/rencontre_search.php:53
+#: ../inc/base.php:1894 ../templates/rencontre_search.php:53
 msgid "Height"
 msgstr "Magasság"
 
-#: ../inc/base.php:1894 ../templates/rencontre_search.php:79
+#: ../inc/base.php:1895 ../templates/rencontre_search.php:79
 msgid "Weight"
 msgstr "Súly"
 
-#: ../inc/base.php:1895 ../inc/base.php:3043 ../inc/base.php:4335
+#: ../inc/base.php:1896 ../inc/base.php:3044 ../inc/base.php:4401
 #: ../templates/rencontre_libre_search.php:65
 #: ../templates/rencontre_menu.php:34 ../templates/rencontre_menu.php:37
 #: ../templates/rencontre_search.php:16
 msgid "Search"
 msgstr "Keresés"
 
-#: ../inc/base.php:1896
+#: ../inc/base.php:1897
 msgid "Hang"
 msgstr "Hang"
 
-#: ../inc/base.php:1897
+#: ../inc/base.php:1898
 msgid "Place"
 msgstr "Hely"
 
-#: ../inc/base.php:1898
+#: ../inc/base.php:1899
 msgid "Ad (change)"
 msgstr "Bemutatkozás (módosítás)"
 
-#: ../inc/base.php:1898
+#: ../inc/base.php:1899
 msgid "Registered"
 msgstr "Regisztrált"
 
-#: ../inc/base.php:1899 ../inc/base.php:2473
+#: ../inc/base.php:1900 ../inc/base.php:2474
 msgid "IP address"
 msgstr "IP cím"
 
-#: ../inc/base.php:1901
+#: ../inc/base.php:1902
 msgid "Reporting"
 msgstr "Jelentés"
 
-#: ../inc/base.php:1925 ../inc/base.php:1937
+#: ../inc/base.php:1926 ../inc/base.php:1938
 msgid "See"
 msgstr "Lásd"
 
-#: ../inc/base.php:1929
+#: ../inc/base.php:1930
 msgid "Unblock this member"
 msgstr "Tag újra engedélyezése"
 
-#: ../inc/base.php:1929 ../inc/base.php:2614
+#: ../inc/base.php:1930 ../inc/base.php:2615
 msgid "Block this member"
 msgstr "Tag tiltása"
 
-#: ../inc/base.php:1930
+#: ../inc/base.php:1931
 msgid "Allow sending message"
 msgstr "Üzenet küldésének engedélyezése"
 
-#: ../inc/base.php:1930
+#: ../inc/base.php:1931
 msgid "Prohibit contact"
 msgstr "Kapcsolat tiltása"
 
-#: ../inc/base.php:1932
+#: ../inc/base.php:1933
 msgid "New fast account not completed"
 msgstr "Kitöltetlen új gyors fiók"
 
-#: ../inc/base.php:1933
+#: ../inc/base.php:1934
 msgid "Remove - Black list email"
 msgstr "Eltávolítás - cím feketelistára"
 
-#: ../inc/base.php:1948 ../inc/base.php:2220
-#: ../templates/rencontre_account.php:162
+#: ../inc/base.php:1949 ../inc/base.php:2221
+#: ../templates/rencontre_account.php:165
 #: ../templates/rencontre_portrait.php:98
 #: ../templates/rencontre_registration_part1.php:111
 #: ../templates/rencontre_search.php:59 ../templates/rencontre_search.php:68
 msgid "cm"
 msgstr "cm"
 
-#: ../inc/base.php:1948 ../inc/base.php:2221
-#: ../templates/rencontre_account.php:165
+#: ../inc/base.php:1949 ../inc/base.php:2222
+#: ../templates/rencontre_account.php:168
 #: ../templates/rencontre_portrait.php:98
 #: ../templates/rencontre_registration_part1.php:114
 #: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
 msgid "ft"
 msgstr "cm"
 
-#: ../inc/base.php:1948 ../inc/base.php:2221
-#: ../templates/rencontre_account.php:165
+#: ../inc/base.php:1949 ../inc/base.php:2222
+#: ../templates/rencontre_account.php:168
 #: ../templates/rencontre_portrait.php:98
 #: ../templates/rencontre_registration_part1.php:114
 #: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
 msgid "in"
 msgstr "cm"
 
-#: ../inc/base.php:1950 ../inc/base.php:2233
-#: ../templates/rencontre_account.php:181
+#: ../inc/base.php:1951 ../inc/base.php:2234
+#: ../templates/rencontre_account.php:184
 #: ../templates/rencontre_portrait.php:102
 #: ../templates/rencontre_registration_part1.php:129
 #: ../templates/rencontre_search.php:85 ../templates/rencontre_search.php:94
 msgid "kg"
 msgstr "kg"
 
-#: ../inc/base.php:1950 ../inc/base.php:2234
-#: ../templates/rencontre_account.php:184
+#: ../inc/base.php:1951 ../inc/base.php:2235
+#: ../templates/rencontre_account.php:187
 #: ../templates/rencontre_portrait.php:102
 #: ../templates/rencontre_registration_part1.php:132
 #: ../templates/rencontre_search.php:86 ../templates/rencontre_search.php:95
 msgid "lbs"
 msgstr "lbs"
 
-#: ../inc/base.php:1953 ../inc/base.php:2324 ../inc/rencontre_widget.php:1082
+#: ../inc/base.php:1954 ../inc/base.php:2325 ../inc/rencontre_widget.php:1082
 #: ../inc/rencontre_widget.php:1242 ../inc/rencontre_widget.php:1885
-#: ../inc/rencontre_widget.php:2758 ../inc/rencontre_widget.php:3308
-#: ../templates/rencontre_account.php:310
+#: ../inc/rencontre_widget.php:2788 ../inc/rencontre_widget.php:3335
+#: ../templates/rencontre_account.php:313
 #: ../templates/rencontre_sidebar_top.php:57
 msgid "Profile switched off"
 msgstr "A profil kikapcsolva"
 
-#: ../inc/base.php:1954 ../inc/base.php:2323 ../inc/base.php:2614
+#: ../inc/base.php:1955 ../inc/base.php:2324 ../inc/base.php:2615
 #: ../inc/rencontre_widget.php:1081 ../inc/rencontre_widget.php:1885
-#: ../inc/rencontre_widget.php:2107 ../inc/rencontre_widget.php:2758
-#: ../inc/rencontre_widget.php:3308 ../templates/rencontre_account.php:309
+#: ../inc/rencontre_widget.php:2108 ../inc/rencontre_widget.php:2788
+#: ../inc/rencontre_widget.php:3335 ../templates/rencontre_account.php:312
 #: ../templates/rencontre_sidebar_top.php:57
 msgid "Profile hidden"
 msgstr "Profil elrejtve"
 
-#: ../inc/base.php:1956
+#: ../inc/base.php:1957
 msgid "multiple choice"
 msgstr "több választási lehetőség"
 
-#: ../inc/base.php:1958
+#: ../inc/base.php:1959
 msgid "to"
 msgstr "ide"
 
-#: ../inc/base.php:2104
+#: ../inc/base.php:2105
 msgid "Change a Profile"
 msgstr "Profil módosítása"
 
-#: ../inc/base.php:2105 ../inc/rencontre_widget.php:2787
-#: ../inc/rencontre_widget.php:3338
+#: ../inc/base.php:2106 ../inc/rencontre_widget.php:2817
+#: ../inc/rencontre_widget.php:3365
 msgid "Previous page"
 msgstr "Előző oldal"
 
-#: ../inc/base.php:2113 ../inc/base.php:2335
+#: ../inc/base.php:2114 ../inc/base.php:2336
 #: ../templates/rencontre_portrait_edit.php:105
 #: ../templates/rencontre_portrait_edit.php:183
 msgid "Save profile"
 msgstr "Adatlap mentése"
 
-#: ../inc/base.php:2123
+#: ../inc/base.php:2124
 msgid "Click to delete"
 msgstr "Kattints a törléshez"
 
-#: ../inc/base.php:2126 ../templates/rencontre_portrait_edit.php:54
+#: ../inc/base.php:2127 ../templates/rencontre_portrait_edit.php:54
 msgid "Click to add a photo"
 msgstr "Kattints a fotók feltöltéséhez"
 
-#: ../inc/base.php:2131 ../templates/rencontre_portrait_edit.php:74
+#: ../inc/base.php:2132 ../templates/rencontre_portrait_edit.php:74
 msgid "Delete all photos"
 msgstr "Minden fotó törlése"
 
-#: ../inc/base.php:2142 ../templates/rencontre_portrait_edit.php:96
+#: ../inc/base.php:2143 ../templates/rencontre_portrait_edit.php:96
 msgid "My attention-catcher"
 msgstr "Mottóm"
 
-#: ../inc/base.php:2144 ../templates/rencontre_portrait_edit.php:100
+#: ../inc/base.php:2145 ../templates/rencontre_portrait_edit.php:100
 msgid "My ad"
 msgstr "Bemutatkozásom"
 
-#: ../inc/base.php:2152 ../templates/rencontre_account.php:71
+#: ../inc/base.php:2153 ../templates/rencontre_account.php:74
 #: ../templates/rencontre_registration_part1.php:59
 msgid "I am"
 msgstr "Ez vagyok"
 
-#: ../inc/base.php:2162 ../templates/rencontre_account.php:85
+#: ../inc/base.php:2163 ../templates/rencontre_account.php:88
 #: ../templates/rencontre_registration_part1.php:71
 msgid "Born"
 msgstr "Született"
 
-#: ../inc/base.php:2184 ../templates/rencontre_account.php:125
+#: ../inc/base.php:2185 ../templates/rencontre_account.php:128
 #: ../templates/rencontre_registration_part2.php:30
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:17
 msgid "My country"
 msgstr "Országom"
 
-#: ../inc/base.php:2195 ../templates/rencontre_account.php:136
+#: ../inc/base.php:2196 ../templates/rencontre_account.php:139
 #: ../templates/rencontre_registration_part2.php:41
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:25
 msgid "My region"
 msgstr "Régióm"
 
-#: ../inc/base.php:2206 ../templates/rencontre_account.php:146
+#: ../inc/base.php:2207 ../templates/rencontre_account.php:149
 #: ../templates/rencontre_registration_part2.php:50
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:31
 msgid "My city"
 msgstr "Városom"
 
-#: ../inc/base.php:2209
+#: ../inc/base.php:2210
 msgid "Reset GPS"
 msgstr "GPS alaphelyzetbe állítása"
 
-#: ../inc/base.php:2216 ../templates/rencontre_account.php:157
+#: ../inc/base.php:2217 ../templates/rencontre_account.php:160
 #: ../templates/rencontre_registration_part1.php:106
 msgid "My height"
 msgstr "Magasságom"
 
-#: ../inc/base.php:2229 ../templates/rencontre_account.php:176
+#: ../inc/base.php:2230 ../templates/rencontre_account.php:179
 #: ../templates/rencontre_registration_part1.php:124
 msgid "My weight"
 msgstr "Testsúlyom"
 
-#: ../inc/base.php:2241 ../inc/rencontre_filter.php:1592
-#: ../templates/rencontre_account.php:195 ../templates/rencontre_imgreg.php:39
+#: ../inc/base.php:2242 ../inc/rencontre_filter.php:832
+#: ../templates/rencontre_account.php:198 ../templates/rencontre_imgreg.php:39
 #: ../templates/rencontre_libre_search.php:30
 #: ../templates/rencontre_portrait.php:150
 #: ../templates/rencontre_registration_part3.php:33
@@ -882,14 +890,14 @@ msgstr "Testsúlyom"
 msgid "I'm looking for"
 msgstr "Keresett partner:"
 
-#: ../inc/base.php:2257 ../templates/rencontre_account.php:224
+#: ../inc/base.php:2258 ../templates/rencontre_account.php:227
 #: ../templates/rencontre_registration_part3.php:60
 msgid "Age min/max"
 msgstr "Min/max kor"
 
-#: ../inc/base.php:2262 ../inc/base.php:2269 ../inc/rencontre_widget.php:537
-#: ../templates/rencontre_account.php:230
-#: ../templates/rencontre_account.php:239
+#: ../inc/base.php:2263 ../inc/base.php:2270 ../inc/rencontre_widget.php:537
+#: ../templates/rencontre_account.php:233
+#: ../templates/rencontre_account.php:242
 #: ../templates/rencontre_libre_search.php:46
 #: ../templates/rencontre_libre_search.php:56
 #: ../templates/rencontre_mini_portrait.php:54
@@ -900,113 +908,115 @@ msgstr "Min/max kor"
 #: ../templates/rencontre_search.php:36 ../templates/rencontre_search.php:43
 #: ../templates/rencontre_search_result.php:47
 #: ../templates/rencontre_search_result.php:67
-#: ../templates/rencontre_sidebar_quick_search.php:32
-#: ../templates/rencontre_sidebar_quick_search.php:40
+#: ../templates/rencontre_sidebar_quick_search.php:33
+#: ../templates/rencontre_sidebar_quick_search.php:41
 #: ../templates/rencontre_sidebar_top.php:47
 msgid "years"
 msgstr "év"
 
-#: ../inc/base.php:2277 ../templates/rencontre_account.php:249
+#: ../inc/base.php:2278 ../templates/rencontre_account.php:252
 #: ../templates/rencontre_registration_part3.php:85
 msgid "For"
 msgstr "Emiatt"
 
-#: ../inc/base.php:2292
+#: ../inc/base.php:2293
 msgid "Reset"
 msgstr "Visszaállítás"
 
-#: ../inc/base.php:2294
+#: ../inc/base.php:2295
 msgid "Actions (contact request...)"
 msgstr "Akciók (kapcsolatfelvételi kérés...)"
 
-#: ../inc/base.php:2295
+#: ../inc/base.php:2296
 msgid "Reports"
 msgstr "Jelentések"
 
-#: ../inc/base.php:2298
+#: ../inc/base.php:2299
 msgid "no mail"
 msgstr "nincs e-mail"
 
-#: ../inc/base.php:2304 ../inc/rencontre_widget.php:371
+#: ../inc/base.php:2305 ../inc/rencontre_widget.php:371
+#: ../templates/rencontre_mini_portrait.php:68
 #: ../templates/rencontre_portrait.php:124
 #: ../templates/rencontre_portrait.php:154
 #: ../templates/rencontre_search_result.php:84
+#: ../templates/rencontre_search_result.php:87
 msgid "online"
 msgstr "online"
 
-#: ../inc/base.php:2311 ../inc/rencontre_filter.php:1693
+#: ../inc/base.php:2312 ../inc/rencontre_filter.php:933
 #: ../templates/rencontre_mail_fastreg_confirm.php:11
 msgid "Confirmation email"
 msgstr "Megerősítő e-mail"
 
-#: ../inc/base.php:2313 ../lang/rencontre-js-admin-lang.php:5
+#: ../inc/base.php:2314 ../lang/rencontre-js-admin-lang.php:5
 msgid "Confirm"
 msgstr "Megerősítés"
 
-#: ../inc/base.php:2319 ../templates/rencontre_account.php:303
+#: ../inc/base.php:2320 ../templates/rencontre_account.php:306
 msgid "Profile visibility"
 msgstr "Profil láthatósága"
 
-#: ../inc/base.php:2322 ../templates/rencontre_account.php:308
+#: ../inc/base.php:2323 ../templates/rencontre_account.php:311
 msgid "Profile visible"
 msgstr "Profil látható"
 
-#: ../inc/base.php:2404 ../inc/rencontre_widget.php:642
+#: ../inc/base.php:2405 ../inc/rencontre_widget.php:642
 msgid "Done"
 msgstr "Kész"
 
-#: ../inc/base.php:2436 ../rencontre.php:226 ../rencontre.php:234
+#: ../inc/base.php:2437 ../rencontre.php:226 ../rencontre.php:234
 msgid "Jail"
 msgstr "Letiltás"
 
-#: ../inc/base.php:2437
+#: ../inc/base.php:2438
 msgid ""
 "List of members removed by Admin. They are blacklisted. Subscription blocked"
 msgstr ""
 "Admin által eltávolított tagok listája. Feketelistán vannak. Előfizetés "
 "blokkolva"
 
-#: ../inc/base.php:2437
+#: ../inc/base.php:2438
 msgid "days"
 msgstr "napig"
 
-#: ../inc/base.php:2471
+#: ../inc/base.php:2472
 msgid "Date"
 msgstr "Dátum"
 
-#: ../inc/base.php:2472
+#: ../inc/base.php:2473
 msgid "Email address"
 msgstr "E-mail cím"
 
-#: ../inc/base.php:2474
+#: ../inc/base.php:2475
 msgid "End"
 msgstr "Vége"
 
-#: ../inc/base.php:2475
+#: ../inc/base.php:2476
 msgid "Banning"
 msgstr "Letiltás"
 
-#: ../inc/base.php:2483
+#: ../inc/base.php:2484
 msgid "Release"
 msgstr "Kiengedés"
 
-#: ../inc/base.php:2484
+#: ../inc/base.php:2485
 msgid "Only email"
 msgstr "Csak email"
 
-#: ../inc/base.php:2484
+#: ../inc/base.php:2485
 msgid "Only IP"
 msgstr "Csak IP"
 
-#: ../inc/base.php:2484
+#: ../inc/base.php:2485
 msgid "Email and IP"
 msgstr "E-mail és IP"
 
-#: ../inc/base.php:2489
+#: ../inc/base.php:2490
 msgid "Banning IP is a Premium feature."
 msgstr "Az IP tiltása prémium szolgáltatás."
 
-#: ../inc/base.php:2533
+#: ../inc/base.php:2534
 msgid ""
 "The profiles are not all translated into the language of the site. Users "
 "will see the character \"?\"."
@@ -1014,17 +1024,17 @@ msgstr ""
 "A profilok nem mindegyike van lefordítva a webhely nyelvére. A felhasználók "
 "a \"?\" karaktert fogják látni."
 
-#: ../inc/base.php:2569 ../rencontre.php:227
+#: ../inc/base.php:2570 ../rencontre.php:227
 #: ../templates/rencontre_mail_regular.php:40
 #: ../templates/rencontre_message_write.php:49
 #: ../templates/rencontre_mini_portrait.php:66
-#: ../templates/rencontre_mini_portrait.php:69
-#: ../templates/rencontre_search_result.php:114
+#: ../templates/rencontre_mini_portrait.php:74
 #: ../templates/rencontre_search_result.php:117
+#: ../templates/rencontre_search_result.php:120
 msgid "Profile"
 msgstr "Adatlap"
 
-#: ../inc/base.php:2572
+#: ../inc/base.php:2573
 msgid ""
 "It does not appear to be any profile. You can load the default profile if "
 "you wish."
@@ -1032,15 +1042,15 @@ msgstr ""
 "Úgy tűnik, hogy nincs adatlap. Betöltheted az alapértelmezettet, ha "
 "szeretnéd."
 
-#: ../inc/base.php:2574
+#: ../inc/base.php:2575
 msgid "Load profiles"
 msgstr "Adatlapok betöltése"
 
-#: ../inc/base.php:2583
+#: ../inc/base.php:2584
 msgid "You can create, rename and delete items from the profile."
 msgstr "Elemeket létrehozhatsz, átnevezhetsz és törölhetsz az adatlapról."
 
-#: ../inc/base.php:2585
+#: ../inc/base.php:2586
 msgid ""
 "Warning, this is not without consequences. The changes will be applied to "
 "the member profiles that can offend. Caution !"
@@ -1048,130 +1058,130 @@ msgstr ""
 "Figyelem, ennek következményei lesznek. A módosítások a meglévő adatlapokra "
 "lesznek alkalmazva. Vigyázat!"
 
-#: ../inc/base.php:2587 ../inc/base.php:2897
+#: ../inc/base.php:2588 ../inc/base.php:2898
 msgid "Ref language"
 msgstr "Ref nyelv"
 
-#: ../inc/base.php:2587 ../inc/base.php:2897
+#: ../inc/base.php:2588 ../inc/base.php:2898
 msgid "Other"
 msgstr "Egyéb"
 
-#: ../inc/base.php:2596 ../inc/base.php:2908
+#: ../inc/base.php:2597 ../inc/base.php:2909
 msgid "Add Language (2 lowercase letters comply with country code)"
 msgstr "Nyelv hozzáadása (2 kisbetű az országkódnak megfelelően)"
 
-#: ../inc/base.php:2598 ../inc/base.php:2910
+#: ../inc/base.php:2599 ../inc/base.php:2911
 msgid "Add a language"
 msgstr "Nyelv hozzáadása"
 
-#: ../inc/base.php:2601 ../inc/base.php:2913
+#: ../inc/base.php:2602 ../inc/base.php:2914
 msgid "Remove a language and all related content"
 msgstr "A nyelv és az összes kapcsolódó tartalom eltávolítása"
 
-#: ../inc/base.php:2605 ../inc/base.php:2917
+#: ../inc/base.php:2606 ../inc/base.php:2918
 msgid "Remove a language"
 msgstr "Nyelv eltávolítása"
 
-#: ../inc/base.php:2611
+#: ../inc/base.php:2612
 msgid "User blocking if a required field is missing"
 msgstr "Felhasználó letiltása, ha hiányzik egy kötelező mező"
 
-#: ../inc/base.php:2613
+#: ../inc/base.php:2614
 msgid "Just show a warning"
 msgstr "Csak mutasson figyelmeztetést"
 
-#: ../inc/base.php:2624
+#: ../inc/base.php:2625
 msgid "Add category"
 msgstr "Új kategória hozzáadása"
 
-#: ../inc/base.php:2648 ../lang/rencontre-js-admin-lang.php:10
+#: ../inc/base.php:2649 ../lang/rencontre-js-admin-lang.php:10
 #: ../templates/rencontre_portrait_edit.php:131
 msgid "Required field (hidden)"
 msgstr "Kötelező mező (rejtett)"
 
-#: ../inc/base.php:2666 ../inc/base.php:2686 ../inc/base.php:2720
-#: ../inc/base.php:2748
+#: ../inc/base.php:2667 ../inc/base.php:2687 ../inc/base.php:2721
+#: ../inc/base.php:2749
 msgid "Move Up"
 msgstr "Felfelé mozgatás"
 
-#: ../inc/base.php:2667 ../inc/base.php:2687 ../inc/base.php:2721
-#: ../inc/base.php:2749
+#: ../inc/base.php:2668 ../inc/base.php:2688 ../inc/base.php:2722
+#: ../inc/base.php:2750
 msgid "Move Down"
 msgstr "Lefelé mozgatás"
 
-#: ../inc/base.php:2668
+#: ../inc/base.php:2669
 msgid "Change the name"
 msgstr "Név módosítása"
 
-#: ../inc/base.php:2669
+#: ../inc/base.php:2670
 msgid "Remove the category"
 msgstr "Kategória törlése"
 
-#: ../inc/base.php:2673 ../inc/base.php:2674
+#: ../inc/base.php:2674 ../inc/base.php:2675
 msgid "Add value to this category"
 msgstr "Kategóriához érték hozzárendelése"
 
-#: ../inc/base.php:2688 ../inc/base.php:2942
+#: ../inc/base.php:2689 ../inc/base.php:2943
 msgid "Change the name or type"
 msgstr "Név vagy típus módosítása"
 
-#: ../inc/base.php:2689 ../inc/base.php:2723 ../inc/base.php:2751
-#: ../inc/base.php:2943 ../inc/base.php:2954 ../inc/base.php:3186
-#: ../inc/base.php:3207 ../lang/rencontre-js-admin-lang.php:7
+#: ../inc/base.php:2690 ../inc/base.php:2724 ../inc/base.php:2752
+#: ../inc/base.php:2944 ../inc/base.php:2955 ../inc/base.php:3187
+#: ../inc/base.php:3208 ../lang/rencontre-js-admin-lang.php:7
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: ../inc/base.php:2696
+#: ../inc/base.php:2697
 msgid "A line of text (TEXT)"
 msgstr "Szövegsor (TEXT)"
 
-#: ../inc/base.php:2700
+#: ../inc/base.php:2701
 msgid "Large text box (TEXTAREA)"
 msgstr "Nagy szövegmező (TEXTAREA)"
 
-#: ../inc/base.php:2705 ../inc/base.php:2733 ../inc/base.php:2948
-#: ../inc/base.php:3187 ../inc/base.php:3208
+#: ../inc/base.php:2706 ../inc/base.php:2734 ../inc/base.php:2949
+#: ../inc/base.php:3188 ../inc/base.php:3209
 msgid "Add Value"
 msgstr "Érték megadása"
 
-#: ../inc/base.php:2706
+#: ../inc/base.php:2707
 msgid "Single choice list (SELECT)"
 msgstr "Kiválasztás listáról (SELECT)"
 
-#: ../inc/base.php:2722 ../inc/base.php:2750 ../inc/base.php:2766
-#: ../inc/base.php:2953 ../templates/rencontre_account.php:47
+#: ../inc/base.php:2723 ../inc/base.php:2751 ../inc/base.php:2767
+#: ../inc/base.php:2954 ../templates/rencontre_account.php:48
 msgid "Change"
 msgstr "Módosítás"
 
-#: ../inc/base.php:2734
+#: ../inc/base.php:2735
 msgid "Multiple choice list (CHECKBOX)"
 msgstr "Többválasztós lista (CHECKBOX)"
 
-#: ../inc/base.php:2761
+#: ../inc/base.php:2762
 msgid "Numeric choice list (SELECT)"
 msgstr "Numerikus választási lista (SELECT)"
 
-#: ../inc/base.php:2768 ../lang/rencontre-js-admin-lang.php:34
+#: ../inc/base.php:2769 ../lang/rencontre-js-admin-lang.php:34
 msgid "Step"
 msgstr "Lépés"
 
-#: ../inc/base.php:2775
+#: ../inc/base.php:2776
 msgid "A date (DATE)"
 msgstr "Dátum (DATE)"
 
-#: ../inc/base.php:2811 ../inc/base.php:2889
+#: ../inc/base.php:2812 ../inc/base.php:2890
 msgid "Countries and Regions"
 msgstr "Országok és régiók"
 
-#: ../inc/base.php:2812
+#: ../inc/base.php:2813
 msgid "Cleaner"
 msgstr "Tisztító"
 
-#: ../inc/base.php:2871
+#: ../inc/base.php:2872
 msgid "Datas are old. You should delete all countries and load the new ones."
 msgstr "Az adatok régiek. Töröld az összes országot, és töltsd be az újat."
 
-#: ../inc/base.php:2880
+#: ../inc/base.php:2881
 msgid ""
 "If a country is loaded in wp-geonames, the regions list of this country will "
 "come from the wp-geonames base and not from here."
@@ -1179,7 +1189,7 @@ msgstr ""
 "Ha egy ország betöltésre kerül a wp-geonames-ben, akkor az ország régiók "
 "listája a wp-geonames-ből származik, nem innen."
 
-#: ../inc/base.php:2892
+#: ../inc/base.php:2893
 msgid ""
 "The country table is empty. You can load the countries and regions by "
 "default if you wish."
@@ -1187,183 +1197,183 @@ msgstr ""
 "Az országtábla üres. Alapértelmezés szerint betöltheted az országokat és "
 "régiókat, ha szeretnéd."
 
-#: ../inc/base.php:2893
+#: ../inc/base.php:2894
 msgid "Load countries"
 msgstr "Országok betöltése"
 
-#: ../inc/base.php:2896
+#: ../inc/base.php:2897
 msgid "You can create, rename and delete countries and regions."
 msgstr "Létrehozhatsz, átnevezhetsz és törölhetsz országokat és régiókat."
 
-#: ../inc/base.php:2923 ../inc/base.php:2924
+#: ../inc/base.php:2924 ../inc/base.php:2925
 msgid "Add a country"
 msgstr "Ország megadása"
 
-#: ../inc/base.php:2926 ../inc/base.php:2927
+#: ../inc/base.php:2927 ../inc/base.php:2928
 msgid "Delete all countries"
 msgstr "Összes ország törlése"
 
-#: ../inc/base.php:2949
+#: ../inc/base.php:2950
 msgid "Regions"
 msgstr "Régiók"
 
-#: ../inc/base.php:2970
+#: ../inc/base.php:2971
 msgid "Cleaning missing regions in users data"
 msgstr "A felhasználói adatokban hiányzó régiók tisztítása"
 
-#: ../inc/base.php:2974
+#: ../inc/base.php:2975
 msgid "Missing regions"
 msgstr "Hiányzó régiók"
 
-#: ../inc/base.php:2994
+#: ../inc/base.php:2995
 msgid "Existing regions"
 msgstr "Meglévő régiók"
 
-#: ../inc/base.php:3006
+#: ../inc/base.php:3007
 msgid "Replace"
 msgstr "Helyettesítés"
 
-#: ../inc/base.php:3041
+#: ../inc/base.php:3042
 msgid "Features"
 msgstr "Funkciók"
 
-#: ../inc/base.php:3042
+#: ../inc/base.php:3043
 msgid "Words"
 msgstr "Szavak"
 
-#: ../inc/base.php:3044
+#: ../inc/base.php:3045
 msgid "Templates"
 msgstr "Sablonok"
 
-#: ../inc/base.php:3049
+#: ../inc/base.php:3050
 msgid "Translate"
 msgstr "fordít"
 
-#: ../inc/base.php:3073
+#: ../inc/base.php:3074
 msgid "No country"
 msgstr "Nincs ország"
 
-#: ../inc/base.php:3077
+#: ../inc/base.php:3078
 msgid "No region"
 msgstr "Nincs régió"
 
-#: ../inc/base.php:3081
+#: ../inc/base.php:3082
 msgid "No localisation"
 msgstr "Nincs lokalizáció"
 
-#: ../inc/base.php:3085
+#: ../inc/base.php:3086
 msgid "No birth date"
 msgstr "Nincs születési dátum"
 
-#: ../inc/base.php:3089
+#: ../inc/base.php:3090
 msgid "Min age"
 msgstr "Min kor"
 
-#: ../inc/base.php:3101
+#: ../inc/base.php:3102
 msgid "Max age"
 msgstr "Max kor"
 
-#: ../inc/base.php:3113
+#: ../inc/base.php:3114
 msgid "No smiles"
 msgstr "Nincs mosoly"
 
-#: ../inc/base.php:3117
+#: ../inc/base.php:3118
 msgid "No contact request"
 msgstr "Nincs kapcsolatfelvételi kérés"
 
-#: ../inc/base.php:3121
+#: ../inc/base.php:3122
 msgid "No weight"
 msgstr "Nincs súly"
 
-#: ../inc/base.php:3125
+#: ../inc/base.php:3126
 msgid "Weight unit"
 msgstr "Súly mértékegysége"
 
-#: ../inc/base.php:3128
+#: ../inc/base.php:3129
 msgid "Kilograms"
 msgstr "Kilogram"
 
-#: ../inc/base.php:3129
+#: ../inc/base.php:3130
 msgid "Pounds"
 msgstr "Font"
 
-#: ../inc/base.php:3134
+#: ../inc/base.php:3135
 msgid "No height"
 msgstr "Nincs magasság"
 
-#: ../inc/base.php:3138
+#: ../inc/base.php:3139
 msgid "Height unit"
 msgstr "Magasság egysége"
 
-#: ../inc/base.php:3141
+#: ../inc/base.php:3142
 msgid "Meter"
 msgstr "Méter"
 
-#: ../inc/base.php:3142
+#: ../inc/base.php:3143
 msgid "Feet and Inches"
 msgstr "Láb és col"
 
-#: ../inc/base.php:3147
+#: ../inc/base.php:3148
 msgid "No report"
 msgstr "Nincs jelentés"
 
-#: ../inc/base.php:3151
+#: ../inc/base.php:3152
 msgid "No emoticon"
 msgstr "Nincs hangulatjel"
 
-#: ../inc/base.php:3155
+#: ../inc/base.php:3156
 msgid "No menu (I use WordPress menu)"
 msgstr "Nincs menu (A WordPress menüt használom)"
 
-#: ../inc/base.php:3159
+#: ../inc/base.php:3160
 msgid "No sidebar (I put it with widget)"
 msgstr "Nincs oldalsáv (widgettel tettem)"
 
-#: ../inc/base.php:3163
+#: ../inc/base.php:3164
 msgid "Fit portraits width in home page"
 msgstr "Fénykép-szélesség igazítása a kezdőlapon"
 
-#: ../inc/base.php:3167
+#: ../inc/base.php:3168
 msgid "No ads on logged out plugin homepage"
 msgstr "Nincsenek hirdetések a kijelentkezett bővítmény honlapon"
 
-#: ../inc/base.php:3171
+#: ../inc/base.php:3172
 msgid "Only photo on logged out plugin homepage"
 msgstr "Csak fotó a kijelentkezett bővítmény kezdőlapon"
 
-#: ../inc/base.php:3175
+#: ../inc/base.php:3176
 msgid "Change relation type"
 msgstr "Kapcsolat típusának megváltoztatása"
 
-#: ../inc/base.php:3196
+#: ../inc/base.php:3197
 msgid "Change sex values"
 msgstr "A nemek értékének módosítása"
 
-#: ../inc/base.php:3217
+#: ../inc/base.php:3218
 msgid "Allow multi choice in relation and sex"
 msgstr "Többszörös választás engedélyezve a kapcsolatnál és a nemnél"
 
-#: ../inc/base.php:3221
+#: ../inc/base.php:3222
 msgid "No homosexual"
 msgstr "Nincs homoszexuális"
 
-#: ../inc/base.php:3225
+#: ../inc/base.php:3226
 msgid "No sex change"
 msgstr "Nincs nem változás"
 
-#: ../inc/base.php:3229
+#: ../inc/base.php:3230
 msgid "Change register link on click a portrait"
 msgstr "A regisztrációs hivatkozás megváltoztatása a portréra kattintva"
 
-#: ../inc/base.php:3229
+#: ../inc/base.php:3230
 msgid "(empty => default WP)"
 msgstr "(üres => alapértelmezett WP)"
 
-#: ../inc/base.php:3233
+#: ../inc/base.php:3234
 msgid "No 'no email' button"
 msgstr "Nincsen „nincs e-mail” gomb"
 
-#: ../inc/base.php:3237
+#: ../inc/base.php:3238
 msgid ""
 "Be careful, already registered members will be in a category that no longer "
 "exists. They should update their account."
@@ -1371,21 +1381,21 @@ msgstr ""
 "Légy óvatos, a már regisztrált tagok olyan kategóriába kerülnek, amely már "
 "nem létezik. Frissíteniük kell számlájukat."
 
-#: ../inc/base.php:3258
+#: ../inc/base.php:3259
 msgid "Change welcome text for new user"
 msgstr "Új felhasználó üdvözlő szövegének megváltoztatása"
 
-#: ../inc/base.php:3262 ../templates/rencontre_registration_part1.php:33
+#: ../inc/base.php:3263 ../templates/rencontre_registration_part1.php:33
 msgid ""
 "You will access all the possibilities offered by the site in few minutes."
 msgstr ""
 "Néhány perc alatt hozzáférhetsz a webhely által kínált összes lehetőséghez."
 
-#: ../inc/base.php:3263 ../templates/rencontre_registration_part1.php:34
+#: ../inc/base.php:3264 ../templates/rencontre_registration_part1.php:34
 msgid "Before that, you need to provide some information requested below."
 msgstr "Ezt megelőzően meg kell adnod néhány, az alábbiakban kért információt."
 
-#: ../inc/base.php:3264 ../templates/rencontre_registration_part1.php:38
+#: ../inc/base.php:3265 ../templates/rencontre_registration_part1.php:38
 msgid ""
 "We would like to inform you that we do not use your personal data outside of "
 "this site."
@@ -1393,7 +1403,7 @@ msgstr ""
 "Szeretnénk tájékoztatni, hogy a személyes adataidat ezen a weboldalon kívül "
 "nem használjuk fel."
 
-#: ../inc/base.php:3265 ../templates/rencontre_registration_part1.php:39
+#: ../inc/base.php:3266 ../templates/rencontre_registration_part1.php:39
 msgid ""
 "Deleting your account on your part or ours, causes the deletion of all your "
 "data."
@@ -1401,7 +1411,7 @@ msgstr ""
 "Fiókod törlése a részedről vagy a miénkről az összes adatod törlését "
 "eredményezi."
 
-#: ../inc/base.php:3266 ../templates/rencontre_registration_part1.php:40
+#: ../inc/base.php:3267 ../templates/rencontre_registration_part1.php:40
 msgid ""
 "This also applies to messages that you have sent to other members as well as "
 "those they have sent to you."
@@ -1409,23 +1419,23 @@ msgstr ""
 "Ez vonatkozik azokra az üzenetekre is, amelyeket más tagoknak küldtél, "
 "valamint azokra, amelyeket ők küldtek neked."
 
-#: ../inc/base.php:3267 ../templates/rencontre_registration_part1.php:44
+#: ../inc/base.php:3268 ../templates/rencontre_registration_part1.php:44
 msgid "We wish you nice encounters."
 msgstr "Kellemes randikat kívánunk."
 
-#: ../inc/base.php:3273
+#: ../inc/base.php:3274
 msgid "Change warning account blocked"
 msgstr "A fiók blokkolva van figyelmeztetés módosítása"
 
-#: ../inc/base.php:3277 ../inc/base.php:3279 ../inc/rencontre_widget.php:206
+#: ../inc/base.php:3278 ../inc/base.php:3280 ../inc/rencontre_widget.php:206
 msgid "Your account is blocked. You are invisible. Change your profile."
 msgstr "Fiókod le van tiltva. Láthatatlan vagy. Változtasd meg a profilod."
 
-#: ../inc/base.php:3283
+#: ../inc/base.php:3284
 msgid "Change warning empty profile"
 msgstr "Üres adatlap figyelmeztetés módosítása"
 
-#: ../inc/base.php:3287 ../inc/base.php:3289
+#: ../inc/base.php:3288 ../inc/base.php:3290
 #: ../templates/rencontre_modal_warning.php:47
 msgid ""
 "Your profile is empty. To take advantage of the site and being more visible, "
@@ -1434,22 +1444,22 @@ msgstr ""
 "Profilod üres. A webhely szolgáltatásainak kihasználása és a láthatóság "
 "érdekében megköszönjük, hogy kitöltöd."
 
-#: ../inc/base.php:3293
+#: ../inc/base.php:3294
 msgid "Change the quarantine warning"
 msgstr "Karantén figyelmeztetés módosítása"
 
-#: ../inc/base.php:3297 ../inc/base.php:3299 ../inc/rencontre_filter.php:1615
+#: ../inc/base.php:3298 ../inc/base.php:3300 ../inc/rencontre_filter.php:855
 #: ../templates/rencontre_registration_jail.php:17
 msgid "Your email address is currently in quarantine. Sorry"
 msgstr "Az e-mail címed jelenleg karanténban van. Sajnálom"
 
-#: ../inc/base.php:3303
+#: ../inc/base.php:3304
 msgid "Change the no-photo warning"
 msgstr "Fénykép figyelmeztetés módosítása"
 
-#: ../inc/base.php:3307 ../inc/base.php:3309 ../inc/rencontre_widget.php:411
+#: ../inc/base.php:3308 ../inc/base.php:3310 ../inc/rencontre_widget.php:411
 #: ../inc/rencontre_widget.php:599 ../inc/rencontre_widget.php:1893
-#: ../inc/rencontre_widget.php:2683 ../inc/rencontre_widget.php:3226
+#: ../inc/rencontre_widget.php:2713 ../inc/rencontre_widget.php:3253
 msgid ""
 "To be more visible and to view photos of other members, you should add one "
 "to your profile."
@@ -1457,11 +1467,11 @@ msgstr ""
 "Hogy láthatóbb légy és megtekinthesd a többi tag fotóit, tölts fel egy "
 "fényképet."
 
-#: ../inc/base.php:3313
+#: ../inc/base.php:3314
 msgid "Change the follow-up email"
 msgstr "Később küldött e-mail tartalom módosítása"
 
-#: ../inc/base.php:3318 ../templates/rencontre_mail_remind.php:16
+#: ../inc/base.php:3319 ../templates/rencontre_mail_remind.php:16
 msgid ""
 "You registered on our website but you did not complete the procedure. You'll "
 "miss a date. That's too bad."
@@ -1469,219 +1479,256 @@ msgstr ""
 "Regisztráltál honlapunkon, de nem fejezted be az eljárást. Emiatt "
 "lemaradhatsz randikról és az nem jó."
 
-#: ../inc/base.php:3319 ../templates/rencontre_mail_remind.php:17
+#: ../inc/base.php:3320 ../templates/rencontre_mail_remind.php:17
 msgid ""
 "Thus take two minutes to finish the registration. You should not be "
 "disappointed."
 msgstr ""
 "Ezért tölts két percet a regisztráció befejezésével. Nem fogsz csalódni."
 
-#: ../inc/base.php:3320 ../templates/rencontre_mail_fastreg_confirm.php:16
+#: ../inc/base.php:3321 ../templates/rencontre_mail_fastreg_confirm.php:16
 #: ../templates/rencontre_mail_instant.php:52
 #: ../templates/rencontre_mail_regular_global.php:75
 #: ../templates/rencontre_mail_remind.php:18
 msgid "Regards,"
 msgstr "Üdvözlettel,"
 
-#: ../inc/base.php:3326
+#: ../inc/base.php:3327
 msgid "Change Smile word"
 msgstr "Mosoly szó módosítása"
 
-#: ../inc/base.php:3326 ../inc/base.php:3360
+#: ../inc/base.php:3327 ../inc/base.php:3361
 msgid "(empty => no change)"
 msgstr "(üres => nincs változás)"
 
-#: ../inc/base.php:3330 ../inc/base.php:3331
+#: ../inc/base.php:3331 ../inc/base.php:3332 ../inc/base.php:4408
 #: ../templates/rencontre_mail_regular.php:30
 #: ../templates/rencontre_portrait.php:204
 #: ../templates/rencontre_portrait.php:207
-#: ../templates/rencontre_search_result.php:106
 #: ../templates/rencontre_search_result.php:109
-#: ../templates/rencontre_sidebar_top.php:79
+#: ../templates/rencontre_search_result.php:112
+#: ../templates/rencontre_sidebar_top.php:78
 msgid "Smile"
 msgstr "Rám mosolyogtak"
 
-#: ../inc/base.php:3334 ../inc/base.php:3335
-#: ../templates/rencontre_sidebar_top.php:130
+#: ../inc/base.php:3335 ../inc/base.php:3336 ../inc/base.php:4411
+#: ../templates/rencontre_sidebar_top.php:109
 msgid "Who I smiled?"
 msgstr "Kire mosolyogtam?"
 
-#: ../inc/base.php:3338 ../inc/base.php:3339 ../inc/rencontre_widget.php:2405
+#: ../inc/base.php:3339 ../inc/base.php:3340 ../inc/rencontre_widget.php:2438
 msgid "I smiled at"
 msgstr "Rájuk mosolyogtam"
 
-#: ../inc/base.php:3342 ../inc/base.php:3343
+#: ../inc/base.php:3343 ../inc/base.php:3344
 #: ../templates/rencontre_mail_instant.php:31
 #: ../templates/rencontre_mail_regular_global.php:35
 msgid "You have received a smile from"
 msgstr "Mosolyt kaptál tőlük"
 
-#: ../inc/base.php:3346 ../inc/base.php:3347 ../inc/rencontre_widget.php:3671
+#: ../inc/base.php:3347 ../inc/base.php:3348 ../inc/rencontre_widget.php:3698
 msgid "Smile already sent"
 msgstr "Mosoly korábban elküldve"
 
-#: ../inc/base.php:3350 ../inc/base.php:3351 ../inc/rencontre_widget.php:3706
+#: ../inc/base.php:3351 ../inc/base.php:3352 ../inc/rencontre_widget.php:3733
 msgid "Smile sent"
 msgstr "Mosoly elküldve"
 
-#: ../inc/base.php:3354 ../inc/base.php:3355 ../inc/rencontre_widget.php:2446
+#: ../inc/base.php:3355 ../inc/base.php:3356 ../inc/rencontre_widget.php:2479
 msgid "I got a smile from"
 msgstr "Mosolyt kaptam tőlük"
 
-#: ../inc/base.php:3360
+#: ../inc/base.php:3361
 msgid "Change Look word"
 msgstr "Megtekintés szó módosítása"
 
-#: ../inc/base.php:3364 ../inc/base.php:3365
-#: ../templates/rencontre_sidebar_top.php:95
+#: ../inc/base.php:3365 ../inc/base.php:3366 ../inc/base.php:4409
+#: ../templates/rencontre_sidebar_top.php:87
 msgid "Look"
 msgstr "Látogatók"
 
-#: ../inc/base.php:3368 ../inc/base.php:3369 ../inc/rencontre_widget.php:2547
+#: ../inc/base.php:3369 ../inc/base.php:3370 ../inc/rencontre_widget.php:2580
 msgid "I was watched by"
 msgstr "Engem megnéztek"
 
-#: ../inc/base.php:3392
+#: ../inc/base.php:3393
 msgid "No gender restriction in search"
 msgstr "Nincs nemi korlátozás a keresésben"
 
-#: ../inc/base.php:3396
+#: ../inc/base.php:3397
 msgid "Add relation type in quick search"
 msgstr "Kapcsolat típusa gyors keresésben"
 
-#: ../inc/base.php:3400
+#: ../inc/base.php:3401
 msgid "No ad in search results"
 msgstr "Nincs hirdetés a keresés eredményeknél"
 
-#: ../inc/base.php:3404 ../inc/base.php:3432
+#: ../inc/base.php:3405 ../inc/base.php:3437
 msgid "Add a profile element in quick search"
 msgstr "Profil elem hozzáadása gyors keresés során"
 
-#: ../inc/base.php:3453
+#: ../inc/base.php:3462
 msgid "Add also numerous profile elements in search? Get the kit Premium."
 msgstr "Számos profil elemet hozzáadnál a kereséshez? Vásárolj prémiumot."
 
-#: ../inc/base.php:3480
+#: ../inc/base.php:3489
 msgid "Menu color"
 msgstr "Menü színe"
 
-#: ../inc/base.php:3495 ../inc/base.php:3510 ../inc/base.php:3525
-#: ../inc/base.php:3540
+#: ../inc/base.php:3504 ../inc/base.php:3519 ../inc/base.php:3534
+#: ../inc/base.php:3549
 msgid "Menu buttons color"
 msgstr "Menü gombok színe"
 
-#: ../inc/base.php:3510
+#: ../inc/base.php:3519
 msgid "warning"
 msgstr "figyelmeztetés"
 
-#: ../inc/base.php:3525
+#: ../inc/base.php:3534
 msgid "checked"
 msgstr "Engedélyezve"
 
-#: ../inc/base.php:3540
+#: ../inc/base.php:3549
 msgid "hover"
 msgstr "egeres rámutatás"
 
-#: ../inc/base.php:3555
+#: ../inc/base.php:3564
 msgid "Block background color"
 msgstr "Blokk háttérszín"
 
-#: ../inc/base.php:3570
+#: ../inc/base.php:3579
 msgid "Title color"
 msgstr "Cím színe"
 
-#: ../inc/base.php:3585
+#: ../inc/base.php:3594
 msgid "Text color"
 msgstr "Szöveg színe"
 
-#: ../inc/base.php:3600
+#: ../inc/base.php:3609
 msgid "Label color"
 msgstr "Címke színe"
 
-#: ../inc/base.php:3615
+#: ../inc/base.php:3624
+msgid "Inline color"
+msgstr "Inline szín"
+
+#: ../inc/base.php:3639
+msgid "Inline badge color"
+msgstr "Inline jelvény színe"
+
+#: ../inc/base.php:3654
 msgid "Line and border color"
 msgstr "Vonal és határoló színe"
 
-#: ../inc/base.php:3630
+#: ../inc/base.php:3669
 msgid "Input background color"
 msgstr "Háttérszín megadása"
 
-#: ../inc/base.php:3645
+#: ../inc/base.php:3684
 msgid "Select background color"
 msgstr "Háttérszín kiválasztása"
 
-#: ../inc/base.php:3660
+#: ../inc/base.php:3699
 msgid "Warning bar background color"
 msgstr "Figyelmeztetés háttérszíne"
 
-#: ../inc/base.php:3675
+#: ../inc/base.php:3714
 msgid "Modal warning background color"
 msgstr "Modális figyelmeztető háttérszín"
 
-#: ../inc/base.php:3690
+#: ../inc/base.php:3729
 msgid "Message sent background color"
 msgstr "Elküldött üzenet háttérszíne"
 
-#: ../inc/base.php:3705
+#: ../inc/base.php:3744
 msgid "Message received background color"
 msgstr "Kapott üzenet háttérszíne"
 
-#: ../inc/base.php:3793
+#: ../inc/base.php:3835
+msgid "Color palette"
+msgstr "Szín paletta"
+
+#: ../inc/base.php:3859
 msgid "Custom templates in your theme"
 msgstr "Egyedi sablonok"
 
-#: ../inc/base.php:3796
+#: ../inc/base.php:3862
 msgid "Template file"
 msgstr "Sablonfájl"
 
-#: ../inc/base.php:3797
+#: ../inc/base.php:3863
 msgid "Plugin version"
 msgstr "Bővítmény verziója"
 
-#: ../inc/base.php:3798
+#: ../inc/base.php:3864
 msgid "Theme version"
 msgstr "Sablon verziója"
 
-#: ../inc/base.php:4331 ../templates/rencontre_menu.php:13
+#: ../inc/base.php:4397 ../templates/rencontre_menu.php:13
 msgid "My homepage"
 msgstr "Kezdőlap"
 
-#: ../inc/base.php:4332 ../templates/rencontre_menu.php:14
+#: ../inc/base.php:4398 ../templates/rencontre_menu.php:14
 msgid "My card"
 msgstr "Bankkártyám"
 
-#: ../inc/base.php:4333 ../templates/rencontre_menu.php:17
+#: ../inc/base.php:4399 ../templates/rencontre_menu.php:17
 #: ../templates/rencontre_menu.php:20
 #: ../templates/rencontre_portrait_edit.php:30
 msgid "Edit My Profile"
 msgstr "Profilom szerkesztése"
 
-#: ../inc/base.php:4334 ../templates/rencontre_menu.php:24
+#: ../inc/base.php:4400 ../templates/rencontre_menu.php:24
 #: ../templates/rencontre_menu.php:27
 msgid "Messaging"
 msgstr "Üzenetek"
 
-#: ../inc/base.php:4336 ../templates/rencontre_account.php:57
+#: ../inc/base.php:4402 ../templates/rencontre_account.php:60
 #: ../templates/rencontre_menu.php:40
 msgid "My Account"
 msgstr "Fiókom"
 
-#: ../inc/base.php:4339 ../inc/rencontre_filter.php:1243
+#: ../inc/base.php:4405 ../inc/rencontre_filter.php:483
 msgid "Log in"
 msgstr "Belépés"
 
-#: ../inc/base.php:4340 ../inc/rencontre_filter.php:1250 ../rencontre.php:980
-#: ../rencontre.php:981 ../rencontre.php:1025
+#: ../inc/base.php:4406 ../inc/rencontre_filter.php:490 ../rencontre.php:999
+#: ../rencontre.php:1000 ../rencontre.php:1044
 msgid "Register"
 msgstr "Regisztrálás"
 
-#: ../inc/base.php:4458
+#: ../inc/base.php:4410 ../templates/rencontre_sidebar_top.php:96
+msgid "Contact requests"
+msgstr "Csevegni akartak"
+
+#: ../inc/base.php:4412 ../templates/rencontre_sidebar_top.php:117
+msgid "Who I asked for a contact?"
+msgstr "Kitől kértem kapcsolatfelvételt?"
+
+#: ../inc/base.php:4413 ../templates/rencontre_sidebar_top.php:122
+msgid "Who I've blocked?"
+msgstr "Kit tiltottam le?"
+
+#: ../inc/base.php:4531
 msgid ""
 "The gender of some members is not in accordance with the custom parameter "
 "'change sex values'. These members are not visible."
 msgstr ""
 "Egyes tagok neme nincs összhangban a 'A nemek értékének módosítása' egyéni "
 "paraméterrel. Ezek a tagok nem láthatók."
+
+#: ../inc/rencontre_cron.php:218 ../templates/rencontre_mail_remind.php:11
+msgid "Registration"
+msgstr "Regisztráció"
+
+#: ../inc/rencontre_cron.php:293 ../templates/rencontre_mail_birthday.php:11
+#: ../templates/rencontre_mail_birthday.php:16
+msgid "Happy Birthday"
+msgstr "Boldog születésnapot"
+
+#: ../inc/rencontre_cron.php:804 ../templates/rencontre_mail_instant.php:11
+msgid "A member contact you"
+msgstr "Tag kapcsolatba lépett veled"
 
 #: ../inc/rencontre_don.php:4
 msgid "About This Plugin"
@@ -1757,13 +1804,23 @@ msgstr ""
 
 #: ../inc/rencontre_don.php:71
 msgid ""
+"If the menu tab is missing in appearance (theme full-site editing), install "
+"a classic theme (twenty-twenty-one) to create your menu. Then return to your "
+"theme and select the menu you've just created"
+msgstr ""
+"Ha a menü fül hiányzik (téma full-site editing), telepítsen egy klasszikus "
+"témát (twenty-twenty-one) a menü létrehozásához. Ezután térjen vissza a "
+"témához, és válassza ki az imént létrehozott menüt"
+
+#: ../inc/rencontre_don.php:73
+msgid ""
 "Add a new subscriber member in WP. Login this member and go to the plugin "
 "page (1)."
 msgstr ""
 "Adj egy új előfizető tagot a WP-hez. Jelentkezzen be ezen felhasználóként, "
 "és menj a bővítmény oldalára (1)."
 
-#: ../inc/rencontre_don.php:72
+#: ../inc/rencontre_don.php:74
 msgid ""
 "To facilitate the settings after installing, you can download and install "
 "via CSV (<a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>) "
@@ -1773,7 +1830,7 @@ msgstr ""
 "telepíthetsz CSV-n keresztül (<a href=\"admin.php?page=rencontre.php"
 "\">Rencontre / Általános</a>) 20 teszt profilt fotóval"
 
-#: ../inc/rencontre_don.php:75
+#: ../inc/rencontre_don.php:77
 msgid ""
 "More details in the <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
 "target=\"_blank\">F.A.Q</a>."
@@ -1781,80 +1838,67 @@ msgstr ""
 "További részletek az <a href=\"https://wordpress.org/plugins/rencontre/#faq"
 "\" target=\"_blank\">F.A.Q.</a> részben."
 
-#: ../inc/rencontre_filter.php:356 ../templates/rencontre_mail_remind.php:11
-msgid "Registration"
-msgstr "Regisztráció"
-
-#: ../inc/rencontre_filter.php:431 ../templates/rencontre_mail_birthday.php:11
-#: ../templates/rencontre_mail_birthday.php:16
-msgid "Happy Birthday"
-msgstr "Boldog születésnapot"
-
-#: ../inc/rencontre_filter.php:905 ../templates/rencontre_mail_instant.php:11
-msgid "A member contact you"
-msgstr "Tag kapcsolatba lépett veled"
-
-#: ../inc/rencontre_filter.php:1219 ../rencontre.php:225 ../rencontre.php:233
+#: ../inc/rencontre_filter.php:459 ../rencontre.php:225 ../rencontre.php:233
 msgid "Rencontre - Members"
 msgstr "Rencontre - Tagok"
 
-#: ../inc/rencontre_filter.php:1239
+#: ../inc/rencontre_filter.php:479
 msgid "Log out"
 msgstr "Kilépés"
 
-#: ../inc/rencontre_filter.php:1328 ../inc/rencontre_filter.php:1345
+#: ../inc/rencontre_filter.php:568 ../inc/rencontre_filter.php:585
 #: ../inc/rencontre_widget.php:1806 ../inc/rencontre_widget.php:1828
 msgid "No matter"
 msgstr "Nem számít"
 
-#: ../inc/rencontre_filter.php:1583 ../templates/rencontre_imgreg.php:27
+#: ../inc/rencontre_filter.php:823 ../templates/rencontre_imgreg.php:27
 #: ../templates/rencontre_imgreg.php:66
 msgid "Password"
 msgstr "Jelszó"
 
-#: ../inc/rencontre_filter.php:1603
+#: ../inc/rencontre_filter.php:843
 msgid "<strong>ERROR</strong>: Invalid password (6 characters min)."
 msgstr "<strong>HIBA</strong>: Érvénytelen jelszó (legalább 6 karakter)."
 
-#: ../inc/rencontre_filter.php:1670
+#: ../inc/rencontre_filter.php:910
 msgid "Confirmation email already sent"
 msgstr "Megerősítő email már elküldve"
 
-#: ../inc/rencontre_filter.php:1696
+#: ../inc/rencontre_filter.php:936
 msgid "Confirmation email sent"
 msgstr "Megerősítő email elküldve"
 
-#: ../inc/rencontre_filter.php:1877 ../inc/rencontre_filter.php:1878
-#: ../inc/rencontre_filter.php:1879 ../inc/rencontre_filter.php:1880
-#: ../inc/rencontre_filter.php:1881
+#: ../inc/rencontre_filter.php:1119 ../inc/rencontre_filter.php:1120
+#: ../inc/rencontre_filter.php:1121 ../inc/rencontre_filter.php:1122
+#: ../inc/rencontre_filter.php:1123
 msgid "Fake"
 msgstr "Hamis"
 
-#: ../inc/rencontre_filter.php:1879
+#: ../inc/rencontre_filter.php:1121
 msgid "profile"
 msgstr "adatlap"
 
-#: ../inc/rencontre_filter.php:1880
+#: ../inc/rencontre_filter.php:1122
 msgid "IP"
 msgstr "IP"
 
-#: ../inc/rencontre_filter.php:1881
+#: ../inc/rencontre_filter.php:1123
 msgid "email"
 msgstr "e-mail"
 
-#: ../inc/rencontre_filter.php:1882
+#: ../inc/rencontre_filter.php:1124
 msgid "Inadequate image"
 msgstr "Nem megfelelő kép"
 
-#: ../inc/rencontre_filter.php:1883
+#: ../inc/rencontre_filter.php:1125
 msgid "Inappropriate presentation"
 msgstr "Nem megfelelő prezentáció"
 
-#: ../inc/rencontre_filter.php:1884
+#: ../inc/rencontre_filter.php:1126
 msgid "Many reports"
 msgstr "Sok jelentés"
 
-#: ../inc/rencontre_filter.php:1885
+#: ../inc/rencontre_filter.php:1127
 msgid "Behavior on the site"
 msgstr "Viselkedés az oldalon"
 
@@ -1871,8 +1915,8 @@ msgid "You cannot use RENCONTRE as a user if you have ADMIN rights"
 msgstr ""
 "A RENCONTRE nem használható felhasználóként, ha ADMIN jogokkal rendelkezel"
 
-#: ../inc/rencontre_widget.php:351 ../inc/rencontre_widget.php:2672
-#: ../inc/rencontre_widget.php:3215
+#: ../inc/rencontre_widget.php:351 ../inc/rencontre_widget.php:2705
+#: ../inc/rencontre_widget.php:3245
 #, php-format
 msgid "%s ago"
 msgstr "%s ezelőtt"
@@ -1886,23 +1930,23 @@ msgstr "offline"
 msgid "(blocked)"
 msgstr "(tiltva)"
 
-#: ../inc/rencontre_widget.php:459 ../inc/rencontre_widget.php:2084
-#: ../inc/rencontre_widget.php:2726 ../inc/rencontre_widget.php:3276
+#: ../inc/rencontre_widget.php:459 ../inc/rencontre_widget.php:2085
+#: ../inc/rencontre_widget.php:2756 ../inc/rencontre_widget.php:3303
 msgid "You must first complete your registration."
 msgstr "Először be kell fejeznie a regisztrációját."
 
-#: ../inc/rencontre_widget.php:463 ../inc/rencontre_widget.php:2088
-#: ../inc/rencontre_widget.php:2730 ../inc/rencontre_widget.php:3280
+#: ../inc/rencontre_widget.php:463 ../inc/rencontre_widget.php:2089
+#: ../inc/rencontre_widget.php:2760 ../inc/rencontre_widget.php:3307
 msgid "This member blocked you."
 msgstr "Ez a tag letiltott téged."
 
-#: ../inc/rencontre_widget.php:467 ../inc/rencontre_widget.php:2092
-#: ../inc/rencontre_widget.php:2734 ../inc/rencontre_widget.php:3284
+#: ../inc/rencontre_widget.php:467 ../inc/rencontre_widget.php:2093
+#: ../inc/rencontre_widget.php:2764 ../inc/rencontre_widget.php:3311
 msgid "You have been blocked by the moderator."
 msgstr "A moderátor letiltott."
 
-#: ../inc/rencontre_widget.php:486 ../inc/rencontre_widget.php:2747
-#: ../inc/rencontre_widget.php:3297
+#: ../inc/rencontre_widget.php:486 ../inc/rencontre_widget.php:2777
+#: ../inc/rencontre_widget.php:3324
 msgid "You are no longer allowed to send messages."
 msgstr "Többé nem küldhetsz üzeneteket."
 
@@ -1936,51 +1980,51 @@ msgstr ""
 msgid "Add a photo"
 msgstr "Fotó feltöltése"
 
-#: ../inc/rencontre_widget.php:2180
+#: ../inc/rencontre_widget.php:2181
 msgid "Message sent"
 msgstr "Üzenet elküldve"
 
-#: ../inc/rencontre_widget.php:2183
+#: ../inc/rencontre_widget.php:2184
 msgid "Not sent"
 msgstr "Küldés sikertelen"
 
-#: ../inc/rencontre_widget.php:2477
+#: ../inc/rencontre_widget.php:2510
 msgid "I asked a contact"
 msgstr "Kapcsolatfelvételt kértem"
 
-#: ../inc/rencontre_widget.php:2515
+#: ../inc/rencontre_widget.php:2548
 msgid "I had a contact request from"
 msgstr "Kapcsolatfelvételt kértek"
 
-#: ../inc/rencontre_widget.php:2577
+#: ../inc/rencontre_widget.php:2610
 msgid "I locked"
 msgstr "Letiltottam"
 
-#: ../inc/rencontre_widget.php:2771 ../inc/rencontre_widget.php:3322
+#: ../inc/rencontre_widget.php:2801 ../inc/rencontre_widget.php:3349
 msgid "Sorry, but nothing matched your search terms."
 msgstr "A keresett kifejezésekre nincs találat."
 
-#: ../inc/rencontre_widget.php:2792 ../inc/rencontre_widget.php:3343
+#: ../inc/rencontre_widget.php:2822 ../inc/rencontre_widget.php:3370
 msgid "Next Page"
 msgstr "Következő oldal"
 
-#: ../inc/rencontre_widget.php:3245
+#: ../inc/rencontre_widget.php:3272
 msgid "Astrological affinity"
 msgstr "Asztrológiai vonzás"
 
-#: ../inc/rencontre_widget.php:3249
+#: ../inc/rencontre_widget.php:3276
 msgid "Affinity with my profile"
 msgstr "Vonzódás az adatlapomhoz"
 
-#: ../inc/rencontre_widget.php:3249
+#: ../inc/rencontre_widget.php:3276
 msgid "points"
 msgstr "pontok"
 
-#: ../inc/rencontre_widget.php:3581
+#: ../inc/rencontre_widget.php:3608
 msgid "Region field is empty or outdated !"
 msgstr "A régió mező üres vagy elavult!"
 
-#: ../inc/rencontre_widget.php:3622
+#: ../inc/rencontre_widget.php:3649
 msgid ""
 "You are currently hidden to other members and you can't communicate because "
 "your account is not complete. You should promptly update this page otherwise "
@@ -1990,7 +2034,7 @@ msgstr ""
 "adatlapod nincs kitöltve. Haladéktalanul töltsd ki ezt az oldalt, különben a "
 "hozzáférésed megszűnik."
 
-#: ../inc/rencontre_widget.php:3624
+#: ../inc/rencontre_widget.php:3651
 msgid ""
 "You also need to confirm your email address by clicking the link that you "
 "received. You have 24 hours. Do not delay."
@@ -1998,39 +2042,39 @@ msgstr ""
 "Azt is meg kell erősítened az e-mail címed a kapott linkre kattintva. 24 "
 "órád van. Ne késlekedj."
 
-#: ../inc/rencontre_widget.php:3625
+#: ../inc/rencontre_widget.php:3652
 msgid "Email not received"
 msgstr "Nem érkezett e-mail"
 
-#: ../inc/rencontre_widget.php:3737
+#: ../inc/rencontre_widget.php:3764
 msgid "Contact already requested"
 msgstr "Kapcsolatfelvételi kérés már volt"
 
-#: ../inc/rencontre_widget.php:3766
+#: ../inc/rencontre_widget.php:3793
 msgid "Contact request sent"
 msgstr "Kapcsolatfelvételi kérés elküldve"
 
-#: ../inc/rencontre_widget.php:3782
+#: ../inc/rencontre_widget.php:3809
 msgid "Reporting already done"
 msgstr "Jelentés már megtörtént"
 
-#: ../inc/rencontre_widget.php:3789
+#: ../inc/rencontre_widget.php:3816
 msgid "Thank you for your report"
 msgstr "Köszönöm a jelentést"
 
-#: ../inc/rencontre_widget.php:3922
+#: ../inc/rencontre_widget.php:3949
 msgid "from my position"
 msgstr "pozíciómból"
 
-#: ../inc/rencontre_widget.php:3970
+#: ../inc/rencontre_widget.php:3997
 msgid "Yesterday"
 msgstr "Tegnap"
 
-#: ../inc/rencontre_widget.php:3981
+#: ../inc/rencontre_widget.php:4008
 msgid "Widget to integrate the Rencontre sidebar in your theme sidebar"
 msgstr "Widget a Rencontre oldalsáv integrálásához a téma oldalsávjába"
 
-#: ../inc/rencontre_widget.php:4141
+#: ../inc/rencontre_widget.php:4173
 msgid "Password changed !"
 msgstr "Jelszó megváltoztatva!"
 
@@ -2060,12 +2104,12 @@ msgstr "Hozzáadás"
 
 #: ../lang/rencontre-js-admin-lang.php:13 ../rencontre.php:228
 #: ../templates/rencontre_search.php:127
-#: ../templates/rencontre_sidebar_quick_search.php:48
+#: ../templates/rencontre_sidebar_quick_search.php:49
 msgid "Country"
 msgstr "Ország"
 
 #: ../lang/rencontre-js-admin-lang.php:14 ../templates/rencontre_search.php:138
-#: ../templates/rencontre_sidebar_quick_search.php:58
+#: ../templates/rencontre_sidebar_quick_search.php:59
 msgid "Region"
 msgstr "Régió"
 
@@ -2212,15 +2256,15 @@ msgstr ""
 "üzenetküldéssel, webkamera csevegéssel, profil szerinti kereséssel és "
 "automatikus e-mail küldéssel. Nincs harmadik fél."
 
-#: ../rencontre.php:188
+#: ../rencontre.php:190
 msgid "Serious relationship"
 msgstr "Komoly kapcsolat"
 
-#: ../rencontre.php:189
+#: ../rencontre.php:191
 msgid "Open relationship"
 msgstr "Nyitott kapcsolat"
 
-#: ../rencontre.php:190
+#: ../rencontre.php:192
 msgid "Friendship"
 msgstr "Barátság"
 
@@ -2256,35 +2300,35 @@ msgstr "Rencontre - Egyedi"
 msgid "Custom"
 msgstr "Egyedi"
 
-#: ../templates/rencontre_account.php:28
+#: ../templates/rencontre_account.php:29
 msgid "Change password"
 msgstr "Jelszó megváltoztatása"
 
-#: ../templates/rencontre_account.php:33
+#: ../templates/rencontre_account.php:34
 msgid "Former"
 msgstr "Előző"
 
-#: ../templates/rencontre_account.php:37
+#: ../templates/rencontre_account.php:38
 msgid "New"
 msgstr "Új"
 
-#: ../templates/rencontre_account.php:41
+#: ../templates/rencontre_account.php:42
 msgid "Retype the new"
 msgstr "Írd be újra az újat"
 
-#: ../templates/rencontre_account.php:272
+#: ../templates/rencontre_account.php:275
 msgid "No beep on the chat"
 msgstr "A csevegésnél nincs sípolás"
 
-#: ../templates/rencontre_account.php:279
+#: ../templates/rencontre_account.php:282
 msgid "No email from this site"
 msgstr "Nincs e-mail erről a webhelyről"
 
-#: ../templates/rencontre_account.php:309
+#: ../templates/rencontre_account.php:312
 msgid "home page and search"
 msgstr "honlap és keresés"
 
-#: ../templates/rencontre_account.php:310
+#: ../templates/rencontre_account.php:313
 msgid "home page, search and message"
 msgstr "honlap, keresés és üzenet"
 
@@ -2373,8 +2417,8 @@ msgstr "Kapcsolatfelvétel kérése"
 #: ../templates/rencontre_mail_regular.php:35
 #: ../templates/rencontre_portrait.php:196
 #: ../templates/rencontre_portrait.php:199
-#: ../templates/rencontre_search_result.php:98
 #: ../templates/rencontre_search_result.php:101
+#: ../templates/rencontre_search_result.php:104
 msgid "Send a message"
 msgstr "Üzenet küldése"
 
@@ -2535,7 +2579,7 @@ msgid "City"
 msgstr "Város"
 
 #: ../templates/rencontre_search.php:154
-#: ../templates/rencontre_sidebar_quick_search.php:68
+#: ../templates/rencontre_sidebar_quick_search.php:69
 msgid "Relation"
 msgstr "Kapcsolat"
 
@@ -2551,39 +2595,37 @@ msgstr "Csak fényképpel"
 msgid "The"
 msgstr "A"
 
-#: ../templates/rencontre_sidebar_quick_search.php:15
+#: ../templates/rencontre_sidebar_quick_search.php:16
 msgid "Quick Search"
 msgstr "Gyors keresés"
 
-#: ../templates/rencontre_sidebar_quick_search.php:29
+#: ../templates/rencontre_sidebar_quick_search.php:30
 msgid "From"
 msgstr "Életkortól"
 
-#: ../templates/rencontre_sidebar_quick_search.php:37
+#: ../templates/rencontre_sidebar_quick_search.php:38
 msgid "To"
 msgstr "Életkorig"
 
-#: ../templates/rencontre_sidebar_quick_search.php:88
-#: ../templates/rencontre_sidebar_quick_search.php:103
+#: ../templates/rencontre_sidebar_quick_search.php:89
+#: ../templates/rencontre_sidebar_quick_search.php:114
 msgid "After"
 msgstr "Után"
 
-#: ../templates/rencontre_sidebar_quick_search.php:88
-#: ../templates/rencontre_sidebar_quick_search.php:103
+#: ../templates/rencontre_sidebar_quick_search.php:89
+#: ../templates/rencontre_sidebar_quick_search.php:114
 msgid "Before"
 msgstr "Előtte"
 
-#: ../templates/rencontre_sidebar_top.php:110
-msgid "Contact requests"
-msgstr "Csevegni akartak"
+#: ../templates/rencontre_sidebar_quick_search.php:95
+#: ../templates/rencontre_sidebar_quick_search.php:120
+msgid "Greater than"
+msgstr "Nagyobb, mint"
 
-#: ../templates/rencontre_sidebar_top.php:138
-msgid "Who I asked for a contact?"
-msgstr "Kitől kértem kapcsolatfelvételt?"
-
-#: ../templates/rencontre_sidebar_top.php:143
-msgid "Who I've blocked?"
-msgstr "Kit tiltottam le?"
+#: ../templates/rencontre_sidebar_quick_search.php:95
+#: ../templates/rencontre_sidebar_quick_search.php:120
+msgid "Less than"
+msgstr "Kevesebb, mint"
 
 #~ msgid "Change login name (after, it will not be possible)"
 #~ msgstr "Bejelentkezési név módosítása (utána nem lesz lehetséges)"

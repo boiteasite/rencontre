@@ -92,7 +92,7 @@ function f_main_photo(f){
 function f_photoPop_display(f){
 	if(f.files&&f.files[0]){
 		f_exifOrientation(f.files[0],function(o){
-			var r=new FileReader(),b=document.getElementById('popPhoto');
+			var r=new FileReader(),b=document.getElementById('popPhoto'),x={3:180,6:90,8:270};
 			r.onload=function(e){
 				while(b.firstChild)b.removeChild(b.firstChild);
 				var a=document.createElement('img');
@@ -101,9 +101,7 @@ function f_photoPop_display(f){
 				a.style.width='auto';
 				a.style.height='60px';
 				b.appendChild(a);
-				if(o==3)jQuery('#popPhoto img').rotate({angle:180});
-				else if(o==6)jQuery('#popPhoto img').rotate({angle:90});
-				else if(o==8)jQuery('#popPhoto img').rotate({angle:270});
+				if(o)jQuery('#popPhoto img').rotate({angle:x[o]});
 				a=document.createElement('span');
 				a.className='w3-button w3-renc-mebt w3-renc-mebo w3-margin rotateLeft';
 				a.onclick=function(){
@@ -297,42 +295,6 @@ function f_quickTrouve(){
 	a.elements[jrenc].value=jqsearch;
 	a.submit();
 }
-/* Popup avec photo FB */
-function f_plus_photoFB_submit(f,g){
-	var a=document.forms['portraitPhotoPop'],
-		jrenc=(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
-		jedit=(typeof lbl.edit!="undefined"?lbl.edit:'edit');
-	a.elements['a1'].value='plusImg';
-	a.elements['a2'].value=f+'|'+g;
-	a.elements[jrenc].value=jedit;
-	a.submit();
-}
-function f_FBLogin(f){
-	FB.getLoginStatus(function(response){
-		if(response.status==='connected')f_FBProfileImage(f);
-		else if(response.status==='not_authorized'){
-			FB.login(function(response){
-				if(response&&response.status==='connected')f_FBProfileImage(f);
-			});
-		}
-		else{
-			FB.login(function(response){
-				if(response&&response.status==='connected')f_FBProfileImage(f);
-			});
-		}
-	});
-}
-function f_FBProfileImage(f){
-	FB.api("/me/picture?type=large&redirect=false",function(response){
-	var u=response.data.url,a=document.createElement("img");
-		a.src=u;
-		a.className='pop-photo';
-		a.style.width='auto';
-		a.style.height='60px';
-		document.getElementById('popPhoto').appendChild(a);
-		document.getElementById('popPhotoSubm').onclick=function(){f_plus_photoFB_submit(f,u);};
-	});  
-}
 function f_msgEmot(d){
 	for(v=1;v<16;v++){
 		d1=document.createElement("img");
@@ -420,7 +382,7 @@ function f_voir_msg(f,g,h){
 	jQuery(document).ready(function(){
 		jQuery.post(g,{'action':'voirMsg','idmsg':f,'alias':h,'rencTok':rencTok},function(r){
 			jQuery('#rencMsg').empty();
-			jQuery('#rencMsg').append(r.substring(0,r.length-1));
+			jQuery('#rencMsg').append(r);
 		});
 	});
 }
@@ -442,7 +404,7 @@ function f_password(f0,f1,f2,f,g){
 				d.submit();
 			}
 			else{
-				jQuery('#rencAlertPass').html(rencobjet.pass_init_faux+r.substring(0,r.length-1)).show(0).delay(5000).hide(0);
+				jQuery('#rencAlertPass').html(rencobjet.pass_init_faux+r).show(0).delay(5000).hide(0);
 				if(document.getElementById('buttonPass')!==null)document.getElementById('buttonPass').style.visibility="visible";
 			}
 		});
@@ -452,7 +414,7 @@ function f_fastregMail(g){
 	jQuery.post(g,{'action':'fastregMail','rencTok':rencTok},function(r){
 		if(r){
 			document.cookie="rencfastregMail=yes";
-			jQuery('#rencAlertEmail').html(r.substring(0,r.length-1)).show(0).delay(5000).hide(0);
+			jQuery('#rencAlertEmail').html(r).show(0).delay(5000).hide(0);
 		}
 	});
 }
@@ -481,7 +443,7 @@ function f_dyn_reload(){ // (NOT AJAX)
 //
 /* Tchat */
 function f_bip(){
-	if(typeof noBip!=='undefined'&&noBip==1)return false;
+	if(typeof rencobjet.bipurl==='undefined'||typeof noBip!=='undefined'&&noBip==1)return false;
 	at={
 		"mp3":"audio/mpeg",
 		"mp4":"audio/mp4",
@@ -626,7 +588,7 @@ function f_tchat_dem(f,t){
 		jQuery.post(rencobjet.wpajax,p,function(r){
 			r=r.split('|');
 			rencName=r[0];
-			jQuery("#rcContent").append(r[1].substring(0,r[1].length-1));
+			jQuery("#rcContent").append(r[1]);
 			jQuery("#rcYes").click(function(){
 				f_tchat_ok(f,t,rencobjet.ajaxchat);
 			});
@@ -902,5 +864,5 @@ function f_modalWarn(f){
 //
 if(document.getElementById("infoChange")!==null)window.setTimeout(function(){jQuery("#infoChange").remove()},((typeof rencInfochange!=='undefined')?rencInfochange:5000));
 jQuery(document).ready(function(){
-	if(typeof rencobjet!=='undefined')f_tchat_interval('veil',1,[]);
+	if(typeof rencobjet.ajaxchat!=='undefined')f_tchat_interval('veil',1,[]);
 });

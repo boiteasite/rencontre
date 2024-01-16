@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.9
+ * Last Change : Rencontre 3.10
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
  * Call : rencontre_widget.php => widget()
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
@@ -151,7 +151,7 @@
 									<?php } else if($v->type==4) { ?>
 										<?php $j = 0; foreach($v->valeur as $valeur) { ?>
 					
-										<input type="checkbox" class="rencLabelauty" name="check<?php echo $v->id; ?>[]" value="<?php echo $j; ?>"<?php if(strpos($v->active,','.$j.',')!==false) echo ' checked'; ?> data-labelauty="<?php echo $valeur; ?>" />
+										<input type="checkbox" class="rencLabelauty" name="check<?php echo $v->id; ?>[]" value="<?php echo $j; ?>"<?php if(strpos($v->active.'-',','.$j.',')!==false) echo ' checked'; ?> data-labelauty="<?php echo $valeur; ?>" />
 											<?php ++$j; ?>
 										<?php } ?>
 									<?php } else if($v->type==5) { ?>

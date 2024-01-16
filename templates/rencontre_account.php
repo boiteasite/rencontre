@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.10
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
  * Call : rencontre_widget.php => f_compte()
  * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert, pause
@@ -20,7 +20,8 @@
 		
 		<?php } ?>
 		<?php if(!empty($accountPlus)) echo $accountPlus; ?>
-		
+		<?php if(empty($rencOpt['chpsw'])) { ?>
+			
 		<div class="w3-margin-bottom">
 			<div class="w3-card w3-renc-blbg">
 				<div class="w3-container w3-renc-lblc">
@@ -50,6 +51,8 @@
 				</div>
 			</div><!-- .w3-card -->
 		</div><!-- .w3-margin-bottom -->
+		<?php } ?>
+		
 		<div class="w3-margin-bottom">
 			<div class="w3-card w3-renc-blbg">
 				<div class="w3-container w3-renc-lblc">
@@ -210,7 +213,7 @@
 								<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
 									<?php if(empty($rencCustom['hetero']) || $hetero!=$v) { ?>
 
-									<input type="checkbox" class="rencLabelauty" name="zsex[]" value="<?php echo $v; ?>" <?php if(strpos($u0->c_zsex,','.$v.',')!==false) echo 'checked'; ?> data-labelauty="<?php echo $rencOpt['iam'][$v]; ?>" />
+									<input type="checkbox" class="rencLabelauty" name="zsex[]" value="<?php echo $v; ?>" <?php if(strpos($u0->c_zsex.'-',','.$v.',')!==false) echo 'checked'; ?> data-labelauty="<?php echo $rencOpt['iam'][$v]; ?>" />
 									<?php } ?>
 								<?php } ?>
 								</div>
@@ -261,7 +264,7 @@
 								<div>
 								<?php for($v=(isset($rencCustom['relation'])?3:0);$v<(isset($rencCustom['relation'])?count($rencOpt['for']):3);++$v) { ?>
 							
-									<input type="checkbox" class="rencLabelauty" name="zrelation[]" value="<?php echo $v; ?>"<?php if(strpos($u0->c_zrelation,','.$v.',')!==false) echo ' checked'; ?> data-labelauty="<?php echo $rencOpt['for'][$v]; ?>" />
+									<input type="checkbox" class="rencLabelauty" name="zrelation[]" value="<?php echo $v; ?>"<?php if(strpos($u0->c_zrelation.'-',','.$v.',')!==false) echo ' checked'; ?> data-labelauty="<?php echo $rencOpt['for'][$v]; ?>" />
 								<?php } ?>
 								
 								</div>
@@ -270,14 +273,14 @@
 							</div>
 							<div class="w3-right-align w3-padding-small">
 								<label><?php _e('No beep on the chat','rencontre'); ?>
-									<input type="checkbox" style="margin:0 8px" name="nobip"<?php if(strpos($u0->t_action,',nobip,')!==false) echo ' checked'; ?> />
+									<input type="checkbox" style="margin:0 8px" name="nobip"<?php if(strpos($u0->t_action.'-',',nobip,')!==false) echo ' checked'; ?> />
 								</label>
 							</div>
 							<?php if(empty($rencCustom['unmail'])) { ?>
 							
 							<div class="w3-right-align w3-padding-small">
 								<label><?php _e('No email from this site','rencontre'); ?>
-									<input type="checkbox" style="margin:0 8px" name="nomail"<?php if(strpos($u0->t_action,',nomail,')!==false) echo ' checked'; ?> />
+									<input type="checkbox" style="margin:0 8px" name="nomail"<?php if(strpos($u0->t_action.'-',',nomail,')!==false) echo ' checked'; ?> />
 								</label>
 							</div>
 						<?php } ?>

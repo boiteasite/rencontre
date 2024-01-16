@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.9.1
+Version: 3.11.3
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -14,10 +14,10 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 });
 //
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.9.1';
+$rencVersion = '3.11.3';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
-	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'],'theme-editor.php')) return;
+	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
 }
 // **********************************************************************************
 // INSTALLATION DU PLUGIN - Creation des tables en BDD
@@ -182,8 +182,8 @@ class Rencontre {
 		$rencDiv['lang2'] = (!empty($l2)?$rencDiv['lang1']:(!empty($rencOpt['lang2'])?$rencOpt['lang2']:$rencDiv['lang1'])); // Profile lang
 		$l3 = $wpdb->get_var("SELECT c_liste_lang FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".strtolower(substr($rencDiv['lang1'],0,2))."' LIMIT 1");
 		$rencDiv['lang3'] = (!empty($l3)?$rencDiv['lang1']:(!empty($rencOpt['lang3'])?$rencOpt['lang3']:$rencDiv['lang1'])); // Country (select) lang
-		$rencOpt['page_id'] = (!empty($rencOpt['home']) && strpos($rencOpt['home'],'page_id')!==false)?substr($rencOpt['home'],strpos($rencOpt['home'],'page_id')+8):get_the_id();
-		$rencCustom = (isset($rencOpt['custom'])?json_decode($rencOpt['custom'],true):array());
+		$rencOpt['page_id'] = (!empty($rencOpt['home']) && strpos($rencOpt['home'].'-','page_id')!==false)?substr($rencOpt['home'],strpos($rencOpt['home'].'-','page_id')+8):get_the_id();
+		$rencCustom = (isset($rencOpt['custom'])?json_decode((empty($rencOpt['custom'])?'{}':$rencOpt['custom']),true):array());
 		if(!isset($rencOpt['for'])) $rencOpt['for'] = array();
 		add_action('init', function() { // Hook already loaded...
 			global $rencOpt, $rencCustom;
@@ -269,6 +269,7 @@ class Rencontre {
 		$LfavoriAdd = (!empty($rencOpt['lbl']['favoriAdd'])?$rencOpt['lbl']['favoriAdd']:'favoriAdd');
 		$LfavoriDel = (!empty($rencOpt['lbl']['favoriDel'])?$rencOpt['lbl']['favoriDel']:'favoriDel');
 		$Lzsex = (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex');
+		$Lz2sex = (!empty($rencOpt['lbl']['z2sex'])?$rencOpt['lbl']['z2sex']:'z2sex');
 		$Lagemin = (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin');
 		$Lagemax = (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax');
 		$Ltaillemin = (!empty($rencOpt['lbl']['tailleMin'])?$rencOpt['lbl']['tailleMin']:'tailleMin');
@@ -279,6 +280,7 @@ class Rencontre {
 		$Lregion = (!empty($rencOpt['lbl']['region'])?$rencOpt['lbl']['region']:'region');
 		$Lville = (!empty($rencOpt['lbl']['ville'])?$rencOpt['lbl']['ville']:'ville');
 		$Lrelation = (!empty($rencOpt['lbl']['relation'])?$rencOpt['lbl']['relation']:'relation');
+		$Lprofilqs = (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS');
 		$Lphoto = (!empty($rencOpt['lbl']['photo'])?$rencOpt['lbl']['photo']:'photo');
 		$Lgps = (!empty($rencOpt['lbl']['gps'])?$rencOpt['lbl']['gps']:'gps');
 		$Lkm = (!empty($rencOpt['lbl']['km'])?$rencOpt['lbl']['km']:'km');
@@ -351,8 +353,8 @@ class Rencontre {
 			if($q && isset($rencOpt['blockmand']) && $rencOpt['blockmand']==2 && rencistatus($rencDiv['istatus'],3)) $rencDiv['rencBlock'] = 1; // Mandatory fiel empty => ON
 			$rencDiv['mpause'] = '';
 			if(empty($rencOpt['paus'])) {
-				if(strpos($rencDiv['action'],',pause2,')!==false) $rencDiv['mpause'] = 'pause2';
-				else if(strpos($rencDiv['action'],',pause1,')!==false) $rencDiv['mpause'] = 'pause1';
+				if(strpos($rencDiv['action'].'-',',pause2,')!==false) $rencDiv['mpause'] = 'pause2';
+				else if(strpos($rencDiv['action'].'-',',pause1,')!==false) $rencDiv['mpause'] = 'pause1';
 			}
 			$rencDiv['pacam'] = false;
 			$rencDiv['pacas'] = false;
@@ -379,7 +381,7 @@ class Rencontre {
 			$spot = (!empty($Prenc)?$Prenc:((!empty($Pnouveau)&&$Pnouveau!='update')?'':(!empty($Grenc)?$Grenc:'')));
 			$hopage = false; if(has_filter('rencPage')) $hopage = apply_filters('rencPage', $spot);
 			if(!$ip && $Pnouveau!='OK') {
-				if(empty($current_user->display_name) || strpos($current_user->display_name, '@')!==false) {
+				if(empty($current_user->display_name) || strpos($current_user->display_name.'-', '@')!==false) {
 					$disnam = explode('@', $current_user->user_login);
 					if(!empty($disnam[0])) wp_update_user(array('ID'=>$current_user->ID, 'display_name'=>$disnam[0]));
 				}
@@ -439,10 +441,16 @@ class Rencontre {
 			else if($spot==$LfavoriDel) $_SESSION['rencontre'] = 'card,menu,favoriDel';
 			else if($spot==$Ledit) $_SESSION['rencontre'] = 'edit,menu';
 			else if($spot==$Lgsearch) $_SESSION['rencontre'] = 'gsearch,accueil,menu';
+			else if($spot=='qsearchs') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchs';
+			else if($spot=='qsearchis') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchis';
+			else if($spot=='qsearchc') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchc';
+			else if($spot=='qsearchic') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchic';
+			else if($spot=='qsearchl') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchl';
+			else if($spot=='qsearchib') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchib';
 			else if($spot==$Lqsearch) { // Quick Search result
 				$blockQSearch = false; if(is_numeric($Gid) && has_filter('rencLimitedActionP')) $blockQSearch = apply_filters('rencLimitedActionP', array('qsearch',0,0)); // security - Already done before
 				$_SESSION['rencontre'] = ($blockQSearch?'mini,accueil,menu':'qsearch,accueil,menu');
-				if(isset($_COOKIE['searchmem'.$current_user->ID])) $mem = json_decode(base64_decode($_COOKIE['searchmem'.$current_user->ID]),true);
+				if(isset($_COOKIE['searchmem'.$current_user->ID])) $mem = json_decode((empty(base64_decode($_COOKIE['searchmem'.$current_user->ID]))?'{}':base64_decode($_COOKIE['searchmem'.$current_user->ID])),true);
 				$mem = array(
 					'zage_min'=>(isset($_GET[$Lagemin])?rencSanit($_GET[$Lagemin],'int'):''),
 					'zage_max'=>(isset($_GET[$Lagemax])?rencSanit($_GET[$Lagemax],'int'):''),
@@ -451,20 +459,26 @@ class Rencontre {
 					'weight_min'=>(isset($mem['weight_min'])?$mem['weight_min']:''),
 					'weight_max'=>(isset($mem['weight_max'])?$mem['weight_max']:''),
 					'zsex'=>(isset($mem['zsex'])?$mem['zsex']:''),
+					'z2sex'=>(isset($mem['z2sex'])?$mem['z2sex']:''),
 					'country'=>(!empty($_GET[$Lpays])?rencSanit($_GET[$Lpays],'AZ'):'i'), // i : no matter selected => no region
 					'region'=>(isset($_GET[$Lregion])?rencSanit($_GET[$Lregion],'alphanum'):''), // INT or ADMIN1_CODE in GEONAMES
 					'city'=>(isset($mem['city'])?stripslashes($mem['city']):''),
 					'gps'=>(isset($mem['gps'])?$mem['gps']:''),
 					'km'=>(isset($mem['km'])?$mem['km']:''),
 					'photo'=>(isset($mem['photo'])?$mem['photo']:''),
-					'relation'=>(isset($mem['relation'])?$mem['relation']:'')
+					'relation'=>(isset($mem['relation'])?$mem['relation']:''),
+					'profilQS1'=>(isset($_GET[$Lprofilqs.'1'])?rencSanit($_GET[$Lprofilqs.'1'],'alphanum'):''),
+					'profilQS2'=>(isset($_GET[$Lprofilqs.'2'])?rencSanit($_GET[$Lprofilqs.'2'],'alphanum'):'')
 					);
+				$ho = false; if(has_filter('searchmem')) $ho = apply_filters('searchmem',$ho);
+				if(is_array($ho)) $mem = array_merge($mem, $ho);
 				setcookie('searchmem'.$current_user->ID, base64_encode(json_encode($mem)), time()+(86400*90), '/'); // 90 days
 			}
 			else if($spot==$Lliste) { // Search result
 				$blockSearch = false; if(has_filter('rencLimitedActionP')) $blockSearch = apply_filters('rencLimitedActionP', array('search',0,0)); // security - Already done before
 				$_SESSION['rencontre'] = ($blockSearch?'mini,accueil,menu':'gsearch,liste,accueil,menu');
 				// $mem : array(zage_min, zage_max, size_min, size_max, weight_min, weight_max, zsex, country, region, city, gps, km, photo, relation)
+				if(isset($_COOKIE['searchmem'.$current_user->ID])) $mem1 = json_decode((empty(base64_decode($_COOKIE['searchmem'.$current_user->ID]))?'{}':base64_decode($_COOKIE['searchmem'.$current_user->ID])),true);
 				$mem = array(
 					'zage_min'=>(isset($_GET[$Lagemin])?rencSanit($_GET[$Lagemin],'int'):''),
 					'zage_max'=>(isset($_GET[$Lagemax])?rencSanit($_GET[$Lagemax],'int'):''),
@@ -473,14 +487,19 @@ class Rencontre {
 					'weight_min'=>(isset($_GET[$Lpoidsmin])?rencSanit($_GET[$Lpoidsmin],'int'):''),
 					'weight_max'=>(isset($_GET[$Lpoidsmax])?rencSanit($_GET[$Lpoidsmax],'int'):''),
 					'zsex'=>(isset($_GET[$Lzsex])?rencSanit($_GET[$Lzsex],'int'):''),
+					'z2sex'=>((isset($_GET[$Lz2sex])&&$_GET[$Lz2sex]!=='')?rencSanit($_GET[$Lz2sex],'int'):''),
 					'country'=>(!empty($_GET[$Lpays])?rencSanit($_GET[$Lpays],'AZ'):'i'), // i : no matter selected => no region
 					'region'=>(isset($_GET[$Lregion])?rencSanit($_GET[$Lregion],'alphanum'):''), // INT or ADMIN1_CODE in GEONAMES
 					'city'=>(isset($_GET[$Lville])?rencSanit($_GET[$Lville],'words'):''),
 					'gps'=>(isset($_GET[$Lgps])?rencSanit($_GET[$Lgps],'pipe'):''),
 					'km'=>(isset($_GET[$Lkm])?rencSanit($_GET[$Lkm],'int'):''),
 					'photo'=>(isset($_GET[$Lphoto])?rencSanit($_GET[$Lphoto],'int'):''),
-					'relation'=>(isset($_GET[$Lrelation])?rencSanit($_GET[$Lrelation],'int'):'')
+					'relation'=>(isset($_GET[$Lrelation])?rencSanit($_GET[$Lrelation],'int'):''),
+					'profilQS1'=>(isset($mem1['profilQS1'])?$mem1['profilQS1']:''),
+					'profilQS2'=>(isset($mem1['profilQS2'])?$mem1['profilQS2']:'')
 					);
+				$ho = false; if(has_filter('searchmem')) $ho = apply_filters('searchmem',$ho);
+				if(is_array($ho)) $mem = array_merge($mem, $ho);
 				setcookie('searchmem'.$current_user->ID, base64_encode(json_encode($mem)), time()+(86400*90), '/'); // 90 days
 			}
 			else if($spot==$Lmsg) $_SESSION['rencontre'] = 'msg,accueil,menu';
@@ -826,7 +845,7 @@ class Rencontre {
 				}
 				if(!isset($rencCustom['librePhoto'])) {
 					if($u->c_pays!="" && !isset($rencCustom['country']) && !isset($rencCustom['place']) && (!isset($rencCustom['libreFlag']) || !$rencCustom['libreFlag'])) {
-						$pays = strtr(utf8_decode($u->c_pays), 'ÁÀÂÄÃÅÇÉÈÊËÍÏÎÌÑÓÒÔÖÕÚÙÛÜÝ', 'AAAAAACEEEEEIIIINOOOOOUUUUY');
+						$pays = strtr(mb_convert_encoding($u->c_pays, 'ISO-8859-1', 'UTF-8'), 'ÁÀÂÄÃÅÇÉÈÊËÍÏÎÌÑÓÒÔÖÕÚÙÛÜÝ', 'AAAAAACEEEEEIIIINOOOOOUUUUY');
 						$pays = strtr($pays, 'áàâäãåçéèêëíìîïñóòôöõúùûüýÿ ', 'aaaaaaceeeeiiiinooooouuuuyy_');
 						$pays = str_replace("'", "", $pays);
 						$cpays = str_replace("'", "&#39;", $u->c_pays);
@@ -971,10 +990,9 @@ class Rencontre {
 		return $nm;
 	}
 	//
-	static function f_login($fb=false,$ret=false) { // SHORTCODE [rencontre_login]
+	static function f_login($ext=false,$ret=false) { // SHORTCODE [rencontre_login]
 		global $rencOpt, $rencDiv, $rencCustom;
 		$o = '<div id="log" class="renclog">'."\r\n";
-		if($fb=='fb') $o .= Rencontre::f_loginFB(1);
 		$o .= wp_loginout(esc_url(home_url('?page_id='.(!empty($rencOpt['page_id'])?$rencOpt['page_id']:''))),false)."\r\n";
 		if(!is_user_logged_in()) {
 			if(empty($rencCustom['reglink']) || !empty($rencOpt['fastreg'])) $o .= '<a href="'.esc_url(wp_registration_url()).'">'.__('Register').'</a>'."\r\n";
@@ -983,26 +1001,6 @@ class Rencontre {
 		$o .= '</div><!-- #log.rencLog -->'."\r\n";
 		if(!$ret) echo $o;
 		else return $o; // SHORTCODE
-	}
-	//
-	static function f_loginFB($ret=false) { // connexion via Facebook
-		if(!is_user_logged_in()) {
-			global $rencOpt, $rencDiv;
-			if(isset($rencOpt['fblog']) && strlen($rencOpt['fblog'])>2)
-				{
-				$rencTokfb = wp_create_nonce('rencTokfb');
-				$o = '<form action="" name="reload"></form>'."\r\n";
-				$o .= '<script>'."\r\n";
-				$o .= 'function checkLoginState(){FB.getLoginStatus(function(r){logfb(r);});};'."\r\n";
-				$o .= 'function logfb(r){if(r.status===\'connected\'){FB.api(\'/me?fields=email,first_name,id\',function(r){jQuery(document).ready(function(){jQuery.post(\''.admin_url('admin-ajax.php').'\',{\'action\':\'fbok\',\'fb\':r,\'rencTokfb\':\''.$rencTokfb.'\'},function(re){document.forms[\'reload\'].submit();});});});}};'."\r\n";
-				$o .= 'window.fbAsyncInit=function(){FB.init({appId:\''.preg_replace("/[^0-9]/", "",$rencOpt['fblog']).'\',cookie:true,xfbml:true,version:\'v3.2\'});};'."\r\n";
-				$o .= '(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="http://connect.facebook.net/'.get_locale().'/sdk.js";fjs.parentNode.insertBefore(js,fjs);}(document,\'script\',\'facebook-jssdk\'));'."\r\n";
-				$o .= '</script>'."\r\n";
-				$o .= '<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true"></fb:login-button>'."\r\n";
-				if(!$ret) echo $o;
-				else return $o; // SHORTCODE
-			}
-		}
 	}
 	//
 	static function f_img($img,$f=0) { // ENCODE only - $f = 1 : ALL in base - $f = 2 : No Filter

@@ -22,7 +22,7 @@ function f_exportCsv(){
 			document.getElementById("waitCsv").style.display="none";
 			a.style.display="inline";
 			document.getElementById("photoCsv").style.display="block";
-			a.href='../wp-content/uploads/tmp/'+r.substring(0,r.length-1)+'export_rencontre.csv';
+			a.href='../wp-content/uploads/tmp/'+r+'export_rencontre.csv';
 		});
 	});
 }
@@ -55,7 +55,7 @@ function f_importCsv(f){
 			jQuery.post('admin-ajax.php',{'action':'importCsv','cas':f,'rencToka':rencToka},function(r){
 				if(f==3){
 					if(r!=0){
-						document.getElementById('impCsv1').innerHTML+=r.substring(0,r.length-1);
+						document.getElementById('impCsv1').innerHTML+=r;
 						document.getElementById('impCsv3').style.display='inline';
 						f_importCsv(2);
 					}
@@ -66,12 +66,12 @@ function f_importCsv(f){
 				}
 				else{
 					if(f==2){
-						csv=r.substring(0,r.length-1);
+						csv=r;
 						document.getElementById('impCsv4').style.display='inline';
 						document.getElementById('impCsv5').style.display='inline';
 					}
 					if(r!=0){
-						csv1=parseInt(csv1)+parseInt(r.substring(0,r.length-1));
+						csv1=parseInt(csv1)+parseInt(r);
 						if(f==2)csv1=0;
 						if(csv=='999999')document.getElementById('impCsv6').innerHTML=csv1;
 						else document.getElementById('impCsv6').innerHTML=csv1+' / '+csv;
@@ -92,22 +92,10 @@ function f_importCsv(f){
 function f_regeneratePhotos(f){
 	if(f==1||confirm(rencobjet.confirmer)){
 		jQuery.post('admin-ajax.php',{'action':'regeneratePhotos','cas':f,'rencToka':rencToka},function(r){
-			if(r.substring(0,1)=='!')jQuery("#infoePhotos").html(r.substring(1,r.length-1));
+			if(r.substring(0,1)=='!')jQuery("#infoePhotos").html(r);
 			else if(r.substring(0,1)=='>'){
-				jQuery("#infoPhotos").html(r.substring(1,r.length-1))
+				jQuery("#infoPhotos").html(r)
 				f_regeneratePhotos(1);
-			}
-			else jQuery("#infoePhotos").html('End');
-		});
-	}
-}
-function f_cleanupPhotos(f){
-	if(f!=0||confirm(rencobjet.confirmer)){
-		jQuery.post('admin-ajax.php',{'action':'cleanupPhotos','nb':f},function(r){
-			if(r.substring(0,1)=='!')jQuery("#infoePhotos").html(r.substring(1,r.length-1));
-			else if(r.substring(0,1)=='>'){
-				jQuery("#infoPhotos").html(r.substring(1,r.length-1))
-				f_regeneratePhotos(f);
 			}
 			else jQuery("#infoePhotos").html('End');
 		});
@@ -508,7 +496,6 @@ function f_liste_plus(a2,a3,a4,a5){
 		n=document.createElement("select");n.id='sdrap';
 		jQuery(document).ready(function(){
 			jQuery.post('admin-ajax.php',{'action':'drap','rencToka':rencToka},function(r){
-				r=r.substring(0,r.length-1);
 				n.innerHTML=r;
 			});
 		});
@@ -561,7 +548,6 @@ function f_iso(){
 	if(f.length>1){
 		jQuery(document).ready(function(){
 			jQuery.post('admin-ajax.php',{'action':'iso','iso':f,'rencToka':rencToka},function(r){
-				r=r.substring(0,r.length-1);
 				if(r){g.style.backgroundColor="#ffffff";h.style.visibility="visible";}
 				else{g.style.backgroundColor="red";h.style.visibility="hidden";}
 			});
@@ -814,4 +800,8 @@ function f_maxA(f,x,y,z){
 		else e.options[v].disabled=false;
 	}
 	if(e.options[e.selectedIndex]&&f<parseInt(e.options[e.selectedIndex].value))e.selectedIndex=c;
+}
+function rencPalette(){
+	if(document.getElementById("palet").style.display=='none')jQuery('#palet').slideDown("slow");
+	else jQuery('#palet').slideUp("slow");
 }

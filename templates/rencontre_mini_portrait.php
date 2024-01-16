@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait
- * Last Change : Rencontre 3.8.1
+ * Last Change : Rencontre 3.10.1
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait.php
  * Call : rencontre_widget.php => f_miniPortrait()
  * $u : ID, display_name, c_pays, c_ville, d_naissance, i_photo, t_titre, online, miniPhoto, miniPhotoWebp
@@ -37,7 +37,7 @@
 						</a>
 					<?php } ?>
 					<?php if(!empty($certified)) echo $certified; ?>
-						
+					
 					</div>
 				<?php } else { ?>
 
@@ -49,7 +49,7 @@
 				<?php } ?>
 					<div class="w3-rest w3-renc-container-lm w3-padding w3-renc-padding-8-s" style="white-space:nowrap;text-transform:capitalize;">
 						<div class="w3-large w3-renc-medium-s"><?php echo $u->display_name; ?></div>
-						<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance,'0000')===false) { ?>
+						<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) { ?>
 						
 						<div class="w3-renc-small-s"><?php echo Rencontre::f_age($u->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?></div>
 						<?php } ?>
@@ -63,7 +63,12 @@
 			</div>
 		<?php if(!empty($onClick['profile'])) { ?>
 		
-			<div class="w3-button w3-block w3-renc-sebg" onClick="<?php echo $onClick['profile']; ?>"><?php _e('Profile','rencontre'); ?>...</div>
+			<div class="w3-button w3-block w3-renc-sebg" onClick="<?php echo $onClick['profile']; ?>"><?php _e('Profile','rencontre'); ?>...
+			<?php if(!empty($u->online)){ ?>
+				<span class="w3-right w3-renc-inlb w3-badge" title="<?php _e('online','rencontre'); ?>">&nbsp;</span>
+
+			<?php } ?>
+			</div>
 		<?php } else { ?>
 			
 			<div class="w3-button w3-block w3-renc-sebg w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['profile']); ?>')" title="<?php echo $title['profile']; ?>"><?php _e('Profile','rencontre'); ?>...</div>

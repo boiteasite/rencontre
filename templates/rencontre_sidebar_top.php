@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Top
- * Last Change : Rencontre 3.8.3
+ * Last Change : Rencontre 3.10
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_top.php
  * Call : rencontre_widget.php => RencontreSidebarWidget::widget()
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, miniPhoto, miniPhotoWebp, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, age, agemin, agemax, pause
@@ -42,7 +42,7 @@
 			<?php } ?>
 				<div class="w3-cell w3-cell-middle w3-padding-small" style="text-transform:capitalize;word-break:break-all;">
 					<div class="w3-large"><?php echo $u0->display_name; ?></div>
-					<?php if(!isset($rencCustom['born']) && strpos($u0->d_naissance,'0000')===false) { ?>
+					<?php if(!isset($rencCustom['born']) && strpos($u0->d_naissance.'-','0000')===false) { ?>
 					
 					<div><?php echo Rencontre::f_age($u0->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?></div>
 					<?php } ?>

@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait Chat - Chat only
- * Last Change : Rencontre 3.6.2
+ * Last Change : Rencontre 3.10
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait_chat.php
  * Call : rencontre_widget.php => f_miniPortrait2()
  * $u : display_name, c_pays, c_ville, d_naissance, i_photo, t_titre 
@@ -37,7 +37,7 @@
 				<?php } ?>
 					<div class="w3-cell w3-cell-middle w3-padding-small">
 						<div class="w3-large"><?php echo $u->display_name; ?></div>
-						<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance,'0000')===false) { ?>
+						<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) { ?>
 						
 						<div><?php echo Rencontre::f_age($u->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?></div>
 						<?php } ?>

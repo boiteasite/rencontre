@@ -29,7 +29,7 @@ if(isset($_POST['tchat'])) {
 		}
 		else {
 			$t = fopen($d.$fm.'.txt', 'r'); $r = fread($t, 15); fclose($t);
-			$to = substr($r,1,(strpos($r,']')-1));
+			$to = substr($r,1,(strpos($r.'-',']')-1));
 			if(!file_exists($d.$to.'.txt') || filesize($d.$to.'.txt')==0) { // old tchat
 				if(isset($_SESSION['tchat'])) unset($_SESSION['tchat']);
 				$t = fopen($d.$fm.'.txt', 'w'); fclose($t);
@@ -95,7 +95,7 @@ if(isset($_POST['tchat'])) {
 		}
 		else if(!file_exists($base.'session/'.$to.'.txt') || time()-filemtime($base.'session/'.$to.'.txt')>17) { // sa session >17 sec : fin sauf demande
 			$t = fopen($d.$fm.'.txt', 'r'); $r=fread($t, 15); fclose($t);
-			$r = substr($r,1,(strpos($r,']')-1));
+			$r = substr($r,1,(strpos($r.'-',']')-1));
 			if($r!=$fm || time()-filemtime($base.'session/'.$to.'.txt')>60) { // fin si session to > 60 (voir f_en_ligne() rencontre_widget.php)
 				if(isset($_SESSION['tchat'])) unset($_SESSION['tchat']);
 				echo "::".$fm."::"; // fin du chat sauf si demande en cours (fm dans mon fichier fm)
@@ -110,7 +110,7 @@ if(isset($_POST['tchat'])) {
 		}
 		else if(filesize($d.$fm.'.txt')>strlen('[]'.$to)) {
 			$t = fopen($d.$fm.'.txt', 'r'); $r = fread($t, filesize($d.$fm.'.txt')); fclose($t); // lecture de ma boite
-			if(substr($r,1,(strpos($r,']')-1))!=$fm) { // vide ma boite
+			if(substr($r,1,(strpos($r.'-',']')-1))!=$fm) { // vide ma boite
 				$t = fopen($d.$fm.'.txt', 'w'); fwrite($t,'['.$to.']',15); fclose($t);
 				if(file_exists($base.'tchat/cam'.$to.'-'.$fm.'.jpg') && $r!='['.$to.']-') echo stripslashes($r.chr(127)); // cam chez autre
 				else echo stripslashes($r);

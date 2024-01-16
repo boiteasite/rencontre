@@ -2,10 +2,11 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Quick Search
- * Last Change : Rencontre 3.7
+ * Last Change : Rencontre 3.10
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_quick_search.php
  * Call : rencontre_widget.php => RencontreSidebarWidget::widget()
- * $u0 : ID, display_name, user_login, c_ip, c_pays, c_region, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, agemin, agemax
+ * $u0 : ID, display_name, user_login, c_ip, c_pays, c_region, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, agemin, agemax, profilQS1, profilQS2
+
 */
 ?>
 
@@ -78,7 +79,7 @@
 				
 					<div>
 						<label><?php echo $qs1->c_label; ?>&nbsp;</label>
-						<select id="profilQS1" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" class="w3-select w3-border w3-renc-sebg">
+						<select id="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" class="w3-select w3-border w3-renc-sebg">
 						<?php echo $profilQuickSearch1; ?>
 						</select>
 					</div>
@@ -86,14 +87,24 @@
 				
 					<div>
 						<label><?php echo $qs1->c_label; ?>&nbsp;(<?php echo ($profilQuickSearch1D=='after'?__('After','rencontre'):__('Before','rencontre')); ?>)</label>
-						<input id="profilQS1" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" type="date" class="w3-input w3-renc-inbg" />
+						<input id="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" type="date" class="w3-input w3-renc-inbg" />
+					</div>
+				<?php } else if(!empty($profilQuickSearch1N) && isset($profilQuickSearch1N[4])) { ?>
+				
+					<div>
+						<label><?php echo $qs1->c_label; ?>&nbsp;(<?php echo ($profilQuickSearch1N[0]=='min'?__('Greater than','rencontre'):__('Less than','rencontre')); ?>)</label>
+						<select id="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>1" class="w3-select w3-border w3-renc-sebg">
+							<option value="">-</option>
+						<?php $c=1; for($v=(!empty($profilQuickSearch1N[1])?$profilQuickSearch1N[1]:0);$v<=(!empty($profilQuickSearch1N[2])?$profilQuickSearch1N[2]:0);$v+=(!empty($profilQuickSearch1N[3])?$profilQuickSearch1N[3]:1))
+						{ ?><option value="<?php echo $c; ?>" <?php if(isset($u0->profilQS1) && $c==$u0->profilQS1) echo 'selected'; ?>><?php echo $v.' '.$profilQuickSearch1N[4]; ?></option><?php ++$c; } ?>
+						</select>
 					</div>
 				<?php } ?>
 				<?php if(!empty($profilQuickSearch2)) { ?>
 				
 					<div>
 						<label><?php echo $qs2->c_label; ?>&nbsp;</label>
-						<select id="profilQS2" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" class="w3-select w3-border w3-renc-sebg">
+						<select id="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" class="w3-select w3-border w3-renc-sebg">
 						<?php echo $profilQuickSearch2; ?>
 						</select>
 					</div>
@@ -101,7 +112,17 @@
 				
 					<div>
 						<label><?php echo $qs2->c_label; ?>&nbsp;(<?php echo ($profilQuickSearch2D=='after'?__('After','rencontre'):__('Before','rencontre')); ?>)</label>
-						<input id="profilQS2" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" type="date" class="w3-input w3-renc-inbg" />
+						<input id="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" type="date" class="w3-input w3-renc-inbg" />
+					</div>
+				<?php } else if(!empty($profilQuickSearch2N) && isset($profilQuickSearch2N[4])) { ?>
+				
+					<div>
+						<label><?php echo $qs2->c_label; ?>&nbsp;(<?php echo ($profilQuickSearch2N[0]=='min'?__('Greater than','rencontre'):__('Less than','rencontre')); ?>)</label>
+						<select id="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" name="<?php echo (!empty($rencOpt['lbl']['profilQS'])?$rencOpt['lbl']['profilQS']:'profilQS'); ?>2" class="w3-select w3-border w3-renc-sebg">
+							<option value="">-</option>
+						<?php $c=1; for($v=(!empty($profilQuickSearch2N[1])?$profilQuickSearch2N[1]:0);$v<=(!empty($profilQuickSearch2N[2])?$profilQuickSearch2N[2]:0);$v+=(!empty($profilQuickSearch2N[3])?$profilQuickSearch2N[3]:1))
+						{ ?><option value="<?php echo $c; ?>" <?php if(isset($u0->profilQS2) && $c==$u0->profilQS2) echo 'selected'; ?>><?php echo $v.' '.$profilQuickSearch2N[4]; ?></option><?php ++$c; } ?>
+						</select>
 					</div>
 				<?php } ?>
 					
