@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.11.3
+Version: 3.12
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -14,7 +14,7 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 });
 //
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.11.3';
+$rencVersion = '3.12';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -182,7 +182,6 @@ class Rencontre {
 		$rencDiv['lang2'] = (!empty($l2)?$rencDiv['lang1']:(!empty($rencOpt['lang2'])?$rencOpt['lang2']:$rencDiv['lang1'])); // Profile lang
 		$l3 = $wpdb->get_var("SELECT c_liste_lang FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".strtolower(substr($rencDiv['lang1'],0,2))."' LIMIT 1");
 		$rencDiv['lang3'] = (!empty($l3)?$rencDiv['lang1']:(!empty($rencOpt['lang3'])?$rencOpt['lang3']:$rencDiv['lang1'])); // Country (select) lang
-		$rencOpt['page_id'] = (!empty($rencOpt['home']) && strpos($rencOpt['home'].'-','page_id')!==false)?substr($rencOpt['home'],strpos($rencOpt['home'].'-','page_id')+8):get_the_id();
 		$rencCustom = (isset($rencOpt['custom'])?json_decode((empty($rencOpt['custom'])?'{}':$rencOpt['custom']),true):array());
 		if(!isset($rencOpt['for'])) $rencOpt['for'] = array();
 		add_action('init', function() { // Hook already loaded...
@@ -245,6 +244,12 @@ class Rencontre {
 	function rencwidget() { // loaded at WIDGET-INIT
 		global $rencOpt, $rencDiv, $wpdb;
 		if(!headers_sent() && empty(session_id())) session_start();
+		if(0) { // reset manually OPTIONS
+			$rencOpt = array('passw'=>1,'rol'=>1,'pays'=>'FR','limit'=>5,'dynsearch'=>1,'hcron'=>3,'msgdel'=>3,'qmail'=>25,'npa'=>12,'jlibre'=>3,'prison'=>30,'anniv'=>1,'ligne'=>1,'mailsupp'=>1,'onlyphoto'=>1,'imnb'=>4,'imcopyright'=>1);
+			$nu = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->base_prefix."users");
+			if($nu<10) unset($rencOpt['rol']);
+			update_option('rencontre_options', $rencOpt);
+		}
 		$rencOpt['nbr'] = rencNumbers();
 		$rencOpt['lbl'] = rencLabels();
 		if(empty($rencOpt['home']) && !current_user_can("administrator")) $rencOpt['home'] = home_url();
@@ -319,7 +324,7 @@ class Rencontre {
 			register_widget("RencontreSidebarWidget"); // class
 		}
 		else if(is_user_logged_in()) {
-			global $current_user, $rencCustom;
+			global $current_user, $rencCustom, $rencU0;
 			if(has_filter('rencInitHook')) $ho = apply_filters('rencInitHook', 0);
 			if(empty($current_user->user_login)) $current_user = wp_get_current_user();
 			if(empty($_SESSION['rencontre'])) $_SESSION['rencontre'] = 'mini,accueil,menu';
@@ -332,25 +337,27 @@ class Rencontre {
 				else if(substr($Grencidfm,0,1)=='s') $_SESSION['rencontre'] = 'card,menu,sourire';
 				else if(substr($Grencidfm,0,1)=='r') $_SESSION['rencontre'] = 'msg,accueil,menu';
 			}
-			$q = $wpdb->get_row("SELECT
-					R.c_ip,
-					R.i_status,
-					P.d_modif,
-					P.t_action
-				FROM ".$wpdb->prefix."rencontre_users R
-				INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
-					ON P.user_id=R.user_id
-				WHERE
-					R.user_id=".$current_user->ID."
-				LIMIT 1
-				");
-			$ip = ($q?$q->c_ip:0);
+			$rencU0 = $wpdb->get_row("SELECT *
+					FROM ".$wpdb->base_prefix."users U
+					LEFT JOIN ".$wpdb->prefix."rencontre_users R
+						ON R.user_id=U.ID
+					LEFT JOIN ".$wpdb->prefix."rencontre_users_profil P
+						ON P.user_id=U.ID
+					WHERE
+						U.ID=".$current_user->ID."
+					LIMIT 1
+					");
+			$rencU0->age = self::f_age($rencU0->d_naissance);
+			$rencU0->action = json_decode((empty($rencU0->t_action)?'{}':$rencU0->t_action),true);
+			$rencU0->profil = json_decode((empty($rencU0->t_profil)?'{}':$rencU0->t_profil),true);
+			$rencU0->zstrict = (isset($rencU0->action['option'])&&strpos($rencU0->action['option'],',zstrict,')!==false)?1:0;
+			$ip = (isset($rencU0->c_ip)?$rencU0->c_ip:0);
 			// rencDiv USER VAR
-			$rencDiv['action'] = ($q?$q->t_action:0);
-			$rencDiv['istatus'] = ($q?$q->i_status:0);
-			if($q && !empty($rencOpt['mandatory']) && $rencOpt['mandatory']>strtotime($q->d_modif)) rencUserCheckMandatory($current_user->ID);
-			$rencDiv['rencBlock'] = ($q?rencistatus($rencDiv['istatus'],0):0); // (($rencDiv['istatus']==1 || $rencDiv['istatus']==3)?1:0); // blocked
-			if($q && isset($rencOpt['blockmand']) && $rencOpt['blockmand']==2 && rencistatus($rencDiv['istatus'],3)) $rencDiv['rencBlock'] = 1; // Mandatory fiel empty => ON
+			$rencDiv['action'] = (isset($rencU0->t_action)?$rencU0->t_action:0);
+			$rencDiv['istatus'] = (isset($rencU0->i_status)?$rencU0->i_status:0);
+			if(isset($rencU0->i_status) && !empty($rencOpt['mandatory']) && $rencOpt['mandatory']>strtotime($q->d_modif)) rencUserCheckMandatory($current_user->ID);
+			$rencDiv['rencBlock'] = (isset($rencU0->i_status)?rencistatus($rencDiv['istatus'],0):0); // (($rencDiv['istatus']==1 || $rencDiv['istatus']==3)?1:0); // blocked
+			if(isset($rencU0->i_status) && isset($rencOpt['blockmand']) && $rencOpt['blockmand']==2 && rencistatus($rencDiv['istatus'],3)) $rencDiv['rencBlock'] = 1; // Mandatory fiel empty => ON
 			$rencDiv['mpause'] = '';
 			if(empty($rencOpt['paus'])) {
 				if(strpos($rencDiv['action'].'-',',pause2,')!==false) $rencDiv['mpause'] = 'pause2';
@@ -358,14 +365,7 @@ class Rencontre {
 			}
 			$rencDiv['pacam'] = false;
 			$rencDiv['pacas'] = false;
-			$rencDiv['titann'] = $wpdb->get_var("SELECT
-					user_id 
-				FROM ".$wpdb->prefix."rencontre_users_profil
-				WHERE
-					user_id='".$current_user->ID."' and
-					CHAR_LENGTH(t_titre)>4 and
-					CHAR_LENGTH(t_annonce)>30
-				LIMIT 1"); // return null or user_id
+			$rencDiv['titann'] = ((isset($rencU0->t_titre) && strlen($rencU0->t_titre)>4 && strlen($rencU0->t_annonce)>30) ? $rencU0->ID : null);
 			if(!empty($rencOpt['pacamsg']) || !empty($rencOpt['pacasig'])) {
 				if(!$rencDiv['titann']) $a = true; // photo & attention-catcher & ad ; null => OK
 				else $a = (($wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$current_user->ID."' LIMIT 1"))?false:true);
@@ -386,17 +386,17 @@ class Rencontre {
 					if(!empty($disnam[0])) wp_update_user(array('ID'=>$current_user->ID, 'display_name'=>$disnam[0]));
 				}
 				if($Pnouveau==='') {
-					$q = $wpdb->get_row("SELECT
-							c_ville,
-							c_zsex
-						FROM
-							".$wpdb->prefix."rencontre_users
-						WHERE
-							user_id='".$current_user->ID."'
-						LIMIT 1
-						");
-					if(($q && $q->c_ville) || (isset($rencCustom['place']) && $q)) $_SESSION['rencontre'] = 'nouveau2';
-					else if($q) $_SESSION['rencontre'] = 'nouveau1';
+//					$q = $wpdb->get_row("SELECT
+//							c_ville,
+//							c_zsex
+//						FROM
+//							".$wpdb->prefix."rencontre_users
+//						WHERE
+//							user_id='".$current_user->ID."'
+//						LIMIT 1
+//						");
+					if(!empty($rencU0->c_ville) || (isset($rencCustom['place']) && $q)) $_SESSION['rencontre'] = 'nouveau2';
+					else if(isset($rencU0->c_ville)) $_SESSION['rencontre'] = 'nouveau1';
 					else $_SESSION['rencontre'] = 'nouveau';
 				}
 				else {
@@ -990,15 +990,32 @@ class Rencontre {
 		return $nm;
 	}
 	//
-	static function f_login($ext=false,$ret=false) { // SHORTCODE [rencontre_login]
+	static function f_login($ext=false,$ret=false,$a=array()) { // SHORTCODE [rencontre_login]
 		global $rencOpt, $rencDiv, $rencCustom;
-		$o = '<div id="log" class="renclog">'."\r\n";
-		$o .= wp_loginout(esc_url(home_url('?page_id='.(!empty($rencOpt['page_id'])?$rencOpt['page_id']:''))),false)."\r\n";
-		if(!is_user_logged_in()) {
-			if(empty($rencCustom['reglink']) || !empty($rencOpt['fastreg'])) $o .= '<a href="'.esc_url(wp_registration_url()).'">'.__('Register').'</a>'."\r\n";
-			else $o .= '<a href="'.$rencCustom['reglink'].'">'.__('Register').'</a>'."\r\n";
+		$atts = shortcode_atts(array('loginout'=>1,'register'=>1),$a);
+		// Check HOME
+		if(!empty($rencOpt['home'])) {
+			$pages = get_pages();
+			foreach($pages as $p) if($rencOpt['home']==get_page_link($p->ID)) { // Exists and well structured
+				$h = $rencOpt['home'];
+				break;
+			}
 		}
+		if(empty($h)) $h = home_url();
+		// Output
+		$o = "\r\n".'<div id="log" class="renclog">'."\r\n";
+		if(!is_user_logged_in()) {
+			if($atts['loginout']) $o .= "\t".'<a href="'.esc_url(wp_login_url($h)).'" title="'.__('Log in').'">'.__('Log in').'</a>'."\r\n";
+			if($atts['register']) {
+				if(empty($rencCustom['reglink']) || !empty($rencOpt['fastreg'])) {
+					$o .= "\t".'<a href="'.esc_url(wp_registration_url()).'" title="'.__('Register').'">'.__('Register').'</a>'."\r\n";
+				}
+				else $o .= "\t".'<a href="'.$rencCustom['reglink'].'" title="'.__('Register').'">'.__('Register').'</a>'."\r\n";
+			}
+		}
+		else $o .= "\t".'<a href="'.esc_url(wp_logout_url($h)).'" title="'.__('Log out').'">'.__('Log out').'</a>'."\r\n";
 		$o .= '</div><!-- #log.rencLog -->'."\r\n";
+		// Return
 		if(!$ret) echo $o;
 		else return $o; // SHORTCODE
 	}

@@ -8,9 +8,9 @@
 */
 ?>
 
-	<div class="rencMenu w3-bar w3-renc-mebg w3-left-align w3-large w3-margin-bottom">
+	<div id="rencMenu" class="rencMenu w3-bar w3-renc-mebg w3-left-align w3-large w3-margin-bottom">
 
-		<a id="rencMenuHome" class="w3-bar-item w3-button w3-padding-large w3-renc-mebt w3-renc-mebo" href="<?php echo $link['home']; ?>" title="<?php _e('My homepage','rencontre'); ?>"><i class="fas fa-home w3-margin-right"></i></a>
+		<a id="rencMenuHome" class="w3-bar-item w3-button w3-padding-large w3-renc-mebt w3-renc-mebo" href="<?php echo $link['home']; ?>" title="<?php _e('My homepage','rencontre'); ?>"><i class="fas fa-home"></i></a>
 		<a id="rencMenuCard" class="rencMenuCard w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('My card','rencontre'); ?>"><i class="far fa-address-card"></i></a>
 			<?php if(isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) { ?>
 			
@@ -55,3 +55,13 @@
 			<?php } ?>
 			
 	</div><!-- .rencMenu -->
+<<<<<<< .mine
+	<script>document.addEventListener("DOMContentLoaded",()=>{window.scrollTo(0,document.getElementById("rencMenu").getBoundingClientRect().top)});</script>
+||||||| .r3074882
+=======
+<?php if(!empty($rencOpt['discrol'])) { ?>
+		
+	<script><?php if($rencOpt['discrol']==2) { ?>var risMob=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if(risMob) <?php } ?>
+["DOMContentLoaded","pageshow"].forEach(function(e){document.addEventListener(e,function(){window.scrollTo(0,document.getElementById("rencMenu").getBoundingClientRect().top-8);},false);});</script>
+<?php } ?>
+>>>>>>> .r3097546

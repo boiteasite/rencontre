@@ -32,4 +32,5 @@ input.labelauty:checked+label>span.labelauty-checked{display:inline-block;}
 	.rencCam{bottom:390px;right:10px;}
 	.rencCam.contOff{bottom:110px;right:10px;}
 	.rencCam2{display:none;}
+	.rencMenu .w3-bar-item{padding:6px 12px!important;}
 }

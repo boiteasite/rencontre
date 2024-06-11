@@ -272,6 +272,11 @@
 							
 							</div>
 							<div class="w3-right-align w3-padding-small">
+								<label><?php _e('No interaction with members who don\'t match my search criteria','rencontre'); ?>
+									<input type="checkbox" style="margin:0 8px" name="zstrict"<?php if(strpos($u0->t_action.'-',',zstrict,')!==false) echo ' checked'; ?> />
+								</label>
+							</div>
+							<div class="w3-right-align w3-padding-small">
 								<label><?php _e('No beep on the chat','rencontre'); ?>
 									<input type="checkbox" style="margin:0 8px" name="nobip"<?php if(strpos($u0->t_action.'-',',nobip,')!==false) echo ' checked'; ?> />
 								</label>
@@ -283,7 +288,7 @@
 									<input type="checkbox" style="margin:0 8px" name="nomail"<?php if(strpos($u0->t_action.'-',',nomail,')!==false) echo ' checked'; ?> />
 								</label>
 							</div>
-						<?php } ?>
+							<?php } ?>
 							<?php if(isset($checkbox2)) echo $checkbox2; ?>
 									
 						</form>

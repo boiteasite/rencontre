@@ -1085,11 +1085,13 @@ function update_rencontre_options($P) {
 		if(isset($P['npa'])) $rencOpt['npa'] = rencSanit($P['npa'],'int'); else unset($rencOpt['npa']);
 		if(!empty($P['wlibre'])) $rencOpt['wlibre'] = rencSanit($P['wlibre'],'int'); else unset($rencOpt['wlibre']);
 		if(!empty($P['wslibre'])) $rencOpt['wslibre'] = rencSanit($P['wslibre'],'int'); else unset($rencOpt['wslibre']);
+		if(!empty($P['discrol'])) $rencOpt['discrol'] = rencSanit($P['discrol'],'int'); else unset($rencOpt['discrol']);
 		if(!empty($P['jlibre'])) $rencOpt['jlibre'] = rencSanit($P['jlibre'],'int'); else unset($rencOpt['jlibre']);
 		if(!empty($P['limit'])) $rencOpt['limit'] = rencSanit($P['limit'],'int'); else unset($rencOpt['limit']);
 		if(!empty($P['dynsearch'])) $rencOpt['dynsearch'] = 1; else unset($rencOpt['dynsearch']);
 		if(!empty($P['newtab'])) $rencOpt['newtab'] = 1; else unset($rencOpt['newtab']);
 		if(!empty($P['myctry'])) $rencOpt['myctry'] = 1; else unset($rencOpt['myctry']);
+		if(!empty($P['recexact'])) $rencOpt['recexact'] = 1; else unset($rencOpt['recexact']);
 		if(!empty($P['anniv'])) $rencOpt['anniv'] = 1; else unset($rencOpt['anniv']);
 		if(!empty($P['ligne'])) $rencOpt['ligne'] = 1; else unset($rencOpt['ligne']);
 		if(!empty($P['tchat'])) $rencOpt['tchat'] = 1; else unset($rencOpt['tchat']);
@@ -1109,6 +1111,10 @@ function update_rencontre_options($P) {
 	else if($Grenctab=='mel') {
 		if(!empty($P['mailsupp'])) $rencOpt['mailsupp'] = 1; else unset($rencOpt['mailsupp']);
 		if(!empty($P['mailmois'])) $rencOpt['mailmois'] = rencSanit($P['mailmois'],'int'); else unset($rencOpt['mailmois']);
+		if(!empty($P['titmailmois'])) $rencOpt['titmailmois'] = rencSanit($P['titmailmois'],'text'); else unset($rencOpt['titmailmois']);
+		if(!empty($P['titmailinst'])) $rencOpt['titmailinst'] = rencSanit($P['titmailinst'],'text'); else unset($rencOpt['titmailinst']);
+		if(!empty($P['titmailbirt'])) $rencOpt['titmailbirt'] = rencSanit($P['titmailbirt'],'text'); else unset($rencOpt['titmailbirt']);
+		if(!empty($P['titmailremind'])) $rencOpt['titmailremind'] = rencSanit($P['titmailremind'],'text'); else unset($rencOpt['titmailremind']);
 		if(!empty($P['textmail'])) $rencOpt['textmail'] = rencSanit($P['textmail'],'para'); else unset($rencOpt['textmail']);
 		if(!empty($P['melctry'])) $rencOpt['melctry'] = 1; else unset($rencOpt['melctry']);
 		if(!empty($P['mailsmile'])) $rencOpt['mailsmile'] = 1; else unset($rencOpt['mailsmile']);
@@ -1405,6 +1411,16 @@ function rencTabDis() {
 				<td><input type="number" name="wslibre" value="<?php if(!empty($rencOpt['wslibre'])) echo $rencOpt['wslibre']; ?>" /></td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><label><?php _e('Auto-scrolling to center the page on this plugin', 'rencontre'); ?></label></th>
+				<td>
+					<select name="discrol">
+						<option value="0" <?php if(empty($rencOpt['discrol'])) echo 'selected'; ?>><?php _e('No', 'rencontre'); ?></option>
+						<option value="1" <?php if(isset($rencOpt['discrol']) && $rencOpt['discrol']==1) echo 'selected'; ?>><?php _e('Yes', 'rencontre'); ?></option>
+						<option value="2" <?php if(isset($rencOpt['discrol']) && $rencOpt['discrol']==2) echo 'selected'; ?>><?php _e('On smartphone only', 'rencontre'); ?></option>
+					</select>
+				</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row"><label><?php _e('Number of days to wait before presence homepage', 'rencontre'); ?></label></th>
 				<td>
 					<select name="jlibre">
@@ -1440,6 +1456,10 @@ function rencTabDis() {
 			</tr>
 			<?php } ?>
 			
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Precise criteria for featured profiles', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="recexact" value="1" <?php if(!empty($rencOpt['recexact'])) echo 'checked'; ?>></td>
+			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Today\'s birthday', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="anniv" value="1" <?php if(!empty($rencOpt['anniv'])) echo 'checked'; ?>></td>
@@ -1525,7 +1545,7 @@ function rencTabMel() {
 	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
 	$mph = get_option('rencontre_mailPerHour');
 	?>
-	
+	<p style="margin-top:2em;"><?php _e('Sending emails via WordPress can sometimes be tricky. If registration emails (for example) aren\'t being received, try an SMTP email plugin.', 'rencontre'); ?></p>
 	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel&tok=<?php echo $rencToka; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
@@ -1543,6 +1563,34 @@ function rencTabMel() {
 					</select>
 					<?php if(isset($mph[0])) echo '<p style="color:#D54E21;">'.__('Up this week', 'rencontre').__(': ','rencontre').'<span style="color:#111;font-weight:700;">'.$mph[0].'</span>&nbsp;'.__('mail/hour', 'rencontre').'<br />('.__('sent during maintenance', 'rencontre').')</p>'; ?>
 
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Regular email subject', 'rencontre'); ?><br><i style="font-size:90%"><?php _e('Site title'); ?> : [BLOGNAME]</i></label></th>
+				<td>
+					<input type="text" name="titmailmois" style="width:100%;" value="<?php if(isset($rencOpt['titmailmois'])) echo $rencOpt['titmailmois']; ?>" />
+					<br><?php _e('Empty', 'rencontre'); ?> : <?php echo "[BLOGNAME]"; ?>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Instant email subject', 'rencontre'); ?><br><i style="font-size:90%"><?php _e('Site title'); ?> : [BLOGNAME]</i></label></th>
+				<td>
+					<input type="text" name="titmailinst" style="width:100%;" value="<?php if(isset($rencOpt['titmailinst'])) echo $rencOpt['titmailinst']; ?>" />
+					<br><?php _e('Empty', 'rencontre'); ?> : <?php echo "[BLOGNAME] - ".__('A member contact you','rencontre'); ?>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Birthday email subject', 'rencontre'); ?><br><i style="font-size:90%"><?php _e('Site title'); ?> : [BLOGNAME]</i></label></th>
+				<td>
+					<input type="text" name="titmailbirt" style="width:100%;" value="<?php if(isset($rencOpt['titmailbirt'])) echo $rencOpt['titmailbirt']; ?>" />
+					<br><?php _e('Empty', 'rencontre'); ?> : <?php echo "[BLOGNAME] - ".__('Happy Birthday','rencontre'); ?>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Reminder email subject', 'rencontre'); ?><br><i style="font-size:90%"><?php _e('Site title'); ?> : [BLOGNAME]</i></label></th>
+				<td>
+					<input type="text" name="titmailremind" style="width:100%;" value="<?php if(isset($rencOpt['titmailremind'])) echo $rencOpt['titmailremind']; ?>" />
+					<br><?php _e('Empty', 'rencontre'); ?> : <?php echo "[BLOGNAME] - ".__('Registration','rencontre'); ?>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -1825,6 +1873,8 @@ function rencMenuMembres() {
 				else if($Gtri=='Rid') $tri='ORDER BY R.user_id DESC';
 				else if($Gtri=='pseudo') $tri='ORDER BY U.user_login ASC';
 				else if($Gtri=='Rpseudo') $tri='ORDER BY U.user_login DESC';
+				else if($Gtri=='sex') $tri='ORDER BY R.i_sex ASC, P.d_modif DESC';
+				else if($Gtri=='Rsex') $tri='ORDER BY R.i_sex DESC, P.d_modif DESC';
 				else if($Gtri=='age') $tri='ORDER BY R.d_naissance DESC';
 				else if($Gtri=='Rage') $tri='ORDER BY R.d_naissance ASC';
 				else if($Gtri=='pays') $tri='ORDER BY R.'.$p.' ASC, P.d_modif DESC';
@@ -1904,7 +1954,7 @@ function rencMenuMembres() {
 					<td><a href="admin.php?page=rencmembers&tri=action" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Action','rencontre');?></a></td>
 					<td><?php _e('Photo','rencontre');?></td>
 					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='pseudo') echo 'R'; ?>pseudo" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Alias','rencontre');?></a><br /><i><?php _e('My name','rencontre'); ?></i></td>
-					<td><?php _e('Sex','rencontre');?></td>
+					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='sex') echo 'R'; ?>sex" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Sex','rencontre');?></a></td>
 					<td><a href="admin.php?page=rencmembers&tri=<?php if($Gtri=='age') echo 'R'; ?>age" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Age','rencontre');?><a></td>
 					<?php if(!isset($rencCustom['size'])) echo '<td>'.__('Height','rencontre').'</td>'; ?>
 					<?php if(!isset($rencCustom['weight'])) echo '<td>'.__('Weight','rencontre').'</td>'; ?>

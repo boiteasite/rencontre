@@ -33,7 +33,7 @@ function f_shortcode_rencontre() { // shortcode : [rencontre]
 		return $a;
 	}
 }
-function f_shortcode_rencontre_login() {return Rencontre::f_login(0,1);} // shortcode : [rencontre_login]
+function f_shortcode_rencontre_login($a) {return Rencontre::f_login(0,1,$a);} // shortcode : [rencontre_login]
 function f_shortcode_rencontre_imreg($a) {if(!is_user_logged_in()) return Rencontre::f_rencontreImgReg($a);} // shortcode : [rencontre_imgreg title= selector='.site-header .wp-custom-header img' left=20 top=20] - left & top in purcent
 // Mail
 //add_filter ('retrieve_password_message', 'retrieve_password_message2', 10, 2);

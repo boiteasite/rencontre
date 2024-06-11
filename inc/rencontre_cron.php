@@ -209,6 +209,8 @@ function f_cron_on($part=1) {
 					// ************************
 					$s = trim(preg_replace('/\t+/', '', $s)); // remove tab
 					$s = preg_replace('/^\s+|\n|\r|\s+$/m', '', $s); // remove line break
+					$mailSubj = (!empty($rencOpt['titmailremind'])?$rencOpt['titmailremind']:'');
+					$mailSubj = str_replace("[BLOGNAME]", $blogName, $mailSubj);
 					$he = array();
 					if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
 						$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
@@ -287,6 +289,8 @@ function f_cron_on($part=1) {
 					// ************************
 					$s = trim(preg_replace('/\t+/', '', $s)); // remove tab
 					$s = preg_replace('/^\s+|\n|\r|\s+$/m', '', $s); // remove line break
+					$mailSubj = (!empty($rencOpt['titmailbirt'])?$rencOpt['titmailbirt']:'');
+					$mailSubj = str_replace("[BLOGNAME]", $blogName, $mailSubj);
 					$he = array();
 					if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
 						$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
@@ -409,15 +413,23 @@ function f_cron_on($part=1) {
 				$zmax = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d"), date("Y")-$u->i_zage_max));
 				if(!empty($rencBenchmark)) { $rencBenchmark .= ' Mail'.$ct.' - S0:'.(microtime(true)-$rbm2); $rbm2 = microtime(true); }
 				// Selection par le sex
-				$sexQuery = ''; // and R.i_zsex!=0 and R.i_sex=0
+				$sexQuery = '';
+				$relQuery = '';
 				// 1. SEX
 				if($u->i_zsex==99) $sexQuery .= " and R.i_sex IN (".substr($u->c_zsex,1,-1).") ";
 				else $sexQuery .= " and R.i_sex=".$u->i_zsex." ";
 				// 2. ZSEX
 				$sexQuery .= " and (R.i_zsex=".$u->i_sex." or R.c_zsex LIKE '%,".$u->i_sex.",%') "; // multiSR or not (in case of change multiSR by ADMIN but not by users Account)
-				//
+				// 3. ZRELATION
 				if($u->i_zrelation!=99) $relQuery = " and (R.i_zrelation=".$u->i_zrelation." or  R.c_zrelation LIKE '%,".$u->i_zrelation.",%') ";
-				else $relQuery = ''; // pas de else - trop complique sans boucle - ,1,3,6, IN/LIKE/= ,2,3,5,
+				else {
+					$a = explode(',', $u->c_zrelation);
+					foreach($a as $a1) if(strlen($a1)) {
+						if(!empty($relQuery)) $relQuery .= " or ";
+						$relQuery .= "R.c_zrelation LIKE '%,".$a1.",%'";
+					}
+					if(!empty($relQuery)) $relQuery = " and (".$relQuery.") ";
+				}
 				//
 			//	$qpause = (empty($rencOpt['paus'])?"and (P.t_action NOT REGEXP ',pause1,|,pause2,' or P.t_action IS NULL) ":""); // REGEXP
 				$qpause = (empty($rencOpt['paus'])?"and (P.t_action NOT LIKE '%,pause_,%' or P.t_action IS NULL) ":""); // LIKE
@@ -542,6 +554,8 @@ function f_cron_on($part=1) {
 					// ************************
 					$s = trim(preg_replace('/\t+/', '', $s)); // remove tab
 					$s = preg_replace('/^\s+|\n|\r|\s+$/m', '', $s); // remove line break
+					$mailSubj = (!empty($rencOpt['titmailmois'])?$rencOpt['titmailmois']:'');
+					$mailSubj = str_replace("[BLOGNAME]", $blogName, $mailSubj);
 					$he = array();
 					if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
 						$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
@@ -798,6 +812,8 @@ function f_cron_list() {
 					// ************************
 					$o = trim(preg_replace('/\t+/', '', $o)); // remove tab
 					$o = preg_replace('/^\s+|\n|\r|\s+$/m', '', $o); // remove line break
+					$mailSubj = (!empty($rencOpt['titmailinst'])?$rencOpt['titmailinst']:'');
+					$mailSubj = str_replace("[BLOGNAME]", $blogName, $mailSubj);
 					$he = array();
 					if(!empty($rencOpt['mailfo']) || !has_filter('wp_mail_content_type')) {
 						$he[] = 'From: '.$blogName.' <'.$rencDiv['admin_email'].'>';
