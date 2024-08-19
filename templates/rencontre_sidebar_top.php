@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Sidebar Top
- * Last Change : Rencontre 3.10
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_sidebar_top.php
  * Call : rencontre_widget.php => RencontreSidebarWidget::widget()
  * $u0 : ID, display_name, user_login, c_ip, c_pays, c_ville, i_sex, d_naissance, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, miniPhoto, miniPhotoWebp, t_action, sourireIn, contactIn, visite, looking, forwhat, homo, zsex, country, age, agemin, agemax, pause
@@ -44,7 +44,7 @@
 					<div class="w3-large"><?php echo $u0->display_name; ?></div>
 					<?php if(!isset($rencCustom['born']) && strpos($u0->d_naissance.'-','0000')===false) { ?>
 					
-					<div><?php echo Rencontre::f_age($u0->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?></div>
+					<div><?php echo Rencontre::f_age($u0->d_naissance); ?> <?php _e('years','rencontre'); ?></div>
 					<?php } ?>
 					<?php if(!isset($rencCustom['place'])) { ?>
 					
@@ -64,10 +64,10 @@
 			<div class="myAction w3-medium w3-border-bottom w3-renc-line">
 				<div class="firstMaj">
 				<?php if($u0->looking) { ?>
-					<?php _e('I\'m looking for','rencontre'); ?>&nbsp;<em><?php echo $u0->looking; ?></em>
+					<?php _e('I\'m looking for','rencontre'); ?> <em><?php echo $u0->looking; ?></em>
 				<?php } ?>
 				<?php if($u0->forwhat) { ?>
-					&nbsp;<?php _e('for','rencontre'); ?>&nbsp;<em><?php echo $u0->forwhat; ?></em>
+				<?php echo ' '.__('for','rencontre'); ?> <em><?php echo $u0->forwhat; ?></em>
 				<?php } ?>
 				
 				</div>

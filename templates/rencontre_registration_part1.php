@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 1/3 and 1/2
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part1.php
  * Call : rencontre_widget.php => widget()
  * Filter : do_action('rencontre_registration', $f, $g) - see below
@@ -25,7 +25,7 @@
 		<div class="w3-card w3-renc-blbg w3-section">
 			<div class="w3-container w3-renc-txtc">
 				<div class="w3-section">
-					<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Hello','rencontre'); ?>&nbsp;<?php echo $current_user->user_login; ?>,&nbsp;<?php _e('welcome to the site','rencontre'); ?>&nbsp;<?php echo bloginfo('name'); ?></div>
+					<div class="w3-xlarge w3-renc-titc w3-section"><?php echo __('Hello','rencontre').' '.$current_user->user_login.', '.__('welcome to the site','rencontre').' '.bloginfo('name'); ?></div>
 				<?php if($t=rencTranslate('newText')) echo '<div>'.$t.'</div>';
 				else { ?>
 					
@@ -108,10 +108,10 @@
 							<?php for($v=140;$v<221;++$v) { ?>
 								<?php if(empty($rencCustom['sizeu'])) { ?>
 								
-								<option value="<?php echo $v; ?>"><?php echo $v.'&nbsp;'.__('cm','rencontre'); ?></option>
+								<option value="<?php echo $v; ?>"><?php echo $v.' '.__('cm','rencontre'); ?></option>
 								<?php } else { ?>
 								
-								<option value="<?php echo $v; ?>"><?php echo (floor($v/24-1.708)).'&nbsp;'.__('ft','rencontre').'&nbsp;'.(round(((($v/24-1.708)-floor($v/24-1.708))*12),1)).'&nbsp;'.__('in','rencontre'); ?></option>
+								<option value="<?php echo $v; ?>"><?php echo (floor($v/24-1.708)).' '.__('ft','rencontre').' '.(round(((($v/24-1.708)-floor($v/24-1.708))*12),1)).' '.__('in','rencontre'); ?></option>
 								<?php } ?>
 							<?php } ?>
 							
@@ -126,10 +126,10 @@
 							<?php for($v=40;$v<140;++$v) { ?>
 								<?php if(empty($rencCustom['weightu'])) { ?>
 								
-								<option value="<?php echo $v; ?>"><?php echo $v.'&nbsp;'.__('kg','rencontre'); ?></option>
+								<option value="<?php echo $v; ?>"><?php echo $v.' '.__('kg','rencontre'); ?></option>
 								<?php } else { ?>
 								
-								<option value="<?php echo $v; ?>"><?php echo ($v*2+10).'&nbsp;'.__('lbs','rencontre'); ?></option>
+								<option value="<?php echo $v; ?>"><?php echo ($v*2+10).' '.__('lbs','rencontre'); ?></option>
 								<?php } ?>
 							<?php } ?>
 							

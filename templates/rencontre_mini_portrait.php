@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait
- * Last Change : Rencontre 3.10.1
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait.php
  * Call : rencontre_widget.php => f_miniPortrait()
  * $u : ID, display_name, c_pays, c_ville, d_naissance, i_photo, t_titre, online, miniPhoto, miniPhotoWebp
@@ -51,11 +51,11 @@
 						<div class="w3-large w3-renc-medium-s"><?php echo $u->display_name; ?></div>
 						<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) { ?>
 						
-						<div class="w3-renc-small-s"><?php echo Rencontre::f_age($u->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?></div>
+						<div class="w3-renc-small-s"><?php echo Rencontre::f_age($u->d_naissance).' '.__('years','rencontre'); ?></div>
 						<?php } ?>
 						<?php if(!isset($rencCustom['place'])) { ?>
 						
-						<div class="w3-renc-small-s"><?php echo $u->c_ville; ?>&nbsp;</div>
+						<div class="w3-renc-small-s"><?php echo $u->c_ville; ?> </div>
 						<?php } ?>
 					</div>
 				</div>

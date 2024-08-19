@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Message Conversation
- * Last Change : Rencontre 3.8.1
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_conversation.php
  * Call : rencontre_widget.php => f_conversation()
  * $u : ID, user_login, display_name, login, i_photo, miniPhoto, miniPhotoWebp
@@ -54,13 +54,13 @@
 					</div>
 				</div>
 				<div class="w3-container w3-cell">
-					<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['inbox']; ?>"><i class="far fa-envelope"></i><span class="w3-hide-small">&nbsp;<?php _e('Inbox','rencontre');?></span></button>
+					<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['inbox']; ?>"><i class="far fa-envelope"></i><span class="w3-hide-small"> <?php _e('Inbox','rencontre');?></span></button>
 				<?php if(!empty($onClick['write'])){ ?>
 					
-					<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['write']; ?>"><i class="fas fa-reply"></i><span class="w3-hide-small">&nbsp;<?php _e('Answer','rencontre');?></span></button>
+					<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['write']; ?>"><i class="fas fa-reply"></i><span class="w3-hide-small"> <?php _e('Answer','rencontre');?></span></button>
 				<?php } else { ?>
 				
-					<button class="w3-btn w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['write']); ?>')" title="<?php echo $title['write']; ?>"><i class="fas fa-reply"></i><span class="w3-hide-small">&nbsp;<?php _e('Answer','rencontre');?></span></button>
+					<button class="w3-btn w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['write']); ?>')" title="<?php echo $title['write']; ?>"><i class="fas fa-reply"></i><span class="w3-hide-small"> <?php _e('Answer','rencontre');?></span></button>
 				<?php } ?>
 				
 				</div>

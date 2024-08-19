@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Mini Portrait Chat - Chat only
- * Last Change : Rencontre 3.10
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_mini_portrait_chat.php
  * Call : rencontre_widget.php => f_miniPortrait2()
  * $u : display_name, c_pays, c_ville, d_naissance, i_photo, t_titre 
@@ -39,7 +39,7 @@
 						<div class="w3-large"><?php echo $u->display_name; ?></div>
 						<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) { ?>
 						
-						<div><?php echo Rencontre::f_age($u->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?></div>
+						<div><?php echo Rencontre::f_age($u->d_naissance).' '.__('years','rencontre'); ?></div>
 						<?php } ?>
 						<?php if(!isset($rencCustom['place'])) { ?>
 						
@@ -50,10 +50,10 @@
 				<div id="rcStart" class="w3-border-top w3-border-grey w3-clear">
 					<div class="w3-cell-row">
 						<div class="w3-cell w3-cell-middle w3-padding-small">
-							<button id="rcYes" class="w3-button w3-renc-mebt w3-renc-mebo"><i class="far fa-comments"></i>&nbsp;<?php _e('Accept','rencontre'); ?></button>
+							<button id="rcYes" class="w3-button w3-renc-mebt w3-renc-mebo"><i class="far fa-comments"></i> <?php _e('Accept','rencontre'); ?></button>
 						</div>
 						<div class="w3-cell w3-cell-middle w3-padding-small">
-							<button id="rcNo" class="w3-button w3-renc-mebt w3-renc-mebo"><i class="far fa-window-close"></i>&nbsp;<?php _e('Ignore','rencontre'); ?></button>
+							<button id="rcNo" class="w3-button w3-renc-mebt w3-renc-mebo"><i class="far fa-window-close"></i> <?php _e('Ignore','rencontre'); ?></button>
 						</div>
 					</div>
 				</div>

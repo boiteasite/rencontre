@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Libre Search
- * Last Change : Rencontre 3.6.3
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_search.php
  * Call : rencontre.php => f_rencontreSearch()
 */
@@ -27,7 +27,7 @@
 						<?php } ?>
 						<div class="w3-row-padding">
 							<div class="rencSearchBloc<?php echo (empty($rencCustom['born'])?' w3-third':''); ?>">
-								<label><?php _e('I\'m looking for','rencontre'); ?>&nbsp;</label>
+								<label><?php _e('I\'m looking for','rencontre'); ?> </label>
 								<select name="<?php echo (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex'); ?>" class="w3-select w3-border w3-renc-sebg">
 								<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
 
@@ -39,7 +39,7 @@
 							<?php if(empty($rencCustom['born'])) { ?>
 
 							<div class="rencSearchBloc w3-third">
-								<label><?php _e('between','rencontre'); ?>&nbsp;</label>
+								<label><?php _e('between','rencontre'); ?> </label>
 								<select name="<?php echo (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemin']; ?>">
 								<?php for($v=20;$v<91;$v+=5) { ?>
 								
@@ -49,7 +49,7 @@
 								</select>
 							</div>
 							<div class="rencSearchBloc w3-third">
-								<label>&nbsp;<?php _e('and','rencontre'); ?>&nbsp;</label>
+								<label> <?php _e('and','rencontre'); ?> </label>
 								<select name="<?php echo (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemax']; ?>">
 								<?php for($v=25;$v<96;$v+=5) { ?>
 								

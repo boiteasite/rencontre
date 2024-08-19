@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search
- * Last Change : Rencontre 3.9.2
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search.php
  * Call : rencontre_widget.php => f_cherchePlus()
  * $u0 : ID, cryptID, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, e_lat, e_lon, zsex, c_pays, country, age, agemin, agemax
@@ -28,19 +28,19 @@
 					<?php if(!isset($rencCustom['born'])) { ?>
 
 						<div>
-							<label><?php echo __('Age','rencontre').__(': ','rencontre').__('min','rencontre'); ?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
+							<label><?php echo __('Age','rencontre').__(': ','rencontre').__('min','rencontre').' - '.__('max','rencontre');?></label>
 							<div class="w3-row">
 								<div class="w3-half">
 									<select name="<?php echo (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemin']; ?>">
 										<?php for($v=(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18);$v<=(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99);++$v)
-										{ ?><option value="<?php echo $v; ?>" <?php if($v==$u0->i_zage_min) echo 'selected'; ?> ><?php echo $v?>&nbsp;<?php _e('years','rencontre'); ?></option><?php } ?>
+										{ ?><option value="<?php echo $v; ?>" <?php if($v==$u0->i_zage_min) echo 'selected'; ?> ><?php echo $v?> <?php _e('years','rencontre'); ?></option><?php } ?>
 										
 									</select>
 								</div>
 								<div class="w3-half">
 									<select name="<?php echo (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemax']; ?>">
 										<?php for($v=(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18);$v<=(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99);++$v)
-										{ ?><option value="<?php echo $v; ?>" <?php if($v==$u0->i_zage_max) echo 'selected'; ?> ><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option><?php } ?>
+										{ ?><option value="<?php echo $v; ?>" <?php if($v==$u0->i_zage_max) echo 'selected'; ?> ><?php echo $v; ?> <?php _e('years','rencontre'); ?></option><?php } ?>
 										
 									</select>
 								</div>
@@ -50,14 +50,14 @@
 					<?php if(!isset($rencCustom['size'])) { ?>
 
 						<div>
-							<label><?php echo __('Height','rencontre').__(': ','rencontre').__('min','rencontre'); ?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
+							<label><?php echo __('Height','rencontre').__(': ','rencontre').__('min','rencontre').' - '.__('max','rencontre'); ?></label>
 							<div class="w3-row">
 								<div class="w3-half">
 									<select name="<?php echo (!empty($rencOpt['lbl']['tailleMin'])?$rencOpt['lbl']['tailleMin']:'tailleMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['sizemin']; ?>">
 										<?php for($v=140;$v<221;++$v) { 
 											if(empty($rencCustom['sizeu']))
-											{ ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_min']) && $mem['size_min']==$v) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('cm','rencontre'); ?></option><?php }
-											else { ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_min']) && $mem['size_min']==$v) echo 'selected'; ?>><?php echo (floor($v/24-1.708)); ?>&nbsp;<?php _e('ft','rencontre'); ?>&nbsp;<?php echo (round(((($v/24-1.708)-floor($v/24-1.708))*12),1)); ?>&nbsp;<?php _e('in','rencontre'); ?></option><?php } } ?>
+											{ ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_min']) && $mem['size_min']==$v) echo 'selected'; ?>><?php echo $v; ?> <?php _e('cm','rencontre'); ?></option><?php }
+											else { ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_min']) && $mem['size_min']==$v) echo 'selected'; ?>><?php echo (floor($v/24-1.708)); ?> <?php _e('ft','rencontre'); ?> <?php echo (round(((($v/24-1.708)-floor($v/24-1.708))*12),1)); ?> <?php _e('in','rencontre'); ?></option><?php } } ?>
 										
 									</select>
 								</div>
@@ -65,8 +65,8 @@
 									<select name="<?php echo (!empty($rencOpt['lbl']['tailleMax'])?$rencOpt['lbl']['tailleMax']:'tailleMax'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['sizemax']; ?>">
 										<?php for($v=140;$v<221;++$v) {
 											if(empty($rencCustom['sizeu']))
-											{ ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_max']) && $mem['size_max']==$v) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('cm','rencontre')?></option><?php }
-											else { ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_max']) && $mem['size_max']==$v) echo 'selected'; ?>><?php echo (floor($v/24-1.708)); ?>&nbsp;<?php _e('ft','rencontre'); ?>&nbsp;<?php echo (round(((($v/24-1.708)-floor($v/24-1.708))*12),1)); ?>&nbsp;<?php _e('in','rencontre'); ?></option><?php } } ?>
+											{ ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_max']) && $mem['size_max']==$v) echo 'selected'; ?>><?php echo $v; ?> <?php _e('cm','rencontre')?></option><?php }
+											else { ?><option value="<?php echo $v; ?>" <?php if(!empty($mem['size_max']) && $mem['size_max']==$v) echo 'selected'; ?>><?php echo (floor($v/24-1.708)); ?> <?php _e('ft','rencontre'); ?> <?php echo (round(((($v/24-1.708)-floor($v/24-1.708))*12),1)); ?> <?php _e('in','rencontre'); ?></option><?php } } ?>
 										
 									</select>
 								</div>
@@ -76,14 +76,14 @@
 					<?php if(!isset($rencCustom['weight'])) { ?>
 
 						<div>
-							<label><?php echo __('Weight','rencontre').__(': ','rencontre').__('min','rencontre'); ?>&nbsp;-&nbsp;<?php _e('max','rencontre');?></label>
+							<label><?php echo __('Weight','rencontre').__(': ','rencontre').__('min','rencontre').' - '.__('max','rencontre'); ?></label>
 							<div class="w3-row">
 								<div class="w3-half">
 									<select name="<?php echo (!empty($rencOpt['lbl']['poidsMin'])?$rencOpt['lbl']['poidsMin']:'poidsMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['weightmin']; ?>">
 										<?php for($v=40;$v<141;++$v) {
 											if(empty($rencCustom['weightu']))
-											{ ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_min']) && $mem['weight_min']==$v+100) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('kg','rencontre'); ?></option><?php }
-											else { ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_min']) && $mem['weight_min']==$v+100) echo 'selected'; ?>><?php echo ($v*2+10); ?>&nbsp;<?php _e('lbs','rencontre'); ?></option><?php } } ?>
+											{ ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_min']) && $mem['weight_min']==$v+100) echo 'selected'; ?>><?php echo $v; ?> <?php _e('kg','rencontre'); ?></option><?php }
+											else { ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_min']) && $mem['weight_min']==$v+100) echo 'selected'; ?>><?php echo ($v*2+10); ?> <?php _e('lbs','rencontre'); ?></option><?php } } ?>
 														
 									</select>
 								</div>
@@ -91,8 +91,8 @@
 									<select name="<?php echo (!empty($rencOpt['lbl']['poidsMax'])?$rencOpt['lbl']['poidsMax']:'poidsMax'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['weightmax']; ?>">
 										<?php for($v=40;$v<141;++$v) {
 											if(empty($rencCustom['weightu']))
-											{ ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_max']) && $mem['weight_max']==$v+100) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('kg','rencontre'); ?></option><?php }
-											else { ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_max']) && $mem['weight_max']==$v+100) echo 'selected'; ?>><?php echo ($v*2+10); ?>&nbsp;<?php _e('lbs','rencontre'); ?></option><?php } } ?>
+											{ ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_max']) && $mem['weight_max']==$v+100) echo 'selected'; ?>><?php echo $v; ?> <?php _e('kg','rencontre'); ?></option><?php }
+											else { ?><option value="<?php echo ($v+100); ?>" <?php if(!empty($mem['weight_max']) && $mem['weight_max']==$v+100) echo 'selected'; ?>><?php echo ($v*2+10); ?> <?php _e('lbs','rencontre'); ?></option><?php } } ?>
 										
 									</select>
 								</div>

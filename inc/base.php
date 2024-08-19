@@ -1279,7 +1279,7 @@ function rencMenuGeneral() {
 					<td><input type="checkbox" name="rol" value="1" <?php if(!empty($rencOpt['rol'])) echo 'checked'; ?> onClick="document.getElementById('blocRolu').style.display=((this.checked==true)?'table-row':'none')"></td>
 				</tr>
 				<tr valign="top" id="blocRolu" style="<?php echo ((!empty($rencOpt['rol']))?'display:table-row;':'display:none;'); ?>">
-					<th scope="row"><label><?php _e('Do not remove user in WP when remove in Rencontre', 'rencontre'); ?></label></th>
+					<th scope="row"><label><?php _e('Do not remove user in WP when remove in Rencontre', 'rencontre'); ?> (ADMIN del)</label></th>
 					<td><input type="checkbox" name="rolu" value="1" <?php if(!empty($rencOpt['rolu'])) echo 'checked'; ?>></td>
 				</tr>
 				<tr>

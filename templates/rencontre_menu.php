@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Menu
- * Last Change : Rencontre 3.8.3
+ * Last Change : Rencontre 3.12
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_menu.php
  * Call : rencontre_widget.php => widget()
 */
@@ -55,13 +55,8 @@
 			<?php } ?>
 			
 	</div><!-- .rencMenu -->
-<<<<<<< .mine
-	<script>document.addEventListener("DOMContentLoaded",()=>{window.scrollTo(0,document.getElementById("rencMenu").getBoundingClientRect().top)});</script>
-||||||| .r3074882
-=======
-<?php if(!empty($rencOpt['discrol'])) { ?>
+	<?php if(!empty($rencOpt['discrol'])) { ?>
 		
 	<script><?php if($rencOpt['discrol']==2) { ?>var risMob=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if(risMob) <?php } ?>
 ["DOMContentLoaded","pageshow"].forEach(function(e){document.addEventListener(e,function(){window.scrollTo(0,document.getElementById("rencMenu").getBoundingClientRect().top-8);},false);});</script>
-<?php } ?>
->>>>>>> .r3097546
+	<?php } ?>

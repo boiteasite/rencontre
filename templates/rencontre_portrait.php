@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.10.1
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * Call : rencontre_widget.php => widget()
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
@@ -88,22 +88,22 @@
 						<div class="w3-cell">
 							<div class="w3-large" style="text-transform:capitalize"><?php echo $u->display_name; ?>
 							<?php if($u->display_name!=strtok($u->user_login, '@')) { ?>
-							&nbsp;<span class="w3-small w3-opacity">(<?php echo strtok($u->user_login, '@'); ?>)</span>
+							<span class="w3-small w3-opacity"> (<?php echo strtok($u->user_login, '@'); ?>)</span>
 							<?php } ?>
 							</div>
 							<div>
-							<?php if(empty($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) echo '<span id="userAge">'.Rencontre::f_age($u->d_naissance).'&nbsp;'.__('years','rencontre').'</span>'; ?>
+							<?php if(empty($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) echo '<span id="userAge">'.Rencontre::f_age($u->d_naissance).' '.__('years','rencontre').'</span>'; ?>
 							<?php if(!isset($rencCustom['size'])) { ?>
 							
-							<span id="userSize">&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo (empty($rencCustom['sizeu'])?$u->i_taille.' '.__('cm','rencontre'):floor($u->i_taille/24-1.708).' '.__('ft','rencontre').' '.round(((($u->i_taille/24-1.708)-floor($u->i_taille/24-1.708))*12),1).' '.__('in','rencontre')); ?></span>
+							<span id="userSize"> &nbsp;-&nbsp; <?php echo (empty($rencCustom['sizeu'])?$u->i_taille.' '.__('cm','rencontre'):floor($u->i_taille/24-1.708).' '.__('ft','rencontre').' '.round(((($u->i_taille/24-1.708)-floor($u->i_taille/24-1.708))*12),1).' '.__('in','rencontre')); ?></span>
 							<?php } ?>
 							<?php if(!isset($rencCustom['weight'])) { ?>
 							
-							<span id="userWeight">&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo (empty($rencCustom['weightu'])?$u->i_poids.' '.__('kg','rencontre'):($u->i_poids*2+10).' '.__('lbs','rencontre')) ?></span>
+							<span id="userWeight"> &nbsp;-&nbsp; <?php echo (empty($rencCustom['weightu'])?$u->i_poids.' '.__('kg','rencontre'):($u->i_poids*2+10).' '.__('lbs','rencontre')) ?></span>
 							<?php } ?>
 							<?php if(!empty($rencCustom['sex'])) { ?>
 							
-							<span id="userGender" style="text-transform:capitalize">&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rencOpt['iam'][$u->i_sex]; ?></span>
+							<span id="userGender" style="text-transform:capitalize"> &nbsp;-&nbsp; <?php echo $rencOpt['iam'][$u->i_sex]; ?></span>
 							<?php } ?>
 							
 							</div>
@@ -147,7 +147,7 @@
 						<div class="annonce w3-section" style="word-break:break-word"><?php echo stripslashes($u->t_annonce); ?></div>
 					</div>
 					<div>
-						<div class="looking"><?php _e('I\'m looking for','rencontre'); ?>&nbsp;<?php echo $u->looking . $u->forwhat; ?></div>
+						<div class="looking"><?php echo __('I\'m looking for','rencontre') . ' ' . $u->looking . $u->forwhat; ?></div>
 						<?php echo $portraitAdd1; ?>
 					<?php if(!empty($u->session) && $u0->ID!=$u->ID && !$u->online) { ?>
 					
@@ -193,58 +193,58 @@
 					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="if(jQuery(this).children('i').hasClass('fa-angle-up')){jQuery('.btnrar.w3-hide').removeClass('w3-hide');jQuery(this).children('i').removeClass('fa-angle-up').addClass('fa-angle-down')}else{jQuery('.btnrar').addClass('w3-hide');jQuery(this).children('i').removeClass('fa-angle-down').addClass('fa-angle-up')}"><i class="fa fa-angle-up"></i></button>
 				<?php if(!$disable['send']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['send']; ?>"><i class="far fa-envelope"></i> <?php _e('Send a message','rencontre');?></button> 
 				<?php } else { ?>
 					
-					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['send']); ?>')" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['send']); ?>')" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i> <?php _e('Send a message','rencontre');?></button> 
 				<?php } ?>
 				<?php if(empty($rencCustom['smile'])) { ?>
 					<?php if(!$disable['smile']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i> <?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['smile']); ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['smile']); ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i> <?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(empty($rencCustom['creq'])) { ?>
 					<?php if(!$disable['contact']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['contact']; ?>"><i class="far fa-flag"></i> <?php _e('Ask for a contact','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['contact']); ?>')" title="<?php echo $title['contact']; ?>"><i class="far fa-flag"></i>&nbsp;<?php _e('Ask for a contact','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['contact']); ?>')" title="<?php echo $title['contact']; ?>"><i class="far fa-flag"></i> <?php _e('Ask for a contact','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(!empty($rencOpt['tchat'])) { ?>
 					<?php if(!$disable['chat']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['chat']; ?>"><i class="far fa-comments"></i> <?php _e('Chat','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['chat']); ?>')" title="<?php echo $title['chat']; ?>"><i class="far fa-comments"></i>&nbsp;<?php _e('Chat','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['chat']); ?>')" title="<?php echo $title['chat']; ?>"><i class="far fa-comments"></i> <?php _e('Chat','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(!$disable['block']) { ?>
 
-					<button class="w3-button btnrar w3-hide w3-margin-bottom w3-renc-mebt <?php echo (!$u->blocked->he?'w3-renc-mebo':'w3-renc-mebw'); ?>" onClick="<?php echo $onClick['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php if(!$u->blocked->he) _e('Block','rencontre'); else _e('Unblock','rencontre'); ?></button> 
+					<button class="w3-button btnrar w3-hide w3-margin-bottom w3-renc-mebt <?php echo (!$u->blocked->he?'w3-renc-mebo':'w3-renc-mebw'); ?>" onClick="<?php echo $onClick['block']; ?>"><i class="far fa-eye-slash"></i> <?php if(!$u->blocked->he) _e('Block','rencontre'); else _e('Unblock','rencontre'); ?></button> 
 				<?php } else { ?>
 
-					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['block']); ?>')" title="<?php echo $title['block']; ?>"><i class="far fa-eye-slash"></i>&nbsp;<?php _e('Block','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['block']); ?>')" title="<?php echo $title['block']; ?>"><i class="far fa-eye-slash"></i> <?php _e('Block','rencontre'); ?></button> 
 				<?php } ?>
 				<?php if(!$disable['report']) { ?>
 					
-					<button class="w3-button btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['report']; ?>" title="<?php _e('Report a fake profile or inappropriate content','rencontre'); ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
+					<button class="w3-button btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['report']; ?>" title="<?php _e('Report a fake profile or inappropriate content','rencontre'); ?>"><i class="far fa-thumbs-down "></i> <?php _e('Report','rencontre'); ?></button> 
 				<?php } else { ?>
 
-					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['report']); ?>')" title="<?php echo $title['report']; ?>"><i class="far fa-thumbs-down "></i>&nbsp;<?php _e('Report','rencontre'); ?></button> 
+					<button class="w3-btn btnrar w3-hide w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['report']); ?>')" title="<?php echo $title['report']; ?>"><i class="far fa-thumbs-down "></i> <?php _e('Report','rencontre'); ?></button> 
 				<?php } ?>
 				<?php if(!$disable['favori']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['favoriAdd']; ?>" title="<?php _e('Add to my favorites','rencontre'); ?>"><i class="far fa-star"></i>&nbsp;<?php _e('Favorite','rencontre'); ?>&nbsp;&nbsp;<i class="fas fa-user-plus"></i></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['favoriAdd']; ?>" title="<?php _e('Add to my favorites','rencontre'); ?>"><i class="far fa-star"></i> <?php _e('Favorite','rencontre'); ?> &nbsp;<i class="fas fa-user-plus"></i></button> 
 				<?php } else { ?>
 
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebc" onClick="<?php echo $onClick['favoriDel']; ?>" title="<?php _e('Delete from my favorites','rencontre'); ?>"><i class="far fa-star"></i>&nbsp;<?php _e('Favorite','rencontre'); ?>&nbsp;&nbsp;<i class="fas fa-user-slash"></i></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebc" onClick="<?php echo $onClick['favoriDel']; ?>" title="<?php _e('Delete from my favorites','rencontre'); ?>"><i class="far fa-star"></i> <?php _e('Favorite','rencontre'); ?> &nbsp;<i class="fas fa-user-slash"></i></button> 
 				<?php } ?>
 				<?php if(!empty($buttonPlus)) echo $buttonPlus; ?>
 				

@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Message Write
- * Last Change : Rencontre 3.8.2
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_message_write.php
  * Call : rencontre_widget.php => widget()
  * $u : user_id, user_login, display_name, i_photo, miniPhoto, miniPhotoWebp
@@ -55,7 +55,7 @@
 								</div>
 							</div>
 							<div class="w3-container w3-cell">
-								<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['inbox']; ?>"><i class="far fa-envelope"></i><span class="w3-hide-small">&nbsp;<?php _e('Inbox','rencontre');?></span></button>
+								<button class="w3-button w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['inbox']; ?>"><i class="far fa-envelope"></i><span class="w3-hide-small"> <?php _e('Inbox','rencontre');?></span></button>
 							</div>
 						</div><!-- .w3-cell-row -->
 					</div>
@@ -69,7 +69,7 @@
 							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc'); ?>" value="" />
 							<input type="hidden" name="P<?php echo (!empty($rencOpt['lbl']['id'])?$rencOpt['lbl']['id']:'id'); ?>" value="" />
 							<input type="hidden" name="<?php echo (!empty($rencOpt['lbl']['msg'])?$rencOpt['lbl']['msg']:'msg'); ?>" value="" />
-							<label><?php _e('Send a message to','rencontre'); ?>&nbsp;<span style="text-transform:capitalize;"><?php echo $u->display_name; ?></span></label>
+							<label><?php _e('Send a message to','rencontre'); ?><span style="text-transform:capitalize;"> <?php echo $u->display_name; ?></span></label>
 							<textarea name="contenu" class="w3-input w3-renc-inbg" rows="8"></textarea>
 						<?php if(!isset($rencCustom['emot']) || !$rencCustom['emot']) { ?>
 							

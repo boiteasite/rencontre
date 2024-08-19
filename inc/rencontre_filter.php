@@ -673,7 +673,7 @@ function f_userSupp($f,$a,$b) { // rencontre.php - in action 'widget_init' - bas
 	$wpdb->delete($wpdb->prefix.'rencontre_msg', array('sender'=>$a));
 	$wpdb->delete($wpdb->prefix.'rencontre_msg', array('recipient'=>$a));
 	$wpdb->delete($wpdb->prefix.'rencontre_users', array('user_id'=>$f));
-	if(empty($rencOpt['rol']) || empty($rencOpt['rolu']) || !$b || $ip==2) { // $b=0 => user delete his account - $ip=2 => "hard del"
+	if(empty($rencOpt['rol']) || empty($rencOpt['rolu']) || !$b || $ip==2) { // $b=0 => user delete his account (force all WP), $b=1 => ADMIN delete user - $ip=2 => "hard del"
 		require_once(ABSPATH.'wp-admin/includes/user.php');
 		wp_delete_user($f);
 	}

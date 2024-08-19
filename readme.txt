@@ -5,7 +5,7 @@ Tags: dating, meet, love, match, social
 Requires at least: 4.6
 Tested up to: 6.5
 Requires PHP: 5.5
-Stable tag: 3.12
+Stable tag: 3.12.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -407,6 +407,19 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+= 3.12.3 =
+
+* Remove '&nbsp;' that cause text alignment issues.
+* Fix profil search issue on some servers.
+
+= 3.12.2 =
+
+* Fix modal warning closing issue on Android.
+
+= 3.12.1 =
+
+* Fix user photo issue when add or delete.
 
 = 3.12 =
 

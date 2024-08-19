@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search Result
- * Last Change : Rencontre 3.10.1
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search_result.php
  * Call : rencontre_widget.php => f_quickFind(), f_trouver()
  * $u : user_login, user_id, d_naissance, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_annonce, t_profil, t_action, looking, forwhat, hidephoto, online, online_ago, miniPhoto, miniPhotoWebp
@@ -44,7 +44,7 @@
 
 								<div>
 									<?php if(isset($rencCustom['sex']) && isset($rencOpt['iam'][$u->i_sex])) echo $rencOpt['iam'][$u->i_sex].' - '; ?>
-									<?php echo Rencontre::f_age($u->d_naissance); ?>&nbsp;<?php _e('years','rencontre'); ?>
+									<?php echo Rencontre::f_age($u->d_naissance).' '.__('years','rencontre'); ?>
 								</div>
 								<?php } ?>
 								<?php if(!isset($rencCustom['place'])) { ?>
@@ -59,17 +59,17 @@
 
 						<div class="looking">
 							<?php if($u->looking) { ?>
-							<?php _e('I\'m looking for','rencontre'); ?>&nbsp;<span><?php echo $u->looking; ?></span>
+							<?php _e('I\'m looking for','rencontre'); ?> <span><?php echo $u->looking; ?></span>
 							
 							<br />
 							<?php } ?>
 							<?php if(!isset($rencCustom['born']) && $u->i_zage_min) { ?>
-							<span style="text-transform:capitalize;"><?php _e('between','rencontre'); ?></span>&nbsp;<span><?php echo $u->i_zage_min; ?></span>&nbsp;<?php _e('and','rencontre'); ?>&nbsp;<span><?php echo $u->i_zage_max; ?></span>&nbsp;<?php _e('years','rencontre')?>
+							<span style="text-transform:capitalize;"><?php _e('between','rencontre'); ?> </span><span><?php echo $u->i_zage_min; ?></span> <?php _e('and','rencontre'); ?><span> <?php echo $u->i_zage_max; ?> </span><?php _e('years','rencontre')?>
 							
 							<br />
 							<?php } ?>
 							<?php if($u->forwhat) { ?>
-							<span style="text-transform:capitalize;"><?php _e('for','rencontre'); ?></span>&nbsp;<span><?php echo $u->forwhat; ?></span>
+							<span style="text-transform:capitalize;"><?php _e('for','rencontre'); ?> </span><span><?php echo $u->forwhat; ?></span>
 							<?php } ?>
 
 						</div><!-- .looking -->
@@ -77,7 +77,7 @@
 					<?php if(empty($rencCustom['searchAd'])) { ?>
 						<?php if($u->date) { ?>
 						
-						<div class="rencDate w3-right-align w3-opacity" style="text-transform:capitalize;"><?php _e('The','rencontre'); ?>&nbsp;<?php echo $u->date; ?></div>
+						<div class="rencDate w3-right-align w3-opacity" style="text-transform:capitalize;"><?php echo __('The','rencontre').' '.$u->date; ?></div>
 						<?php } ?>
 						<?php if($u->online===true) { ?>
 						
@@ -98,26 +98,26 @@
 				<div>
 				<?php if(!$disable['send']) { ?>
 				
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['send']; ?>"><i class="far fa-envelope"></i> <?php _e('Send a message','rencontre');?></button> 
 				<?php } else { ?>
 					
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['send']); ?>')" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i>&nbsp;<?php _e('Send a message','rencontre');?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['send']); ?>')" title="<?php echo $title['send']; ?>"><i class="far fa-envelope"></i> <?php _e('Send a message','rencontre');?></button> 
 				<?php } ?>
 				<?php if(!isset($rencCustom['smile'])) { ?>
 					<?php if(!$disable['smile']) { ?>
 					
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['smile']; ?>"><i class="far fa-grin-wink"></i> <?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
 					<?php } else { ?>
 
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['smile']); ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i>&nbsp;<?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['smile']); ?>')" title="<?php echo $title['smile']; ?>"><i class="far fa-grin-wink"></i> <?php if($t=rencTranslate('smiw1')) echo $t; else _e('Smile','rencontre'); ?></button> 
 					<?php } ?>
 				<?php } ?>
 				<?php if(!$disable['profile']) { ?>
 				
-					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['profile']; ?>"><i class="far fa-address-card"></i>&nbsp;<?php _e('Profile','rencontre'); ?></button> 
+					<button class="w3-button w3-margin-bottom w3-renc-mebt w3-renc-mebo" onClick="<?php echo $onClick['profile']; ?>"><i class="far fa-address-card"></i> <?php _e('Profile','rencontre'); ?></button> 
 				<?php } else { ?>
 					
-					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['profile']); ?>')" title="<?php echo $title['profile']; ?>"><i class="far fa-address-card"></i>&nbsp;<?php _e('Profile','rencontre');?></button> 
+					<button class="w3-btn w3-margin-bottom w3-renc-mebt w3-disabled" onClick="f_modalWarn('<?php echo addslashes($title['profile']); ?>')" title="<?php echo $title['profile']; ?>"><i class="far fa-address-card"></i> <?php _e('Profile','rencontre');?></button> 
 				<?php } ?>
 
 				</div>

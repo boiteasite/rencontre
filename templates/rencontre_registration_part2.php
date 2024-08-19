@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 2/3
- * Last Change : Rencontre 3.5
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part2.php
  * Call : rencontre_widget.php => widget()
 */
@@ -17,7 +17,7 @@
 		<div class="w3-card w3-renc-blbg w3-section">
 			<div class="w3-container w3-renc-lblc">
 				<div class="w3-section">
-					<div class="w3-xlarge w3-renc-titc w3-section"><?php _e('Hello','rencontre'); ?>&nbsp;<?php echo $current_user->user_login; ?>,&nbsp;<?php _e('welcome to the site','rencontre'); ?>&nbsp;<?php echo bloginfo('name'); ?></div>
+					<div class="w3-xlarge w3-renc-titc w3-section"><?php echo __('Hello','rencontre').' '. $current_user->user_login.', '. __('welcome to the site','rencontre').' '.bloginfo('name'); ?></div>
 					<form name="formNouveau" method="post" action="">
 						<input type="hidden" name="nouveau" value="2" />
 						<input type="hidden" name="a1" value="" />

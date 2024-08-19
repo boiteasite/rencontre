@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait Edit
- * Last Change : Rencontre 3.10
+ * Last Change : Rencontre 3.12.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait_edit.php
  * Call : rencontre_widget.php => widget()
  * $u0 : U.ID, display_name, c_pays, c_ville, i_sex, i_photo, t_titre, t_annonce, t_profil
@@ -128,7 +128,7 @@
 							
 								<div class="w3-row w3-padding-small<?php if(!empty($v->mandatory)) echo ' w3-renc-msbs'; ?>">
 									<div class="w3-quarter"><?php echo $v->label; ?><?php if(!empty($v->mandatory)) {
-										?><a href="javascript:void(0)" onClick="f_modalWarn('<?php echo addslashes(__('Required field (hidden)','rencontre')); ?>')">&nbsp;&nbsp;<i class="fas fa-info-circle w3-opacity-max"></i></a><?php
+										?><a href="javascript:void(0)" onClick="f_modalWarn('<?php echo addslashes(__('Required field (hidden)','rencontre')); ?>')"> &nbsp;<i class="fas fa-info-circle w3-opacity-max"></i></a><?php
 									} ?></div>
 									<div class="w3-threequarter">
 									<?php if($v->type==1) { ?>
