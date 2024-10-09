@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.12.3
+Version: 3.12.4
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -338,20 +338,7 @@ class Rencontre {
 				else if(substr($Grencidfm,0,1)=='s') $_SESSION['rencontre'] = 'card,menu,sourire';
 				else if(substr($Grencidfm,0,1)=='r') $_SESSION['rencontre'] = 'msg,accueil,menu';
 			}
-			$rencU0 = $wpdb->get_row("SELECT *
-					FROM ".$wpdb->base_prefix."users U
-					LEFT JOIN ".$wpdb->prefix."rencontre_users R
-						ON R.user_id=U.ID
-					LEFT JOIN ".$wpdb->prefix."rencontre_users_profil P
-						ON P.user_id=U.ID
-					WHERE
-						U.ID=".$current_user->ID."
-					LIMIT 1
-					");
-			$rencU0->age = self::f_age($rencU0->d_naissance);
-			$rencU0->action = json_decode((empty($rencU0->t_action)?'{}':$rencU0->t_action),true);
-			$rencU0->profil = json_decode((empty($rencU0->t_profil)?'{}':$rencU0->t_profil),true);
-			$rencU0->zstrict = (isset($rencU0->action['option'])&&strpos($rencU0->action['option'],',zstrict,')!==false)?1:0;
+			rencU0($current_user->ID); // Load U0 - Rencontre_filter
 			$ip = (isset($rencU0->c_ip)?$rencU0->c_ip:0);
 			// rencDiv USER VAR
 			$rencDiv['action'] = (isset($rencU0->t_action)?$rencU0->t_action:0);
@@ -440,7 +427,7 @@ class Rencontre {
 			else if($spot==$Lbloque) $_SESSION['rencontre'] = 'card,menu,bloque';
 			else if($spot==$LfavoriAdd) $_SESSION['rencontre'] = 'card,menu,favoriAdd';
 			else if($spot==$LfavoriDel) $_SESSION['rencontre'] = 'card,menu,favoriDel';
-			else if($spot==$Ledit) $_SESSION['rencontre'] = 'edit,menu';
+			else if($spot==$Ledit || ($spot==$Laccount && !empty($rencOpt['accprof']))) $_SESSION['rencontre'] = 'edit,menu';
 			else if($spot==$Lgsearch) $_SESSION['rencontre'] = 'gsearch,accueil,menu';
 			else if($spot=='qsearchs') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchs';
 			else if($spot=='qsearchis') $_SESSION['rencontre'] = 'qsearch,accueil,menu,qsearchis';
@@ -997,9 +984,11 @@ class Rencontre {
 		// Check HOME
 		if(!empty($rencOpt['home'])) {
 			$pages = get_pages();
-			foreach($pages as $p) if($rencOpt['home']==get_page_link($p->ID)) { // Exists and well structured
-				$h = $rencOpt['home'];
-				break;
+			foreach($pages as $p) {
+				if($rencOpt['home']==get_page_link($p->ID)) { // Exists and well structured
+					$h = $rencOpt['home'];
+					break;
+				}
 			}
 		}
 		if(empty($h)) $h = home_url();

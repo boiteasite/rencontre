@@ -94,7 +94,7 @@ if(file_exists($upl['basedir'].'/portrait/cache/rencontre_cronBis.txt')) unlink(
 //
 // PERMANENT : Update DBIP
 //
-$versionDBIP = "202310"; // new version with this update
+$versionDBIP = "202409"; // new version with this update
 $a = get_option('rencontre_dbip');
 $b = $wpdb->get_var("SELECT ip_end FROM ".$wpdb->base_prefix."rencontre_dbip LIMIT 1"); // empty ?
 if(file_exists(dirname(__FILE__).'/dbip-country.csv.gz') && (!$a || intval($a)<intval($versionDBIP) || !$b)) {

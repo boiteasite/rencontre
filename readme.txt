@@ -5,7 +5,7 @@ Tags: dating, meet, love, match, social
 Requires at least: 4.6
 Tested up to: 6.5
 Requires PHP: 5.5
-Stable tag: 3.12.3
+Stable tag: 3.12.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -407,6 +407,13 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+= 3.12.4 =
+
+* Option to merge My Account and Edit My Profil pages.
+* Update DBIP.
+* Improve Portuguese Brazil translation - thanks to Cesar Ramos.
+* Fix some issues.
 
 = 3.12.3 =
 

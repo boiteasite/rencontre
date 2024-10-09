@@ -756,6 +756,14 @@ class RencontreWidget extends WP_widget {
 				// ****** TEMPLATE ********
 				if($tpl=rencTpl('rencontre_portrait_add_photo.php')) include($tpl);
 				// ************************
+				if(!empty($rencOpt['accprof'])) { ?>
+					
+				<div <?php if(empty($rencCustom['side'])) echo 'class="w3-twothird w3-left"'; ?>>
+					<div class="rencCompte rencBox">
+					<?php self::f_compte($mid); ?>
+					</div><!-- .rencCompte .rencBox -->
+				</div><?php if(empty($rencCustom['side'])) echo '<!-- .w3-twothird -->'; ?>
+				<?php }
 			}
 		}
 		//
@@ -1932,7 +1940,15 @@ class RencontreWidget extends WP_widget {
 				M.recipient='".$f."'
 				and M.read=0
 				and M.deleted=0
-				and EXISTS (SELECT ID FROM ".$wpdb->base_prefix."users U WHERE user_login=M.sender);
+				and EXISTS (
+					SELECT ID
+					FROM ".$wpdb->base_prefix."users U
+					INNER JOIN ".$wpdb->prefix."rencontre_users_profil P
+						ON P.user_id=U.ID
+					WHERE
+						user_login=M.sender
+						and P.t_action NOT LIKE '%,pause2,%'
+				);
 			");
 		if(has_filter('rencMsgNotifP')) apply_filters('rencMsgNotifP', array(2,$f));
 		if($n) return '<span class="inbox">'.$n.'</span>';
@@ -3427,7 +3443,7 @@ class RencontreWidget extends WP_widget {
 	//
 	static function f_updateMember($f) {
 		// $f : ID
-		global $wpdb, $rencOpt, $rencCustom;
+		global $wpdb, $rencOpt, $rencCustom, $rencU0;
 		if(has_action('rencontre_account')) do_action('rencontre_account', $f);
 		else {
 			$post = (!empty($_POST)?$_POST:array());
@@ -3541,6 +3557,7 @@ class RencontreWidget extends WP_widget {
 				$out = json_encode($action);
 				$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$f));
 			}
+			rencU0($f); // Reload U0 to update display - Rencontre_filter
 		}
 	if(isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) echo "<script language='JavaScript'>document.location.href='".(!empty($rencOpt['home'])?$rencOpt['home']:site_url())."';</script>"; //reload to hide warning
 	}

@@ -474,6 +474,25 @@ function rencAddCustomW3css($f=0) {
 	else echo '<link rel="stylesheet" href="'.plugins_url('rencontre/css/w3.css').'"><style>'.$a.'</style>';
 }
 //
+function rencU0($f) {
+	// $f : User ID
+	global $wpdb, $rencU0;
+	$rencU0 = $wpdb->get_row("SELECT *
+			FROM ".$wpdb->base_prefix."users U
+			LEFT JOIN ".$wpdb->prefix."rencontre_users R
+				ON R.user_id=U.ID
+			LEFT JOIN ".$wpdb->prefix."rencontre_users_profil P
+				ON P.user_id=U.ID
+			WHERE
+				U.ID=".$f."
+			LIMIT 1
+			");
+	$rencU0->age = Rencontre::f_age($rencU0->d_naissance);
+	$rencU0->action = json_decode((empty($rencU0->t_action)?'{}':$rencU0->t_action),true);
+	$rencU0->profil = json_decode((empty($rencU0->t_profil)?'{}':$rencU0->t_profil),true);
+	$rencU0->zstrict = (isset($rencU0->action['option'])&&strpos($rencU0->action['option'],',zstrict,')!==false)?1:0;
+}
+//
 function rencPause($f,$id) {
 	global $wpdb;
 	$q = $wpdb->get_var("SELECT
@@ -490,6 +509,7 @@ function rencPause($f,$id) {
 	$out = json_encode($action);
 	$wpdb->update($wpdb->prefix.'rencontre_users_profil', array('t_action'=>$out), array('user_id'=>$id));
 	renc_clear_cache_portrait();
+	rencU0($id); // reload U0
 }
 //
 function f_admin_menu ($wp_admin_bar) {

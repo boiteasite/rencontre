@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Menu
- * Last Change : Rencontre 3.12
+ * Last Change : Rencontre 3.12.4
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_menu.php
  * Call : rencontre_widget.php => widget()
 */
@@ -12,13 +12,17 @@
 
 		<a id="rencMenuHome" class="w3-bar-item w3-button w3-padding-large w3-renc-mebt w3-renc-mebo" href="<?php echo $link['home']; ?>" title="<?php _e('My homepage','rencontre'); ?>"><i class="fas fa-home"></i></a>
 		<a id="rencMenuCard" class="rencMenuCard w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('My card','rencontre'); ?>"><i class="far fa-address-card"></i></a>
-			<?php if(isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) { ?>
+		<?php if(empty($rencOpt['accprof'])) { ?>
+
+				<?php if(isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) { ?>
 			
 		<a id="rencMenuEdit" class="rencMenuEdit w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Edit My Profile','rencontre'); ?>"><i class="far fa-edit"></i></a>
-			<?php } else { ?>
+				<?php } else { ?>
 			
 		<a id="rencMenuEdit" class="rencMenuEdit w3-bar-item w3-button w3-padding-large <?php if(empty($rencDiv['titann']) || (!empty($rencOpt['mandatory']) && rencistatus($rencDiv['istatus'],3))) echo 'w3-renc-mebw '; ?>w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Edit My Profile','rencontre'); ?>"><i class="far fa-edit"></i></a>
+				<?php } ?>
 			<?php } ?>
+			
 			<?php if(isset($rencOpt['fastreg']) && $rencOpt['fastreg']>1) { ?>
 			
 		<a id="rencMenuMsg" class="rencMenuMsg w3-bar-item w3-button w3-padding-large w3-renc-mebo" href="javascript:void(0)" title="<?php _e('Messaging','rencontre'); ?>"><i class="far fa-envelope"></i></a>

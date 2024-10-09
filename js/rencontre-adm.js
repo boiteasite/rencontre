@@ -161,7 +161,7 @@ function f_edit(f,a2,a3,a4,a5,g){
 		n1=document.createElement("input");
 		n1.id="profilLabel"+v;
 		n1.setAttribute('type','text');
-		if(a5=='ns'){
+		if(a5=='ns'){ // Numeric Select
 			n1.setAttribute('size','8');
 			n1.setAttribute('value',a6[v]);
 			n1.style.marginLeft='10px';
@@ -194,6 +194,7 @@ function f_edit(f,a2,a3,a4,a5,g){
 		m.appendChild(n);
 	}
 	if(a3!='t_valeur'){
+		// Gender
 		n=document.createElement("div");
 		n.id="profilGenre";
 		n.style.marginTop='15px';
@@ -312,7 +313,7 @@ function f_Submit(a1,a2,a3,a5){
 		b[0]=parseFloat(b[0])?parseFloat(b[0]):0;
 		b[2]=(parseFloat(b[2])>0)?parseFloat(b[2]):1;
 		b[1]=(parseFloat(b[1])>=(b[0]+b[2]))?parseFloat(b[1]):b[0]+b[2];
-		b[3]=b[3].replace(/[^a-z0-9 /_-]/gi,'');
+		b[3]=b[3].replace(/[^a-z0-9' /_-]/gi,'');
 		a=b[0]+'&'+b[1]+'&'+b[2]+'&'+b[3]+'&';
 	}
 	else if(a1=='edit'){

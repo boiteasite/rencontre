@@ -418,9 +418,10 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 		$q = $wpdb->get_results("SELECT i_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' ");
 		foreach($q as $qr) {
 			for($v=0;$v<count($c4);++$v) {
+				$e = str_replace("'", "&#39;", $c4[$v]['b']);
 				$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
 					SET
-						c_categ='".$c4[$v]['b']."',
+						c_categ='".$e."',
 						c_genre='".$g."'
 					WHERE
 						i_categ='".$qr->i_categ."' and
@@ -434,9 +435,10 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 		if($a6==1 || $a6==2 || $a6==6) {
 			$q = $wpdb->get_var("SELECT i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' LIMIT 1");
 			for($v=0;$v<count($c4);++$v) {
+				$e = str_replace("'", "&#39;", $c4[$v]['b']);
 				$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
 					SET
-						c_label='".$c4[$v]['b']."',
+						c_label='".$e."',
 						t_valeur='' ,
 						i_type='".$a6."',
 						i_poids='".(($q<5 && $typ!=$a6)?($q+5):$q)."',
@@ -454,9 +456,10 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 					if($c4[$v]['a']==$qr->c_lang) {
 						$a = $qr->t_valeur;
 						if($a=="") $a = '["*** '. __('TO CHANGE','rencontre').' ***"]';
+						$e = str_replace("'", "&#39;", $c4[$v]['b']);
 						$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
 							SET
-								c_label='".$c4[$v]['b']."',
+								c_label='".$e."',
 								t_valeur='".$a."',
 								i_type='".$a6."',
 								i_poids='".(($qr->i_poids<5 && $typ!=$a6)?($qr->i_poids+5):$qr->i_poids)."',
@@ -476,9 +479,10 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 					if($c4[$v]['a']==$qr->c_lang) {
 						$a = $qr->t_valeur;
 						if($a=="") $a = '["0","50","1","'. __('Unit','rencontre').'"]';
+						$e = str_replace("'", "&#39;", $c4[$v]['b']);
 						$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
 							SET
-								c_label='".$c4[$v]['b']."',
+								c_label='".$e."',
 								t_valeur='".$a."',
 								i_type='".$a6."',
 								i_poids='".(($qr->i_poids<5 && $typ!=$a6)?($qr->i_poids+5):$qr->i_poids)."',
@@ -505,6 +509,8 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 		$q = $wpdb->get_results("SELECT t_valeur, c_lang, i_poids FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' ");
 		foreach($q as $qr) {
 			if($a5=='ns') {
+				// ns : Numeric Select - Case 5
+				$b4[3] = str_replace("'", "&#39;", $b4[3]); // identifying quotation marks |#39;
 				$s = '["'.$b4[0].'","'.$b4[1].'","'.$b4[2].'","'.$b4[3].'"]';
 				$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
 					SET
@@ -527,7 +533,12 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 				for($v=0;$v<count($c4);++$v) {
 					if($c4[$v]['a']==$qr->c_lang) {
 						$r[$a5-1] = $c4[$v]['b']; // a5 : indice a partir de 1 (this)
-						$s = '['; foreach($r as $rr) {$s .='"'. $rr . '",';} $s = substr($s,0,-1) . "]"; $s = str_replace("'", "&#39;", $s);
+						$s = '[';
+						foreach($r as $rr) {
+							$s .='"'. $rr . '",';
+						}
+						$s = substr($s,0,-1) . "]";
+						$s = str_replace("'", "&#39;", $s);
 						$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
 							SET
 								t_valeur='".$s."'
@@ -562,11 +573,12 @@ function profil_plus($a2,$a3,$a4,$a5) {
 	if($a3=="c_categ") {
 		$m = $wpdb->get_var("SELECT MAX(i_categ) FROM ".$wpdb->prefix."rencontre_profil");
 		for($v=0;$v<count($c4);++$v) {
+			$e = str_replace("'", "&#39;", $c4[$v]['b']);
 			if($v==0) {
-				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES(".($m+1).",1,'".$c4[$v]['b']."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
+				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES(".($m+1).",1,'".$e."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
 				$lastid = $wpdb->insert_id;
 			}
-			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$lastid."',".($m+1).",1,'".$c4[$v]['b']."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
+			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$lastid."',".($m+1).",1,'".$e."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
 		}
 	}
 	else if($a3=="c_label") {
@@ -574,11 +586,12 @@ function profil_plus($a2,$a3,$a4,$a5) {
 		$m = $wpdb->get_var("SELECT MAX(i_label) FROM ".$wpdb->prefix."rencontre_profil WHERE i_categ='".$ic."'");
 		for($v=0;$v<count($c4);++$v) {
 			$q = $wpdb->get_var("SELECT c_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' AND c_lang='".$c4[$v]['a']."' LIMIT 1");
+			$e = str_replace("'", "&#39;", $c4[$v]['b']);
 			if($v==0) {
-				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES(".$ic.",".($m+1).",'".addslashes($q)."','".$c4[$v]['b']."','',1,0,'".$c4[$v]['a']."')");
+				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES(".$ic.",".($m+1).",'".addslashes($q)."','".$e."','',1,0,'".$c4[$v]['a']."')");
 				$lastid = $wpdb->insert_id;
 			}
-			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$lastid."',".$ic.",".($m+1).",'".addslashes($q)."','".$c4[$v]['b']."','',1,0,'".$c4[$v]['a']."')");
+			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$lastid."',".$ic.",".($m+1).",'".addslashes($q)."','".$e."','',1,0,'".$c4[$v]['a']."')");
 		}
 	}
 	else if($a3=="t_valeur") {
@@ -615,8 +628,13 @@ function profil_langplus($loc,$a4) {
 		foreach($q as $r) {
 			if($r->t_valeur=='') $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$r->id."','".$r->i_categ."','".$r->i_label."','?','?','','".$r->i_type."','".$r->i_poids."','".$a4."')");
 			else {
-				$s='['; for($v=0;$v<count(json_decode((empty($r->t_valeur)?'{}':$r->t_valeur)));++$v) {$s.='"?",';} $s = str_replace("'", "&#39;", $s);
-				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$r->id."','".$r->i_categ."','".$r->i_label."','?','?','".substr($s,0,-1)."]"."','".$r->i_type."','".$r->i_poids."','".$a4."')");
+				$s='[';
+				for($v=0;$v<count(json_decode((empty($r->t_valeur)?'{}':$r->t_valeur)));++$v) {
+					$s.='"?",';
+				}
+				$s = str_replace("'", "&#39;", $s);
+				$s = substr($s,0,-1)."]";
+				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$r->id."','".$r->i_categ."','".$r->i_label."','?','?','".$s."','".$r->i_type."','".$r->i_poids."','".$a4."')");
 			}
 		}
 	}
@@ -733,7 +751,9 @@ function f_rencUpDown() {
 				$j[$Pid2-1] = $b;
 				$j[$Pid2-2] = $a;
 				$s = '[';
-				foreach($j as $rr) { $s .= '"'. $rr . '",'; }
+				foreach($j as $rr) {
+					$s .= '"'. $rr . '",';
+				}
 				$s = substr($s,0,-1) . "]";
 				$s = str_replace("'", "&#39;", $s);
 				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($r->i_poids<5)?($r->i_poids+5):($r->i_poids))), array('id'=>$Pid, 'c_lang'=>$r->c_lang));
@@ -775,7 +795,9 @@ function f_rencUpDown() {
 				$j[$Pid2-1] = $b;
 				$j[$Pid2] = $a;
 				$s = '[';
-				foreach($j as $rr) { $s .= '"'. $rr . '",'; }
+				foreach($j as $rr) {
+					$s .= '"'. $rr . '",';
+				}
 				$s = substr($s,0,-1) . "]";
 				$s = str_replace("'", "&#39;", $s);
 				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($r->i_poids<5)?($r->i_poids+5):($r->i_poids))), array('id'=>$Pid, 'c_lang'=>$r->c_lang) );
@@ -843,7 +865,9 @@ function f_rencUpDown() {
 				$le = count($r);
 				unset($r[$Pid2-1]);
 				$s = '[';
-				foreach($r as $rr) { $s .= '"' . $rr . '",'; }
+				foreach($r as $rr) {
+					$s .= '"' . $rr . '",';
+				}
 				$s = substr($s,0,-1) . "]";
 				$s = str_replace("'", "&#39;", $s);
 				$wpdb->update($wpdb->prefix.'rencontre_profil', array('t_valeur'=>$s, 'i_poids'=>(($qr->i_poids<5)?($qr->i_poids+5):($qr->i_poids))), array('id'=>$Pid, 'c_lang'=>$qr->c_lang) );
@@ -1088,6 +1112,7 @@ function update_rencontre_options($P) {
 		if(!empty($P['discrol'])) $rencOpt['discrol'] = rencSanit($P['discrol'],'int'); else unset($rencOpt['discrol']);
 		if(!empty($P['jlibre'])) $rencOpt['jlibre'] = rencSanit($P['jlibre'],'int'); else unset($rencOpt['jlibre']);
 		if(!empty($P['limit'])) $rencOpt['limit'] = rencSanit($P['limit'],'int'); else unset($rencOpt['limit']);
+		if(!empty($P['accprof'])) $rencOpt['accprof'] = 1; else unset($rencOpt['accprof']);
 		if(!empty($P['dynsearch'])) $rencOpt['dynsearch'] = 1; else unset($rencOpt['dynsearch']);
 		if(!empty($P['newtab'])) $rencOpt['newtab'] = 1; else unset($rencOpt['newtab']);
 		if(!empty($P['myctry'])) $rencOpt['myctry'] = 1; else unset($rencOpt['myctry']);
@@ -1439,6 +1464,10 @@ function rencTabDis() {
 						?>
 					</select>
 				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Merge My Account and Edit My Profile pages', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="accprof" value="1" <?php if(!empty($rencOpt['accprof'])) echo 'checked'; ?>></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Dynamic loading of search results', 'rencontre'); ?></label></th>
@@ -2724,11 +2753,11 @@ function rencMenuProfil() {
 		// CATEGORIE
 			if($categ!="") echo '</div><!-- .categ -->'."\r\n";
 			$categ = $r->c_categ;
-			$a4 = $r->c_lang . '=' . $r->c_categ . '&';
+			$a4 = $r->c_lang . '=' . str_replace('&','|',$r->c_categ) . '&';
 			$out = '<div style="margin:-15px 0 10px 37px;color:#777;">';
 			foreach($q1 as $r1) {
 				$out .= $r1->c_lang.__(': ','rencontre').$r1->c_categ. ' -- ';
-				$a4 .= $r1->c_lang . '=' . $r1->c_categ . '&';
+				$a4 .= $r1->c_lang . '=' . str_replace('&','|',$r1->c_categ) . '&'; // identifying quotation marks &#39; => |#39;
 			}
 			echo '<div class="categ">'."\r\n";
 			echo '<h3>';
@@ -2743,10 +2772,10 @@ function rencMenuProfil() {
 			echo '<span style="font-style:italic;">'.__('Add value to this category','rencontre').'</span><br /><br />';
 		}
 		$out = '<div id="rencLabelHide'.$r->id.'" style="display:none;">';
-		$a4 = $r->c_lang . '=' . $r->c_label . '&';
+		$a4 = $r->c_lang . '=' . str_replace('&','|',$r->c_label) . '&'; // identifying quotation marks &#39; => |#39;
 		foreach($q1 as $r1) {
 			$out .= '<span style="margin:0 0 0 37px;color:#777;" class="rencLabel'.$r1->c_lang.'">'.$r1->c_lang.__(': ','rencontre').$r1->c_label. '</span><br />';
-			$a4 .= $r1->c_lang . '=' . $r1->c_label . '&';
+			$a4 .= $r1->c_lang . '=' . str_replace('&','|',$r1->c_label) . '&'; // identifying quotation marks &#39; => |#39;
 		}
 		$out .= '</div>';
 		if($label) echo '</div><!-- .label -->'."\r\n";
@@ -2778,10 +2807,10 @@ function rencMenuProfil() {
 			$s1=Array(); $s2=Array(); foreach($q1 as $r1) { $s1[] = json_decode((empty($r1->t_valeur)?'{}':$r1->t_valeur)); $s2[] = $r1->c_lang; }
 			$c=0;
 			foreach($s as $ss) {
-				$a4 = $r->c_lang . '=' . str_replace('&','|',$ss) . '&';
+				$a4 = $r->c_lang . '=' . str_replace('&','|',$ss) . '&'; // identifying quotation marks &#39; => |#39;
 				$t = '';
 				for($v=0; $v<count($s1); ++$v) {
-					$a4 .= $s2[$v] . '=' . str_replace('&','|',$s1[$v][$c]) . '&';
+					$a4 .= $s2[$v] . '=' . str_replace('&','|',$s1[$v][$c]) . '&'; // identifying quotation marks &#39; => |#39;
 					$t .= ($v!=0?'<br />':''). '<span style="margin:0 0 0 37px;color:#777;" class="rencValeur'.$s2[$v].'">'.$s2[$v].__(': ','rencontre').$s1[$v][$c]. '</span>';
 				}
 				echo '<div class="valeur">';
@@ -2830,9 +2859,10 @@ function rencMenuProfil() {
 			echo '<span class="rencType" onClick="f_profil_hideshow(1,'.$r->id.')">'.__('Numeric choice list (SELECT)','rencontre').$m.$g1.'</span>';
 			echo '<div id="rencValeurHide'.$r->id.'" style="display:none;">';
 			$s = json_decode((empty($r->t_valeur)?'{}':$r->t_valeur));
+			$e = str_replace('&','|',$s[3]); // identifying quotation marks &#39; => |#39;
 			echo '<div class="valeur">';
 			echo '<br />';
-			echo '<a href="javascript:void(0)" class="rencEdit" onClick="f_edit(this,'.$r->id.',\'t_valeur\',\''.urlencode($s[0].'&'.$s[1].'&'.$s[2].'&'.$s[3].'&').'\',\'ns\',0);" title="'.__('Change','rencontre').'"></a>';
+			echo '<a href="javascript:void(0)" class="rencEdit" onClick="f_edit(this,'.$r->id.',\'t_valeur\',\''.urlencode($s[0].'&'.$s[1].'&'.$s[2].'&'.$e.'&').'\',\'ns\',0);" title="'.__('Change','rencontre').'"></a>';
 			echo '<span>['.$s[0].' ; '.$s[1].']</span><br />';
 			echo '<q style="margin:0 0 0 18px;color:blue;">'.__('Step','rencontre').'</q><span>'.__(': ','rencontre').$s[2].'</span><br />';
 			echo '<q style="margin:0 0 0 18px;color:blue;">'.__('Unit','rencontre').'</q><span>'.__(': ','rencontre').$s[3].'</span>';
