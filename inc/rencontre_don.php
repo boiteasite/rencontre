@@ -50,6 +50,11 @@
 					<a href="https://translate.wordpress.org/projects/wp-plugins/rencontre" target="_blank">Translations</a>
 				</td>
 			</tr>
+			<tr>
+				<td style="font-size:.8em;text-align:center;">
+					<a href="https://github.com/boiteasite/rencontre" target="_blank">Download Rencontre from GitHub</a><br />
+				</td>
+			</tr>
 		</tfoot>
 	</tbody>
 </table>

@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.12.4
+Version: 3.12.5
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -14,7 +14,7 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 });
 //
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.12.3';
+$rencVersion = '3.12.5';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -176,6 +176,7 @@ class Rencontre {
 		$rencDiv['admin_email'] = get_option('admin_email');
 		$rencDiv['siteurl'] = site_url();
 		$l = get_site_option('WPLANG');
+		if(file_exists(dirname(__FILE__).'/lang/rencontre-'.$l.'.mo')) load_textdomain( 'rencontre', dirname(__FILE__).'/lang/rencontre-'.$l.'.mo' ); // Fix WP 6.7 mod
 		$rencDiv['lang'] = ((defined('WPLANG')&&WPLANG)?WPLANG:($l?$l:'en_US')); // WP ADMIN locale set
 		$rencDiv['lang1'] = get_locale(); // user locale (cookie ? language plugin ?)
 		$l2 = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".strtolower(substr($rencDiv['lang1'],0,2))."' LIMIT 1");
