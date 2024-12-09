@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 1/3 and 1/2
- * Last Change : Rencontre 3.12.3
+ * Last Change : Rencontre 3.13
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part1.php
  * Call : rencontre_widget.php => widget()
  * Filter : do_action('rencontre_registration', $f, $g) - see below
@@ -25,7 +25,7 @@
 		<div class="w3-card w3-renc-blbg w3-section">
 			<div class="w3-container w3-renc-txtc">
 				<div class="w3-section">
-					<div class="w3-xlarge w3-renc-titc w3-section"><?php echo __('Hello','rencontre').' '.$current_user->user_login.', '.__('welcome to the site','rencontre').' '.bloginfo('name'); ?></div>
+					<div class="w3-xlarge w3-renc-titc w3-section"><?php echo __('Hello','rencontre').' '.$current_user->user_login.', '.__('welcome to the site','rencontre').' '.get_bloginfo('name'); ?></div>
 				<?php if($t=rencTranslate('newText')) echo '<div>'.$t.'</div>';
 				else { ?>
 					
@@ -105,15 +105,16 @@
 						<div>
 							<label><?php _e('My height','rencontre'); ?></label>
 							<select name="taille" class="w3-select w3-border w3-renc-sebg">
-							<?php for($v=140;$v<221;++$v) { ?>
-								<?php if(empty($rencCustom['sizeu'])) { ?>
-								
-								<option value="<?php echo $v; ?>"><?php echo $v.' '.__('cm','rencontre'); ?></option>
-								<?php } else { ?>
-								
-								<option value="<?php echo $v; ?>"><?php echo (floor($v/24-1.708)).' '.__('ft','rencontre').' '.(round(((($v/24-1.708)-floor($v/24-1.708))*12),1)).' '.__('in','rencontre'); ?></option>
-								<?php } ?>
-							<?php } ?>
+							<?php if(empty($u0->imperials)) {
+								for($v=(!empty($rencCustom['sizemin'])?$rencCustom['sizemin']:140); $v<=(!empty($rencCustom['sizemax'])?$rencCustom['sizemax']:220); ++$v) {
+									?><option value="<?php echo $v; ?>"><?php echo $v.' '.__('cm','rencontre'); ?></option>
+								<?php }
+							}
+							else {
+								for($v=(!empty($rencCustom['sizemin'])?rencConvertUnit($rencCustom['sizemin'],'cm',1):55); $v<=(!empty($rencCustom['sizemax'])?rencConvertUnit($rencCustom['sizemax'],'cm',1):86.5); $v+=.5) {
+									?><option value="<?php echo $v; ?>"><?php echo rencIn2Ft($v); ?></option>
+								<?php }
+							} ?>
 							
 							</select>
 						</div>
@@ -123,15 +124,16 @@
 						<div>
 							<label><?php _e('My weight','rencontre'); ?></label>
 							<select name="poids" class="w3-select w3-border w3-renc-sebg">
-							<?php for($v=40;$v<140;++$v) { ?>
-								<?php if(empty($rencCustom['weightu'])) { ?>
-								
-								<option value="<?php echo $v; ?>"><?php echo $v.' '.__('kg','rencontre'); ?></option>
-								<?php } else { ?>
-								
-								<option value="<?php echo $v; ?>"><?php echo ($v*2+10).' '.__('lbs','rencontre'); ?></option>
-								<?php } ?>
-							<?php } ?>
+							<?php if(empty($u0->imperialw)) {
+								for($v=(!empty($rencCustom['weightmin'])?$rencCustom['weightmin']:40); $v<=(!empty($rencCustom['weightmax'])?$rencCustom['weightmax']:140); ++$v) {
+									?><option value="<?php echo $v; ?>"><?php echo $v.' '.__('kg','rencontre'); ?></option>
+								<?php }
+							}
+							else {
+								for($v=(!empty($rencCustom['weightmin'])?rencConvertUnit($rencCustom['weightmin'],'kg',1):88); $v<=(!empty($rencCustom['weightmax'])?rencConvertUnit($rencCustom['weightmax'],'kg',1):309); $v++) {
+									?><option value="<?php echo $v; ?>"><?php echo $v.' '.__('lbs','rencontre'); ?></option>
+								<?php }
+							} ?>
 							
 							</select>
 						</div>

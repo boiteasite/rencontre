@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.12.5
+Version: 3.13
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -14,7 +14,7 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 });
 //
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.12.5';
+$rencVersion = '3.13';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -79,8 +79,8 @@ function rencontre_activation() {
 			`e_lon` decimal(10,5) NOT NULL,
 			`i_sex` tinyint NOT NULL,
 			`d_naissance` date NOT NULL,
-			`i_taille` tinyint unsigned NOT NULL,
-			`i_poids` tinyint unsigned NOT NULL,
+			`i_taille` smallint unsigned NOT NULL,
+			`i_poids` smallint unsigned NOT NULL,
 			`i_zsex` tinyint NOT NULL,
 			`c_zsex` varchar(50) NOT NULL,
 			`i_zage_min` tinyint unsigned NOT NULL,
@@ -168,21 +168,27 @@ new Rencontre();
 class Rencontre {
 	function __construct() {
 		// Variables globale Rencontre
-		global $rencOpt, $rencDiv, $wpdb, $rencCustom;
+		global $rencOpt, $rencDiv, $wpdb, $rencCustom, $rencWPLANG;
 		$upl = wp_upload_dir();
 		$rencDiv['basedir'] = str_replace('\\', '/', $upl['basedir']); // Windows backwards => forward slashes
 		$rencDiv['baseurl'] = $upl['baseurl'];
 		$rencDiv['blogname'] = get_option('blogname');
 		$rencDiv['admin_email'] = get_option('admin_email');
 		$rencDiv['siteurl'] = site_url();
-		$l = get_site_option('WPLANG');
-		if(file_exists(dirname(__FILE__).'/lang/rencontre-'.$l.'.mo')) load_textdomain( 'rencontre', dirname(__FILE__).'/lang/rencontre-'.$l.'.mo' ); // Fix WP 6.7 mod
-		$rencDiv['lang'] = ((defined('WPLANG')&&WPLANG)?WPLANG:($l?$l:'en_US')); // WP ADMIN locale set
-		$rencDiv['lang1'] = get_locale(); // user locale (cookie ? language plugin ?)
-		$l2 = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".strtolower(substr($rencDiv['lang1'],0,2))."' LIMIT 1");
-		$rencDiv['lang2'] = (!empty($l2)?$rencDiv['lang1']:(!empty($rencOpt['lang2'])?$rencOpt['lang2']:$rencDiv['lang1'])); // Profile lang
-		$l3 = $wpdb->get_var("SELECT c_liste_lang FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".strtolower(substr($rencDiv['lang1'],0,2))."' LIMIT 1");
-		$rencDiv['lang3'] = (!empty($l3)?$rencDiv['lang1']:(!empty($rencOpt['lang3'])?$rencOpt['lang3']:$rencDiv['lang1'])); // Country (select) lang
+		// LANG - Modif with WP 6.7 and Rencontre 3.13
+		$CURLANG = get_locale(); // Can be changed with cookie (user lang), see FAQ - default : en_US
+		$rencWPLANG = get_site_option('WPLANG'); // WordPress lang (Dashboard/Settings/General/site language => options table WPLANG) - Can be empty or not exists
+		if(empty($rencWPLANG)) $rencWPLANG = $CURLANG;
+		if(!empty(WP_LANG_DIR) && file_exists(WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo');
+		else if(file_exists(WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo');
+		else if(file_exists(dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo');
+		// Lang2 : PROFIL LANG - DB rencontre_profil - rencontre, base, widget, hook_user
+		$l2 = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".strtolower(substr($CURLANG,0,2))."' LIMIT 1");
+		$rencDiv['lang2'] = (!empty($l2)?$CURLANG:(!empty($rencOpt['lang2'])?$rencOpt['lang2']:$CURLANG)); // Profile lang
+		// Lang3 : COUNTRIES & REGIONS spelling - DB rencontre_liste - rencontre, base, widget, hook_adm
+		$l3 = $wpdb->get_var("SELECT c_liste_lang FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".strtolower(substr($CURLANG,0,2))."' LIMIT 1");
+		$rencDiv['lang3'] = (!empty($l3)?$CURLANG:(!empty($rencOpt['lang3'])?$rencOpt['lang3']:$CURLANG)); // Country (select) lang
+		//
 		$rencCustom = (isset($rencOpt['custom'])?json_decode((empty($rencOpt['custom'])?'{}':$rencOpt['custom']),true):array());
 		if(!isset($rencOpt['for'])) $rencOpt['for'] = array();
 		add_action('init', function() { // Hook already loaded...
@@ -245,12 +251,6 @@ class Rencontre {
 	function rencwidget() { // loaded at WIDGET-INIT
 		global $rencOpt, $rencDiv, $wpdb;
 		if(!headers_sent() && empty(session_id())) session_start();
-		if(0) { // reset manually OPTIONS
-			$rencOpt = array('passw'=>1,'rol'=>1,'pays'=>'FR','limit'=>5,'dynsearch'=>1,'hcron'=>3,'msgdel'=>3,'qmail'=>25,'npa'=>12,'jlibre'=>3,'prison'=>30,'anniv'=>1,'ligne'=>1,'mailsupp'=>1,'onlyphoto'=>1,'imnb'=>4,'imcopyright'=>1);
-			$nu = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->base_prefix."users");
-			if($nu<10) unset($rencOpt['rol']);
-			update_option('rencontre_options', $rencOpt);
-		}
 		$rencOpt['nbr'] = rencNumbers();
 		$rencOpt['lbl'] = rencLabels();
 		if(empty($rencOpt['home']) && !current_user_can("administrator")) $rencOpt['home'] = home_url();
@@ -357,9 +357,10 @@ class Rencontre {
 			$rencDiv['titann'] = ((isset($rencU0->t_titre) && strlen($rencU0->t_titre)>4 && strlen($rencU0->t_annonce)>30) ? $rencU0->ID : null);
 			if(!empty($rencOpt['pacamsg']) || !empty($rencOpt['pacasig'])) {
 				if(!$rencDiv['titann']) $a = true; // photo & attention-catcher & ad ; null => OK
-				else $a = (($wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$current_user->ID."' LIMIT 1"))?false:true);
-				$rencDiv['pacam'] = (!empty($rencOpt['pacamsg']))?$a:false;
-				$rencDiv['pacas'] = (!empty($rencOpt['pacasig']))?$a:false;
+				else $a = empty($rencU0->i_photo); // no photo => true
+				// else $a = (($wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$current_user->ID."' LIMIT 1"))?false:true);
+				$rencDiv['pacam'] = (!empty($rencOpt['pacamsg'])) ? $a : false;
+				$rencDiv['pacas'] = (!empty($rencOpt['pacasig'])) ? $a : false;
 			}
 			//
 			$Prenc = (!empty($_POST['P'.$Lrenc])?rencSanit($_POST['P'.$Lrenc],'alphanum'):''); // Post used in message part
@@ -408,6 +409,8 @@ class Rencontre {
 				$photo = self::f_img((($current_user->ID)*10).'-libre',2);
 				if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg')) {
 					unlink($rencDiv['basedir'].'/portrait/libre/'.$photo.'.jpg');
+					if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'@2x.jpg')) unlink($rencDiv['basedir'].'/portrait/libre/'.$photo.'@2x.jpg'); // RETINA
+					if(file_exists($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp')) unlink($rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp'); // WEBP
 					renc_clear_cache_portrait();
 				}
 				f_userSupp($current_user->ID,$current_user->user_login,0);
@@ -471,8 +474,8 @@ class Rencontre {
 				$mem = array(
 					'zage_min'=>(isset($_GET[$Lagemin])?rencSanit($_GET[$Lagemin],'int'):''),
 					'zage_max'=>(isset($_GET[$Lagemax])?rencSanit($_GET[$Lagemax],'int'):''),
-					'size_min'=>(isset($_GET[$Ltaillemin])?rencSanit($_GET[$Ltaillemin],'int'):''),
-					'size_max'=>(isset($_GET[$Ltaillemax])?rencSanit($_GET[$Ltaillemax],'int'):''),
+					'size_min'=>(isset($_GET[$Ltaillemin])?rencSanit($_GET[$Ltaillemin],'num'):''),
+					'size_max'=>(isset($_GET[$Ltaillemax])?rencSanit($_GET[$Ltaillemax],'num'):''),
 					'weight_min'=>(isset($_GET[$Lpoidsmin])?rencSanit($_GET[$Lpoidsmin],'int'):''),
 					'weight_max'=>(isset($_GET[$Lpoidsmax])?rencSanit($_GET[$Lpoidsmax],'int'):''),
 					'zsex'=>(isset($_GET[$Lzsex])?rencSanit($_GET[$Lzsex],'int'):''),
@@ -586,7 +589,7 @@ class Rencontre {
 	}
 	//
 	static function f_ficheLibre($a=array(),$ret=0) { // Creation du fichier HTML de presentation des membres en libre acces pour la page d accueil
-		global $rencDiv, $rencCustom, $rencOpt;
+		global $rencDiv, $rencCustom, $rencOpt, $rencWPLANG;
 		$atts = shortcode_atts(array(
 			'gen'=>'',
 			'country'=>'',
@@ -594,6 +597,11 @@ class Rencontre {
 			'city'=>'',
 			'redirect'=>$rencDiv['siteurl'].'/wp-login.php?action=register'
 			),$a);
+		$atts['gen'] = rencSanit($atts['gen'],'alphanum');
+		$atts['country'] = rencSanit($atts['country'],'alphanum');
+		$atts['region'] = rencSanit($atts['region'],'words');
+		$atts['city'] = rencSanit($atts['city'],'words');
+		$atts['redirect'] = rencSanit($atts['redirect'],'url');
 		$redirect = $atts['redirect'];
 		$tdir = rencTplDir();
 		$out = ''; $sc = '';
@@ -640,7 +648,7 @@ class Rencontre {
 					WHERE
 						c_liste_categ='d'
 						or
-						(c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang'],0,2)."')
+						(c_liste_categ='p' and c_liste_lang='".substr($rencWPLANG,0,2)."')
 					");
 				$rencDrap = array(); $rencDrapNom = array();
 				foreach($q as $r) {
@@ -867,9 +875,10 @@ class Rencontre {
 	}
 	//
 	static function f_rencontreSearch($ret=0,$a=array()) { // SHORTCODE [rencontre_search nb=6 day=365]
-		global $wpdb, $rencOpt, $rencDiv, $rencCustom;
+		global $wpdb, $rencOpt, $rencDiv, $rencCustom, $rencWPLANG;
 		$atts = shortcode_atts(array('nb'=>6,'day'=>365),$a);
-		$day = ($atts['day']?intval($atts['day']):365);
+		$atts['nb'] = rencSanit($atts['nb'],'int');
+		$atts['day'] = rencSanit($atts['day'],'int');
 		$out = ''; $searchResult = '';
 		$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
 		$Lzsex = (!empty($rencOpt['lbl']['zsex'])?$rencOpt['lbl']['zsex']:'zsex');
@@ -892,7 +901,7 @@ class Rencontre {
 				WHERE
 					c_liste_categ='d'
 					or
-					(c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang'],0,2)."')
+					(c_liste_categ='p' and c_liste_lang='".substr($rencWPLANG,0,2)."')
 				");
 			$rencDrap = array(); $rencDrapNom = array();
 			foreach($q as $r) {
@@ -965,6 +974,8 @@ class Rencontre {
 	static function f_nbMembre($a=array()) { // Nombre de membres inscrits sur le site
 		global $wpdb;
 		$atts = shortcode_atts(array('gen'=>'','ph'=>0),$a);
+		$atts['gen'] = rencSanit($atts['gen'],'alphanum');
+		$atts['ph'] = rencSanit($atts['ph'],'int');
 		$nm = $wpdb->get_var("
 			SELECT
 				COUNT(*)
@@ -982,6 +993,8 @@ class Rencontre {
 	static function f_login($ext=false,$ret=false,$a=array()) { // SHORTCODE [rencontre_login]
 		global $rencOpt, $rencDiv, $rencCustom;
 		$atts = shortcode_atts(array('loginout'=>1,'register'=>1),$a);
+		$atts['loginout'] = rencSanit($atts['loginout'],'int');
+		$atts['register'] = rencSanit($atts['register'],'int');
 		// Check HOME
 		if(!empty($rencOpt['home'])) {
 			$pages = get_pages();
@@ -1034,7 +1047,11 @@ class Rencontre {
 			'top' => '15',
 			'login' => 0
 			),$atts);
-		
+		$atts['title'] = rencSanit($atts['title'],'text');
+		$atts['selector'] = rencSanit($atts['selector'],'selector');
+		$atts['left'] = rencSanit($atts['left'],'int');
+		$atts['top'] = rencSanit($atts['top'],'int');
+		$atts['login'] = rencSanit($atts['login'],'int');
 		// ****** TEMPLATE ********
 		ob_start();
 		if($tpl=rencTpl('rencontre_imgreg.php')) include $tpl;

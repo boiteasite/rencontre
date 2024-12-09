@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rencontre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-08 16:59+0200\n"
+"POT-Creation-Date: 2024-12-06 18:40+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jacques Malgrange <contacter@boiteasite.fr>\n"
 "Language-Team: boiteasite.fr <contacter@boiteasite.fr>\n"
@@ -17,26 +17,26 @@ msgstr ""
 "X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../inc/base.php:146 ../inc/base.php:367 ../inc/base.php:1165
-#: ../inc/base.php:1569 ../inc/base.php:1645 ../inc/base.php:1658
-#: ../inc/base.php:1730 ../inc/base.php:1743 ../inc/base.php:1802
-#: ../inc/base.php:1803 ../inc/base.php:1804 ../inc/base.php:1835
-#: ../inc/base.php:1944 ../inc/base.php:2454 ../inc/base.php:2654
-#: ../inc/base.php:2661 ../inc/base.php:2735 ../inc/base.php:2753
-#: ../inc/base.php:2790 ../inc/base.php:2818 ../inc/base.php:2842
-#: ../inc/base.php:2843 ../inc/base.php:2971 ../inc/base.php:3011
-#: ../inc/base.php:3048 ../inc/base.php:3068 ../inc/base.php:3496
-#: ../inc/base.php:3497 ../inc/base.php:3500 ../inc/base.php:3501
-#: ../inc/base.php:3503 ../inc/base.php:3516 ../inc/base.php:3517
-#: ../inc/base.php:3520 ../inc/base.php:3521 ../inc/base.php:3523
-#: ../inc/base.php:3893 ../inc/base.php:3894 ../inc/rencontre_don.php:74
-#: ../inc/rencontre_widget.php:3250 ../inc/rencontre_widget.php:3254
+#: ../inc/base.php:146 ../inc/base.php:367 ../inc/base.php:1190
+#: ../inc/base.php:1593 ../inc/base.php:1666 ../inc/base.php:1687
+#: ../inc/base.php:1759 ../inc/base.php:1772 ../inc/base.php:1831
+#: ../inc/base.php:1832 ../inc/base.php:1833 ../inc/base.php:1864
+#: ../inc/base.php:1973 ../inc/base.php:2513 ../inc/base.php:2712
+#: ../inc/base.php:2719 ../inc/base.php:2793 ../inc/base.php:2811
+#: ../inc/base.php:2848 ../inc/base.php:2876 ../inc/base.php:2901
+#: ../inc/base.php:2902 ../inc/base.php:3029 ../inc/base.php:3069
+#: ../inc/base.php:3106 ../inc/base.php:3126 ../inc/base.php:3606
+#: ../inc/base.php:3607 ../inc/base.php:3610 ../inc/base.php:3611
+#: ../inc/base.php:3613 ../inc/base.php:3626 ../inc/base.php:3627
+#: ../inc/base.php:3630 ../inc/base.php:3631 ../inc/base.php:3633
+#: ../inc/base.php:4003 ../inc/base.php:4004 ../inc/rencontre_don.php:79
+#: ../inc/rencontre_widget.php:3276 ../inc/rencontre_widget.php:3280
 #: ../templates/rencontre_mail_regular_global.php:21
 #: ../templates/rencontre_mail_regular_global.php:33
 #: ../templates/rencontre_mail_regular_global.php:35
 #: ../templates/rencontre_mail_regular_global.php:52
-#: ../templates/rencontre_portrait.php:154 ../templates/rencontre_search.php:31
-#: ../templates/rencontre_search.php:53 ../templates/rencontre_search.php:79
+#: ../templates/rencontre_portrait.php:154 ../templates/rencontre_search.php:34
+#: ../templates/rencontre_search.php:56 ../templates/rencontre_search.php:98
 #: ../templates/rencontre_search_result.php:87
 #: ../templates/rencontre_sidebar_top.php:78
 #: ../templates/rencontre_sidebar_top.php:87
@@ -48,58 +48,58 @@ msgstr ": "
 msgid "lines"
 msgstr "行"
 
-#: ../inc/base.php:367 ../inc/base.php:1374
+#: ../inc/base.php:367 ../inc/base.php:1399
 msgid "Done!"
 msgstr "完了"
 
-#: ../inc/base.php:367 ../inc/rencontre_filter.php:1143
+#: ../inc/base.php:367 ../inc/rencontre_filter.php:1205
 msgid "photo"
 msgstr "写真"
 
-#: ../inc/base.php:456 ../inc/base.php:566 ../inc/base.php:569
+#: ../inc/base.php:458 ../inc/base.php:578 ../inc/base.php:581
 msgid "TO CHANGE"
 msgstr "TO CHANGE"
 
-#: ../inc/base.php:478 ../inc/base.php:2843
+#: ../inc/base.php:481 ../inc/base.php:2902
 #: ../lang/rencontre-js-admin-lang.php:34
 msgid "Unit"
 msgstr "ユニット"
 
-#: ../inc/base.php:1164 ../inc/base.php:2653
+#: ../inc/base.php:1189 ../inc/base.php:2711
 msgid "Update member profile"
 msgstr "メンバープロファイルをアップデート"
 
-#: ../inc/base.php:1165 ../inc/base.php:2654
+#: ../inc/base.php:1190 ../inc/base.php:2712
 msgid "You have made changes. Remember to update when you're done."
 msgstr "変更されています。終了後に更新をしてください。"
 
-#: ../inc/base.php:1170 ../rencontre.php:223
+#: ../inc/base.php:1195 ../rencontre.php:230
 msgid "General"
 msgstr "一般"
 
-#: ../inc/base.php:1171 ../templates/rencontre_mail_instant.php:55
+#: ../inc/base.php:1196 ../templates/rencontre_mail_instant.php:55
 #: ../templates/rencontre_mail_regular_global.php:78
 #: ../templates/rencontre_mail_remind.php:20
 msgid "Login"
 msgstr "ログイン"
 
-#: ../inc/base.php:1172
+#: ../inc/base.php:1197
 msgid "Display"
 msgstr "表示"
 
-#: ../inc/base.php:1173
+#: ../inc/base.php:1198
 msgid "E-mails"
 msgstr "Eメール"
 
-#: ../inc/base.php:1174
+#: ../inc/base.php:1199
 msgid "CSV"
 msgstr "CSV"
 
-#: ../inc/base.php:1179
+#: ../inc/base.php:1204
 msgid "Premium"
 msgstr "プレミアム"
 
-#: ../inc/base.php:1200
+#: ../inc/base.php:1225
 msgid ""
 "OpenSSL doesn't seem to be working. Some features of this plugin will not be "
 "available."
@@ -107,78 +107,23 @@ msgstr ""
 "OpenSSLは動作しないようです。このプラグインの一部の機能が利用できなくなりま"
 "す。"
 
-#: ../inc/base.php:1204
+#: ../inc/base.php:1229
 msgid "Plugin page"
 msgstr "プラグインページ"
 
-#: ../inc/base.php:1218
+#: ../inc/base.php:1243
 msgid "Country selected by default"
 msgstr "デフォルトで選択された国"
 
-#: ../inc/base.php:1226
-msgid "Number of days in jail (deleted account)"
-msgstr "ジェイル格納日数（削除されたアカウント)"
-
-#: ../inc/base.php:1239
-msgid "Use member's picture as WordPress avatar"
-msgstr "メンバーの写真をWordPressのアバターにする"
-
-#: ../inc/base.php:1243
-msgid "Old messages deleted during maintenance (recommended)"
-msgstr "メンテナンス中に削除された古いメッセージ(推奨)"
-
-#: ../inc/base.php:1246 ../inc/base.php:1258 ../inc/base.php:1387
-#: ../inc/base.php:1418 ../inc/base.php:1505 ../inc/base.php:1564
-#: ../inc/base.php:3481 ../inc/base.php:3513
-msgid "No"
-msgstr "ない"
-
-#: ../inc/base.php:1247 ../inc/base.php:1565
-msgid "Monthly"
-msgstr "月毎"
-
-#: ../inc/base.php:1248
-msgid "Quarterly"
-msgstr "3か月ごと"
-
-#: ../inc/base.php:1249
-msgid "Biannual"
-msgstr "半年ごと"
-
-#: ../inc/base.php:1250
-msgid "Annual"
-msgstr "1年毎"
-
-#: ../inc/base.php:1255
-msgid "Inactive users deleted during maintenance"
-msgstr "メンテナンス中に削除された非アクティブなユーザー"
-
-#: ../inc/base.php:1259
-msgid "Year"
-msgstr "年"
-
-#: ../inc/base.php:1260 ../inc/base.php:1261 ../inc/base.php:1262
-#: ../inc/base.php:1263
-msgid "Years"
-msgstr "年"
-
-#: ../inc/base.php:1268
-msgid "Hour maintenance tasks (off peak)"
-msgstr "時間メンテナンス作業（ピーク時以外）"
-
-#: ../inc/base.php:1273
-msgid "hours"
-msgstr "時間"
-
-#: ../inc/base.php:1279
+#: ../inc/base.php:1251
 msgid "Do not remove WP roles"
 msgstr "WPの役割を削除しないでください"
 
-#: ../inc/base.php:1283
+#: ../inc/base.php:1255
 msgid "Do not remove user in WP when remove in Rencontre"
 msgstr "Rencontre内で削除する場合は、WPでユーザーを削除しないでください"
 
-#: ../inc/base.php:1289
+#: ../inc/base.php:1261
 msgid ""
 "Unchecked: WP roles will be destroyed. Users who are not in Rencontre will "
 "be destroyed. This is the best mode for a big and exclusive dating site."
@@ -186,7 +131,7 @@ msgstr ""
 "チェックなし: WPロールが破棄されます。Rencontre内にいないユーザーは破棄されま"
 "す。大規模な出会い系サイトでは最善のモードです。"
 
-#: ../inc/base.php:1290
+#: ../inc/base.php:1262
 msgid ""
 "Checked: Better choice to test this plugin or to use with other one "
 "(forum...). Over time, the site will be slower with numerous abandoned "
@@ -196,70 +141,125 @@ msgstr ""
 "用するのが良いでしょう。時間が経つにつれて, サイトは、多数の放棄されたアカウ"
 "ントで遅くなります."
 
-#: ../inc/base.php:1294
+#: ../inc/base.php:1266
+msgid "Hour maintenance tasks (off peak)"
+msgstr "時間メンテナンス作業（ピーク時以外）"
+
+#: ../inc/base.php:1271
+msgid "hours"
+msgstr "時間"
+
+#: ../inc/base.php:1277
+msgid "Old messages deleted during maintenance (recommended)"
+msgstr "メンテナンス中に削除された古いメッセージ(推奨)"
+
+#: ../inc/base.php:1280 ../inc/base.php:1292 ../inc/base.php:1412
+#: ../inc/base.php:1422 ../inc/base.php:1514 ../inc/base.php:1588
+#: ../inc/base.php:3591 ../inc/base.php:3623
+msgid "No"
+msgstr "ない"
+
+#: ../inc/base.php:1281 ../inc/base.php:1589
+msgid "Monthly"
+msgstr "月毎"
+
+#: ../inc/base.php:1282
+msgid "Quarterly"
+msgstr "3か月ごと"
+
+#: ../inc/base.php:1283
+msgid "Biannual"
+msgstr "半年ごと"
+
+#: ../inc/base.php:1284
+msgid "Annual"
+msgstr "1年毎"
+
+#: ../inc/base.php:1289
+msgid "Inactive users deleted during maintenance"
+msgstr "メンテナンス中に削除された非アクティブなユーザー"
+
+#: ../inc/base.php:1293
+msgid "Year"
+msgstr "年"
+
+#: ../inc/base.php:1294 ../inc/base.php:1295 ../inc/base.php:1296
+#: ../inc/base.php:1297
+msgid "Years"
+msgstr "年"
+
+#: ../inc/base.php:1302
+msgid "Use member's picture as WordPress avatar"
+msgstr "メンバーの写真をWordPressのアバターにする"
+
+#: ../inc/base.php:1306
+msgid "Number of days in jail (deleted account)"
+msgstr "ジェイル格納日数（削除されたアカウント)"
+
+#: ../inc/base.php:1319
 msgid "Clean-up when uninstall"
 msgstr "アンインストール時のクリーンアップ"
 
-#: ../inc/base.php:1299 ../inc/base.php:1361 ../inc/base.php:1541
-#: ../inc/base.php:1660 ../inc/base.php:2690 ../inc/base.php:3313
-#: ../inc/base.php:3449 ../inc/base.php:3542 ../inc/base.php:3837
-#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:297
-#: ../templates/rencontre_account.php:323
-#: ../templates/rencontre_registration_part1.php:143
+#: ../inc/base.php:1324 ../inc/base.php:1386 ../inc/base.php:1570
+#: ../inc/base.php:1689 ../inc/base.php:2748 ../inc/base.php:3423
+#: ../inc/base.php:3559 ../inc/base.php:3652 ../inc/base.php:3947
+#: ../lang/rencontre-js-admin-lang.php:4 ../templates/rencontre_account.php:327
+#: ../templates/rencontre_account.php:353
+#: ../templates/rencontre_registration_part1.php:145
 #: ../templates/rencontre_registration_part2.php:59
 #: ../templates/rencontre_registration_part3.php:110
 msgid "Save"
 msgstr "保存"
 
-#: ../inc/base.php:1304
+#: ../inc/base.php:1329
 msgid "Images names"
 msgstr "画像名"
 
-#: ../inc/base.php:1305
+#: ../inc/base.php:1330
 msgid "Be careful, all pictures of the members will have another name."
 msgstr "メンバーの写真には全て別の名前が入っているので気をつけてください。"
 
-#: ../inc/base.php:1312
+#: ../inc/base.php:1337
 msgid "Images names are encoded"
 msgstr "画像名はエンコードされています。"
 
-#: ../inc/base.php:1313
+#: ../inc/base.php:1338
 msgid "Images names are not encoded"
 msgstr "画像名はエンコードされていません"
 
-#: ../inc/base.php:1314
+#: ../inc/base.php:1339
 msgid "I don't know if it's encoded or not"
 msgstr "エンコードされているかどうかは問わず"
 
-#: ../inc/base.php:1321
+#: ../inc/base.php:1346
 msgid "Encode all images names"
 msgstr "すべての画像名をエンコードする"
 
-#: ../inc/base.php:1322
+#: ../inc/base.php:1347
 msgid "Decode all images names"
 msgstr "すべての画像名をデコード"
 
-#: ../inc/base.php:1324
+#: ../inc/base.php:1349
 msgid "Cleanup abandoned images"
 msgstr "放置画像のクリーンアップ"
 
-#: ../inc/base.php:1340
+#: ../inc/base.php:1365
 msgid "Redirect to the plugin page after login"
 msgstr "ログイン後にプラグインのページにリダイレクトする"
 
-#: ../inc/base.php:1344
+#: ../inc/base.php:1369
 msgid "Enable rapid registration"
 msgstr "簡易登録を有効にする"
 
-#: ../inc/base.php:1348
+#: ../inc/base.php:1373
 msgid "Do not request a new password after registration"
 msgstr "登録後に新しいパスワードを要求しない"
 
-#: ../inc/base.php:1352
+#: ../inc/base.php:1377
 msgid "Do not allow password change in -my account-"
 msgstr "-私のアカウント-でパスワードの変更を許可しないでください"
 
-#: ../inc/base.php:1356
+#: ../inc/base.php:1381
 msgid ""
 "Obligation to choose a city in the wp_Geonames list during registration (if "
 "plugin installed)"
@@ -267,148 +267,152 @@ msgstr ""
 "登録時にwp_Geonamesリストで都市を選択する義務（プラグインがインストールされて"
 "いる場合）"
 
-#: ../inc/base.php:1384
+#: ../inc/base.php:1409
+msgid "Auto-scrolling to center the page on this plugin"
+msgstr "このプラグインではページを中央に自動スクロールします"
+
+#: ../inc/base.php:1413
+msgid "Yes"
+msgstr "はい"
+
+#: ../inc/base.php:1414
+msgid "On smartphone only"
+msgstr "スマートフォンのみ"
+
+#: ../inc/base.php:1419
 msgid "Display a different name than login"
 msgstr "ログイン名とは別の名前を表示する"
 
-#: ../inc/base.php:1388
+#: ../inc/base.php:1423
 msgid "Uneditable after registration"
 msgstr "登録後の編集不可"
 
-#: ../inc/base.php:1389
+#: ../inc/base.php:1424
 msgid "Editable in \"my account\""
 msgstr "停止された日数（削除されたアカウント)"
 
-#: ../inc/base.php:1394
+#: ../inc/base.php:1429
 msgid "Number of portrait on logged out plugin homepage"
 msgstr "ログアウトしたプラグインのホームページのポートレイトの数"
 
-#: ../inc/base.php:1399
+#: ../inc/base.php:1434
 msgid "Update now"
 msgstr "今すぐアップデート"
 
-#: ../inc/base.php:1404
+#: ../inc/base.php:1438
+msgid "Number of days to wait before presence homepage"
+msgstr "プレゼンスホームページまでの待ち日数"
+
+#: ../inc/base.php:1447
 msgid "Min width of portrait on logged out plugin homepage"
 msgstr "ログアウトしたプラグインホームページのポートレートの最小幅"
 
-#: ../inc/base.php:1410
+#: ../inc/base.php:1453
 msgid "Min width of portrait on logged out plugin homepage on small screen"
 msgstr ""
 "小さな画面でログアウトしたプラグインのホームページのポートレートの最小幅"
 
-#: ../inc/base.php:1415
-msgid "Auto-scrolling to center the page on this plugin"
-msgstr "このプラグインではページを中央に自動スクロールします"
-
-#: ../inc/base.php:1419
-msgid "Yes"
-msgstr "はい"
-
-#: ../inc/base.php:1420
-msgid "On smartphone only"
-msgstr "スマートフォンのみ"
-
-#: ../inc/base.php:1425
-msgid "Number of days to wait before presence homepage"
-msgstr "プレゼンスホームページまでの待ち日数"
-
-#: ../inc/base.php:1433
+#: ../inc/base.php:1458
 msgid "Max number of results per search"
 msgstr "1回の検索での最大検索結果数"
 
-#: ../inc/base.php:1445
-msgid "Merge My Account and Edit My Profile pages"
-msgstr "「マイアカウント」ページと「マイプロフィール編集」ページを統合"
-
-#: ../inc/base.php:1449
+#: ../inc/base.php:1470
 msgid "Dynamic loading of search results"
 msgstr "検索結果の動的読み込み"
 
-#: ../inc/base.php:1453
+#: ../inc/base.php:1474
 msgid "Display profiles searched in a new tab"
 msgstr "新しいタブで検索されたプロファイルを表示する"
 
-#: ../inc/base.php:1459
-msgid "Only members from the same country on the logged on plugin homepage"
-msgstr "ログインしたプラグインのホームページ上で同じ国からのメンバーのみ"
-
-#: ../inc/base.php:1465
+#: ../inc/base.php:1478
 msgid "Precise criteria for featured profiles"
 msgstr "注目プロフィールの正確な基準"
 
-#: ../inc/base.php:1469 ../templates/rencontre_my_home.php:33
+#: ../inc/base.php:1484
+msgid "Only members from the same country on the logged on plugin homepage"
+msgstr "ログインしたプラグインのホームページ上で同じ国からのメンバーのみ"
+
+#: ../inc/base.php:1490 ../templates/rencontre_my_home.php:33
 msgid "Today's birthday"
 msgstr "本日誕生日"
 
-#: ../inc/base.php:1473
+#: ../inc/base.php:1494
 msgid "Profiles currently online"
 msgstr "現在オンラインでのプロフィール"
 
-#: ../inc/base.php:1477
-msgid "Enable chat"
-msgstr "チャットの有効化"
-
-#: ../inc/base.php:1481
-msgid "Chat thread down (Android)"
-msgstr "チャットスレッドダウン（Android）"
-
-#: ../inc/base.php:1485
-msgid "Geolocation"
-msgstr "地理的位置情報"
-
-#: ../inc/base.php:1489
+#: ../inc/base.php:1498
 msgid "Number of photos"
 msgstr "写真の数"
 
-#: ../inc/base.php:1497
+#: ../inc/base.php:1506
 msgid "Regenerate all photos"
 msgstr "すべての写真を再生"
 
-#: ../inc/base.php:1502
+#: ../inc/base.php:1511
 msgid "View a discrete copyright on photos"
 msgstr "写真の離散著作権を表示する"
 
-#: ../inc/base.php:1506
+#: ../inc/base.php:1515
 msgid "Upwardly inclined"
 msgstr "上向き"
 
-#: ../inc/base.php:1507
+#: ../inc/base.php:1516
 msgid "Downwardly inclined"
 msgstr "下向き"
 
-#: ../inc/base.php:1512
+#: ../inc/base.php:1521
 msgid "Copyright text on pictures. Empty => Site URL."
 msgstr "画像に著作権のテキストを表示します。空 => サイトのURL。"
 
-#: ../inc/base.php:1516
+#: ../inc/base.php:1525
 msgid "Lightbox Image Gallery"
 msgstr "ライトボックス画像ギャラリー"
 
-#: ../inc/base.php:1520
+#: ../inc/base.php:1529
+msgid "Photo required"
+msgstr "写真が必要です"
+
+#: ../inc/base.php:1533
 msgid "Members without photo are less visible"
 msgstr "写真のない会員は目立ちにくい"
 
-#: ../inc/base.php:1524
+#: ../inc/base.php:1537
 msgid "Members without photo cannot zoom other members"
 msgstr "写真のない会員は他の会員をズームすることができません"
 
-#: ../inc/base.php:1528 ../inc/rencontre_widget.php:490
-#: ../inc/rencontre_widget.php:2064 ../inc/rencontre_widget.php:2742
-#: ../inc/rencontre_widget.php:3295
+#: ../inc/base.php:1541 ../inc/rencontre_widget.php:497
+#: ../inc/rencontre_widget.php:2086 ../inc/rencontre_widget.php:2765
+#: ../inc/rencontre_widget.php:3321
 msgid "Members without photo, attention-catcher and ad cannot send message"
 msgstr ""
 "写真、アテンションキャッチャー、広告のない会員はメッセージを送信することがで"
 "きません。"
 
-#: ../inc/base.php:1532 ../inc/rencontre_widget.php:512
+#: ../inc/base.php:1545 ../inc/rencontre_widget.php:519
 msgid "Members without photo, attention-catcher and ad cannot make a report"
 msgstr "写真、注目のキャッチャー、広告のない会員は報告ができない"
 
-#: ../inc/base.php:1536
+#: ../inc/base.php:1549
+msgid "Merge My Account and Edit My Profile pages"
+msgstr "「マイアカウント」ページと「マイプロフィール編集」ページを統合"
+
+#: ../inc/base.php:1553
+msgid "Geolocation"
+msgstr "地理的位置情報"
+
+#: ../inc/base.php:1557
+msgid "Enable chat"
+msgstr "チャットの有効化"
+
+#: ../inc/base.php:1561
+msgid "Chat thread down (Android)"
+msgstr "チャットスレッドダウン（Android）"
+
+#: ../inc/base.php:1565
 msgid "Members cannot hide their profile"
 msgstr "メンバーは自分のプロフィールを隠すことはできません"
 
-#: ../inc/base.php:1553
+#: ../inc/base.php:1581
 msgid ""
 "Sending emails via WordPress can sometimes be tricky. If registration emails "
 "(for example) aren't being received, try an SMTP email plugin."
@@ -416,115 +420,115 @@ msgstr ""
 "WordPress 経由でメールを送信するのは、時々難しい場合があります。たとえば、登"
 "録メールが受信されない場合は、SMTP メール プラグインを試してください。"
 
-#: ../inc/base.php:1557
-msgid "Send an email to the user whose account is deleted"
-msgstr "アカウントが削除されたユーザーにメールを送信する"
-
-#: ../inc/base.php:1561
+#: ../inc/base.php:1585
 msgid "Automatic sending a summary email to members (shared daily)"
 msgstr "会員への要約メールの自動送信（毎日共有）"
 
-#: ../inc/base.php:1566
+#: ../inc/base.php:1590
 msgid "Fortnightly"
 msgstr "2週間ごとに"
 
-#: ../inc/base.php:1567
+#: ../inc/base.php:1591
 msgid "Weekly"
 msgstr "1週間ごと"
 
-#: ../inc/base.php:1569 ../inc/base.php:1645
+#: ../inc/base.php:1593 ../inc/base.php:1666
 msgid "Up this week"
 msgstr "今週のピックアップ"
 
-#: ../inc/base.php:1569 ../inc/base.php:1645
+#: ../inc/base.php:1593 ../inc/base.php:1666
 msgid "mail/hour"
 msgstr "メール/時間"
 
-#: ../inc/base.php:1569
+#: ../inc/base.php:1593
 msgid "sent during maintenance"
 msgstr "メンテナンス時に送信"
 
-#: ../inc/base.php:1574
+#: ../inc/base.php:1598
+msgid "Automatically sending an email happy birthday members"
+msgstr "ハッピーバースデーメンバーへのメールを自動送信"
+
+#: ../inc/base.php:1604
+msgid "Also send an email for a smile"
+msgstr "また、スマイルのメールを送る"
+
+#: ../inc/base.php:1610
+msgid "Send an email to the user whose account is deleted"
+msgstr "アカウントが削除されたユーザーにメールを送信する"
+
+#: ../inc/base.php:1614
 msgid "Regular email subject"
 msgstr "通常のメールの件名"
 
-#: ../inc/base.php:1574 ../inc/base.php:1581 ../inc/base.php:1588
-#: ../inc/base.php:1595
+#: ../inc/base.php:1614 ../inc/base.php:1621 ../inc/base.php:1628
+#: ../inc/base.php:1635
 msgid "Site title"
 msgstr "サイトタイトル"
 
-#: ../inc/base.php:1577 ../inc/base.php:1584 ../inc/base.php:1591
-#: ../inc/base.php:1598
+#: ../inc/base.php:1617 ../inc/base.php:1624 ../inc/base.php:1631
+#: ../inc/base.php:1638
 msgid "Empty"
 msgstr "空"
 
-#: ../inc/base.php:1581
+#: ../inc/base.php:1621
 msgid "Instant email subject"
 msgstr "インスタントメールの件名"
 
-#: ../inc/base.php:1584 ../inc/rencontre_cron.php:823
+#: ../inc/base.php:1624 ../inc/rencontre_cron.php:821
 #: ../templates/rencontre_mail_instant.php:11
 msgid "A member contact you"
 msgstr "メンバーからの連絡"
 
-#: ../inc/base.php:1588
+#: ../inc/base.php:1628
 msgid "Birthday email subject"
 msgstr "誕生日メールの件名"
 
-#: ../inc/base.php:1591 ../inc/rencontre_cron.php:300
+#: ../inc/base.php:1631 ../inc/rencontre_cron.php:299
 #: ../templates/rencontre_mail_birthday.php:11
 #: ../templates/rencontre_mail_birthday.php:16
 msgid "Happy Birthday"
 msgstr "ハッピーバースデー"
 
-#: ../inc/base.php:1595
+#: ../inc/base.php:1635
 msgid "Reminder email subject"
 msgstr "リマインダーメールの件名"
 
-#: ../inc/base.php:1598 ../inc/rencontre_cron.php:220
+#: ../inc/base.php:1638 ../inc/rencontre_cron.php:219
 #: ../templates/rencontre_mail_remind.php:11
 msgid "Registration"
 msgstr "登録"
 
-#: ../inc/base.php:1602
+#: ../inc/base.php:1642
 msgid ""
 "Introductory text for the summary email (After hello login - Before the "
 "smiles and contact requests)"
 msgstr "まとめメールの紹介文（初回ログイン後 - 連絡先リクエストの前）"
 
-#: ../inc/base.php:1608
-msgid "Only my country in summary email"
-msgstr "まとめメールで自分の国だけ"
-
-#: ../inc/base.php:1615
-msgid "Also send an email for a smile"
-msgstr "また、スマイルのメールを送る"
-
-#: ../inc/base.php:1621
-msgid "Automatically sending an email happy birthday members"
-msgstr "ハッピーバースデーメンバーへのメールを自動送信"
-
-#: ../inc/base.php:1625
+#: ../inc/base.php:1646
 msgid "Full text for the birthday mail (After hello pseudo)"
 msgstr "誕生日メールの全文（ハロー疑似後）"
 
-#: ../inc/base.php:1629
+#: ../inc/base.php:1650
 msgid "Max number of mails sent per hour"
 msgstr "1時間あたりの最大メール送信数"
 
-#: ../inc/base.php:1645
+#: ../inc/base.php:1666
 msgid "except during maintenance"
 msgstr "メンテナンス中を除く"
 
-#: ../inc/base.php:1650
+#: ../inc/base.php:1673
+msgid "Only my country in summary email"
+msgstr "まとめメールで自分の国だけ"
+
+#: ../inc/base.php:1679
 msgid "No members without photo in automatic mails"
 msgstr "自動配信メールに写真なしの会員がいない"
 
-#: ../inc/base.php:1654
+#: ../inc/base.php:1683
 msgid "Force HTML mode (mail not readable)"
 msgstr "強制的にHTMLモードにする(メールが読めない)"
 
-#: ../inc/base.php:1658
+#: ../inc/base.php:1687
 msgid ""
 "The language used for emails is the one of your ADMIN interface (hardcoded "
 "in DB)."
@@ -532,55 +536,55 @@ msgstr ""
 "電子メールに使用される言語は、ADMIN インターフェイスの言語です (DB にハード"
 "コードされています)。"
 
-#: ../inc/base.php:1681
+#: ../inc/base.php:1710
 msgid "Export members in CSV"
 msgstr "CSVでメンバーをエクスポートする"
 
-#: ../inc/base.php:1685
+#: ../inc/base.php:1714
 msgid "All members"
 msgstr "全メンバー"
 
-#: ../inc/base.php:1686
+#: ../inc/base.php:1715
 msgid "Active last month"
 msgstr "先月の活動状況"
 
-#: ../inc/base.php:1687
+#: ../inc/base.php:1716
 msgid "Active last 2 months"
 msgstr "過去2ヶ月の活動状況"
 
-#: ../inc/base.php:1688
+#: ../inc/base.php:1717
 msgid "Active last 6 months"
 msgstr "過去6ヶ月間の活動状況"
 
-#: ../inc/base.php:1689
+#: ../inc/base.php:1718
 msgid "Active last 12 months"
 msgstr "過去12か月の活動状況"
 
-#: ../inc/base.php:1693
+#: ../inc/base.php:1722
 msgid "Only members with photo"
 msgstr "写真付き会員のみ"
 
-#: ../inc/base.php:1696
+#: ../inc/base.php:1725
 msgid "Only members with attention-catcher and ad"
 msgstr "アテンションキャッチャーとアドを持っているメンバーのみ"
 
-#: ../inc/base.php:1698
+#: ../inc/base.php:1727
 msgid "Export in CSV"
 msgstr "CSVでエクスポート"
 
-#: ../inc/base.php:1701
+#: ../inc/base.php:1730
 msgid "Get back photos by FTP in wp-content/uploads/tmp/"
 msgstr "wp-content/uploads/tmp/でFTPで写真を取り戻してください"
 
-#: ../inc/base.php:1704
+#: ../inc/base.php:1733
 msgid "Import members in CSV"
 msgstr "CSVでメンバーをインポートする"
 
-#: ../inc/base.php:1709
+#: ../inc/base.php:1738
 msgid "Manual method"
 msgstr "手動による方法"
 
-#: ../inc/base.php:1711
+#: ../inc/base.php:1740
 msgid ""
 "Put members photos in wp-content/uploads/tmp/photo_import/ by FTP before the "
 "start (right RW - no sub folder - .jpg - no zip)."
@@ -588,15 +592,15 @@ msgstr ""
 "起動前にFTPでwp-content/uploads/tmp/photo_import/にメンバーの写真を入れておい"
 "てください（右RW-サブフォルダなし-.jpg-zipなし）。"
 
-#: ../inc/base.php:1712
+#: ../inc/base.php:1741
 msgid "Select your CSV file (.csv - no zip)."
 msgstr "CSVファイル（.csv - zipではありません）を選択します。"
 
-#: ../inc/base.php:1713 ../inc/base.php:1737
+#: ../inc/base.php:1742 ../inc/base.php:1766
 msgid "Import in CSV"
 msgstr "Import in CSV"
 
-#: ../inc/base.php:1715
+#: ../inc/base.php:1744
 msgid ""
 "Make an export and look at it to get the right format (The first line is not "
 "treated)."
@@ -604,11 +608,11 @@ msgstr ""
 "書き出しを作って見て、正しいフォーマットになるようにする（1行目は処理されな"
 "い）"
 
-#: ../inc/base.php:1716
+#: ../inc/base.php:1745
 msgid "Zip package"
 msgstr "Zipパッケージ"
 
-#: ../inc/base.php:1717
+#: ../inc/base.php:1746
 msgid ""
 "Create a zip file containing a .csv file and a \"photo_import\" folder with "
 "the members' photos in .jpg."
@@ -616,11 +620,11 @@ msgstr ""
 ".csvファイルと「photo_import」フォルダーを含むzipファイルを作成し、メンバーの"
 "写真を.jpgに入れます。"
 
-#: ../inc/base.php:1730
+#: ../inc/base.php:1759
 msgid "CSV or ZIP File"
 msgstr "CSVまたはZIPファイル"
 
-#: ../inc/base.php:1734
+#: ../inc/base.php:1763
 msgid ""
 "In case of interruption during the import of photos, restart the procedure. "
 "Doubloons are killed."
@@ -628,327 +632,311 @@ msgstr ""
 "写真の取り込み中に中断した場合は、手順を再開してください。Doubloons（ダブロ"
 "ン）が殺されます。"
 
-#: ../inc/base.php:1738
+#: ../inc/base.php:1767
 msgid "File loaded"
 msgstr "ファイルのロード"
 
-#: ../inc/base.php:1739
+#: ../inc/base.php:1768
 msgid "Error !"
 msgstr "エラー!"
 
-#: ../inc/base.php:1740
+#: ../inc/base.php:1769
 msgid "Import data"
 msgstr "データのインポート"
 
-#: ../inc/base.php:1741
+#: ../inc/base.php:1770
 msgid "completed"
 msgstr "コンプリート"
 
-#: ../inc/base.php:1743
+#: ../inc/base.php:1772
 msgid "Photos Import"
 msgstr "写真のインポート"
 
-#: ../inc/base.php:1745
+#: ../inc/base.php:1774
 msgid "Import completed"
 msgstr "インポート完了"
 
-#: ../inc/base.php:1793 ../inc/base.php:2178 ../rencontre.php:224
-#: ../rencontre.php:232
+#: ../inc/base.php:1822 ../inc/base.php:2221 ../rencontre.php:231
+#: ../rencontre.php:239
 msgid "Members"
 msgstr "メンバー"
 
-#: ../inc/base.php:1802
+#: ../inc/base.php:1831
 msgid "Number of registered members"
 msgstr "登録メンバー数"
 
-#: ../inc/base.php:1803
+#: ../inc/base.php:1832
 msgid "Number of members with profile and photo"
 msgstr "プロフィール・写真付き会員数"
 
-#: ../inc/base.php:1804 ../inc/rencontre_widget.php:2607
+#: ../inc/base.php:1833 ../inc/rencontre_widget.php:2630
 #: ../templates/rencontre_my_home.php:49 ../templates/rencontre_my_home.php:51
 msgid "Online now"
 msgstr "現在オンライン"
 
-#: ../inc/base.php:1810
+#: ../inc/base.php:1839
 msgid "Statistic"
 msgstr "統計"
 
-#: ../inc/base.php:1831
+#: ../inc/base.php:1860
 msgid "Add new from WordPress"
 msgstr "WordPressから新規追加"
 
-#: ../inc/base.php:1835
+#: ../inc/base.php:1864
 msgid "Alias or email or ID"
 msgstr "別名またはメールアドレスまたはID"
 
-#: ../inc/base.php:1837 ../templates/rencontre_search.php:179
-#: ../templates/rencontre_search.php:182
+#: ../inc/base.php:1866 ../templates/rencontre_search.php:214
+#: ../templates/rencontre_search.php:217
 #: ../templates/rencontre_sidebar_quick_search.php:133
 #: ../templates/rencontre_sidebar_quick_search.php:136
 msgid "Find"
 msgstr "探す"
 
-#: ../inc/base.php:1858 ../inc/rencontre_filter.php:1139 ../rencontre.php:415
+#: ../inc/base.php:1887 ../inc/rencontre_filter.php:1201 ../rencontre.php:419
 #: ../templates/rencontre_account_delete.php:16
 msgid "Account deletion"
 msgstr "アカウント削除"
 
-#: ../inc/base.php:1859 ../inc/rencontre_filter.php:1140 ../rencontre.php:416
+#: ../inc/base.php:1888 ../inc/rencontre_filter.php:1202 ../rencontre.php:420
 msgid "Your account has been deleted"
 msgstr "あなたのアカウントは削除されました"
 
-#: ../inc/base.php:1940
+#: ../inc/base.php:1969
 msgid "Reason for this action"
 msgstr "本アクションの理由"
 
-#: ../inc/base.php:1946 ../templates/rencontre_message_write.php:82
+#: ../inc/base.php:1975 ../templates/rencontre_message_write.php:82
 msgid "Send"
 msgstr "送信"
 
-#: ../inc/base.php:1958 ../inc/base.php:1959 ../inc/base.php:1961
-#: ../inc/base.php:1962 ../inc/base.php:1963 ../inc/base.php:1968
-#: ../inc/base.php:1969 ../inc/base.php:1970 ../inc/base.php:1972
-#: ../inc/base.php:2545 ../inc/base.php:2546 ../inc/base.php:2547
-#: ../inc/base.php:2549
+#: ../inc/base.php:1987 ../inc/base.php:1988 ../inc/base.php:1990
+#: ../inc/base.php:1991 ../inc/base.php:1992 ../inc/base.php:1997
+#: ../inc/base.php:1998 ../inc/base.php:1999 ../inc/base.php:2001
+#: ../inc/base.php:2604 ../inc/base.php:2605 ../inc/base.php:2606
+#: ../inc/base.php:2608
 msgid "Sort"
 msgstr "並び替え"
 
-#: ../inc/base.php:1959
+#: ../inc/base.php:1988
 msgid "Action"
 msgstr "アクション"
 
-#: ../inc/base.php:1960
+#: ../inc/base.php:1989
 msgid "Photo"
 msgstr "写真"
 
-#: ../inc/base.php:1961 ../templates/rencontre_search.php:169
+#: ../inc/base.php:1990 ../templates/rencontre_search.php:204
 msgid "Alias"
 msgstr "エイリアス"
 
-#: ../inc/base.php:1961 ../inc/rencontre_filter.php:850
+#: ../inc/base.php:1990 ../inc/rencontre_filter.php:866
 #: ../templates/rencontre_account.php:68 ../templates/rencontre_imgreg.php:33
 msgid "My name"
 msgstr "名前"
 
-#: ../inc/base.php:1962
+#: ../inc/base.php:1991
 msgid "Sex"
 msgstr "性別"
 
-#: ../inc/base.php:1963 ../templates/rencontre_search.php:31
+#: ../inc/base.php:1992 ../templates/rencontre_search.php:34
 msgid "Age"
 msgstr "年"
 
-#: ../inc/base.php:1964 ../templates/rencontre_search.php:53
+#: ../inc/base.php:1993 ../templates/rencontre_search.php:56
 msgid "Height"
 msgstr "身長"
 
-#: ../inc/base.php:1965 ../templates/rencontre_search.php:79
+#: ../inc/base.php:1994 ../templates/rencontre_search.php:98
 msgid "Weight"
 msgstr "体重"
 
-#: ../inc/base.php:1966 ../inc/base.php:3117 ../inc/base.php:4474
+#: ../inc/base.php:1995 ../inc/base.php:3175 ../inc/base.php:4592
 #: ../templates/rencontre_libre_search.php:65
-#: ../templates/rencontre_menu.php:38 ../templates/rencontre_menu.php:41
-#: ../templates/rencontre_search.php:16
+#: ../templates/rencontre_menu.php:39 ../templates/rencontre_menu.php:42
+#: ../templates/rencontre_search.php:19
 msgid "Search"
 msgstr "検索"
 
-#: ../inc/base.php:1967
+#: ../inc/base.php:1996
 msgid "Hang"
 msgstr "ハング"
 
-#: ../inc/base.php:1968
+#: ../inc/base.php:1997
 msgid "Place"
 msgstr "場所"
 
-#: ../inc/base.php:1969
+#: ../inc/base.php:1998
 msgid "Ad (change)"
 msgstr "広告（変更）"
 
-#: ../inc/base.php:1969
+#: ../inc/base.php:1998
 msgid "Registered"
 msgstr "登録済み"
 
-#: ../inc/base.php:1970 ../inc/base.php:2547
+#: ../inc/base.php:1999 ../inc/base.php:2606
 msgid "IP address"
 msgstr "IPアドレス"
 
-#: ../inc/base.php:1972
+#: ../inc/base.php:2001
 msgid "Reporting"
 msgstr "レポート"
 
-#: ../inc/base.php:1998 ../inc/base.php:2010
+#: ../inc/base.php:2027 ../inc/base.php:2039
 msgid "See"
 msgstr "見る"
 
-#: ../inc/base.php:2002
+#: ../inc/base.php:2031
 msgid "Unblock this member"
 msgstr "このメンバーのブロックを解除する"
 
-#: ../inc/base.php:2002 ../inc/base.php:2688
+#: ../inc/base.php:2031 ../inc/base.php:2746
 msgid "Block this member"
 msgstr "このメンバーをブロックする"
 
-#: ../inc/base.php:2003
+#: ../inc/base.php:2032
 msgid "Allow sending message"
 msgstr "メッセージの送信を許可する"
 
-#: ../inc/base.php:2003
+#: ../inc/base.php:2032
 msgid "Prohibit contact"
 msgstr "コンタクトを不許可にする"
 
-#: ../inc/base.php:2005
+#: ../inc/base.php:2034
 msgid "New fast account not completed"
 msgstr "新規ファストアカウント未完了"
 
-#: ../inc/base.php:2006
+#: ../inc/base.php:2035
 msgid "Remove - Black list email"
 msgstr "削除 - ブラックリストのメール"
 
-#: ../inc/base.php:2021 ../inc/base.php:2294
-#: ../templates/rencontre_account.php:165
+#: ../inc/base.php:2053 ../inc/base.php:2339
+#: ../templates/rencontre_account.php:166
 #: ../templates/rencontre_portrait.php:98
-#: ../templates/rencontre_registration_part1.php:111
-#: ../templates/rencontre_search.php:59 ../templates/rencontre_search.php:68
+#: ../templates/rencontre_registration_part1.php:110
+#: ../templates/rencontre_search.php:64 ../templates/rencontre_search.php:81
 msgid "cm"
 msgstr "cm"
 
-#: ../inc/base.php:2021 ../inc/base.php:2295
-#: ../templates/rencontre_account.php:168
-#: ../templates/rencontre_portrait.php:98
-#: ../templates/rencontre_registration_part1.php:114
-#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
-msgid "ft"
-msgstr "ft"
-
-#: ../inc/base.php:2021 ../inc/base.php:2295
-#: ../templates/rencontre_account.php:168
-#: ../templates/rencontre_portrait.php:98
-#: ../templates/rencontre_registration_part1.php:114
-#: ../templates/rencontre_search.php:60 ../templates/rencontre_search.php:69
-msgid "in"
-msgstr "in"
-
-#: ../inc/base.php:2023 ../inc/base.php:2307
-#: ../templates/rencontre_account.php:184
+#: ../inc/base.php:2061 ../inc/base.php:2360
+#: ../templates/rencontre_account.php:188
 #: ../templates/rencontre_portrait.php:102
 #: ../templates/rencontre_registration_part1.php:129
-#: ../templates/rencontre_search.php:85 ../templates/rencontre_search.php:94
+#: ../templates/rencontre_search.php:106 ../templates/rencontre_search.php:123
 msgid "kg"
 msgstr "kg"
 
-#: ../inc/base.php:2023 ../inc/base.php:2308
-#: ../templates/rencontre_account.php:187
+#: ../inc/base.php:2062 ../inc/base.php:2365
+#: ../templates/rencontre_account.php:193
 #: ../templates/rencontre_portrait.php:102
-#: ../templates/rencontre_registration_part1.php:132
-#: ../templates/rencontre_search.php:86 ../templates/rencontre_search.php:95
+#: ../templates/rencontre_registration_part1.php:134
+#: ../templates/rencontre_search.php:111 ../templates/rencontre_search.php:128
 msgid "lbs"
 msgstr "lbs"
 
-#: ../inc/base.php:2026 ../inc/base.php:2398 ../inc/rencontre_widget.php:1036
-#: ../inc/rencontre_widget.php:1195 ../inc/rencontre_widget.php:1852
-#: ../inc/rencontre_widget.php:2757 ../inc/rencontre_widget.php:3310
-#: ../templates/rencontre_account.php:318
+#: ../inc/base.php:2067 ../inc/base.php:2457 ../inc/rencontre_widget.php:1043
+#: ../inc/rencontre_widget.php:1203 ../inc/rencontre_widget.php:1865
+#: ../inc/rencontre_widget.php:2780 ../inc/rencontre_widget.php:3336
+#: ../templates/rencontre_account.php:348
 #: ../templates/rencontre_sidebar_top.php:57
 msgid "Profile switched off"
 msgstr "プロファイルがオフになりました"
 
-#: ../inc/base.php:2027 ../inc/base.php:2397 ../inc/base.php:2688
-#: ../inc/rencontre_widget.php:1035 ../inc/rencontre_widget.php:1852
-#: ../inc/rencontre_widget.php:2075 ../inc/rencontre_widget.php:2757
-#: ../inc/rencontre_widget.php:3310 ../templates/rencontre_account.php:317
+#: ../inc/base.php:2068 ../inc/base.php:2456 ../inc/base.php:2746
+#: ../inc/rencontre_widget.php:1042 ../inc/rencontre_widget.php:1865
+#: ../inc/rencontre_widget.php:2097 ../inc/rencontre_widget.php:2780
+#: ../inc/rencontre_widget.php:3336 ../templates/rencontre_account.php:347
 #: ../templates/rencontre_sidebar_top.php:57
 msgid "Profile hidden"
 msgstr "プロフィールを非表示"
 
-#: ../inc/base.php:2029
+#: ../inc/base.php:2070
 msgid "multiple choice"
 msgstr "多重選択"
 
-#: ../inc/base.php:2031
+#: ../inc/base.php:2072
 msgid "to"
 msgstr "to"
 
-#: ../inc/base.php:2178
+#: ../inc/base.php:2221
 msgid "Change a Profile"
 msgstr "プロファイルを変更する"
 
-#: ../inc/base.php:2179 ../inc/rencontre_widget.php:2793
-#: ../inc/rencontre_widget.php:3347
+#: ../inc/base.php:2222 ../inc/rencontre_widget.php:2817
+#: ../inc/rencontre_widget.php:3373
 msgid "Previous page"
 msgstr "前のページ"
 
-#: ../inc/base.php:2187 ../inc/base.php:2409
+#: ../inc/base.php:2230 ../inc/base.php:2468
 #: ../templates/rencontre_portrait_edit.php:105
 #: ../templates/rencontre_portrait_edit.php:183
 msgid "Save profile"
 msgstr "Save profile"
 
-#: ../inc/base.php:2197
+#: ../inc/base.php:2240
 msgid "Click to delete"
 msgstr "クリックして削除"
 
-#: ../inc/base.php:2200 ../templates/rencontre_portrait_edit.php:54
+#: ../inc/base.php:2243 ../templates/rencontre_portrait_edit.php:54
 msgid "Click to add a photo"
 msgstr "クリックして写真を追加"
 
-#: ../inc/base.php:2205 ../templates/rencontre_portrait_edit.php:74
+#: ../inc/base.php:2248 ../templates/rencontre_portrait_edit.php:74
 msgid "Delete all photos"
 msgstr "すべての写真を削除"
 
-#: ../inc/base.php:2216 ../templates/rencontre_portrait_edit.php:96
+#: ../inc/base.php:2259 ../templates/rencontre_portrait_edit.php:96
 msgid "My attention-catcher"
 msgstr "アイキャッチ"
 
-#: ../inc/base.php:2218 ../templates/rencontre_portrait_edit.php:100
+#: ../inc/base.php:2261 ../templates/rencontre_portrait_edit.php:100
 msgid "My ad"
 msgstr "My ad"
 
-#: ../inc/base.php:2226 ../templates/rencontre_account.php:74
+#: ../inc/base.php:2269 ../templates/rencontre_account.php:74
 #: ../templates/rencontre_registration_part1.php:59
 msgid "I am"
 msgstr "私は"
 
-#: ../inc/base.php:2236 ../templates/rencontre_account.php:88
+#: ../inc/base.php:2279 ../templates/rencontre_account.php:88
 #: ../templates/rencontre_registration_part1.php:71
 msgid "Born"
 msgstr "生まれ"
 
-#: ../inc/base.php:2258 ../templates/rencontre_account.php:128
+#: ../inc/base.php:2301 ../templates/rencontre_account.php:128
 #: ../templates/rencontre_registration_part2.php:30
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:17
 msgid "My country"
 msgstr "出身国"
 
-#: ../inc/base.php:2269 ../templates/rencontre_account.php:139
+#: ../inc/base.php:2312 ../templates/rencontre_account.php:139
 #: ../templates/rencontre_registration_part2.php:41
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:25
 msgid "My region"
 msgstr "地域"
 
-#: ../inc/base.php:2280 ../templates/rencontre_account.php:149
+#: ../inc/base.php:2323 ../templates/rencontre_account.php:149
 #: ../templates/rencontre_registration_part2.php:50
 #: ../templates/rencontre_wp-geonames_location_taxonomy.php:31
 msgid "My city"
 msgstr "市区町村"
 
-#: ../inc/base.php:2283
+#: ../inc/base.php:2326
 msgid "Reset GPS"
 msgstr "GPSをリセット"
 
-#: ../inc/base.php:2290 ../templates/rencontre_account.php:160
+#: ../inc/base.php:2333 ../templates/rencontre_account.php:161
 #: ../templates/rencontre_registration_part1.php:106
 msgid "My height"
 msgstr "身長"
 
-#: ../inc/base.php:2303 ../templates/rencontre_account.php:179
-#: ../templates/rencontre_registration_part1.php:124
+#: ../inc/base.php:2354 ../templates/rencontre_account.php:183
+#: ../templates/rencontre_registration_part1.php:125
 msgid "My weight"
 msgstr "体重"
 
-#: ../inc/base.php:2315 ../inc/rencontre_filter.php:855
-#: ../templates/rencontre_account.php:198 ../templates/rencontre_imgreg.php:39
+#: ../inc/base.php:2374 ../inc/rencontre_filter.php:871
+#: ../templates/rencontre_account.php:204 ../templates/rencontre_imgreg.php:39
 #: ../templates/rencontre_libre_search.php:30
 #: ../templates/rencontre_portrait.php:150
 #: ../templates/rencontre_registration_part3.php:33
@@ -957,22 +945,22 @@ msgstr "体重"
 msgid "I'm looking for"
 msgstr "対象"
 
-#: ../inc/base.php:2331 ../templates/rencontre_account.php:227
+#: ../inc/base.php:2390 ../templates/rencontre_account.php:233
 #: ../templates/rencontre_registration_part3.php:60
 msgid "Age min/max"
 msgstr "年齢 最小/最大"
 
-#: ../inc/base.php:2336 ../inc/base.php:2343 ../inc/rencontre_widget.php:549
-#: ../templates/rencontre_account.php:233
-#: ../templates/rencontre_account.php:242
+#: ../inc/base.php:2395 ../inc/base.php:2402 ../inc/rencontre_widget.php:556
+#: ../templates/rencontre_account.php:239
+#: ../templates/rencontre_account.php:248
 #: ../templates/rencontre_libre_search.php:46
 #: ../templates/rencontre_libre_search.php:56
-#: ../templates/rencontre_mini_portrait.php:54
+#: ../templates/rencontre_mini_portrait.php:55
 #: ../templates/rencontre_mini_portrait_chat.php:42
 #: ../templates/rencontre_portrait.php:95
 #: ../templates/rencontre_registration_part3.php:66
 #: ../templates/rencontre_registration_part3.php:75
-#: ../templates/rencontre_search.php:36 ../templates/rencontre_search.php:43
+#: ../templates/rencontre_search.php:39 ../templates/rencontre_search.php:46
 #: ../templates/rencontre_search_result.php:47
 #: ../templates/rencontre_search_result.php:67
 #: ../templates/rencontre_sidebar_quick_search.php:33
@@ -981,29 +969,29 @@ msgstr "年齢 最小/最大"
 msgid "years"
 msgstr "年"
 
-#: ../inc/base.php:2351 ../templates/rencontre_account.php:252
+#: ../inc/base.php:2410 ../templates/rencontre_account.php:258
 #: ../templates/rencontre_registration_part3.php:85
 msgid "For"
 msgstr "For"
 
-#: ../inc/base.php:2366
+#: ../inc/base.php:2425
 msgid "Reset"
 msgstr "リセット"
 
-#: ../inc/base.php:2368
+#: ../inc/base.php:2427
 msgid "Actions (contact request...)"
 msgstr "アクション（コンタクトリクエスト）"
 
-#: ../inc/base.php:2369
+#: ../inc/base.php:2428
 msgid "Reports"
 msgstr "リポート"
 
-#: ../inc/base.php:2372
+#: ../inc/base.php:2431
 msgid "no mail"
 msgstr "メールなし"
 
-#: ../inc/base.php:2378 ../inc/rencontre_widget.php:379
-#: ../templates/rencontre_mini_portrait.php:68
+#: ../inc/base.php:2437 ../inc/rencontre_widget.php:386
+#: ../templates/rencontre_mini_portrait.php:69
 #: ../templates/rencontre_portrait.php:124
 #: ../templates/rencontre_portrait.php:154
 #: ../templates/rencontre_search_result.php:84
@@ -1011,79 +999,79 @@ msgstr "メールなし"
 msgid "online"
 msgstr "オンライン"
 
-#: ../inc/base.php:2385 ../inc/rencontre_filter.php:956
+#: ../inc/base.php:2444 ../inc/rencontre_filter.php:972
 #: ../templates/rencontre_mail_fastreg_confirm.php:11
 msgid "Confirmation email"
 msgstr "メール確認"
 
-#: ../inc/base.php:2387 ../lang/rencontre-js-admin-lang.php:5
+#: ../inc/base.php:2446 ../lang/rencontre-js-admin-lang.php:5
 msgid "Confirm"
 msgstr "確認"
 
-#: ../inc/base.php:2393 ../templates/rencontre_account.php:311
+#: ../inc/base.php:2452 ../templates/rencontre_account.php:341
 msgid "Profile visibility"
 msgstr "プロファイルの可視性"
 
-#: ../inc/base.php:2396 ../templates/rencontre_account.php:316
+#: ../inc/base.php:2455 ../templates/rencontre_account.php:346
 msgid "Profile visible"
 msgstr "プロフィールが見える"
 
-#: ../inc/base.php:2478 ../inc/rencontre_widget.php:644
+#: ../inc/base.php:2537 ../inc/rencontre_widget.php:651
 msgid "Done"
 msgstr "完了"
 
-#: ../inc/base.php:2510 ../rencontre.php:225 ../rencontre.php:233
+#: ../inc/base.php:2569 ../rencontre.php:232 ../rencontre.php:240
 msgid "Jail"
 msgstr "ジェイル(要注意)"
 
-#: ../inc/base.php:2511
+#: ../inc/base.php:2570
 msgid ""
 "List of members removed by Admin. They are blacklisted. Subscription blocked"
 msgstr ""
 "管理者によって削除されたメンバーの一覧です。彼らはブラックリストに登録されて"
 "います。サブスクリプションはブロックされています。"
 
-#: ../inc/base.php:2511
+#: ../inc/base.php:2570
 msgid "days"
 msgstr "日数"
 
-#: ../inc/base.php:2545
+#: ../inc/base.php:2604
 msgid "Date"
 msgstr "日付"
 
-#: ../inc/base.php:2546
+#: ../inc/base.php:2605
 msgid "Email address"
 msgstr "メールアドレス"
 
-#: ../inc/base.php:2548
+#: ../inc/base.php:2607
 msgid "End"
 msgstr "End"
 
-#: ../inc/base.php:2549
+#: ../inc/base.php:2608
 msgid "Banning"
 msgstr "Banning"
 
-#: ../inc/base.php:2557
+#: ../inc/base.php:2616
 msgid "Release"
 msgstr "リリース"
 
-#: ../inc/base.php:2558
+#: ../inc/base.php:2617
 msgid "Only email"
 msgstr "メールのみ"
 
-#: ../inc/base.php:2558
+#: ../inc/base.php:2617
 msgid "Only IP"
 msgstr "IPのみ"
 
-#: ../inc/base.php:2558
+#: ../inc/base.php:2617
 msgid "Email and IP"
 msgstr "メールとIP"
 
-#: ../inc/base.php:2563
+#: ../inc/base.php:2622
 msgid "Banning IP is a Premium feature."
 msgstr "IPのBanはプレミアム機能です。"
 
-#: ../inc/base.php:2607
+#: ../inc/base.php:2665
 msgid ""
 "The profiles are not all translated into the language of the site. Users "
 "will see the character \"?\"."
@@ -1091,32 +1079,32 @@ msgstr ""
 "プロファイルがすべてサイトの言語に翻訳されているわけではありません。 ユーザー"
 "には「？」という文字が表示されます。"
 
-#: ../inc/base.php:2643 ../rencontre.php:226
+#: ../inc/base.php:2701 ../rencontre.php:233
 #: ../templates/rencontre_mail_regular.php:40
 #: ../templates/rencontre_message_write.php:49
-#: ../templates/rencontre_mini_portrait.php:66
-#: ../templates/rencontre_mini_portrait.php:74
+#: ../templates/rencontre_mini_portrait.php:67
+#: ../templates/rencontre_mini_portrait.php:75
 #: ../templates/rencontre_search_result.php:117
 #: ../templates/rencontre_search_result.php:120
 msgid "Profile"
 msgstr "プロファイル"
 
-#: ../inc/base.php:2646
+#: ../inc/base.php:2704
 msgid ""
 "It does not appear to be any profile. You can load the default profile if "
 "you wish."
 msgstr ""
 "何のプロフィールもありません。デフォルトのプロファイルをロードしてください。"
 
-#: ../inc/base.php:2648
+#: ../inc/base.php:2706
 msgid "Load profiles"
 msgstr "プロファイルの読み込み"
 
-#: ../inc/base.php:2657
+#: ../inc/base.php:2715
 msgid "You can create, rename and delete items from the profile."
 msgstr "プロフィールから項目の作成、名前の変更、削除ができます。"
 
-#: ../inc/base.php:2659
+#: ../inc/base.php:2717
 msgid ""
 "Warning, this is not without consequences. The changes will be applied to "
 "the member profiles that can offend. Caution !"
@@ -1124,130 +1112,130 @@ msgstr ""
 "警告、これは結果がないわけではありません。この変更は、不快感を与える可能性の"
 "あるメンバーのプロフィールに適用されます。注意!"
 
-#: ../inc/base.php:2661 ../inc/base.php:2971
+#: ../inc/base.php:2719 ../inc/base.php:3029
 msgid "Ref language"
 msgstr "参照言語"
 
-#: ../inc/base.php:2661 ../inc/base.php:2971
+#: ../inc/base.php:2719 ../inc/base.php:3029
 msgid "Other"
 msgstr "その他"
 
-#: ../inc/base.php:2670 ../inc/base.php:2982
+#: ../inc/base.php:2728 ../inc/base.php:3040
 msgid "Add Language (2 lowercase letters comply with country code)"
 msgstr "言語の追加 (小文字2文字で国コードに準拠)"
 
-#: ../inc/base.php:2672 ../inc/base.php:2984
+#: ../inc/base.php:2730 ../inc/base.php:3042
 msgid "Add a language"
 msgstr "言語の追加"
 
-#: ../inc/base.php:2675 ../inc/base.php:2987
+#: ../inc/base.php:2733 ../inc/base.php:3045
 msgid "Remove a language and all related content"
 msgstr "言語と関連するすべてのコンテンツを削除する"
 
-#: ../inc/base.php:2679 ../inc/base.php:2991
+#: ../inc/base.php:2737 ../inc/base.php:3049
 msgid "Remove a language"
 msgstr "言語を削除する"
 
-#: ../inc/base.php:2685
+#: ../inc/base.php:2743
 msgid "User blocking if a required field is missing"
 msgstr "必須フィールドが欠落している場合のユーザーのブロック"
 
-#: ../inc/base.php:2687
+#: ../inc/base.php:2745
 msgid "Just show a warning"
 msgstr "警告を表示するだけ"
 
-#: ../inc/base.php:2698
+#: ../inc/base.php:2756
 msgid "Add category"
 msgstr "カテゴリーの追加"
 
-#: ../inc/base.php:2722 ../lang/rencontre-js-admin-lang.php:10
+#: ../inc/base.php:2780 ../lang/rencontre-js-admin-lang.php:10
 #: ../templates/rencontre_portrait_edit.php:131
 msgid "Required field (hidden)"
 msgstr "必須フィールド（非表示）"
 
-#: ../inc/base.php:2740 ../inc/base.php:2760 ../inc/base.php:2794
-#: ../inc/base.php:2822
+#: ../inc/base.php:2798 ../inc/base.php:2818 ../inc/base.php:2852
+#: ../inc/base.php:2880
 msgid "Move Up"
 msgstr "上に移動"
 
-#: ../inc/base.php:2741 ../inc/base.php:2761 ../inc/base.php:2795
-#: ../inc/base.php:2823
+#: ../inc/base.php:2799 ../inc/base.php:2819 ../inc/base.php:2853
+#: ../inc/base.php:2881
 msgid "Move Down"
 msgstr "下に移動"
 
-#: ../inc/base.php:2742
+#: ../inc/base.php:2800
 msgid "Change the name"
 msgstr "名前の変更"
 
-#: ../inc/base.php:2743
+#: ../inc/base.php:2801
 msgid "Remove the category"
 msgstr "カテゴリの削除"
 
-#: ../inc/base.php:2747 ../inc/base.php:2748
+#: ../inc/base.php:2805 ../inc/base.php:2806
 msgid "Add value to this category"
 msgstr "このカテゴリに値をつける"
 
-#: ../inc/base.php:2762 ../inc/base.php:3016
+#: ../inc/base.php:2820 ../inc/base.php:3074
 msgid "Change the name or type"
 msgstr "名前やタイプの変更"
 
-#: ../inc/base.php:2763 ../inc/base.php:2797 ../inc/base.php:2825
-#: ../inc/base.php:3017 ../inc/base.php:3028 ../inc/base.php:3260
-#: ../inc/base.php:3281 ../lang/rencontre-js-admin-lang.php:7
+#: ../inc/base.php:2821 ../inc/base.php:2855 ../inc/base.php:2883
+#: ../inc/base.php:3075 ../inc/base.php:3086 ../inc/base.php:3350
+#: ../inc/base.php:3371 ../lang/rencontre-js-admin-lang.php:7
 msgid "Remove"
 msgstr "削除"
 
-#: ../inc/base.php:2770
+#: ../inc/base.php:2828
 msgid "A line of text (TEXT)"
 msgstr "テキストの行（TEXT）"
 
-#: ../inc/base.php:2774
+#: ../inc/base.php:2832
 msgid "Large text box (TEXTAREA)"
 msgstr "大きなテキストボックス(TEXTAREA)"
 
-#: ../inc/base.php:2779 ../inc/base.php:2807 ../inc/base.php:3022
-#: ../inc/base.php:3261 ../inc/base.php:3282
+#: ../inc/base.php:2837 ../inc/base.php:2865 ../inc/base.php:3080
+#: ../inc/base.php:3351 ../inc/base.php:3372
 msgid "Add Value"
 msgstr "値を追加"
 
-#: ../inc/base.php:2780
+#: ../inc/base.php:2838
 msgid "Single choice list (SELECT)"
 msgstr "単一選択リスト(SELECT)"
 
-#: ../inc/base.php:2796 ../inc/base.php:2824 ../inc/base.php:2840
-#: ../inc/base.php:3027 ../templates/rencontre_account.php:48
+#: ../inc/base.php:2854 ../inc/base.php:2882 ../inc/base.php:2899
+#: ../inc/base.php:3085 ../templates/rencontre_account.php:48
 msgid "Change"
 msgstr "変更"
 
-#: ../inc/base.php:2808
+#: ../inc/base.php:2866
 msgid "Multiple choice list (CHECKBOX)"
 msgstr "複数選択リスト(CHECKBOX)"
 
-#: ../inc/base.php:2835
+#: ../inc/base.php:2893
 msgid "Numeric choice list (SELECT)"
 msgstr "数値選択リスト(SELECT)"
 
-#: ../inc/base.php:2842 ../lang/rencontre-js-admin-lang.php:34
+#: ../inc/base.php:2901 ../lang/rencontre-js-admin-lang.php:34
 msgid "Step"
 msgstr "ステップ"
 
-#: ../inc/base.php:2849
+#: ../inc/base.php:2908
 msgid "A date (DATE)"
 msgstr "日付(DATE)"
 
-#: ../inc/base.php:2885 ../inc/base.php:2963
+#: ../inc/base.php:2944 ../inc/base.php:3021
 msgid "Countries and Regions"
 msgstr "国と地域"
 
-#: ../inc/base.php:2886
+#: ../inc/base.php:2945
 msgid "Cleaner"
 msgstr "クリーナー"
 
-#: ../inc/base.php:2945
+#: ../inc/base.php:3003
 msgid "Datas are old. You should delete all countries and load the new ones."
 msgstr "データが古いです。すべての国を削除して、新しい国をロードしてください。"
 
-#: ../inc/base.php:2954
+#: ../inc/base.php:3012
 msgid ""
 "If a country is loaded in wp-geonames, the regions list of this country will "
 "come from the wp-geonames base and not from here."
@@ -1255,7 +1243,7 @@ msgstr ""
 "wp-geonames に国が読み込まれている場合、この国の地域リストは wp-geonames ベー"
 "スのもので、ここからではありません。"
 
-#: ../inc/base.php:2966
+#: ../inc/base.php:3024
 msgid ""
 "The country table is empty. You can load the countries and regions by "
 "default if you wish."
@@ -1263,183 +1251,203 @@ msgstr ""
 "国のテーブルは空です。必要に応じて、国と地域をデフォルトで読み込むことができ"
 "ます。"
 
-#: ../inc/base.php:2967
+#: ../inc/base.php:3025
 msgid "Load countries"
 msgstr "国の読み込み"
 
-#: ../inc/base.php:2970
+#: ../inc/base.php:3028
 msgid "You can create, rename and delete countries and regions."
 msgstr "国や地域の作成、名前の変更、削除ができます。"
 
-#: ../inc/base.php:2997 ../inc/base.php:2998
+#: ../inc/base.php:3055 ../inc/base.php:3056
 msgid "Add a country"
 msgstr "国を追加"
 
-#: ../inc/base.php:3000 ../inc/base.php:3001
+#: ../inc/base.php:3058 ../inc/base.php:3059
 msgid "Delete all countries"
 msgstr "すべての国を削除"
 
-#: ../inc/base.php:3023
+#: ../inc/base.php:3081
 msgid "Regions"
 msgstr "地域"
 
-#: ../inc/base.php:3044
+#: ../inc/base.php:3102
 msgid "Cleaning missing regions in users data"
 msgstr "ユーザーデータの欠落した領域のクリーニング"
 
-#: ../inc/base.php:3048
+#: ../inc/base.php:3106
 msgid "Missing regions"
 msgstr "欠落している地域"
 
-#: ../inc/base.php:3068
+#: ../inc/base.php:3126
 msgid "Existing regions"
 msgstr "既存の地域"
 
-#: ../inc/base.php:3080
+#: ../inc/base.php:3138
 msgid "Replace"
 msgstr "置換"
 
-#: ../inc/base.php:3115
+#: ../inc/base.php:3173
 msgid "Features"
 msgstr "特徴"
 
-#: ../inc/base.php:3116
+#: ../inc/base.php:3174
 msgid "Words"
 msgstr "単語"
 
-#: ../inc/base.php:3118
+#: ../inc/base.php:3176
 msgid "Templates"
 msgstr "テンプレート"
 
-#: ../inc/base.php:3123
+#: ../inc/base.php:3181
 msgid "Translate"
 msgstr "翻訳"
 
-#: ../inc/base.php:3147
+#: ../inc/base.php:3205
 msgid "No country"
 msgstr "国がありません"
 
-#: ../inc/base.php:3151
+#: ../inc/base.php:3209
 msgid "No region"
 msgstr "地域なし"
 
-#: ../inc/base.php:3155
+#: ../inc/base.php:3213
 msgid "No localisation"
 msgstr "ローカライゼーションなし"
 
-#: ../inc/base.php:3159
+#: ../inc/base.php:3217
 msgid "No birth date"
 msgstr "生年月日なし"
 
-#: ../inc/base.php:3163
+#: ../inc/base.php:3221
 msgid "Min age"
 msgstr "最少年齢"
 
-#: ../inc/base.php:3175
+#: ../inc/base.php:3233
 msgid "Max age"
 msgstr "最高年齢"
 
-#: ../inc/base.php:3187
-msgid "No smiles"
-msgstr "ノースマイル"
-
-#: ../inc/base.php:3191
-msgid "No contact request"
-msgstr "コンタクトリクエストなし"
-
-#: ../inc/base.php:3195
+#: ../inc/base.php:3245
 msgid "No weight"
 msgstr "体重なし"
 
-#: ../inc/base.php:3199
+#: ../inc/base.php:3249
+msgid "Min weight"
+msgstr "最小重量"
+
+#: ../inc/base.php:3262
+msgid "Max weight"
+msgstr "最大重量"
+
+#: ../inc/base.php:3275 ../templates/rencontre_account.php:284
 msgid "Weight unit"
 msgstr "体重単位"
 
-#: ../inc/base.php:3202
+#: ../inc/base.php:3278 ../templates/rencontre_account.php:286
 msgid "Kilograms"
 msgstr "キログラム"
 
-#: ../inc/base.php:3203
+#: ../inc/base.php:3279 ../templates/rencontre_account.php:287
 msgid "Pounds"
 msgstr "ポンド"
 
-#: ../inc/base.php:3208
+#: ../inc/base.php:3280 ../inc/base.php:3318
+msgid "Both, the user chooses"
+msgstr "どちらもユーザーが選択"
+
+#: ../inc/base.php:3285
 msgid "No height"
 msgstr "身長なし"
 
-#: ../inc/base.php:3212
+#: ../inc/base.php:3289
+msgid "Min height"
+msgstr "最小高さ"
+
+#: ../inc/base.php:3301
+msgid "Max height"
+msgstr "最大高さ"
+
+#: ../inc/base.php:3313 ../templates/rencontre_account.php:295
 msgid "Height unit"
 msgstr "身長の単位"
 
-#: ../inc/base.php:3215
+#: ../inc/base.php:3316 ../templates/rencontre_account.php:297
 msgid "Meter"
 msgstr "メートル"
 
-#: ../inc/base.php:3216
+#: ../inc/base.php:3317 ../templates/rencontre_account.php:298
 msgid "Feet and Inches"
 msgstr "フィートとインチ"
 
-#: ../inc/base.php:3221
+#: ../inc/base.php:3323
+msgid "No smiles"
+msgstr "ノースマイル"
+
+#: ../inc/base.php:3327
+msgid "No contact request"
+msgstr "コンタクトリクエストなし"
+
+#: ../inc/base.php:3331
 msgid "No report"
 msgstr "リポートなし"
 
-#: ../inc/base.php:3225
+#: ../inc/base.php:3335
 msgid "No emoticon"
 msgstr "エモーティコンなし"
 
-#: ../inc/base.php:3229
-msgid "No menu (I use WordPress menu)"
-msgstr "メニューなし（WordPressのメニューを使用）"
-
-#: ../inc/base.php:3233
-msgid "No sidebar (I put it with widget)"
-msgstr "サイドバーなし（ウィジェットと一緒に設置）"
-
-#: ../inc/base.php:3237
-msgid "Fit portraits width in home page"
-msgstr "ホームページのポートレートの幅に合わせる"
-
-#: ../inc/base.php:3241
-msgid "No ads on logged out plugin homepage"
-msgstr "ログアウトしたプラグインのホームページに広告はありません"
-
-#: ../inc/base.php:3245
-msgid "Only photo on logged out plugin homepage"
-msgstr "ログアウトしたプラグインのホームページの写真のみ"
-
-#: ../inc/base.php:3249
+#: ../inc/base.php:3339
 msgid "Change relation type"
 msgstr "リレーションタイプの変更"
 
-#: ../inc/base.php:3270
+#: ../inc/base.php:3360
 msgid "Change sex values"
 msgstr "性を変更"
 
-#: ../inc/base.php:3291
+#: ../inc/base.php:3381
 msgid "Allow multi choice in relation and sex"
 msgstr "性別と関係性の複数選択を許可"
 
-#: ../inc/base.php:3295
+#: ../inc/base.php:3385
 msgid "No homosexual"
 msgstr "ホモセクシュアルなし"
 
-#: ../inc/base.php:3299
+#: ../inc/base.php:3389
 msgid "No sex change"
 msgstr "性別変更なし"
 
-#: ../inc/base.php:3303
+#: ../inc/base.php:3393
+msgid "No menu (I use WordPress menu)"
+msgstr "メニューなし（WordPressのメニューを使用）"
+
+#: ../inc/base.php:3397
+msgid "No sidebar (I put it with widget)"
+msgstr "サイドバーなし（ウィジェットと一緒に設置）"
+
+#: ../inc/base.php:3401
+msgid "Fit portraits width in home page"
+msgstr "ホームページのポートレートの幅に合わせる"
+
+#: ../inc/base.php:3405
+msgid "No ads on logged out plugin homepage"
+msgstr "ログアウトしたプラグインのホームページに広告はありません"
+
+#: ../inc/base.php:3409
+msgid "Only photo on logged out plugin homepage"
+msgstr "ログアウトしたプラグインのホームページの写真のみ"
+
+#: ../inc/base.php:3413
 msgid "Change register link on click a portrait"
 msgstr "ポートレイトをクリックして登録リンクを変更する"
 
-#: ../inc/base.php:3303
+#: ../inc/base.php:3413
 msgid "(empty => default WP)"
 msgstr "(empty => default WP)"
 
-#: ../inc/base.php:3307
+#: ../inc/base.php:3417
 msgid "No 'no email' button"
 msgstr "No 'no email' button"
 
-#: ../inc/base.php:3311
+#: ../inc/base.php:3421
 msgid ""
 "Be careful, already registered members will be in a category that no longer "
 "exists. They should update their account."
@@ -1447,32 +1455,32 @@ msgstr ""
 "すでに登録されている会員は、もはや存在しないカテゴリになっているので注意して"
 "ください。彼らは自分のアカウントを更新する必要があります。"
 
-#: ../inc/base.php:3332
+#: ../inc/base.php:3442
 msgid "Change welcome text for new user"
 msgstr "新規ユーザーのためのウェルカムテキストの変更"
 
-#: ../inc/base.php:3336 ../templates/rencontre_registration_part1.php:33
+#: ../inc/base.php:3446 ../templates/rencontre_registration_part1.php:33
 msgid ""
 "You will access all the possibilities offered by the site in few minutes."
 msgstr "数分でサイトが提供するすべての機能にアクセスすることができます。"
 
-#: ../inc/base.php:3337 ../templates/rencontre_registration_part1.php:34
+#: ../inc/base.php:3447 ../templates/rencontre_registration_part1.php:34
 msgid "Before that, you need to provide some information requested below."
 msgstr "その前に、以下のような情報を提供してください。"
 
-#: ../inc/base.php:3338 ../templates/rencontre_registration_part1.php:38
+#: ../inc/base.php:3448 ../templates/rencontre_registration_part1.php:38
 msgid ""
 "We would like to inform you that we do not use your personal data outside of "
 "this site."
 msgstr "個人情報は、当サイト以外では一切使用いたしません。"
 
-#: ../inc/base.php:3339 ../templates/rencontre_registration_part1.php:39
+#: ../inc/base.php:3449 ../templates/rencontre_registration_part1.php:39
 msgid ""
 "Deleting your account on your part or ours, causes the deletion of all your "
 "data."
 msgstr "あなたのアカウントを削除すると、あなたのデータはすべて削除されます。"
 
-#: ../inc/base.php:3340 ../templates/rencontre_registration_part1.php:40
+#: ../inc/base.php:3450 ../templates/rencontre_registration_part1.php:40
 msgid ""
 "This also applies to messages that you have sent to other members as well as "
 "those they have sent to you."
@@ -1480,25 +1488,25 @@ msgstr ""
 "これは、他のメンバーに送ったメッセージだけでなく、他のメンバーが自分に送った"
 "メッセージにも適用されます。"
 
-#: ../inc/base.php:3341 ../templates/rencontre_registration_part1.php:44
+#: ../inc/base.php:3451 ../templates/rencontre_registration_part1.php:44
 msgid "We wish you nice encounters."
 msgstr "素敵な出会いがありますように。"
 
-#: ../inc/base.php:3347
+#: ../inc/base.php:3457
 msgid "Change warning account blocked"
 msgstr "ブロックされた警告アカウントを変更する"
 
-#: ../inc/base.php:3351 ../inc/base.php:3353 ../inc/rencontre_widget.php:206
+#: ../inc/base.php:3461 ../inc/base.php:3463 ../inc/rencontre_widget.php:207
 msgid "Your account is blocked. You are invisible. Change your profile."
 msgstr ""
 "あなたのアカウントはブロックされています。あなたは非表示になっています。プロ"
 "フィールを変更してください。"
 
-#: ../inc/base.php:3357
+#: ../inc/base.php:3467
 msgid "Change warning empty profile"
 msgstr "警告の空のプロファイルを変更する"
 
-#: ../inc/base.php:3361 ../inc/base.php:3363
+#: ../inc/base.php:3471 ../inc/base.php:3473
 #: ../templates/rencontre_modal_warning.php:47
 msgid ""
 "Your profile is empty. To take advantage of the site and being more visible, "
@@ -1507,22 +1515,22 @@ msgstr ""
 "あなたのプロフィールは空です。より多くの人に見てもらうために、プロフィールを"
 "埋めましょう。"
 
-#: ../inc/base.php:3367
+#: ../inc/base.php:3477
 msgid "Change the quarantine warning"
 msgstr "隔離警告の変更"
 
-#: ../inc/base.php:3371 ../inc/base.php:3373 ../inc/rencontre_filter.php:878
+#: ../inc/base.php:3481 ../inc/base.php:3483 ../inc/rencontre_filter.php:894
 #: ../templates/rencontre_registration_jail.php:17
 msgid "Your email address is currently in quarantine. Sorry"
 msgstr "あなたのメールアドレスは現在隔離されています。申し訳ありません。"
 
-#: ../inc/base.php:3377
+#: ../inc/base.php:3487
 msgid "Change the no-photo warning"
 msgstr "写真がない状態の警告を変更"
 
-#: ../inc/base.php:3381 ../inc/base.php:3383 ../inc/rencontre_widget.php:419
-#: ../inc/rencontre_widget.php:611 ../inc/rencontre_widget.php:1860
-#: ../inc/rencontre_widget.php:2682 ../inc/rencontre_widget.php:3231
+#: ../inc/base.php:3491 ../inc/base.php:3493 ../inc/rencontre_widget.php:426
+#: ../inc/rencontre_widget.php:618 ../inc/rencontre_widget.php:1873
+#: ../inc/rencontre_widget.php:2705 ../inc/rencontre_widget.php:3257
 msgid ""
 "To be more visible and to view photos of other members, you should add one "
 "to your profile."
@@ -1530,38 +1538,38 @@ msgstr ""
 "より多くの人に見てもらうためにも、また、他のメンバーの写真を見るためにも、プ"
 "ロフィールに1枚追加しておきましょう。"
 
-#: ../inc/base.php:3387
+#: ../inc/base.php:3497
 msgid "Change the follow-up email"
 msgstr "フォローアップメールの変更"
 
-#: ../inc/base.php:3392 ../templates/rencontre_mail_remind.php:16
+#: ../inc/base.php:3502 ../templates/rencontre_mail_remind.php:16
 msgid ""
 "You registered on our website but you did not complete the procedure. You'll "
 "miss a date. That's too bad."
 msgstr "登録後、手続きが完了していません。"
 
-#: ../inc/base.php:3393 ../templates/rencontre_mail_remind.php:17
+#: ../inc/base.php:3503 ../templates/rencontre_mail_remind.php:17
 msgid ""
 "Thus take two minutes to finish the registration. You should not be "
 "disappointed."
 msgstr "2分で登録は完了します。"
 
-#: ../inc/base.php:3394 ../templates/rencontre_mail_fastreg_confirm.php:16
+#: ../inc/base.php:3504 ../templates/rencontre_mail_fastreg_confirm.php:16
 #: ../templates/rencontre_mail_instant.php:52
 #: ../templates/rencontre_mail_regular_global.php:74
 #: ../templates/rencontre_mail_remind.php:18
 msgid "Regards,"
 msgstr "よろしくお願いいたします。"
 
-#: ../inc/base.php:3400
+#: ../inc/base.php:3510
 msgid "Change Smile word"
 msgstr "スマイルワードを変える"
 
-#: ../inc/base.php:3400 ../inc/base.php:3434
+#: ../inc/base.php:3510 ../inc/base.php:3544
 msgid "(empty => no change)"
 msgstr "(empty => no change)"
 
-#: ../inc/base.php:3404 ../inc/base.php:3405 ../inc/base.php:4481
+#: ../inc/base.php:3514 ../inc/base.php:3515 ../inc/base.php:4599
 #: ../templates/rencontre_mail_regular.php:30
 #: ../templates/rencontre_portrait.php:204
 #: ../templates/rencontre_portrait.php:207
@@ -1571,207 +1579,207 @@ msgstr "(empty => no change)"
 msgid "Smile"
 msgstr "スマイル"
 
-#: ../inc/base.php:3408 ../inc/base.php:3409 ../inc/base.php:4484
+#: ../inc/base.php:3518 ../inc/base.php:3519 ../inc/base.php:4602
 #: ../templates/rencontre_sidebar_top.php:109
 msgid "Who I smiled?"
 msgstr "スマイルされた人"
 
-#: ../inc/base.php:3412 ../inc/base.php:3413 ../inc/rencontre_widget.php:2405
+#: ../inc/base.php:3522 ../inc/base.php:3523 ../inc/rencontre_widget.php:2428
 msgid "I smiled at"
 msgstr "スマイルした人"
 
-#: ../inc/base.php:3416 ../inc/base.php:3417
+#: ../inc/base.php:3526 ../inc/base.php:3527
 #: ../templates/rencontre_mail_instant.php:31
 #: ../templates/rencontre_mail_regular_global.php:35
 msgid "You have received a smile from"
 msgstr "スマイルを受け取りました"
 
-#: ../inc/base.php:3420 ../inc/base.php:3421 ../inc/rencontre_widget.php:3651
+#: ../inc/base.php:3530 ../inc/base.php:3531 ../inc/rencontre_widget.php:3722
 msgid "Smile already sent"
 msgstr "スマイルはすでに送信されています"
 
-#: ../inc/base.php:3424 ../inc/base.php:3425 ../inc/rencontre_widget.php:3686
+#: ../inc/base.php:3534 ../inc/base.php:3535 ../inc/rencontre_widget.php:3757
 msgid "Smile sent"
 msgstr "スマイルが送られました"
 
-#: ../inc/base.php:3428 ../inc/base.php:3429 ../inc/rencontre_widget.php:2446
+#: ../inc/base.php:3538 ../inc/base.php:3539 ../inc/rencontre_widget.php:2469
 msgid "I got a smile from"
 msgstr "スマイルを受け取りました"
 
-#: ../inc/base.php:3434
+#: ../inc/base.php:3544
 msgid "Change Look word"
 msgstr "ルックワードを変える"
 
-#: ../inc/base.php:3438 ../inc/base.php:3439 ../inc/base.php:4482
+#: ../inc/base.php:3548 ../inc/base.php:3549 ../inc/base.php:4600
 #: ../templates/rencontre_sidebar_top.php:87
 msgid "Look"
 msgstr "ルック"
 
-#: ../inc/base.php:3442 ../inc/base.php:3443 ../inc/rencontre_widget.php:2547
+#: ../inc/base.php:3552 ../inc/base.php:3553 ../inc/rencontre_widget.php:2570
 msgid "I was watched by"
 msgstr "閲覧した人"
 
-#: ../inc/base.php:3466
+#: ../inc/base.php:3576
 msgid "No gender restriction in search"
 msgstr "検索に性別の制限はありません"
 
-#: ../inc/base.php:3470
+#: ../inc/base.php:3580
 msgid "Add relation type in quick search"
 msgstr "クイック検索でリレーションタイプを追加"
 
-#: ../inc/base.php:3474
+#: ../inc/base.php:3584
 msgid "No ad in search results"
 msgstr "検索結果に広告なし"
 
-#: ../inc/base.php:3478 ../inc/base.php:3510
+#: ../inc/base.php:3588 ../inc/base.php:3620
 msgid "Add a profile element in quick search"
 msgstr "クイック検索でプロフィール要素を追加"
 
-#: ../inc/base.php:3535
+#: ../inc/base.php:3645
 msgid "Add also numerous profile elements in search? Get the kit Premium."
 msgstr ""
 "検索でも多数のプロフィール要素を追加できます。キットプレミアムを取得してみま"
 "しょう。"
 
-#: ../inc/base.php:3562
+#: ../inc/base.php:3672
 msgid "Menu color"
 msgstr "メニューの色"
 
-#: ../inc/base.php:3577 ../inc/base.php:3592 ../inc/base.php:3607
-#: ../inc/base.php:3622
+#: ../inc/base.php:3687 ../inc/base.php:3702 ../inc/base.php:3717
+#: ../inc/base.php:3732
 msgid "Menu buttons color"
 msgstr "メニューボタンの色"
 
-#: ../inc/base.php:3592
+#: ../inc/base.php:3702
 msgid "warning"
 msgstr "warning"
 
-#: ../inc/base.php:3607
+#: ../inc/base.php:3717
 msgid "checked"
 msgstr "有効"
 
-#: ../inc/base.php:3622
+#: ../inc/base.php:3732
 msgid "hover"
 msgstr "hover"
 
-#: ../inc/base.php:3637
+#: ../inc/base.php:3747
 msgid "Block background color"
 msgstr "ブロックの背景色"
 
-#: ../inc/base.php:3652
+#: ../inc/base.php:3762
 msgid "Title color"
 msgstr "タイトルカラー"
 
-#: ../inc/base.php:3667
+#: ../inc/base.php:3777
 msgid "Text color"
 msgstr "テキストの色"
 
-#: ../inc/base.php:3682
+#: ../inc/base.php:3792
 msgid "Label color"
 msgstr "ラベル色"
 
-#: ../inc/base.php:3697
+#: ../inc/base.php:3807
 msgid "Inline color"
 msgstr "インラインカラー"
 
-#: ../inc/base.php:3712
+#: ../inc/base.php:3822
 msgid "Inline badge color"
 msgstr "インラインバッジの色"
 
-#: ../inc/base.php:3727
+#: ../inc/base.php:3837
 msgid "Line and border color"
 msgstr "ラインとボーダーの色"
 
-#: ../inc/base.php:3742
+#: ../inc/base.php:3852
 msgid "Input background color"
 msgstr "背景色の入力"
 
-#: ../inc/base.php:3757
+#: ../inc/base.php:3867
 msgid "Select background color"
 msgstr "背景色を選択"
 
-#: ../inc/base.php:3772
+#: ../inc/base.php:3882
 msgid "Warning bar background color"
 msgstr "ワーニングバーの背景色"
 
-#: ../inc/base.php:3787
+#: ../inc/base.php:3897
 msgid "Modal warning background color"
 msgstr "モーダル警告の背景色"
 
-#: ../inc/base.php:3802
+#: ../inc/base.php:3912
 msgid "Message sent background color"
 msgstr "メッセージ送信時の背景色"
 
-#: ../inc/base.php:3817
+#: ../inc/base.php:3927
 msgid "Message received background color"
 msgstr "受信したメッセージの背景色"
 
-#: ../inc/base.php:3908
+#: ../inc/base.php:4018
 msgid "Color palette"
 msgstr "カラーパレット"
 
-#: ../inc/base.php:3932
+#: ../inc/base.php:4042
 msgid "Custom templates in your theme"
 msgstr "あなたのテーマのカスタムテンプレート"
 
-#: ../inc/base.php:3935
+#: ../inc/base.php:4045
 msgid "Template file"
 msgstr "テンプレートファイル"
 
-#: ../inc/base.php:3936
+#: ../inc/base.php:4046
 msgid "Plugin version"
 msgstr "プラグインのバージョン"
 
-#: ../inc/base.php:3937
+#: ../inc/base.php:4047
 msgid "Theme version"
 msgstr "Theme version"
 
-#: ../inc/base.php:4470 ../templates/rencontre_menu.php:13
+#: ../inc/base.php:4588 ../templates/rencontre_menu.php:14
 msgid "My homepage"
 msgstr "マイホームページ"
 
-#: ../inc/base.php:4471 ../templates/rencontre_menu.php:14
+#: ../inc/base.php:4589 ../templates/rencontre_menu.php:15
 msgid "My card"
 msgstr "マイカード"
 
-#: ../inc/base.php:4472 ../templates/rencontre_menu.php:19
-#: ../templates/rencontre_menu.php:22
+#: ../inc/base.php:4590 ../templates/rencontre_menu.php:20
+#: ../templates/rencontre_menu.php:23
 #: ../templates/rencontre_portrait_edit.php:30
 msgid "Edit My Profile"
 msgstr "プロフィールの編集"
 
-#: ../inc/base.php:4473 ../templates/rencontre_menu.php:28
-#: ../templates/rencontre_menu.php:31
+#: ../inc/base.php:4591 ../templates/rencontre_menu.php:29
+#: ../templates/rencontre_menu.php:32
 msgid "Messaging"
 msgstr "メッセージング"
 
-#: ../inc/base.php:4475 ../templates/rencontre_account.php:60
-#: ../templates/rencontre_menu.php:44
+#: ../inc/base.php:4593 ../templates/rencontre_account.php:60
+#: ../templates/rencontre_menu.php:45
 msgid "My Account"
 msgstr "マイアカウント"
 
-#: ../inc/base.php:4478 ../inc/rencontre_filter.php:543 ../rencontre.php:998
+#: ../inc/base.php:4596 ../inc/rencontre_filter.php:559 ../rencontre.php:1012
 msgid "Log in"
 msgstr "ログイン"
 
-#: ../inc/base.php:4479 ../inc/rencontre_filter.php:550 ../rencontre.php:1001
-#: ../rencontre.php:1003 ../rencontre.php:1030
+#: ../inc/base.php:4597 ../inc/rencontre_filter.php:566 ../rencontre.php:1015
+#: ../rencontre.php:1017 ../rencontre.php:1044
 msgid "Register"
 msgstr "登録"
 
-#: ../inc/base.php:4483 ../templates/rencontre_sidebar_top.php:96
+#: ../inc/base.php:4601 ../templates/rencontre_sidebar_top.php:96
 msgid "Contact requests"
 msgstr "連絡先のリクエスト"
 
-#: ../inc/base.php:4485 ../templates/rencontre_sidebar_top.php:117
+#: ../inc/base.php:4603 ../templates/rencontre_sidebar_top.php:117
 msgid "Who I asked for a contact?"
 msgstr "連絡先を聞いたのは誰？"
 
-#: ../inc/base.php:4486 ../templates/rencontre_sidebar_top.php:122
+#: ../inc/base.php:4604 ../templates/rencontre_sidebar_top.php:122
 msgid "Who I've blocked?"
 msgstr "ブロックした人は？"
 
-#: ../inc/base.php:4604
+#: ../inc/base.php:4722
 msgid ""
 "The gender of some members is not in accordance with the custom parameter "
 "'change sex values'. These members are not visible."
@@ -1819,11 +1827,11 @@ msgstr ""
 msgid "Add this kit PREMIUM"
 msgstr "プレミアムキットを追加"
 
-#: ../inc/rencontre_don.php:66
+#: ../inc/rencontre_don.php:71
 msgid "How to install this plugin?"
 msgstr "このプラグインをインストールする方法は？"
 
-#: ../inc/rencontre_don.php:68
+#: ../inc/rencontre_don.php:73
 msgid ""
 "In <a href=\"edit.php?post_type=page\">Pages</a>, edit or create the page of "
 "your choice. Add the shortcodes <code>[rencontre][rencontre_libre]</code> in "
@@ -1833,7 +1841,7 @@ msgstr ""
 "作成してください。このページの内容にショートコード<code>[rencontre]"
 "[rencontre_libre]</code>を追加します。"
 
-#: ../inc/rencontre_don.php:69
+#: ../inc/rencontre_don.php:74
 msgid ""
 "In <a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>, set the "
 "plugin page and save."
@@ -1841,7 +1849,7 @@ msgstr ""
 "<a href=\"admin.php?page=rencontre.php\">rencontre / General</a>で、プラグイ"
 "ンページを設定して保存します。"
 
-#: ../inc/rencontre_don.php:70
+#: ../inc/rencontre_don.php:75
 msgid ""
 "You need the WordPress Login / Logout / Register links. Take a look in <a "
 "href=\"nav-menus.php\">Appearance / Menus</a> if your theme has not these "
@@ -1851,7 +1859,7 @@ msgstr ""
 "リンクを表示していない場合は、<a href=\"nav-menus.php\">外観/メニュー</a>で表"
 "示させてください。"
 
-#: ../inc/rencontre_don.php:71
+#: ../inc/rencontre_don.php:76
 msgid ""
 "If the menu tab is missing in appearance (theme full-site editing), install "
 "a classic theme (twenty-twenty-one) to create your menu. Then return to your "
@@ -1861,7 +1869,7 @@ msgstr ""
 "(twenty-twenty-one) をインストールしてメニューを作成します。 次に、テーマに戻"
 "り、作成したばかりのメニューを選択します"
 
-#: ../inc/rencontre_don.php:73
+#: ../inc/rencontre_don.php:78
 msgid ""
 "Add a new subscriber member in WP. Login this member and go to the plugin "
 "page (1)."
@@ -1869,7 +1877,7 @@ msgstr ""
 "WPで新規サブスク会員を追加します。この会員にログインして、プラグインのページ"
 "に移動します(1)。"
 
-#: ../inc/rencontre_don.php:74
+#: ../inc/rencontre_don.php:79
 msgid ""
 "To facilitate the settings after installing, you can download and install "
 "via CSV (<a href=\"admin.php?page=rencontre.php\">Rencontre / General</a>) "
@@ -1879,7 +1887,7 @@ msgstr ""
 "page=rencontre.php\">rencontre / General</a>）でダウンロードしてインストール"
 "すると、写真付きのテストプロファイル20個が表示されます。"
 
-#: ../inc/rencontre_don.php:77
+#: ../inc/rencontre_don.php:82
 msgid ""
 "More details in the <a href=\"https://wordpress.org/plugins/rencontre/#faq\" "
 "target=\"_blank\">F.A.Q</a>."
@@ -1887,67 +1895,75 @@ msgstr ""
 "<a href=\"https://wordpress.org/plugins/rencontre/#faq\" target=\"_blank\">F."
 "A.Q</a>の詳細。"
 
-#: ../inc/rencontre_filter.php:519 ../rencontre.php:224 ../rencontre.php:232
+#: ../inc/rencontre_filter.php:535 ../rencontre.php:231 ../rencontre.php:239
 msgid "Rencontre - Members"
 msgstr "Rencontre - メンバー"
 
-#: ../inc/rencontre_filter.php:539 ../rencontre.php:1006
+#: ../inc/rencontre_filter.php:555 ../rencontre.php:1020
 msgid "Log out"
 msgstr "ログアウト"
 
-#: ../inc/rencontre_filter.php:628 ../inc/rencontre_filter.php:645
-#: ../inc/rencontre_widget.php:1744 ../inc/rencontre_widget.php:1766
+#: ../inc/rencontre_filter.php:644 ../inc/rencontre_filter.php:661
+#: ../inc/rencontre_widget.php:1752 ../inc/rencontre_widget.php:1774
 msgid "No matter"
 msgstr "どんなに"
 
-#: ../inc/rencontre_filter.php:846 ../templates/rencontre_imgreg.php:27
+#: ../inc/rencontre_filter.php:862 ../templates/rencontre_imgreg.php:27
 #: ../templates/rencontre_imgreg.php:66
 msgid "Password"
 msgstr "パスワード"
 
-#: ../inc/rencontre_filter.php:866
+#: ../inc/rencontre_filter.php:882
 msgid "<strong>ERROR</strong>: Invalid password (6 characters min)."
 msgstr "<strong>ERROR</strong>: 無効なパスワード(6文字以上)です。"
 
-#: ../inc/rencontre_filter.php:933
+#: ../inc/rencontre_filter.php:949
 msgid "Confirmation email already sent"
 msgstr "確認メール送信済"
 
-#: ../inc/rencontre_filter.php:959
+#: ../inc/rencontre_filter.php:975
 msgid "Confirmation email sent"
 msgstr "確認メールが送信されました"
 
-#: ../inc/rencontre_filter.php:1142 ../inc/rencontre_filter.php:1143
-#: ../inc/rencontre_filter.php:1144 ../inc/rencontre_filter.php:1145
-#: ../inc/rencontre_filter.php:1146
+#: ../inc/rencontre_filter.php:1183
+msgid "ft"
+msgstr "ft"
+
+#: ../inc/rencontre_filter.php:1183
+msgid "in"
+msgstr "in"
+
+#: ../inc/rencontre_filter.php:1204 ../inc/rencontre_filter.php:1205
+#: ../inc/rencontre_filter.php:1206 ../inc/rencontre_filter.php:1207
+#: ../inc/rencontre_filter.php:1208
 msgid "Fake"
 msgstr "フェイク"
 
-#: ../inc/rencontre_filter.php:1144
+#: ../inc/rencontre_filter.php:1206
 msgid "profile"
 msgstr "プロファイル"
 
-#: ../inc/rencontre_filter.php:1145
+#: ../inc/rencontre_filter.php:1207
 msgid "IP"
 msgstr "IP"
 
-#: ../inc/rencontre_filter.php:1146
+#: ../inc/rencontre_filter.php:1208
 msgid "email"
 msgstr "メール"
 
-#: ../inc/rencontre_filter.php:1147
+#: ../inc/rencontre_filter.php:1209
 msgid "Inadequate image"
 msgstr "不適切な画像"
 
-#: ../inc/rencontre_filter.php:1148
+#: ../inc/rencontre_filter.php:1210
 msgid "Inappropriate presentation"
 msgstr "不適切なプレゼンテーション"
 
-#: ../inc/rencontre_filter.php:1149
+#: ../inc/rencontre_filter.php:1211
 msgid "Many reports"
 msgstr "Many reports"
 
-#: ../inc/rencontre_filter.php:1150
+#: ../inc/rencontre_filter.php:1212
 msgid "Behavior on the site"
 msgstr "サイト上での行動"
 
@@ -1963,121 +1979,123 @@ msgstr "あなたはADMINとして接続されています。"
 msgid "You cannot use RENCONTRE as a user if you have ADMIN rights"
 msgstr "ADMIN権限では、RENCONTREをユーザーとして使用することはできません。"
 
-#: ../inc/rencontre_widget.php:359 ../inc/rencontre_widget.php:2674
-#: ../inc/rencontre_widget.php:3223
+#: ../inc/rencontre_widget.php:366 ../inc/rencontre_widget.php:2697
+#: ../inc/rencontre_widget.php:3249
 #, php-format
 msgid "%s ago"
 msgstr "%s ago"
 
-#: ../inc/rencontre_widget.php:379 ../inc/rencontre_widget.php:503
+#: ../inc/rencontre_widget.php:386 ../inc/rencontre_widget.php:510
 #: ../templates/rencontre_portrait.php:127
 msgid "offline"
 msgstr "オフライン"
 
-#: ../inc/rencontre_widget.php:462
+#: ../inc/rencontre_widget.php:469
 msgid "(blocked)"
 msgstr "(blocked)"
 
-#: ../inc/rencontre_widget.php:467 ../inc/rencontre_widget.php:2052
-#: ../inc/rencontre_widget.php:2725 ../inc/rencontre_widget.php:3278
+#: ../inc/rencontre_widget.php:474 ../inc/rencontre_widget.php:2074
+#: ../inc/rencontre_widget.php:2748 ../inc/rencontre_widget.php:3304
 msgid "You must first complete your registration."
 msgstr "最初に登録を完了する必要があります。"
 
-#: ../inc/rencontre_widget.php:471 ../inc/rencontre_widget.php:2056
-#: ../inc/rencontre_widget.php:2729 ../inc/rencontre_widget.php:3282
+#: ../inc/rencontre_widget.php:478 ../inc/rencontre_widget.php:2078
+#: ../inc/rencontre_widget.php:2752 ../inc/rencontre_widget.php:3308
 msgid "This member blocked you."
 msgstr "このメンバーがあなたをブロックしました。"
 
-#: ../inc/rencontre_widget.php:475 ../inc/rencontre_widget.php:2060
-#: ../inc/rencontre_widget.php:2733 ../inc/rencontre_widget.php:3286
+#: ../inc/rencontre_widget.php:482 ../inc/rencontre_widget.php:2082
+#: ../inc/rencontre_widget.php:2756 ../inc/rencontre_widget.php:3312
 msgid "You have been blocked by the moderator."
 msgstr "あなたはモデレーターによってブロックされました。"
 
-#: ../inc/rencontre_widget.php:494 ../inc/rencontre_widget.php:2746
-#: ../inc/rencontre_widget.php:3299
+#: ../inc/rencontre_widget.php:501 ../inc/rencontre_widget.php:2769
+#: ../inc/rencontre_widget.php:3325
 msgid "You are no longer allowed to send messages."
 msgstr "メッセージを送ることができなくなりました。"
 
-#: ../inc/rencontre_widget.php:534 ../inc/rencontre_widget.php:546
+#: ../inc/rencontre_widget.php:541 ../inc/rencontre_widget.php:553
 #: ../templates/rencontre_search_result.php:72
 #: ../templates/rencontre_sidebar_top.php:70
 msgid "for"
 msgstr "for"
 
-#: ../inc/rencontre_widget.php:549 ../templates/rencontre_libre_search.php:42
+#: ../inc/rencontre_widget.php:556 ../templates/rencontre_libre_search.php:42
 #: ../templates/rencontre_search_result.php:67
 msgid "between"
 msgstr "between"
 
-#: ../inc/rencontre_widget.php:549 ../templates/rencontre_libre_search.php:52
+#: ../inc/rencontre_widget.php:556 ../templates/rencontre_libre_search.php:52
 #: ../templates/rencontre_search_result.php:67
 msgid "and"
 msgstr "and"
 
-#: ../inc/rencontre_widget.php:609
+#: ../inc/rencontre_widget.php:616 ../inc/rencontre_widget.php:1202
+#: ../inc/rencontre_widget.php:1861 ../inc/rencontre_widget.php:2800
+#: ../inc/rencontre_widget.php:2880 ../inc/rencontre_widget.php:4162
 msgid "You have no photo on your profile?"
 msgstr "プロフィールに写真がない？"
 
-#: ../inc/rencontre_widget.php:645
+#: ../inc/rencontre_widget.php:652
 msgid "You should complete your profile and add a photo to send messages."
 msgstr ""
 "プロフィールを完成させ、写真を追加してメッセージを送信する必要があります。"
 
-#: ../inc/rencontre_widget.php:751
+#: ../inc/rencontre_widget.php:758
 msgid "Add a photo"
 msgstr "写真の追加"
 
-#: ../inc/rencontre_widget.php:2148
+#: ../inc/rencontre_widget.php:2170
 msgid "Message sent"
 msgstr "メッセージが送信されました"
 
-#: ../inc/rencontre_widget.php:2151
+#: ../inc/rencontre_widget.php:2173
 msgid "Not sent"
 msgstr "未送信"
 
-#: ../inc/rencontre_widget.php:2477
+#: ../inc/rencontre_widget.php:2500
 msgid "I asked a contact"
 msgstr "連絡先を聞きました"
 
-#: ../inc/rencontre_widget.php:2515
+#: ../inc/rencontre_widget.php:2538
 msgid "I had a contact request from"
 msgstr "連絡先のリクエストがありました"
 
-#: ../inc/rencontre_widget.php:2577
+#: ../inc/rencontre_widget.php:2600
 msgid "I locked"
 msgstr "ロックしました"
 
-#: ../inc/rencontre_widget.php:2768 ../inc/rencontre_widget.php:3321
+#: ../inc/rencontre_widget.php:2791 ../inc/rencontre_widget.php:3347
 msgid ""
 "You or this member do not want to interact if the criteria do not match."
 msgstr ""
 "条件が一致しない場合、あなたまたはこのメンバーはやり取りを希望しません。"
 
-#: ../inc/rencontre_widget.php:2777 ../inc/rencontre_widget.php:3331
+#: ../inc/rencontre_widget.php:2801 ../inc/rencontre_widget.php:3357
 msgid "Sorry, but nothing matched your search terms."
 msgstr "申し訳ありませんが、検索条件に一致するものはありませんでした。"
 
-#: ../inc/rencontre_widget.php:2798 ../inc/rencontre_widget.php:3352
+#: ../inc/rencontre_widget.php:2822 ../inc/rencontre_widget.php:3378
 msgid "Next Page"
 msgstr "次のページ"
 
-#: ../inc/rencontre_widget.php:3250
+#: ../inc/rencontre_widget.php:3276
 msgid "Astrological affinity"
 msgstr "占星術的相性"
 
-#: ../inc/rencontre_widget.php:3254
+#: ../inc/rencontre_widget.php:3280
 msgid "Affinity with my profile"
 msgstr "プロフィールとの親和性"
 
-#: ../inc/rencontre_widget.php:3254
+#: ../inc/rencontre_widget.php:3280
 msgid "points"
 msgstr "ポイント"
 
-#: ../inc/rencontre_widget.php:3572
+#: ../inc/rencontre_widget.php:3642
 msgid "Region field is empty or outdated !"
 msgstr "リージョンフィールドが空、または古くなっています!"
 
-#: ../inc/rencontre_widget.php:3612
+#: ../inc/rencontre_widget.php:3683
 msgid ""
 "You are currently hidden to other members and you can't communicate because "
 "your account is not complete. You should promptly update this page otherwise "
@@ -2086,7 +2104,7 @@ msgstr ""
 "あなたは現在、他のメンバーには非表示になっており、アカウントが完了していない"
 "ため通信ができません。速やかにこのページを更新してください。"
 
-#: ../inc/rencontre_widget.php:3614
+#: ../inc/rencontre_widget.php:3685
 msgid ""
 "You also need to confirm your email address by clicking the link that you "
 "received. You have 24 hours. Do not delay."
@@ -2094,39 +2112,39 @@ msgstr ""
 "また、届いたリンクをクリックしてメールアドレスを確認する必要があります。24時"
 "間以内に完了してください。"
 
-#: ../inc/rencontre_widget.php:3615
+#: ../inc/rencontre_widget.php:3686
 msgid "Email not received"
 msgstr "メールを受信していません"
 
-#: ../inc/rencontre_widget.php:3707
+#: ../inc/rencontre_widget.php:3778
 msgid "Contact already requested"
 msgstr "コンタクトはすでにリクエスト済みです"
 
-#: ../inc/rencontre_widget.php:3736
+#: ../inc/rencontre_widget.php:3807
 msgid "Contact request sent"
 msgstr "コンタクトリクエストが送信されました"
 
-#: ../inc/rencontre_widget.php:3747
+#: ../inc/rencontre_widget.php:3818
 msgid "Reporting already done"
 msgstr "報告はすでに行われています"
 
-#: ../inc/rencontre_widget.php:3754
+#: ../inc/rencontre_widget.php:3825
 msgid "Thank you for your report"
 msgstr "ご報告ありがとうございました"
 
-#: ../inc/rencontre_widget.php:3884
+#: ../inc/rencontre_widget.php:3955
 msgid "from my position"
 msgstr "私の立場から"
 
-#: ../inc/rencontre_widget.php:3932
+#: ../inc/rencontre_widget.php:4003
 msgid "Yesterday"
 msgstr "昨日"
 
-#: ../inc/rencontre_widget.php:3943
+#: ../inc/rencontre_widget.php:4014
 msgid "Widget to integrate the Rencontre sidebar in your theme sidebar"
 msgstr "テーマのサイドバーにRencontreのサイドバーを統合するためのウィジェット"
 
-#: ../inc/rencontre_widget.php:4081
+#: ../inc/rencontre_widget.php:4152
 msgid "Password changed !"
 msgstr "パスワードを変更しました"
 
@@ -2154,13 +2172,13 @@ msgstr "ニューアイテム"
 msgid "Add"
 msgstr "追加"
 
-#: ../lang/rencontre-js-admin-lang.php:13 ../rencontre.php:227
-#: ../templates/rencontre_search.php:127
+#: ../lang/rencontre-js-admin-lang.php:13 ../rencontre.php:234
+#: ../templates/rencontre_search.php:162
 #: ../templates/rencontre_sidebar_quick_search.php:49
 msgid "Country"
 msgstr "国"
 
-#: ../lang/rencontre-js-admin-lang.php:14 ../templates/rencontre_search.php:138
+#: ../lang/rencontre-js-admin-lang.php:14 ../templates/rencontre_search.php:173
 #: ../templates/rencontre_sidebar_quick_search.php:59
 msgid "Region"
 msgstr "地域"
@@ -2308,47 +2326,47 @@ msgstr ""
 "メールの自動送信が可能な無料の強力で網羅的な出会い系プラグインです。サード"
 "パーティは必要ありません。"
 
-#: ../rencontre.php:189
+#: ../rencontre.php:196
 msgid "Serious relationship"
 msgstr "真面目な関係"
 
-#: ../rencontre.php:190
+#: ../rencontre.php:197
 msgid "Open relationship"
 msgstr "オープンな関係"
 
-#: ../rencontre.php:191
+#: ../rencontre.php:198
 msgid "Friendship"
 msgstr "友達関係"
 
-#: ../rencontre.php:199
+#: ../rencontre.php:206
 msgid "a man"
 msgstr "男"
 
-#: ../rencontre.php:200
+#: ../rencontre.php:207
 msgid "a woman"
 msgstr "女"
 
-#: ../rencontre.php:223
+#: ../rencontre.php:230
 msgid "Rencontre - General"
 msgstr "Rencontre - 一般"
 
-#: ../rencontre.php:225 ../rencontre.php:233
+#: ../rencontre.php:232 ../rencontre.php:240
 msgid "Rencontre - Jail"
 msgstr "Rencontre - ジェイル(要注意)"
 
-#: ../rencontre.php:226
+#: ../rencontre.php:233
 msgid "Rencontre - Profile"
 msgstr "Rencontre - プロフィール"
 
-#: ../rencontre.php:227
+#: ../rencontre.php:234
 msgid "Rencontre - Countries"
 msgstr "Rencontre - 国"
 
-#: ../rencontre.php:228
+#: ../rencontre.php:235
 msgid "Rencontre - Custom"
 msgstr "Rencontre - カスタム"
 
-#: ../rencontre.php:228
+#: ../rencontre.php:235
 msgid "Custom"
 msgstr "カスタム"
 
@@ -2368,23 +2386,23 @@ msgstr "New"
 msgid "Retype the new"
 msgstr "新規のを再入力"
 
-#: ../templates/rencontre_account.php:275
+#: ../templates/rencontre_account.php:305
 msgid "No interaction with members who don't match my search criteria"
 msgstr "検索条件に一致しないメンバーとは交流できません"
 
-#: ../templates/rencontre_account.php:280
+#: ../templates/rencontre_account.php:310
 msgid "No beep on the chat"
 msgstr "チャットでビープ音が鳴らない"
 
-#: ../templates/rencontre_account.php:287
+#: ../templates/rencontre_account.php:317
 msgid "No email from this site"
 msgstr "このサイトからのメールはありません"
 
-#: ../templates/rencontre_account.php:317
+#: ../templates/rencontre_account.php:347
 msgid "home page and search"
 msgstr "ホームページと検索"
 
-#: ../templates/rencontre_account.php:318
+#: ../templates/rencontre_account.php:348
 msgid "home page, search and message"
 msgstr "ホームページ、検索、メッセージ"
 
@@ -2612,34 +2630,34 @@ msgstr "制限されています。"
 msgid "welcome to the site"
 msgstr "ようこそ"
 
-#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
-#: ../templates/rencontre_search.php:79
+#: ../templates/rencontre_search.php:34 ../templates/rencontre_search.php:56
+#: ../templates/rencontre_search.php:98
 msgid "min"
 msgstr "分"
 
-#: ../templates/rencontre_search.php:31 ../templates/rencontre_search.php:53
-#: ../templates/rencontre_search.php:79
+#: ../templates/rencontre_search.php:34 ../templates/rencontre_search.php:56
+#: ../templates/rencontre_search.php:98
 msgid "max"
 msgstr "最大"
 
-#: ../templates/rencontre_search.php:105 ../templates/rencontre_search.php:116
+#: ../templates/rencontre_search.php:140 ../templates/rencontre_search.php:151
 msgid "Gender"
 msgstr "性別"
 
-#: ../templates/rencontre_search.php:147
+#: ../templates/rencontre_search.php:182
 msgid "City"
 msgstr "市区町村"
 
-#: ../templates/rencontre_search.php:154
+#: ../templates/rencontre_search.php:189
 #: ../templates/rencontre_sidebar_quick_search.php:69
 msgid "Relation"
 msgstr "関係性"
 
-#: ../templates/rencontre_search.php:165
+#: ../templates/rencontre_search.php:200
 msgid "Word in the ad"
 msgstr "広告の中にある言葉"
 
-#: ../templates/rencontre_search.php:174
+#: ../templates/rencontre_search.php:209
 msgid "Only with picture"
 msgstr "写真付きのみ"
 

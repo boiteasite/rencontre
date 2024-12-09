@@ -8,23 +8,23 @@ if(typeof rencUrl==='undefined'){
 /* fonctions classiques */
 function f_min(f,x,y,z){
 	var c=0,d=document.forms[x][y],e=document.forms[x][z];
-	f=parseInt(f);
+	f=parseFloat(f);
 	for(v=0;v<e.length;v++){
-		if(parseInt(d.options[v].value)==f)c=v;
-		if(parseInt(e.options[v].value)<=f)e.options[v].disabled=true;
+		if(parseFloat(d.options[v].value)==f)c=v;
+		if(parseFloat(e.options[v].value)<=f)e.options[v].disabled=true;
 		else e.options[v].disabled=false;
 	}
-	if(e.options[e.selectedIndex]&&f>parseInt(e.options[e.selectedIndex].value))e.selectedIndex=c;
+	if(e.options[e.selectedIndex]&&f>parseFloat(e.options[e.selectedIndex].value))e.selectedIndex=c;
 }
 function f_max(f,x,y,z){
 	var c=0,d=document.forms[x][z],e=document.forms[x][y];
-	f=parseInt(f);
+	f=parseFloat(f);
 	for(v=0;v<e.length;v++){
-		if(parseInt(d.options[v].value)==f)c=v;
-		if(parseInt(e.options[v].value)>=f)e.options[v].disabled=true;
+		if(parseFloat(d.options[v].value)==f)c=v;
+		if(parseFloat(e.options[v].value)>=f)e.options[v].disabled=true;
 		else e.options[v].disabled=false;
 	}
-	if(e.options[e.selectedIndex]&&f<parseInt(e.options[e.selectedIndex].value))e.selectedIndex=c;
+	if(e.options[e.selectedIndex]&&f<parseFloat(e.options[e.selectedIndex].value))e.selectedIndex=c;
 }
 function f_onglet(f){
 	if(document.getElementById("portraitBox")!==null){ // V3
@@ -799,6 +799,7 @@ function webcam(f,t){
 	);
 	m.addEventListener('canplay',function(e){
 		m.style.visibility="visible";
+		m.style.display="";
 		m.style.width="160px";
 		m.style.height="120px";
 		c.setAttribute('width',300);

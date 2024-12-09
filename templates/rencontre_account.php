@@ -2,10 +2,10 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.10
+ * Last Change : Rencontre 3.13
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
  * Call : rencontre_widget.php => f_compte()
- * $u0 : ID, user_email, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, e_lat, e_lon, t_action, born_day, born_month, born_year, accountAlert, pause
+ * $u0 : all + born_day, born_month, born_year, accountAlert, pause
  * Filter : do_action('rencontre_account', $f, $g) - see below
 */
 ?>
@@ -154,39 +154,45 @@
 					<?php } ?>
 						<?php if(empty($rencCustom['weight']) || empty($rencCustom['size'])) { ?>
 
-							<?php if(empty($rencCustom['size'])){ ?>
-							
+							<?php if(empty($rencCustom['size'])) {
+								$b = 0; ?>
+
 							<div>
 								<label><?php _e('My height','rencontre'); ?></label>
 								<select name="taille" class="w3-select w3-border w3-renc-sebg">
-								<?php for($v=140;$v<221;++$v) { ?>
-									<?php if(empty($rencCustom['sizeu'])) { ?>
-									
-									<option value="<?php echo $v; ?>"<?php if($v==$u0->i_taille) echo ' selected'; ?>><?php echo $v.'&nbsp;'.__('cm','rencontre'); ?></option>
-									<?php } else { ?>
-									
-									<option value="<?php echo $v; ?>"<?php if($v==$u0->i_taille) echo ' selected'; ?>><?php echo (floor($v/24-1.708)).'&nbsp;'.__('ft','rencontre').'&nbsp;'.(round(((($v/24-1.708)-floor($v/24-1.708))*12),1)).'&nbsp;'.__('in','rencontre'); ?></option>
-									<?php } ?>
-								<?php } ?>
+								<?php 
+								if(empty($u0->imperials)) {
+									for($v=(!empty($rencCustom['sizemin'])?$rencCustom['sizemin']:140); $v<=(!empty($rencCustom['sizemax'])?$rencCustom['sizemax']:220); ++$v) {
+										?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=intval($u0->i_taille+.5)) { echo ' selected'; $b = 1; } ?>><?php echo $v.' '.__('cm','rencontre'); ?></option>
+									<?php }
+								}
+								else {
+									for($v=(!empty($rencCustom['sizemin'])?rencConvertUnit($rencCustom['sizemin'],'cm',1):55); $v<=(!empty($rencCustom['sizemax'])?rencConvertUnit($rencCustom['sizemax'],'cm',1):86.5); $v+=.5) {
+										?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=rencConvertUnit($u0->taille,'cm',3)) { echo ' selected'; $b = 1; } ?>><?php echo rencIn2Ft($v); ?></option>
+									<?php }
+								} ?>
 								
 								</select>
 							</div>
 							<?php } ?>
 							
-							<?php if(empty($rencCustom['weight'])) { ?>
+							<?php if(empty($rencCustom['weight'])) {
+								$b = 0; ?>
 
 							<div>
 								<label><?php _e('My weight','rencontre'); ?></label>
 								<select name="poids" class="w3-select w3-border w3-renc-sebg">
-								<?php for($v=40;$v<140;++$v) { ?>
-									<?php if(empty($rencCustom['weightu'])) { ?>
-									
-									<option value="<?php echo $v; ?>"<?php if($v==$u0->i_poids) echo ' selected'; ?>><?php echo $v.'&nbsp;'.__('kg','rencontre'); ?></option>
-									<?php } else { ?>
-									
-									<option value="<?php echo $v; ?>"<?php if($v==$u0->i_poids) echo ' selected'; ?>><?php echo ($v*2+10).'&nbsp;'.__('lbs','rencontre'); ?></option>
-									<?php } ?>
-								<?php } ?>
+								<?php
+								if(empty($u0->imperialw)) {
+									for($v=(!empty($rencCustom['weightmin'])?$rencCustom['weightmin']:40); $v<=(!empty($rencCustom['weightmax'])?$rencCustom['weightmax']:140); ++$v) {
+										?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=intval($u0->i_poids+.5)) { echo ' selected'; $b = 1; } ?>><?php echo $v.' '.__('kg','rencontre'); ?></option>
+									<?php }
+								}
+								else {
+									for($v=(!empty($rencCustom['weightmin'])?rencConvertUnit($rencCustom['weightmin'],'kg',1):88); $v<=(!empty($rencCustom['weightmax'])?rencConvertUnit($rencCustom['weightmax'],'kg',1):309); $v++) {
+										?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=rencConvertUnit($u0->poids,'kg',1)) { echo ' selected'; $b = 1; } ?>><?php echo $v.' '.__('lbs','rencontre'); ?></option>
+									<?php }
+								} ?>
 								
 								</select>
 							</div>
@@ -271,6 +277,30 @@
 							<?php } ?>
 							
 							</div>
+							<div class="w3-margin"></div>
+							<?php if(isset($rencCustom['weightu']) && $rencCustom['weightu']==3) { ?>
+							
+							<div class="w3-right-align w3-padding-small">
+								<label><?php _e('Weight unit', 'rencontre'); ?>
+									<select name="weightunit" style="margin:0 8px;max-width:50%;width:auto;">
+										<option value="0" <?php if(strpos($u0->t_action.'-',',weight-kg,')!==false) echo 'selected'; ?>><?php _e('Kilograms', 'rencontre'); ?></option>
+										<option value="1" <?php if(strpos($u0->t_action.'-',',weight-lbs,')!==false) echo 'selected'; ?>><?php _e('Pounds', 'rencontre'); ?></option>
+									</select>
+								</label>
+							</div>
+							<?php } ?>
+							<?php if(isset($rencCustom['sizeu']) && $rencCustom['sizeu']==3) { ?>
+							
+							<div class="w3-right-align w3-padding-small">
+								<label><?php _e('Height unit', 'rencontre'); ?>
+									<select name="sizeunit" style="margin:0 8px;max-width:50%;width:auto;">
+										<option value="0" <?php if(strpos($u0->t_action.'-',',size-cm,')!==false) echo 'selected'; ?>><?php _e('Meter', 'rencontre'); ?></option>
+										<option value="1" <?php if(strpos($u0->t_action.'-',',size-ft,')!==false) echo 'selected'; ?>><?php _e('Feet and Inches', 'rencontre'); ?></option>
+									</select>
+								</label>
+							</div>
+							<?php } ?>
+							
 							<div class="w3-right-align w3-padding-small">
 								<label><?php _e('No interaction with members who don\'t match my search criteria','rencontre'); ?>
 									<input type="checkbox" style="margin:0 8px" name="zstrict"<?php if(strpos($u0->t_action.'-',',zstrict,')!==false) echo ' checked'; ?> />
@@ -299,7 +329,7 @@
 					</div>
 				</div>
 			</div><!-- .w3-card -->
-			<?php echo $scriptMap; ?>
+			<?php echo (!empty($scriptMap)?$scriptMap:''); ?>
 
 		</div><!-- .w3-margin-bottom -->
 		<?php if(empty($rencOpt['paus'])) { ?>

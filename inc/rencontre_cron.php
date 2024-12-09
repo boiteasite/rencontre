@@ -4,10 +4,9 @@
 //
 function f_cron_on($part=1) {
 	// Daily Cleaning
-	global $wpdb, $rencOpt, $rencDiv, $rencCustom, $rencBenchmark;
-	$CURLANG = get_locale();
-	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
-	if($CURLANG!=$WPLANG) switch_to_locale($WPLANG); // Multilang : emails in ADMIN default Lang
+	global $wpdb, $rencOpt, $rencDiv, $rencCustom, $rencBenchmark, $rencWPLANG;
+	$CURLANG = get_locale(); // already exists - can be user lang (cookie)
+	if($CURLANG!=$rencWPLANG) switch_to_locale($rencWPLANG); // Multilang : emails in ADMIN default Lang
 	if(!empty($rencBenchmark)) { $rencBenchmark .= 'F_CRON_ON: '.microtime(true).' - '.PHP_EOL; $rbm = microtime(true); }
 	clearstatcache();
 	$Loo = (!empty($rencOpt['lbl']['rencoo'])?$rencOpt['lbl']['rencoo']:'rencoo');
@@ -39,7 +38,7 @@ function f_cron_on($part=1) {
 				option_name like '\_transient\_namespace\_%'
 				OR option_name like '\_transient\_timeout\_namespace\_%'
 			");
-		// 2. Suppression fichiers anciens dans UPLOADS/PORTRAIT/LIBRE/ : > 2.9 jours
+		// 2. Suppression fichiers anciens dans UPLOADS/PORTRAIT/LIBRE/ : > 30 jours
 		if(!empty($rencBenchmark)) { $rencBenchmark .= 'F_CRON-2: '.(microtime(true)-$rbm).' - '.PHP_EOL; $rbm = microtime(true); }
 		if(!is_dir($rencDiv['basedir'].'/portrait/libre/')) @mkdir($rencDiv['basedir'].'/portrait/libre/');
 		else {
@@ -48,7 +47,7 @@ function f_cron_on($part=1) {
 				while(($file = readdir($dh))!==false) { if($file!='.' && $file!='..') $tab[]=$d.$file; }
 				closedir($dh);
 				if($tab!=array()) foreach($tab as $r) {
-					if(file_exists($r) && filemtime($r)<time()-248400) @unlink($r); // 69 heures
+					if(file_exists($r) && filemtime($r)<time()-2592000) @unlink($r); // 2592000 sec = 30 jours
 				}
 			}
 		}
@@ -357,7 +356,7 @@ function f_cron_on($part=1) {
 				FROM
 					".$wpdb->prefix."rencontre_liste 
 				WHERE 
-					c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang'],0,2)."')
+					c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencWPLANG,0,2)."')
 				");
 			foreach($q as $r) {
 				if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
@@ -622,7 +621,7 @@ function f_cron_on($part=1) {
 			$mph[0] = max(intval($mph[0]), $cm);
 			update_option('rencontre_mailPerHour',$mph);
 		}
-		if($CURLANG!=$WPLANG) echo '<script>document.location.reload(true);</script>'; // restore previous locale after switch_to_locale($WPLANG);
+		if($CURLANG!=$rencWPLANG) echo '<script>document.location.reload(true);</script>'; // restore previous locale after switch_to_locale($rencWPLANG);
 		clearstatcache();
 		break;
 		// ********************************************************************************************
@@ -640,11 +639,10 @@ function f_cron_list() {
 		apply_filters('rencCronList', 0);
 		return;
 	}
-	global $wpdb, $rencOpt, $rencDiv, $rencCustom, $rencBenchmark;
+	global $wpdb, $rencOpt, $rencDiv, $rencCustom, $rencBenchmark, $rencWPLANG;
 	if(!empty($rencBenchmark)) { $rencBenchmark .= 'F_CRONLIST_ON: '.microtime(true).' - '.PHP_EOL; $rbm = microtime(true); }
-	$CURLANG = get_locale();
-	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
-	if($CURLANG!=$WPLANG) switch_to_locale($WPLANG); // Multilang : emails in ADMIN default Lang
+	$CURLANG = get_locale(); // already exists - can be user lang (cookie)
+	if($CURLANG!=$rencWPLANG) switch_to_locale($rencWPLANG); // Multilang : emails in ADMIN default Lang
 	$Loo = (!empty($rencOpt['lbl']['rencoo'])?$rencOpt['lbl']['rencoo']:'rencoo');
 	$Lii = (!empty($rencOpt['lbl']['rencii'])?$rencOpt['lbl']['rencii']:'rencii');
 	$Lidf = (!empty($rencOpt['lbl']['rencidfm'])?$rencOpt['lbl']['rencidfm']:'rencidfm');
@@ -661,7 +659,7 @@ function f_cron_list() {
 		$q = $wpdb->get_results("SELECT c_liste_categ, c_liste_valeur, c_liste_iso 
 			FROM ".$wpdb->prefix."rencontre_liste 
 			WHERE 
-				c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencDiv['lang'],0,2)."') ");
+				c_liste_categ='d' or (c_liste_categ='p' and c_liste_lang='".substr($rencWPLANG,0,2)."') ");
 		foreach($q as $r) {
 			if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
 		}
@@ -842,7 +840,7 @@ function f_cron_list() {
 	update_option('rencontre_mailPerHour',$mph);
 	//
 	@unlink($rencDiv['basedir'].'/portrait/cache/rencontre_cronOn.txt');
-	if($CURLANG!=$WPLANG) echo '<script>document.location.reload(true);</script>'; // restore previous locale after switch_to_locale($WPLANG);
+	if($CURLANG!=$rencWPLANG) echo '<script>document.location.reload(true);</script>'; // restore previous locale after switch_to_locale($rencWPLANG);
 	clearstatcache();
 	if(!empty($rencBenchmark)) {
 		$rencBenchmark .= '...Send email to '.$cm.' members'.PHP_EOL.'F_CRONLIST-end: '.(microtime(true)-$rbm).' - size:'.filesize($rencDiv['basedir'].'/portrait/cache/rencontre_cron.txt');

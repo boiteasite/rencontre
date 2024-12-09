@@ -1,5 +1,63 @@
 == Changelog ==
 
+= 3.13 =
+
+08/12/2024
+
+* Dashboard options reorganized for simplicity/readability.
+* Option to set min & max weight, option to set min & max size.
+* Option to use both meter/feet and both kilograms/pounds. The user can then choose which unit to use (account page).
+* Option for profile photo required.
+* Fix profil issue when merging My Account and Edit My Profil pages.
+* Fix some issues.
+
+= 3.12.5 =
+
+15/11/2024
+
+* Fix translation issue with WP 6.7.
+
+= 3.12.4 =
+
+09/10/2024
+
+* Option to merge My Account and Edit My Profil pages.
+* Update DBIP.
+* Improve Portuguese Brazil translation - thanks to Cesar Ramos.
+* Fix some issues.
+
+= 3.12.3 =
+
+17/08/2024
+
+* Remove '&nbsp;' that cause text alignment issues.
+* Fix profil search issue on some servers.
+
+= 3.12.2 =
+
+15/08/2024
+
+* Fix modal warning closing issue on Android.
+
+= 3.12.1 =
+
+20/06/2024
+
+* Fix user photo issue when add or delete.
+
+= 3.12 =
+
+04/06/2024
+
+* Fix warning file not exists on plugin install - patch.php.
+* Fix issues with rencontre_login shortcode. Adds option to disable register or loginout links. See shortcodes F.A.Q.
+* Reduced menu size on smartphones - Template rencontre_menu.php and rencontre.css.
+* Auto scroll on loading (option) to display the plugin menu at the top of the page.
+* Added sorting of members by sex in the Rencontre > Members tab of the dashboard.
+* Email subjects can be customized.
+* Users have the option of prohibiting interaction with members who do not match their criteria.
+* Option to respect precise criteria for featured profiles.
+
 = 3.12 =
 
 04/06/2024

@@ -332,6 +332,14 @@ function rencSanit($f,$g) {
 			$a = strip_tags(stripslashes(filter_var($f, FILTER_SANITIZE_URL)));
 			break;
 			
+		case 'selector': // JQuery simple selector (not all possibility)
+			$a = sanitize_text_field($f);
+			$a = strip_tags($a);
+			$a = preg_replace("/\s+/", " ",$a); // multiple spaces & lines break
+			$n = array('<','(',')','{','}','|','?',';','`','%','!','&');
+			$a = str_replace($n,"",$a);
+			break;
+
 		case 'b64': // RENCOO, RENCII
 			$a = preg_match("%^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$%", $f);
 			if($a) $a = $f;
@@ -476,7 +484,7 @@ function rencAddCustomW3css($f=0) {
 //
 function rencU0($f) {
 	// $f : User ID
-	global $wpdb, $rencU0;
+	global $wpdb, $rencU0, $rencOpt, $rencCustom;
 	$rencU0 = $wpdb->get_row("SELECT *
 			FROM ".$wpdb->base_prefix."users U
 			LEFT JOIN ".$wpdb->prefix."rencontre_users R
@@ -487,10 +495,18 @@ function rencU0($f) {
 				U.ID=".$f."
 			LIMIT 1
 			");
+	$rencU0->taille = number_format($rencU0->i_taille/10, 1); // 1722 => 172.2 (calcul)
+	$rencU0->i_taille = intval($rencU0->i_taille/10+.5); // 1722 => 172 (display)
+	$rencU0->poids = number_format($rencU0->i_poids/10, 1);
+	$rencU0->i_poids = intval($rencU0->i_poids/10+.5);
 	$rencU0->age = Rencontre::f_age($rencU0->d_naissance);
 	$rencU0->action = json_decode((empty($rencU0->t_action)?'{}':$rencU0->t_action),true);
 	$rencU0->profil = json_decode((empty($rencU0->t_profil)?'{}':$rencU0->t_profil),true);
-	$rencU0->zstrict = (isset($rencU0->action['option'])&&strpos($rencU0->action['option'],',zstrict,')!==false)?1:0;
+	$rencU0->zstrict = (isset($rencU0->action['option']) && strpos($rencU0->action['option'],',zstrict,')!==false) ? 1 : 0;
+	$rencU0->photoreq = (!empty($rencOpt['photoreq']) && empty($rencU0->i_photo)) ? 1 : 0; 
+	// Imperial (1) or Metric (0)
+	$rencU0->imperialw = (!empty($rencCustom['weightu']) && ($rencCustom['weightu']==3 && strpos($rencU0->t_action.'-',',weight-lbs,')!==false || $rencCustom['weightu']==2)) ? 1 : 0;
+	$rencU0->imperials = (!empty($rencCustom['sizeu']) && ($rencCustom['sizeu']==3 && strpos($rencU0->t_action.'-',',size-ft,')!==false || $rencCustom['sizeu']==2)) ? 1 : 0;
 }
 //
 function rencPause($f,$id) {
@@ -1121,6 +1137,52 @@ function rencTranslate($f) {
 	if(!empty($o) && has_filter('rencTranslate')) $ho = apply_filters('rencTranslate', $f);
 	return (!empty($ho)?$ho:(!empty($o)&&$o!==1?stripslashes($o):''));
 }
+function rencConvertUnit($f,$u,$g=0) {
+	// $u : 'kg', 'lbs', 'cm', 'ft', 'in'
+	// in & ft => cm
+	// cm => in
+	// $g : 0 = exact value, 1 = ROUND INT, 2 = x10 ROUND INT (75.247kg => 752), 3 = ROUND .5 (10, 10.5, 11, 11.5 inch)
+	$f = (float)$f;
+	switch($u) {
+		// ************************************************************
+		case 'kg': // Return LBS - 1 kg = 2,2046225 lbs
+			$a = $f * 2.2046225;
+		break;
+		// ************************************************************
+		case 'lbs': // Return KG - 1 lbs = 0.4535924 kg
+			$a = $f * 0.4535924;
+		break;
+		// ************************************************************
+		case 'cm': // Return IN - 1 cm = 0.3937008 in (0.0328084 ft)
+			$a = $f * 0.3937008;
+		break;
+		// ************************************************************
+		case 'ft': // Return CM - 1 ft = 30.48 cm
+			$a = $f * 30.48;
+		break;
+		// ************************************************************
+		case 'in': // Return CM - 1 in = 2.54 cm
+			$a = $f * 2.54;
+		break;
+		// ************************************************************
+	}
+	if(!empty($a)) {
+		if($g===2) return intval((10*$a)+.5); // DB - 75.347kg => 753
+		if($g===3) return round($a*2)/2; // 75.347kg => 75.5 (round .5) - Specific for inch 
+		else if($g) return intval($a+.5); // 75.247kg => 75
+		else return $a; // 75.247kg
+	}
+	else return 0;
+}
+function rencIn2Ft($f) {
+	// $f : inch value
+	// return string : 100 => 8 ft - 4.5 in
+	if($f) {
+		$f = (float)$f;
+		$f = (floor($f * 2 + .5)) / 2; // Scale 0.5
+		return (floor($f / 12)) . ' ' . __('ft','rencontre') . ' - ' . (round(( (($f / 12) - floor($f / 12)) * 12), 1)) . ' ' . __('in','rencontre');
+	}
+}
 function renc_clear_cache_portrait() {
 	global $rencDiv, $rencOpt;
 	$a = array(
@@ -1211,6 +1273,10 @@ function rencGetUser($id) {
 			R.user_id=".$id."
 		LIMIT 1
 		");
+	$u->taille = number_format($u->i_taille/10, 1); // 1722 => 172.2 (calcul)
+	$u->i_taille = intval($u->i_taille/10+.5); // 1722 => 172 (display)
+	$u->poids = number_format($u->i_poids/10, 1);
+	$u->i_poids = intval($u->i_poids/10+.5);
 	return $u;
 }
 function rencGetUserPhotos($id) {
@@ -1246,9 +1312,9 @@ function rencGetUserPhotos($id) {
 	}
 	return $photos;
 }
-function rencGetUserProfils($id,$lang=0) {
-	global $wpdb, $rencDiv;
-	if(!empty($lang) && strlen($lang)!=2) $lang = 0;
+function rencGetUserProfils($id,$lang='') {
+	global $wpdb;
+	if(strlen($lang)!=2) $lang = substr(get_locale(),0,2);
 	$profil = array();
 	$q = $wpdb->get_var("SELECT t_profil FROM ".$wpdb->prefix."rencontre_users_profil WHERE user_id=".$id." LIMIT 1");
 	$p = json_decode((empty($q)?'{}':$q),true);
@@ -1269,7 +1335,7 @@ function rencGetUserProfils($id,$lang=0) {
 			".$wpdb->prefix."rencontre_profil
 		WHERE
 			id IN (".$l.")
-			and c_lang='".(!empty($lang)?strtolower($lang):substr($rencDiv['lang'],0,2))."'
+			and c_lang='".$lang."'
 			and c_categ!=''
 			and c_label!=''
 			and i_poids<5

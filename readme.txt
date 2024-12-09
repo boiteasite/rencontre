@@ -5,7 +5,7 @@ Tags: dating, meet, love, match, social
 Requires at least: 4.6
 Tested up to: 6.7
 Requires PHP: 5.5
-Stable tag: 3.12.5
+Stable tag: 3.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -408,6 +408,15 @@ It's better to limit the data size.
 
 == Changelog ==
 
+= 3.13 =
+
+* Dashboard options reorganized for simplicity/readability.
+* Option to set min & max weight, option to set min & max size.
+* Option to use both meter/feet and both kilograms/pounds. The user can then choose which unit to use (account page).
+* Option for profile photo required.
+* Fix profil issue when merging My Account and Edit My Profil pages.
+* Fix some issues.
+
 = 3.12.5 =
 
 * Fix translation issue with WP 6.7.
@@ -442,26 +451,3 @@ It's better to limit the data size.
 * Email subjects can be customized.
 * Users have the option of prohibiting interaction with members who do not match their criteria.
 * Option to respect precise criteria for featured profiles.
-
-= 3.11.3 =
-
-* Fix dynamic search issue.
-
-= 3.11.2 =
-
-* Fix Subscriber+ PHP Object Injection in search fonction - Thanks to Darius Sveikauskas.
-
-= 3.11.1 =
-
-* Add max upload filesize value in CSV Tab.
-* Fix Chat launched when not required.
-* Fix some issues.
-* Add Premium hook.
-
-= 3.11 =
-
-* Removes Facebook login. To keep this WordPress connection via Facebook (and add others), use a specific plugin.
-* Removes ability to import facebook profile photo.
-* Fix Unauthenticated Arbitrary File Upload in CSV Admin part - Thanks to Darius Sveikauskas.
-* Fix Subscriber+ PHP Object Injection in dynamic search - Thanks to Darius Sveikauskas.
-* Fix wrong orientation, in some cases, when uploading an image.

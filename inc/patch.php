@@ -1,4 +1,5 @@
 <?php
+ignore_user_abort(true);
 $upl = wp_upload_dir();
 //
 // PERMANENT WPLANG in db
@@ -7,40 +8,6 @@ global $locale;
 $WPLANG = $wpdb->get_row("SELECT option_id, option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
 if(empty($WPLANG) && $locale) $wpdb->insert($wpdb->prefix.'options', array('option_name'=>'WPLANG', 'option_value'=>$locale, 'autoload'=>'yes'));
 else if(empty($WPLANG->option_value) && $locale) $wpdb->update($wpdb->prefix.'options', array('option_value'=>$locale, 'autoload'=>'yes'), array('option_name'=>'WPLANG'));
-//
-// V2.1
-//
-	// RAZ fiche libre (CSS)
-	if(file_exists($upl['basedir'].'/portrait/cache/cache_portraits_accueil.html')) @unlink($upl['basedir'].'/portrait/cache/cache_portraits_accueil.html');
-	if(file_exists($upl['basedir'].'/portrait/cache/cache_portraits_accueil1.html')) @unlink($upl['basedir'].'/portrait/cache/cache_portraits_accueil1.html');
-	if(file_exists($upl['basedir'].'/portrait/cache/cache_portraits_accueilgirl.html')) @unlink($upl['basedir'].'/portrait/cache/cache_portraits_accueilgirl.html');
-	if(file_exists($upl['basedir'].'/portrait/cache/cache_portraits_accueilmen.html')) @unlink($upl['basedir'].'/portrait/cache/cache_portraits_accueilmen.html');
-	//
-	// REPLACE SHORTCODE IN PAGE
-	$a = array(
-		'[rencontre_libre_mix]'=>'[rencontre_libre gen=mix]',
-		'[rencontre_libre_girl]'=>'[rencontre_libre gen=girl]',
-		'[rencontre_libre_men]'=>'[rencontre_libre gen=men]',
-		'[rencontre_nbmembre_girl]'=>'[rencontre_nbmembre gen=girl]',
-		'[rencontre_nbmembre_men]'=>'[rencontre_nbmembre gen=men]',
-		'[rencontre_nbmembre_girlphoto]'=>'[rencontre_nbmembre gen=girl ph=1]',
-		'[rencontre_nbmembre_menphoto]'=>'[rencontre_nbmembre gen=men ph=1]');
-	$ps = get_posts(array('post_type'=>'page','numberposts'=>-1));
-	foreach($ps as $p) {
-		$b = 0;
-		foreach($a as $k=>$v) {
-			if(strpos($p->post_content.'-',$k)!==false) {
-				$p->post_content = str_replace($k, $v, $p->post_content);
-				$b = 1;
-				var_dump($p);
-			}
-		}
-		if($b) $wpdb->update($wpdb->prefix.'posts', array('post_content'=>$p->post_content), array('ID'=>$p->ID));
-	}
-	//
-	// PRISON ADD TYPE
-	$q = $wpdb->query("SHOW COLUMNS FROM ".$wpdb->prefix."rencontre_prison LIKE 'i_type' ");
-	if(!$q) $wpdb->query("ALTER TABLE ".$wpdb->prefix."rencontre_prison ADD `i_type` tinyint unsigned NOT NULL AFTER `c_ip`");
 //
 // V3.8.2 - Avoid POST and GET mismatch
 //
@@ -88,6 +55,51 @@ if(file_exists($upl['basedir'].'/portrait/cache/rencontre_cronListe.txt')) unlin
 if(file_exists($upl['basedir'].'/portrait/cache/rencontre_cronListeOn.txt')) unlink($upl['basedir'].'/portrait/cache/rencontre_cronListeOn.txt');
 if(file_exists($upl['basedir'].'/portrait/cache/rencontre_cronBis.txt')) unlink($upl['basedir'].'/portrait/cache/rencontre_cronBis.txt');
 @file_put_contents($upl['basedir'].'/portrait/cache/rencontre_cron.txt','');
+//
+// V3.13 - FT and LBS conversion update in DB to set exact value - TINYINT to SMALLINT and x10 to value for precision
+//
+$typ = $wpdb->get_var("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name='".$wpdb->prefix."rencontre_users' AND COLUMN_NAME='i_taille' ");
+if(strtolower($typ)=='tinyint') {
+	$q = $wpdb->query("ALTER TABLE ".$wpdb->prefix."rencontre_users MODIFY COLUMN `i_taille` SMALLINT unsigned NOT NULL");
+	if($q) $wpdb->query("UPDATE ".$wpdb->prefix."rencontre_users SET i_taille=i_taille*10");
+}
+$typ = $wpdb->get_var("SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name='".$wpdb->prefix."rencontre_users' AND COLUMN_NAME='i_poids' ");
+if(strtolower($typ)=='tinyint') {
+	$q = $wpdb->query("ALTER TABLE ".$wpdb->prefix."rencontre_users MODIFY COLUMN `i_poids` SMALLINT unsigned NOT NULL");
+	if($q) $wpdb->query("UPDATE ".$wpdb->prefix."rencontre_users SET i_poids=i_poids*10");
+}
+
+if(isset($rencCustom['sizeu']) && $rencCustom['sizeu']==1) $patchsizeu = 1; // SIZE in Feet and Inches - set in CM not exact
+if(isset($rencCustom['weightu']) && $rencCustom['weightu']==1) $patchweightu = 1; // WEIGHT in Pounds - set in KG not exact
+if(!empty($patchsizeu) || !empty($patchweightu)) {
+	if(file_exists(plugin_dir_path(__FILE__).'patch-3-12-5.json')) {
+		$j = file_get_contents(plugin_dir_path(__FILE__).'patch-3-12-5.json');
+		$q = json_decode($j);
+	}
+	else {
+		$q = $wpdb->get_results("SELECT
+				user_id,
+				i_taille,
+				i_poids
+			FROM ".$wpdb->prefix."rencontre_users
+			");
+		$j = json_encode($q);
+		file_put_contents(plugin_dir_path(__FILE__).'patch-3-12-5.json', $j);
+	}
+	//
+	foreach($q as $r) {
+		$size = intval(  (round((($r->i_taille/24-1.708)*12),1)) *2.54+.5);
+		$weight = intval(  ($r->i_poids*2+10) *.4536+.5);
+		$wpdb->update( $wpdb->prefix.'rencontre_users', array('i_taille' => $size, 'i_poids' => $weight), array('user_id' => $r->user_id) );
+	}
+	if(file_exists(plugin_dir_path(__FILE__).'patch-3-12-5.json')) unlink(plugin_dir_path(__FILE__).'patch-3-12-5.json');
+	$rencCustom['sizeu']=2; $rencCustom['weightu']=2;
+	//
+	$patchRencOpt = get_option('rencontre_options');
+	$patchRencOpt['custom']['sizeu'] = 2; $rencCustom['sizeu'] = 2;
+	$patchRencOpt['custom']['weightu'] = 2; $rencCustom['weightu'] = 2;
+	update_option('rencontre_options',$patchRencOpt);
+}
 //
 // *******************************************************************************************************************
 

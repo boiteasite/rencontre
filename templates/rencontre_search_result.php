@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Search Result
- * Last Change : Rencontre 3.12.3
+ * Last Change : Rencontre 3.13
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_search_result.php
  * Call : rencontre_widget.php => f_quickFind(), f_trouver()
  * $u : user_login, user_id, d_naissance, i_sex, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_annonce, t_profil, t_action, looking, forwhat, hidephoto, online, online_ago, miniPhoto, miniPhotoWebp
@@ -17,7 +17,7 @@
 						<div class="w3-cell-row">
 						<?php if($u->i_photo!=0) { ?>
 
-							<div class="w3-cell w3-cell-middle w3-display-container" style="width:60px;">
+							<div class="w3-cell w3-cell-middle w3-display-container" style="width:60px;" onClick="<?php echo $onClick['profile']; ?>">
 							<?php if(!empty($u->miniPhotoWebp)) { ?>
 							
 								<picture <?php echo $u->thumb; ?>>
@@ -39,7 +39,7 @@
 							</div>
 						<?php } ?>
 							<div class="w3-cell w3-cell-middle w3-padding-small" style="text-transform:capitalize;">
-								<div class="w3-large"><?php echo $u->display_name; ?></div>
+								<div class="w3-large" onClick="<?php echo $onClick['profile']; ?>"><?php echo $u->display_name; ?></div>
 								<?php if(!isset($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) { ?>
 
 								<div>

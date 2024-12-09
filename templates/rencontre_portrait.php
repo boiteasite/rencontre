@@ -2,11 +2,11 @@
 /*
  * Plugin : Rencontre
  * Template : Portrait
- * Last Change : Rencontre 3.12.3
+ * Last Change : Rencontre 3.13
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_portrait.php
  * Call : rencontre_widget.php => widget()
  * $u : ID, user_login, display_name, c_pays, c_region, c_ville, i_sex, d_naissance, i_taille, i_poids, i_zsex, c_zsex, i_zage_min, i_zage_max, i_zrelation, c_zrelation, i_photo, e_lat, e_lon, d_session, t_titre, t_annonce, t_profil, t_action, maxPhoto, photo (object), looking, forwhat, session, session_ago, profil, online
- * $u0 (myself) : ID
+ * $u0 (myself)
 */
 ?>
 
@@ -95,11 +95,11 @@
 							<?php if(empty($rencCustom['born']) && strpos($u->d_naissance.'-','0000')===false) echo '<span id="userAge">'.Rencontre::f_age($u->d_naissance).' '.__('years','rencontre').'</span>'; ?>
 							<?php if(!isset($rencCustom['size'])) { ?>
 							
-							<span id="userSize"> &nbsp;-&nbsp; <?php echo (empty($rencCustom['sizeu'])?$u->i_taille.' '.__('cm','rencontre'):floor($u->i_taille/24-1.708).' '.__('ft','rencontre').' '.round(((($u->i_taille/24-1.708)-floor($u->i_taille/24-1.708))*12),1).' '.__('in','rencontre')); ?></span>
+							<span id="userSize"> &nbsp;-&nbsp; <?php echo ((empty($u0->imperials))?$u->i_taille.' '.__('cm','rencontre'):rencIn2Ft(rencConvertUnit($u->i_taille,'cm'))); ?></span>
 							<?php } ?>
 							<?php if(!isset($rencCustom['weight'])) { ?>
 							
-							<span id="userWeight"> &nbsp;-&nbsp; <?php echo (empty($rencCustom['weightu'])?$u->i_poids.' '.__('kg','rencontre'):($u->i_poids*2+10).' '.__('lbs','rencontre')) ?></span>
+							<span id="userWeight"> &nbsp;-&nbsp; <?php echo ((empty($u0->imperialw))?$u->i_poids.' '.__('kg','rencontre'):rencConvertUnit($u->i_poids,'kg',1).' '.__('lbs','rencontre')) ?></span>
 							<?php } ?>
 							<?php if(!empty($rencCustom['sex'])) { ?>
 							

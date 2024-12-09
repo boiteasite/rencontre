@@ -91,8 +91,8 @@ function f_exportCsv() {
 			"'".$r->c_ville."'",
 			"'".(isset($sex[$r->i_sex])?$sex[$r->i_sex]:'unknow')."'",
 			"'".$r->d_naissance."'",
-			"'".$r->i_taille."'",
-			"'".$r->i_poids."'",
+			"'".intval($r->i_taille / 10 + .5)."'",
+			"'".intval($r->i_poids / 10 + .5)."'",
 			"'".(isset($sex[$r->i_zsex])?$sex[$r->i_zsex]:'unknow')."'",
 			"'".$r->i_zage_min."'",
 			"'".$r->i_zage_max."'",
@@ -208,8 +208,8 @@ function f_importCsv() {
 								'c_ville'=>(!empty($a[7])?$a[7]:''),
 								'i_sex'=>$isex,
 								'd_naissance'=>$n,
-								'i_taille'=>(!empty($a[10])?intval($a[10]):170),
-								'i_poids'=>(!empty($a[11])?intval($a[11]):65),
+								'i_taille'=>(!empty($a[10])?(intval($a[10])*10):1700),
+								'i_poids'=>(!empty($a[11])?(intval($a[11])*10):650),
 								'i_zsex'=>$izsex,
 								'c_zsex'=>',',
 								'i_zage_min'=>(isset($a[13])?intval($a[13]):18),
@@ -1126,6 +1126,7 @@ function update_rencontre_options($P) {
 		if(!empty($P['imcopyright'])) $rencOpt['imcopyright'] = rencSanit($P['imcopyright'],'int'); else unset($rencOpt['imcopyright']);
 		if(!empty($P['txtcopyright'])) $rencOpt['txtcopyright'] = rencSanit($P['txtcopyright'],'text'); else unset($rencOpt['txtcopyright']);
 		if(!empty($P['lightbox'])) $rencOpt['lightbox'] = 1; else unset($rencOpt['lightbox']);
+		if(!empty($P['photoreq'])) $rencOpt['photoreq'] = 1; else unset($rencOpt['photoreq']);
 		if(!empty($P['onlyphoto'])) $rencOpt['onlyphoto'] = 1; else unset($rencOpt['onlyphoto']);
 		if(!empty($P['photoz'])) $rencOpt['photoz'] = 1; else unset($rencOpt['photoz']);
 		if(!empty($P['pacamsg'])) $rencOpt['pacamsg'] = 1; else unset($rencOpt['pacamsg']);
@@ -1247,21 +1248,30 @@ function rencMenuGeneral() {
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row"><label><?php _e('Number of days in jail (deleted account)', 'rencontre'); ?></label></th>
+					<th scope="row"><label><?php _e('Do not remove WP roles', 'rencontre'); ?><strong style="color:#500"> *</strong></label></th>
+					<td><input type="checkbox" name="rol" value="1" <?php if(!empty($rencOpt['rol'])) echo 'checked'; ?> onClick="document.getElementById('blocRolu').style.display=((this.checked==true)?'table-row':'none')"></td>
+				</tr>
+				<tr valign="top" id="blocRolu" style="<?php echo ((!empty($rencOpt['rol']))?'display:table-row;':'display:none;'); ?>">
+					<th scope="row"><label><?php _e('Do not remove user in WP when remove in Rencontre', 'rencontre'); ?> (ADMIN del)</label></th>
+					<td><input type="checkbox" name="rolu" value="1" <?php if(!empty($rencOpt['rolu'])) echo 'checked'; ?>></td>
+				</tr>
+				<tr>
+					<td colspan = "2">
+						<strong style="color:#500">* </strong>
+						<em> - <?php echo __('Unchecked: WP roles will be destroyed. Users who are not in Rencontre will be destroyed. This is the best mode for a big and exclusive dating site.', 'rencontre'); ?></em><br />
+						<em> - <?php echo __('Checked: Better choice to test this plugin or to use with other one (forum...). Over time, the site will be slower with numerous abandoned account.', 'rencontre'); ?></em>
+					</td>
+				</tr>
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
+					<th scope="row"><label><?php _e('Hour maintenance tasks (off peak)', 'rencontre'); ?></label></th>
 					<td>
-						<select name="prison">
-							<?php for($v=7;$v<361;++$v) {
-								if($v>90) $v += 29;
-								else if($v>15) $v += 4;
-								echo '<option value="'.$v.'"'.((isset($rencOpt['prison'])&&$rencOpt['prison']==$v)?' selected':'').'>'.$v.'</option>';
-							}
+						<select name="hcron">
+							<?php
+							if(!isset($rencOpt['hcron'])) $rencOpt['hcron'] = 3;
+							for($v=0;$v<24;++$v) echo '<option value="'.$v.'" '.(($rencOpt['hcron']==$v)?'selected':'').'>'.$v.'&nbsp;'.__('hours','rencontre').'</option>';
 							?>
 						</select>
 					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('Use member\'s picture as WordPress avatar', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="avatar" value="1" <?php if(!empty($rencOpt['avatar'])) echo 'checked'; ?>></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row"><label><?php _e('Old messages deleted during maintenance (recommended)', 'rencontre'); ?></label></th>
@@ -1288,30 +1298,21 @@ function rencMenuGeneral() {
 						</select>
 					</td>
 				</tr>
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
+					<th scope="row"><label><?php _e('Use member\'s picture as WordPress avatar', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="avatar" value="1" <?php if(!empty($rencOpt['avatar'])) echo 'checked'; ?>></td>
+				</tr>
 				<tr valign="top">
-					<th scope="row"><label><?php _e('Hour maintenance tasks (off peak)', 'rencontre'); ?></label></th>
+					<th scope="row"><label><?php _e('Number of days in jail (deleted account)', 'rencontre'); ?></label></th>
 					<td>
-						<select name="hcron">
-							<?php
-							if(!isset($rencOpt['hcron'])) $rencOpt['hcron'] = 3;
-							for($v=0;$v<24;++$v) echo '<option value="'.$v.'" '.(($rencOpt['hcron']==$v)?'selected':'').'>'.$v.'&nbsp;'.__('hours','rencontre').'</option>';
+						<select name="prison">
+							<?php for($v=7;$v<361;++$v) {
+								if($v>90) $v += 29;
+								else if($v>15) $v += 4;
+								echo '<option value="'.$v.'"'.((isset($rencOpt['prison'])&&$rencOpt['prison']==$v)?' selected':'').'>'.$v.'</option>';
+							}
 							?>
 						</select>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('Do not remove WP roles', 'rencontre'); ?><strong style="color:#500"> *</strong></label></th>
-					<td><input type="checkbox" name="rol" value="1" <?php if(!empty($rencOpt['rol'])) echo 'checked'; ?> onClick="document.getElementById('blocRolu').style.display=((this.checked==true)?'table-row':'none')"></td>
-				</tr>
-				<tr valign="top" id="blocRolu" style="<?php echo ((!empty($rencOpt['rol']))?'display:table-row;':'display:none;'); ?>">
-					<th scope="row"><label><?php _e('Do not remove user in WP when remove in Rencontre', 'rencontre'); ?> (ADMIN del)</label></th>
-					<td><input type="checkbox" name="rolu" value="1" <?php if(!empty($rencOpt['rolu'])) echo 'checked'; ?>></td>
-				</tr>
-				<tr>
-					<td colspan = "2">
-						<strong style="color:#500">* </strong>
-						<em> - <?php echo __('Unchecked: WP roles will be destroyed. Users who are not in Rencontre will be destroyed. This is the best mode for a big and exclusive dating site.', 'rencontre'); ?></em><br />
-						<em> - <?php echo __('Checked: Better choice to test this plugin or to use with other one (forum...). Over time, the site will be slower with numerous abandoned account.', 'rencontre'); ?></em>
 					</td>
 				</tr>
 				<tr valign="top">
@@ -1405,6 +1406,16 @@ function rencTabDis() {
 	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=dis&tok=<?php echo $rencToka; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
 			<tr valign="top">
+				<th scope="row"><label><?php _e('Auto-scrolling to center the page on this plugin', 'rencontre'); ?></label></th>
+				<td>
+					<select name="discrol">
+						<option value="0" <?php if(empty($rencOpt['discrol'])) echo 'selected'; ?>><?php _e('No', 'rencontre'); ?></option>
+						<option value="1" <?php if(isset($rencOpt['discrol']) && $rencOpt['discrol']==1) echo 'selected'; ?>><?php _e('Yes', 'rencontre'); ?></option>
+						<option value="2" <?php if(isset($rencOpt['discrol']) && $rencOpt['discrol']==2) echo 'selected'; ?>><?php _e('On smartphone only', 'rencontre'); ?></option>
+					</select>
+				</td>
+			</tr>
+			<tr valign="top">
 				<th scope="row"><label><?php _e('Display a different name than login', 'rencontre'); ?></label></th>
 				<td>
 					<select name="disnam">
@@ -1414,13 +1425,21 @@ function rencTabDis() {
 					</select>
 				</td>
 			</tr>
-			<tr valign="top">
+			<tr valign="top" style="border-top:1px solid #c3c4c7;">
 				<th scope="row"><label><?php _e('Number of portrait on logged out plugin homepage', 'rencontre'); ?></label></th>
 				<td>
 					<select name="npa">
 						<?php for($v=0;$v<91;++$v) echo '<option value="'.$v.'"'.((isset($rencOpt['npa'])&&$rencOpt['npa']==$v)?' selected':'').'>'.$v.'</option>'; ?>
 					</select>
 				<a class="button-primary" href="admin.php?page=rencontre.php&renctab=dis&reloadhomepage=1"><?php _e('Update now', 'rencontre'); ?></a>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Number of days to wait before presence homepage', 'rencontre'); ?></label></th>
+				<td>
+					<select name="jlibre">
+						<?php for($v=0;$v<30;++$v) echo '<option value="'.$v.'"'.((isset($rencOpt['jlibre'])&&$rencOpt['jlibre']==$v)?' selected':'').'>'.$v.'</option>'; ?>
+					</select>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -1435,25 +1454,7 @@ function rencTabDis() {
 				</th>
 				<td><input type="number" name="wslibre" value="<?php if(!empty($rencOpt['wslibre'])) echo $rencOpt['wslibre']; ?>" /></td>
 			</tr>
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Auto-scrolling to center the page on this plugin', 'rencontre'); ?></label></th>
-				<td>
-					<select name="discrol">
-						<option value="0" <?php if(empty($rencOpt['discrol'])) echo 'selected'; ?>><?php _e('No', 'rencontre'); ?></option>
-						<option value="1" <?php if(isset($rencOpt['discrol']) && $rencOpt['discrol']==1) echo 'selected'; ?>><?php _e('Yes', 'rencontre'); ?></option>
-						<option value="2" <?php if(isset($rencOpt['discrol']) && $rencOpt['discrol']==2) echo 'selected'; ?>><?php _e('On smartphone only', 'rencontre'); ?></option>
-					</select>
-				</td>
-			</tr>
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Number of days to wait before presence homepage', 'rencontre'); ?></label></th>
-				<td>
-					<select name="jlibre">
-						<?php for($v=0;$v<30;++$v) echo '<option value="'.$v.'"'.((isset($rencOpt['jlibre'])&&$rencOpt['jlibre']==$v)?' selected':'').'>'.$v.'</option>'; ?>
-					</select>
-				</td>
-			</tr>
-			<tr valign="top">
+			<tr valign="top" style="border-top:1px solid #c3c4c7;">
 				<th scope="row"><label><?php _e('Max number of results per search', 'rencontre'); ?></label></th>
 				<td>
 					<select name="limit">
@@ -1466,16 +1467,16 @@ function rencTabDis() {
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row"><label><?php _e('Merge My Account and Edit My Profile pages', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="accprof" value="1" <?php if(!empty($rencOpt['accprof'])) echo 'checked'; ?>></td>
-			</tr>
-			<tr valign="top">
 				<th scope="row"><label><?php _e('Dynamic loading of search results', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="dynsearch" value="1" <?php if(!empty($rencOpt['dynsearch'])) echo 'checked'; ?>></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Display profiles searched in a new tab', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="newtab" value="1" <?php if(!empty($rencOpt['newtab'])) echo 'checked'; ?>></td>
+			</tr>
+			<tr valign="top" style="border-top:1px solid #c3c4c7;">
+				<th scope="row"><label><?php _e('Precise criteria for featured profiles', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="recexact" value="1" <?php if(!empty($rencOpt['recexact'])) echo 'checked'; ?>></td>
 			</tr>
 			<?php if(empty($rencCustom['country']) && empty($rencCustom['place'])) { ?>
 			
@@ -1486,10 +1487,6 @@ function rencTabDis() {
 			<?php } ?>
 			
 			<tr valign="top">
-				<th scope="row"><label><?php _e('Precise criteria for featured profiles', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="recexact" value="1" <?php if(!empty($rencOpt['recexact'])) echo 'checked'; ?>></td>
-			</tr>
-			<tr valign="top">
 				<th scope="row"><label><?php _e('Today\'s birthday', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="anniv" value="1" <?php if(!empty($rencOpt['anniv'])) echo 'checked'; ?>></td>
 			</tr>
@@ -1497,19 +1494,7 @@ function rencTabDis() {
 				<th scope="row"><label><?php _e('Profiles currently online', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="ligne" value="1" <?php if(!empty($rencOpt['ligne'])) echo 'checked'; ?>></td>
 			</tr>
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Enable chat', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="tchat" value="1" <?php if(!empty($rencOpt['tchat'])) echo 'checked'; ?>></td>
-			</tr>
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Chat thread down (Android)', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="tchatsm" value="1" <?php if(!empty($rencOpt['tchatsm'])) echo 'checked'; ?>></td>
-			</tr>
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Geolocation', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="gps" value="1" <?php if(!empty($rencOpt['gps'])) echo 'checked'; ?>></td>
-			</tr>
-			<tr valign="top">
+			<tr valign="top" style="border-top:1px solid #c3c4c7;">
 				<th scope="row"><label><?php _e('Number of photos', 'rencontre'); ?></label></th>
 				<td>
 					<select name="imnb">
@@ -1541,10 +1526,14 @@ function rencTabDis() {
 				<td><input type="checkbox" name="lightbox" value="1" <?php if(!empty($rencOpt['lightbox'])) echo 'checked'; ?>></td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><label><?php _e('Photo required', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="photoreq" value="1" <?php if(!empty($rencOpt['photoreq'])) echo 'checked'; ?> onClick="document.getElementById('bloconlyphoto').style.display=((this.checked==true)?'none':'table-row');document.getElementById('blocphotoz').style.display=((this.checked==true)?'none':'table-row');"></td>
+			</tr>
+			<tr valign="top" id="bloconlyphoto" style="<?php echo (!empty($rencOpt['photoreq'])?'display:none;':'display:table-row;'); ?>">
 				<th scope="row"><label><?php _e('Members without photo are less visible', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="onlyphoto" value="1" <?php if(!empty($rencOpt['onlyphoto'])) echo 'checked'; ?>></td>
 			</tr>
-			<tr valign="top">
+			<tr valign="top" id="blocphotoz" style="<?php echo (!empty($rencOpt['photoreq'])?'display:none;':'display:table-row;'); ?>">
 				<th scope="row"><label><?php _e('Members without photo cannot zoom other members', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="photoz" value="1" <?php if(!empty($rencOpt['photoz'])) echo 'checked'; ?>></td>
 			</tr>
@@ -1555,6 +1544,22 @@ function rencTabDis() {
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Members without photo, attention-catcher and ad cannot make a report', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="pacasig" value="1" <?php if(!empty($rencOpt['pacasig'])) echo 'checked'; ?>></td>
+			</tr>
+			<tr valign="top" style="border-top:1px solid #c3c4c7;">
+				<th scope="row"><label><?php _e('Merge My Account and Edit My Profile pages', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="accprof" value="1" <?php if(!empty($rencOpt['accprof'])) echo 'checked'; ?>></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Geolocation', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="gps" value="1" <?php if(!empty($rencOpt['gps'])) echo 'checked'; ?>></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Enable chat', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="tchat" value="1" <?php if(!empty($rencOpt['tchat'])) echo 'checked'; ?>></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Chat thread down (Android)', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="tchatsm" value="1" <?php if(!empty($rencOpt['tchatsm'])) echo 'checked'; ?>></td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Members cannot hide their profile', 'rencontre'); ?></label></th>
@@ -1569,18 +1574,13 @@ function rencTabDis() {
 }
 function rencTabMel() {
 	if(!current_user_can("administrator")) die;
-	global $rencOpt, $rencDiv, $rencCustom, $wpdb;;
+	global $rencOpt, $rencDiv, $rencCustom, $wpdb, $rencWPLANG;
 	$rencToka = wp_create_nonce('rencToka');
-	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
 	$mph = get_option('rencontre_mailPerHour');
 	?>
 	<p style="margin-top:2em;"><?php _e('Sending emails via WordPress can sometimes be tricky. If registration emails (for example) aren\'t being received, try an SMTP email plugin.', 'rencontre'); ?></p>
 	<form method="post" name="rencontre_options" action="admin.php?page=rencontre.php&renctab=mel&tok=<?php echo $rencToka; ?>">
 		<table class="form-table" style="max-width:600px;clear:none;z-index:5;">
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Send an email to the user whose account is deleted', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="mailsupp" value="1" <?php if(!empty($rencOpt['mailsupp'])) echo 'checked'; ?>></td>
-			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Automatic sending a summary email to members (shared daily)', 'rencontre'); ?></label></th>
 				<td>
@@ -1595,6 +1595,22 @@ function rencTabMel() {
 				</td>
 			</tr>
 			<tr valign="top">
+				<th scope="row"><label><?php _e('Automatically sending an email happy birthday members', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="mailanniv" value="1" <?php if(!empty($rencOpt['mailanniv'])) echo 'checked'; ?>></td>
+			</tr>
+			<?php if(empty($rencCustom['smile'])) { ?>
+
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Also send an email for a smile', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="mailsmile" value="1" <?php if(!empty($rencOpt['mailsmile'])) echo 'checked'; ?>></td>
+			</tr>
+			<?php } ?>
+			
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Send an email to the user whose account is deleted', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="mailsupp" value="1" <?php if(!empty($rencOpt['mailsupp'])) echo 'checked'; ?>></td>
+			</tr>
+			<tr valign="top" style="border-top:1px solid #c3c4c7;">
 				<th scope="row"><label><?php _e('Regular email subject', 'rencontre'); ?><br><i style="font-size:90%"><?php _e('Site title'); ?> : [BLOGNAME]</i></label></th>
 				<td>
 					<input type="text" name="titmailmois" style="width:100%;" value="<?php if(isset($rencOpt['titmailmois'])) echo $rencOpt['titmailmois']; ?>" />
@@ -1626,30 +1642,11 @@ function rencTabMel() {
 				<th scope="row"><label><?php _e('Introductory text for the summary email (After hello login - Before the smiles and contact requests)', 'rencontre'); ?></label></th>
 				<td><textarea name="textmail"><?php if(isset($rencOpt['textmail'])) echo stripslashes($rencOpt['textmail']); ?></textarea></td>
 			</tr>
-			<?php if(empty($rencCustom['country']) && empty($rencCustom['place'])) { ?>
-			
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Only my country in summary email', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="melctry" value="1" <?php if(!empty($rencOpt['melctry'])) echo 'checked'; ?>></td>
-			</tr>
-			<?php } ?>
-			<?php if(empty($rencCustom['smile'])) { ?>
-
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Also send an email for a smile', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="mailsmile" value="1" <?php if(!empty($rencOpt['mailsmile'])) echo 'checked'; ?>></td>
-			</tr>
-			<?php } ?>
-
-			<tr valign="top">
-				<th scope="row"><label><?php _e('Automatically sending an email happy birthday members', 'rencontre'); ?></label></th>
-				<td><input type="checkbox" name="mailanniv" value="1" <?php if(!empty($rencOpt['mailanniv'])) echo 'checked'; ?>></td>
-			</tr>
 			<tr valign="top">
 				<th scope="row"><label><?php _e('Full text for the birthday mail (After hello pseudo)', 'rencontre'); ?></label></th>
 				<td><textarea name="textanniv"><?php if(isset($rencOpt['textanniv'])) echo stripslashes($rencOpt['textanniv']); ?></textarea></td>
 			</tr>
-			<tr valign="top">
+			<tr valign="top" style="border-top:1px solid #c3c4c7;">
 				<th scope="row"><label><?php _e('Max number of mails sent per hour', 'rencontre'); ?></label></th>
 				<td>
 					<select name="qmail">
@@ -1670,6 +1667,14 @@ function rencTabMel() {
 
 				</td>
 			</tr>
+			<?php if(empty($rencCustom['country']) && empty($rencCustom['place'])) { ?>
+			
+			<tr valign="top">
+				<th scope="row"><label><?php _e('Only my country in summary email', 'rencontre'); ?></label></th>
+				<td><input type="checkbox" name="melctry" value="1" <?php if(!empty($rencOpt['melctry'])) echo 'checked'; ?>></td>
+			</tr>
+			<?php } ?>
+			
 			<tr valign="top">
 				<th scope="row"><label><?php _e('No members without photo in automatic mails', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="mailph" value="1" <?php if(!empty($rencOpt['mailph'])) echo 'checked'; ?>></td>
@@ -1679,7 +1684,7 @@ function rencTabMel() {
 				<td><input type="checkbox" name="mailfo" value="1" <?php if(!empty($rencOpt['mailfo'])) echo 'checked'; ?>></td>
 			</tr>
 		</table>
-		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?><br /><strong>WPLANG<?php _e(': ','rencontre'); ?><span style="color:#D54E21;"><?php echo $WPLANG; ?></span></strong></p>
+		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?><br /><strong>WPLANG<?php _e(': ','rencontre'); ?><span style="color:#D54E21;"><?php echo $rencWPLANG; ?></span></strong></p>
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save','rencontre') ?>" />
 		</p>
@@ -2042,9 +2047,21 @@ function rencMenuMembres() {
 				// Age
 				echo '<td>'.Rencontre::f_age($s->d_naissance).'</td>';
 				// Height
-				if(empty($rencCustom['size'])) echo '<td>'.(empty($rencCustom['sizeu'])?$s->i_taille.' '.__('cm','rencontre'):floor($s->i_taille/24-1.708).' '.__('ft','rencontre').' '.round(((($s->i_taille/24-1.708)-floor($s->i_taille/24-1.708))*12),1).' '.__('in','rencontre')).'</td>';
+				if(empty($rencCustom['size'])) {
+					$s->i_taille = (float)$s->i_taille / 10;
+					echo '<td>';
+					if(empty($rencCustom['sizeu']) || $rencCustom['sizeu']!=2) echo intval($s->i_taille + .5).' '.__('cm','rencontre');
+					else echo rencIn2Ft(rencConvertUnit($s->i_taille,'cm'));
+					echo '</td>';
+				}
 				// Weight
-				if(empty($rencCustom['weight'])) echo '<td>'.(empty($rencCustom['weightu'])?$s->i_poids.' '.__('kg','rencontre'):($s->i_poids*2+10).' '.__('lbs','rencontre')).'</td>';
+				if(empty($rencCustom['weight'])) {
+					$s->i_poids = (float)$s->i_poids / 10;
+					echo '<td>';
+					if(empty($rencCustom['weightu']) || $rencCustom['weightu']!=2) echo intval($s->i_poids + .5).' '.__('kg','rencontre');
+					else echo rencConvertUnit($s->i_poids,'kg',1).' '.__('lbs','rencontre');
+					echo '</td>';
+				}
 				// Search
 				echo '<td>';
 				if(empty($rencOpt['paus']) && !empty($s->t_action) && strpos($s->t_action.'-', ',pause2,')!==false) echo '<div class="pause">'.__('Profile switched off','rencontre').'</div>';
@@ -2196,6 +2213,8 @@ function rencMenuMembres() {
 					R.user_id=".$id." 
 				LIMIT 1
 				");
+			$s->i_taille = (float)$s->i_taille / 10;
+			$s->i_poids = (float)$s->i_poids / 10;
 			$pause = (strpos($s->t_action.'-',',pause2,')!==false?2:(strpos($s->t_action.'-',',pause1,')!==false?1:0));
 			?>
 			
@@ -2249,7 +2268,7 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('I am','rencontre');?></span><br>
 								<p>
-									<select name="sex" size=2>
+									<select name="sex">
 										<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) echo '<option value="'.$v.'" '.(($s->i_sex==$v)?' selected':'').'>'.$rencOpt['iam'][$v].'</option>'; ?>
 									</select>
 								</p>
@@ -2259,15 +2278,15 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('Born','rencontre'); ?></span><br>
 								<p>
-									<select name="jour" size=2>
+									<select name="jour">
 										<?php for($v=1;$v<32;++$v) echo '<option value="'.$v.'"'.(($v==$j)?' selected':'').'>'.$v.'</option>'; ?>
 										
 									</select>
-									<select name="mois" size=2>
+									<select name="mois">
 										<?php for($v=1;$v<13;++$v) echo '<option value="'.$v.'"'.(($v==$m)?' selected':'').'>'.$v.'</option>'; ?>
 										
 									</select>
-									<select name="annee" size=2>
+									<select name="annee">
 										<?php $y=(date('Y'));
 										$oldmax = $y-(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99)-1;
 										$oldmin = $y-(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18)+1;
@@ -2281,7 +2300,7 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('My country','rencontre'); ?></span><br>
 								<p>
-									<select id="rencPays" name="pays" size=2 onChange="f_region_select_adm(this.options[this.selectedIndex].value,'<?php echo admin_url('admin-ajax.php'); ?>','regionSelect2');">
+									<select id="rencPays" name="pays" onChange="f_region_select_adm(this.options[this.selectedIndex].value,'<?php echo admin_url('admin-ajax.php'); ?>','regionSelect2');">
 										<?php RencontreWidget::f_pays($s->c_pays); ?>
 										
 									</select>
@@ -2292,7 +2311,7 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('My region','rencontre'); ?></span><br>
 								<p>
-									<select id="regionSelect2" size=2 name="region">
+									<select id="regionSelect2" name="region">
 										<?php if($s->c_region) RencontreWidget::f_regionBDD($s->c_region,$s->c_pays); else RencontreWidget::f_regionBDD(1,$s->c_pays); ?>
 										
 									</select>
@@ -2313,11 +2332,19 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('My height','rencontre'); ?></span><br>
 								<p>
-									<select name="taille" size=2>
-										<?php for($v=140;$v<220;++$v) {
-											if(empty($rencCustom['sizeu'])) echo '<option value="'.$v.'"'.(($v==$s->i_taille)?' selected':'').'>'.$v.'&nbsp;'.__('cm','rencontre').'</option>';
-											else echo '<option value="'.$v.'"'.(($v==$s->i_taille)?' selected':'').'>'.(floor($v/24-1.708)).'&nbsp;'.__('ft','rencontre').'&nbsp;'.(round(((($v/24-1.708)-floor($v/24-1.708))*12),1)).'&nbsp;'.__('in','rencontre').'</option>';
-										} ?>
+									<select name="taille">
+									<?php $b = 0;
+									if(empty($rencCustom['sizeu']) || $rencCustom['sizeu']!=2) {
+										for($v=(!empty($rencCustom['sizemin'])?$rencCustom['sizemin']:140); $v<=(!empty($rencCustom['sizemax'])?$rencCustom['sizemax']:220); ++$v) {
+											?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=(intval($s->i_taille+.5))) { echo ' selected'; $b = 1; } ?>><?php echo $v.' '.__('cm','rencontre'); ?></option>
+										<?php }
+									}
+									else {
+										for($v=(!empty($rencCustom['sizemin'])?rencConvertUnit($rencCustom['sizemin'],'cm',1):55); $v<=(!empty($rencCustom['sizemax'])?rencConvertUnit($rencCustom['sizemax'],'cm',1):86.5); $v+=.5) {
+											?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=rencConvertUnit($s->i_taille,'cm',3)) { echo ' selected'; $b = 1; } ?>><?php echo rencIn2Ft($v); ?></option>
+										<?php }
+									} ?>
+										
 									</select>
 								</p>
 							</div>
@@ -2326,11 +2353,19 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('My weight','rencontre'); ?></span><br>
 								<p>
-									<select name="poids" size=2>
-										<?php for($v=40;$v<140;++$v) {
-											if(empty($rencCustom['weightu'])) echo '<option value="'.$v.'"'.(($v==$s->i_poids)?' selected':'').'>'.$v.'&nbsp;'.__('kg','rencontre').'</option>';
-											else echo '<option value="'.$v.'"'.(($v==$s->i_poids)?' selected':'').'>'.($v*2+10).'&nbsp;'.__('lbs','rencontre').'</option>';
-										} ?>
+									<select name="poids">
+									<?php $b = 0;
+									if(empty($rencCustom['weightu']) || $rencCustom['weightu']!=2) {
+										for($v=(!empty($rencCustom['weightmin'])?$rencCustom['weightmin']:40); $v<=(!empty($rencCustom['weightmax'])?$rencCustom['weightmax']:140); ++$v) {
+											?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=(intval($s->i_poids+.5))) { echo ' selected'; $b = 1; } ?>><?php echo $v.' '.__('kg','rencontre'); ?></option>
+										<?php }
+									}
+									else {
+										for($v=(!empty($rencCustom['weightmin'])?rencConvertUnit($rencCustom['weightmin'],'kg',1):88); $v<=(!empty($rencCustom['weightmax'])?rencConvertUnit($rencCustom['weightmax'],'kg',1):309); $v++) {
+											?><option value="<?php echo $v; ?>"<?php if(!$b && $v>=rencConvertUnit($s->i_poids,'kg',1)) { echo ' selected'; $b = 1; } ?>><?php echo $v.' '.__('lbs','rencontre'); ?></option>
+										<?php }
+									} ?>
+									
 									</select>			
 								</p>
 							</div>
@@ -2340,7 +2375,7 @@ function rencMenuMembres() {
 								<p>
 									<?php
 									if(!isset($rencCustom['multiSR']) || !$rencCustom['multiSR']) {
-										echo '<select name="zsex" size=2>';
+										echo '<select name="zsex">';
 										for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) echo '<option value="'.$v.'" '.(($s->i_zsex==$v)?' selected':'').'>'.$rencOpt['iam'][$v].'</option>';
 										echo '</select>';
 									}
@@ -2354,14 +2389,14 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('Age min/max','rencontre'); ?></span><br>
 								<p>
-									<select name="zageMin" size=2 onChange="f_minA(this.options[this.selectedIndex].value,'portraitChange','zageMin','zageMax');">
+									<select name="zageMin" onChange="f_minA(this.options[this.selectedIndex].value,'portraitChange','zageMin','zageMax');">
 										<?php for($v=(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18);$v<(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99);++$v) { ?>
 										
 										<option value="<?php echo $v; ?>"<?php if($v==$s->i_zage_min) echo ' selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
 										<?php } ?>
 										
 									</select>
-									<select name="zageMax" size=2 onChange="f_maxA(this.options[this.selectedIndex].value,'portraitChange','zageMin','zageMax');">
+									<select name="zageMax" onChange="f_maxA(this.options[this.selectedIndex].value,'portraitChange','zageMin','zageMax');">
 										<?php for($v=(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18)+1;$v<(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99)+1;++$v) { ?>
 									
 										<option value="<?php echo $v; ?>"<?php if($v==$s->i_zage_max) echo ' selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
@@ -2376,7 +2411,7 @@ function rencMenuMembres() {
 								<p>
 									<?php
 									if(!isset($rencCustom['multiSR']) || !$rencCustom['multiSR']) {
-										echo '<select name="zrelation" size=2>';
+										echo '<select name="zrelation">';
 										for($v=(isset($rencCustom['relation'])?3:0);$v<(isset($rencCustom['relation'])?count($rencOpt['for']):3);++$v) echo '<option value="'.$v.'" '.(($s->i_zrelation==$v)?' selected':'').'>'.$rencOpt['for'][$v].'</option>';
 										echo '</select>';
 									}
@@ -2416,7 +2451,7 @@ function rencMenuMembres() {
 							<div class="compte">
 								<span><?php _e('Profile visibility','rencontre'); ?></span><br>
 								<p>
-									<select name="pause" size=2>
+									<select name="pause">
 										<option value="0" <?php if(!$pause) echo ' selected'; ?>><?php _e('Profile visible','rencontre'); ?></option>
 										<option value="1" <?php if($pause==1) echo ' selected'; ?>><?php echo __('Profile hidden','rencontre'); ?></option>
 										<option value="2" <?php if($pause==2) echo ' selected'; ?>><?php echo __('Profile switched off','rencontre'); ?></option>
@@ -2596,13 +2631,12 @@ function rencMenuProfil() {
 	wp_enqueue_style('rencontre', plugins_url('rencontre/css/rencontre-adm.css'));
 	require(dirname(__FILE__).'/../lang/rencontre-js-admin-lang.php');
 	wp_localize_script('rencontre', 'rencobjet', $lang);
-	global $wpdb, $rencVersion, $rencCustom, $rencOpt, $rencDiv;
+	global $wpdb, $rencVersion, $rencCustom, $rencOpt, $rencDiv, $rencWPLANG;
 	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
 	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'int'):'');
 	$Pa4 = (isset($_POST['a4'])?rencSanit($_POST['a4'],'words'):'');
 	$Ptok = (isset($_POST['tok'])?rencSanit($_POST['tok'],'alphanum'):'');
-	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
-	$loc = ($WPLANG?substr($WPLANG,0,2):substr(get_locale(),0,2));
+	$loc = substr($rencWPLANG,0,2);
 	$loc2 = $loc."&";
 	$rencToka = wp_create_nonce('rencToka');
 	$q2 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$loc."' LIMIT 1");
@@ -2892,7 +2926,7 @@ function rencMenuPays() {
 	wp_enqueue_style( 'rencontre', plugins_url('rencontre/css/rencontre-adm.css'));
 	require(dirname (__FILE__) . '/../lang/rencontre-js-admin-lang.php');
 	wp_localize_script('rencontre', 'rencobjet', $lang);
-	global $wpdb, $rencDiv, $rencVersion, $rencOpt;
+	global $wpdb, $rencDiv, $rencVersion, $rencOpt, $rencWPLANG;
 	$Grenctab = (isset($_GET['renctab'])?rencSanit($_GET['renctab'],'alphanum'):'');
 	$Pa1 = (isset($_POST['a1'])?rencSanit($_POST['a1'],'alphanum'):'');
 	$Pa2 = (isset($_POST['a2'])?rencSanit($_POST['a2'],'alphanum'):'');
@@ -2924,8 +2958,7 @@ function rencMenuPays() {
 		else if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = 'svg/'.strtolower($r->c_liste_iso).'.svg'; // SVG
 		else if($r->c_liste_categ=='p')$rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
 	}
-	$WPLANG = $wpdb->get_var("SELECT option_value FROM ".$wpdb->prefix."options WHERE option_name='WPLANG' LIMIT 1");
-	$loc = ($WPLANG?substr($WPLANG,0,2):substr(get_locale(),0,2));
+	$loc = substr($rencWPLANG,0,2);
 	$loc2 = $loc."&";
 	$q2 = $wpdb->get_var("SELECT id FROM ".$wpdb->prefix."rencontre_liste WHERE c_liste_lang='".$loc."' LIMIT 1");
 	if(!$q2) {
@@ -3180,7 +3213,7 @@ function rencMenuCustom() {
 					<th scope="row"><label><?php _e('No localisation', 'rencontre'); ?></label></th>
 					<td><input type="checkbox" name="place" value="1" <?php if(isset($rencCustom['place']))echo 'checked'; ?>></td>
 				</tr>
-				<tr valign="top">
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
 					<th scope="row"><label><?php _e('No birth date', 'rencontre'); ?></label></th>
 					<td><input type="checkbox" name="born" value="1" <?php if(isset($rencCustom['born']))echo 'checked'; ?> onClick="document.getElementById('blocAgeMin').style.display=((this.checked==true)?'none':'table-row');document.getElementById('blocAgeMax').style.display=((this.checked==true)?'none':'table-row')"></td>
 				</tr>
@@ -3208,39 +3241,91 @@ function rencMenuCustom() {
 						</select>
 					</td>
 				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('No smiles', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="smile" value="1" <?php if(isset($rencCustom['smile']))echo 'checked'; ?>></td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('No contact request', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="creq" value="1" <?php if(isset($rencCustom['creq']))echo 'checked'; ?>></td>
-				</tr>
-				<tr valign="top">
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
 					<th scope="row"><label><?php _e('No weight', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="weight" value="1" <?php if(isset($rencCustom['weight']))echo 'checked'; ?> onClick="document.getElementById('blocWeightu').style.display=((this.checked==true)?'none':'table-row')"></td>
+					<td><input type="checkbox" name="weight" value="1" <?php if(isset($rencCustom['weight']))echo 'checked'; ?> onClick="document.getElementById('blocWeightu').style.display=((this.checked==true)?'none':'table-row');document.getElementById('blocWeightMin').style.display=((this.checked==true)?'none':'table-row');document.getElementById('blocWeightMax').style.display=((this.checked==true)?'none':'table-row')"></td>
+				</tr>
+				<tr valign="top" id="blocWeightMin" style="<?php echo (!empty($rencCustom['weight'])?'display:none;':'display:table-row;'); ?>">
+					<th scope="row"><label><?php _e('Min weight', 'rencontre'); ?></label></th>
+					<td>
+						<select name="weightmin" onChange="f_minA(parseInt(this.options[this.selectedIndex].value),'customForm','weightmin','weightmax');">
+						<?php for($v=0; $v<280; ++$v) {
+							if($v>30) $v+=4;
+							if(!isset($rencCustom['weightmin'])&&$v==30) echo '<option value="30" selected>30 kg</option>';
+							else echo '<option value="'.$v.'" '.((isset($rencCustom['weightmin'])&&$rencCustom['weightmin']==$v)?'selected':'').'>'.$v.' kg</option>';
+						} ?>
+							
+						</select>
+					</td>
+				</tr>
+				<tr valign="top" id="blocWeightMax" style="<?php echo (!empty($rencCustom['weight'])?'display:none;':'display:table-row;'); ?>">
+					<th scope="row"><label><?php _e('Max weight', 'rencontre'); ?></label></th>
+					<td>
+						<select name="weightmax" onChange="f_maxA(parseInt(this.options[this.selectedIndex].value),'customForm','weightmin','weightmax');">
+						<?php for($v=0; $v<280; ++$v) {
+							if($v>30) $v+=4;
+							if(!isset($rencCustom['weightmax'])&&$v==150) echo '<option value="150" selected>150 kg</option>';
+							else echo '<option value="'.$v.'" '.((isset($rencCustom['weightmax'])&&$rencCustom['weightmax']==$v)?'selected':'').'>'.$v.' kg</option>';
+						} ?>
+							
+						</select>
+					</td>
 				</tr>
 				<tr valign="top" id="blocWeightu" style="<?php echo (!empty($rencCustom['weight'])?'display:none;':'display:table-row;'); ?>">
 					<th scope="row"><label><?php _e('Weight unit', 'rencontre'); ?></label></th>
 					<td>
 						<select name="weightu">
 							<option value="0" <?php if(empty($rencCustom['weightu'])) echo 'selected'; ?>><?php _e('Kilograms', 'rencontre'); ?></option>
-							<option value="1" <?php if(!empty($rencCustom['weightu'])) echo 'selected'; ?>><?php _e('Pounds', 'rencontre'); ?></option>
+							<option value="2" <?php if(isset($rencCustom['weightu']) && $rencCustom['weightu']==2) echo 'selected'; ?>><?php _e('Pounds', 'rencontre'); ?></option>
+							<option value="3" <?php if(isset($rencCustom['weightu']) && $rencCustom['weightu']==3) echo 'selected'; ?>><?php _e('Both, the user chooses', 'rencontre'); ?></option>
 						</select>
 					</td>
 				</tr>
-				<tr valign="top">
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
 					<th scope="row"><label><?php _e('No height', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="size" value="1" <?php if(isset($rencCustom['size']))echo 'checked'; ?> onClick="document.getElementById('blocSizeu').style.display=((this.checked==true)?'none':'table-row')"></td>
+					<td><input type="checkbox" name="size" value="1" <?php if(isset($rencCustom['size']))echo 'checked'; ?> onClick="document.getElementById('blocSizeu').style.display=((this.checked==true)?'none':'table-row');document.getElementById('blocSizeMin').style.display=((this.checked==true)?'none':'table-row');document.getElementById('blocSizeMax').style.display=((this.checked==true)?'none':'table-row')"></td>
+				</tr>
+				<tr valign="top" id="blocSizeMin" style="<?php echo (!empty($rencCustom['size'])?'display:none;':'display:table-row;'); ?>">
+					<th scope="row"><label><?php _e('Min height', 'rencontre'); ?></label></th>
+					<td>
+						<select name="sizemin" onChange="f_minA(parseInt(this.options[this.selectedIndex].value),'customForm','sizemin','sizemax');">
+						<?php for($v=0; $v<280; $v+=10) {
+							if(!isset($rencCustom['sizemin'])&&$v==120) echo '<option value="120" selected>120 cm</option>';
+							else echo '<option value="'.$v.'" '.((isset($rencCustom['sizemin'])&&$rencCustom['sizemin']==$v)?'selected':'').'>'.$v.' cm</option>';
+						} ?>
+							
+						</select>
+					</td>
+				</tr>
+				<tr valign="top" id="blocSizeMax" style="<?php echo (!empty($rencCustom['size'])?'display:none;':'display:table-row;'); ?>">
+					<th scope="row"><label><?php _e('Max height', 'rencontre'); ?></label></th>
+					<td>
+						<select name="sizemax" onChange="f_maxA(parseInt(this.options[this.selectedIndex].value),'customForm','sizemin','sizemax');">
+						<?php for($v=0; $v<280; $v+=10) {
+							if(!isset($rencCustom['sizemax'])&&$v==220) echo '<option value="220" selected>220 cm</option>';
+							else echo '<option value="'.$v.'" '.((isset($rencCustom['sizemax'])&&$rencCustom['sizemax']==$v)?'selected':'').'>'.$v.' cm</option>';
+						} ?>
+							
+						</select>
+					</td>
 				</tr>
 				<tr valign="top" id="blocSizeu" style="<?php echo (!empty($rencCustom['size'])?'display:none;':'display:table-row;'); ?>">
 					<th scope="row"><label><?php _e('Height unit', 'rencontre'); ?></label></th>
 					<td>
 						<select name="sizeu">
 							<option value="0" <?php if(empty($rencCustom['sizeu'])) echo 'selected'; ?>><?php _e('Meter', 'rencontre'); ?></option>
-							<option value="1" <?php if(!empty($rencCustom['sizeu'])) echo 'selected'; ?>><?php _e('Feet and Inches', 'rencontre'); ?></option>
+							<option value="2" <?php if(isset($rencCustom['sizeu']) && $rencCustom['sizeu']==2) echo 'selected'; ?>><?php _e('Feet and Inches', 'rencontre'); ?></option>
+							<option value="3" <?php if(isset($rencCustom['sizeu']) && $rencCustom['sizeu']==3) echo 'selected'; ?>><?php _e('Both, the user chooses', 'rencontre'); ?></option>
 						</select>
 					</td>
+				</tr>
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
+					<th scope="row"><label><?php _e('No smiles', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="smile" value="1" <?php if(isset($rencCustom['smile']))echo 'checked'; ?>></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label><?php _e('No contact request', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="creq" value="1" <?php if(isset($rencCustom['creq']))echo 'checked'; ?>></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row"><label><?php _e('No report', 'rencontre'); ?></label></th>
@@ -3250,27 +3335,7 @@ function rencMenuCustom() {
 					<th scope="row"><label><?php _e('No emoticon', 'rencontre'); ?></label></th>
 					<td><input type="checkbox" name="emot" value="1" <?php if(isset($rencCustom['emot']))echo 'checked'; ?>></td>
 				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('No menu (I use WordPress menu)', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="menu" value="1" <?php if(isset($rencCustom['menu']))echo 'checked'; ?>></td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('No sidebar (I put it with widget)', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="side" value="1" <?php if(isset($rencCustom['side']))echo 'checked'; ?>></td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('Fit portraits width in home page', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="fitw" value="1" <?php if(isset($rencCustom['fitw']))echo 'checked'; ?>></td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('No ads on logged out plugin homepage', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="libreAd" value="1" <?php if(isset($rencCustom['libreAd']))echo 'checked'; ?>></td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label><?php _e('Only photo on logged out plugin homepage', 'rencontre'); ?></label></th>
-					<td><input type="checkbox" name="librePhoto" value="1" <?php if(isset($rencCustom['librePhoto']))echo 'checked'; ?>></td>
-				</tr>
-				<tr valign="top">
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
 					<th scope="row"><label><?php _e('Change relation type', 'rencontre'); ?><strong style="color:#500"> *</strong></label></th>
 					<td>
 						<input type="checkbox" name="relation" onChange="if(this.checked){document.getElementById('relationU').style.display='block';document.getElementById('relationT').style.display='none';}else{document.getElementById('relationU').style.display='none';document.getElementById('relationT').style.display='block';}" value="1" <?php if(isset($rencCustom['relation'])) echo 'checked'; ?>><br />
@@ -3324,7 +3389,27 @@ function rencMenuCustom() {
 					<th scope="row"><label><?php _e('No sex change', 'rencontre'); ?></label></th>
 					<td><input type="checkbox" name="blksex" value="1" <?php if(isset($rencCustom['blksex']))echo 'checked'; ?>></td>
 				</tr>
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
+					<th scope="row"><label><?php _e('No menu (I use WordPress menu)', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="menu" value="1" <?php if(isset($rencCustom['menu']))echo 'checked'; ?>></td>
+				</tr>
 				<tr valign="top">
+					<th scope="row"><label><?php _e('No sidebar (I put it with widget)', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="side" value="1" <?php if(isset($rencCustom['side']))echo 'checked'; ?>></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label><?php _e('Fit portraits width in home page', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="fitw" value="1" <?php if(isset($rencCustom['fitw']))echo 'checked'; ?>></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label><?php _e('No ads on logged out plugin homepage', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="libreAd" value="1" <?php if(isset($rencCustom['libreAd']))echo 'checked'; ?>></td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label><?php _e('Only photo on logged out plugin homepage', 'rencontre'); ?></label></th>
+					<td><input type="checkbox" name="librePhoto" value="1" <?php if(isset($rencCustom['librePhoto']))echo 'checked'; ?>></td>
+				</tr>
+				<tr valign="top" style="border-top:1px solid #c3c4c7;">
 					<th scope="row"><label><?php echo __('Change register link on click a portrait', 'rencontre').'<br /><i>'.__('(empty => default WP)', 'rencontre').'</i>'; ?></label></th>
 					<td><input type="text" name="reglink" style="width:400px;" value="<?php if(!empty($rencCustom['reglink'])) echo $rencCustom['reglink']; ?>" /></td>
 				</tr>
@@ -4064,26 +4149,23 @@ function f_update_custom($P) {
 		if(!empty($P['born'])) $a['born'] = 1; else unset($a['born']);
 		if(isset($P['agemin'])) $a['agemin'] = rencSanit($P['agemin'],'int'); else unset($a['agemin']);
 		if(!empty($P['agemax'])) $a['agemax'] = rencSanit($P['agemax'],'int'); else unset($a['agemax']);
-		if(!empty($P['smile'])) $a['smile'] = 1; else unset($a['smile']);
-		if(!empty($P['creq'])) $a['creq'] = 1; else unset($a['creq']);
 		if(!empty($P['weight'])) $a['weight'] = 1; else unset($a['weight']);
+		if(!empty($P['weightmin'])) $a['weightmin'] = rencSanit($P['weightmin'],'int'); else unset($a['weightmin']);
+		if(!empty($P['weightmax'])) $a['weightmax'] = rencSanit($P['weightmax'],'int'); else unset($a['weightmax']);
 		if(!empty($P['weightu'])) $a['weightu'] = rencSanit($P['weightu'],'int'); else unset($a['weightu']);
 		if(!empty($P['size'])) $a['size'] = 1; else unset($a['size']);
+		if(!empty($P['sizemin'])) $a['sizemin'] = rencSanit($P['sizemin'],'int'); else unset($a['sizemin']);
+		if(!empty($P['sizemax'])) $a['sizemax'] = rencSanit($P['sizemax'],'int'); else unset($a['sizemax']);
 		if(!empty($P['sizeu'])) $a['sizeu'] = rencSanit($P['sizeu'],'int'); else unset($a['sizeu']);
+		if(!empty($P['smile'])) $a['smile'] = 1; else unset($a['smile']);
+		if(!empty($P['creq'])) $a['creq'] = 1; else unset($a['creq']);
 		if(!empty($P['report'])) $a['report'] = 1; else unset($a['report']);
 		if(!empty($P['emot'])) $a['emot'] = 1; else unset($a['emot']);
-		if(!empty($P['menu'])) $a['menu'] = 1; else unset($a['menu']);
-		if(!empty($P['side'])) $a['side'] = 1; else unset($a['side']);
-		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
-		if(!empty($P['libreAd'])) $a['libreAd'] = 1; else unset($a['libreAd']);
-		if(!empty($P['librePhoto'])) $a['librePhoto'] = 1; else unset($a['librePhoto']);
 		if(!empty($P['relation'])) $a['relation'] = 1; else unset($a['relation']);
 		if(!empty($P['sex'])) $a['sex'] = 1; else unset($a['sex']);
 		if(!empty($P['multiSR'])) $a['multiSR'] = 1; else unset($a['multiSR']);
 		if(!empty($P['hetero'])) $a['hetero'] = 1; else unset($a['hetero']);
 		if(!empty($P['blksex'])) $a['blksex'] = 1; else unset($a['blksex']);
-		if(!empty($P['reglink'])) $a['reglink'] = rencSanit($P['reglink'],'url'); else unset($a['reglink']);
-		if(!empty($P['unmail'])) $a['unmail'] = 1; else unset($a['unmail']);
 		foreach($P as $k=>$v) {
 			if(strpos($k.'-','relationL')!==false) {
 				if(!(substr($P['a2'],0,9)=='relationS' && $k=='relationL'.substr($P['a2'],9))) {
@@ -4102,6 +4184,13 @@ function f_update_custom($P) {
 		if(substr($P['a2'],0,4)=='sexS') unset($a['sexL'.$sexL]); // DEL
 		if(!isset($a['relationL0'])) unset($a['relation']);
 		if(!isset($a['sexL0'])) unset($a['sex']);
+		if(!empty($P['menu'])) $a['menu'] = 1; else unset($a['menu']);
+		if(!empty($P['side'])) $a['side'] = 1; else unset($a['side']);
+		if(!empty($P['fitw'])) $a['fitw'] = 1; else unset($a['fitw']);
+		if(!empty($P['libreAd'])) $a['libreAd'] = 1; else unset($a['libreAd']);
+		if(!empty($P['librePhoto'])) $a['librePhoto'] = 1; else unset($a['librePhoto']);
+		if(!empty($P['reglink'])) $a['reglink'] = rencSanit($P['reglink'],'url'); else unset($a['reglink']);
+		if(!empty($P['unmail'])) $a['unmail'] = 1; else unset($a['unmail']);
 	}
 	else if($Grenctab=='wor') {
 		if(!empty($P['new'])) $a['new'] = 1; else unset($a['new']);
@@ -4230,8 +4319,12 @@ function sauvProfilAdm($in,$id) {
 	$Pannee = (isset($_POST['annee'])?rencSanit($_POST['annee'],'int'):0);
 	$Pmois = (isset($_POST['mois'])?rencSanit($_POST['mois'],'int'):0);
 	$Pjour = (isset($_POST['jour'])?rencSanit($_POST['jour'],'int'):0);
-	$Ptaille = (isset($_POST['taille'])?rencSanit($_POST['taille'],'int'):'');
+	$Ptaille = (isset($_POST['taille'])?rencSanit($_POST['taille'],'num'):'');
+	if(isset($rencCustom['sizeu']) && $rencCustom['sizeu']==2) $Ptaille = rencConvertUnit($Ptaille, 'in', 2); // Metric x10 in DB
+	else $Ptaille = intval(10 * (float)$Ptaille + .5);
 	$Ppoids = (isset($_POST['poids'])?rencSanit($_POST['poids'],'int'):'');
+	if(isset($rencCustom['weightu']) && $rencCustom['weightu']==2) $Ppoids = rencConvertUnit($Ppoids, 'lbs', 2); // Metric x10 in DB
+	else $Ppoids = intval(10 * (float)$Ppoids + .5);
 	$Pzagemin = (isset($_POST['zageMin'])?rencSanit($_POST['zageMin'],'int'):'');
 	$Pzagemax = (isset($_POST['zageMax'])?rencSanit($_POST['zageMax'],'int'):'');
 	$Pconfmail = (isset($_POST['confmail'])?rencSanit($_POST['confmail'],'int'):'');
