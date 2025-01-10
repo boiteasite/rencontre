@@ -129,6 +129,10 @@ add_action('init', 'f_cron', 21);
 function f_cron() {
 	// Filters after "init"
 	global $rencOpt;
+	// *** For all website, update Menu made by Meta-Menu Rencontre ***
+	add_filter('wp_setup_nav_menu_item', 'rencMetaMenuLoginout', 1); // Update Login/Logout/registered menu items
+	if(!is_user_logged_in()) add_filter('wp_get_nav_menu_items', 'rencMetaMenuRencontre', null, 3); // hide rencontre items in WP menu in not connected
+	// ****************************************************************
 	add_shortcode('rencontre_libre', 'f_shortcode_rencontre_libre');
 	add_shortcode('rencontre_nbmembre', 'f_shortcode_rencontre_nbmembre');
 	add_shortcode('rencontre_search', 'f_shortcode_rencontre_search');
@@ -142,8 +146,7 @@ function f_cron() {
 		add_action('wp_ajax_geoDataRegion', 'renc_ajax_geoDataRegionHook');
 		add_action('wp_ajax_rencGeoDataCity', 'renc_ajax_rencGeoDataCity'); // Search display city list
 	}
-	add_filter('wp_setup_nav_menu_item', 'rencMetaMenuItem', 1);
-	//if(!is_user_logged_in()) add_filter('wp_get_nav_menu_items', 'rencHideMenu', null, 3); // hide rencontre items in WP menu
+	//
 	if(has_filter('rencCron')) apply_filters('rencCron', 0);
 	else {
 		if(is_user_logged_in()) add_action('wp_ajax_cronasync', 'f_cronasync');
@@ -547,42 +550,48 @@ function rencLogRedir($to,$req,$u) {
 	else return $to;
 }
 //
-function rencMetaMenuItem($menu) {
-	if(current_user_can("administrator")) return $menu;
-	if($menu->url=='#rencloginout#') { // URL in metaMenu Rencontre : base.php
+function rencMetaMenuLoginout($item) {
+	// Fired for each menu item - add_filter('wp_setup_nav_menu_item',...)
+	// Update Login/Logout/registered menu items
+	if(current_user_can("administrator")) return $item;
+	if(isset($item->classes) && (in_array('rLoginout', $item->classes) || in_array('rencLoginout', $item->classes))) {
 		if(is_user_logged_in()) {
-			$menu->url = wp_logout_url(get_permalink());
-			$menu->title = __('Log out');
+			$item->url = wp_logout_url(get_permalink());
+			$item->title = __('Log out');
 		}
 		else {
-			$menu->url = wp_login_url(get_permalink());
-			$menu->title = __('Log in');
+			$item->url = wp_login_url(get_permalink());
+			$item->title = __('Log in');
 		}
 	}
-	else if($menu->url=='#rencregister#') {
-		if(is_user_logged_in()) $menu->_invalid = true; // hide
+	else if(isset($item->classes) && (in_array('rRegister', $item->classes) || in_array('rencRegister', $item->classes))) {
+		if(is_user_logged_in()) $item->_invalid = true; // hide
 		else {
-			$menu->url = wp_registration_url();
-			$menu->title = __('Register');
+			$item->url = wp_registration_url();
+			$item->title = __('Register');
 		}
 	}
-	else if(strpos($menu->url.'-','#rencnav#')!==false) {
+	// ** MENU CREATED BEFORE Rencontre 3.13.2 (Mod menu creation) **
+	else if(strpos($item->url.'-','#rencnav#')!==false) {
 		global $rencOpt;
 		if(is_user_logged_in()) {
-			$a = explode('#',$menu->url);
+			$a = explode('#',$item->url);
 			if(!empty($rencOpt['home'])) {
-				if(strpos($rencOpt['home'].'-','?')!==false && strpos($rencOpt['home'].'-','=')!==false) $menu->url = $rencOpt['home'].'&renc='.$a[2];
-				else $menu->url = $rencOpt['home'].'?renc='.$a[2]; // 'javascript:void(0)';
+				if(strpos($rencOpt['home'].'-','?')!==false && strpos($rencOpt['home'].'-','=')!==false) $item->url = $rencOpt['home'].'&renc='.$a[2];
+				else $item->url = $rencOpt['home'].'?renc='.$a[2]; // 'javascript:void(0)';
 			}
-			else $menu->url = site_url();
+			else $item->url = site_url();
 		}
-		else $menu->url = wp_logout_url();
+		else $item->url = wp_login_url(get_permalink());
 	}
-	return $menu;
+	// ***************************************************************
+	return $item;
 }
 //
-function rencHideMenu($items,$m,$a) {
-	foreach($items as $k=>$i) if(in_array('rencNav',$i->classes)) unset($items[$k]);
+function rencMetaMenuRencontre($items,$m,$a) {
+	// Fired once - add_filter('wp_get_nav_menu_items',...)
+	// Hide Menu Items if not logged
+	foreach($items as $k=>$i) if(in_array('onlyLog',$i->classes)) unset($items[$k]);
 	return $items;
 }
 //
@@ -722,7 +731,6 @@ function rencRotateJpg($f,$rot,$id=0) {
 	// f : img not crypted (id*10 + numImg)
 	global $rencDiv, $current_user;
 	if(empty($id)) $id = $current_user->ID;
-	$size = rencPhotoSize();
 	$img = $rencDiv['basedir'].'/portrait/'.floor(intval($id)/1000).'/'.Rencontre::f_img($f).'.jpg';
 	$im = imagecreatefromjpeg($img);
 	$imrot = imagerotate($im, $rot, 0);
@@ -734,32 +742,24 @@ function rencRotateJpg($f,$rot,$id=0) {
 //
 function f_suppImgAll($id) { // After init (has_filter)
 	global $rencDiv;
-	$size = rencPhotoSize();
+	$size = rencPhotoSize(1); // 1 : P added in list
 	$r = $rencDiv['basedir'].'/portrait/'.floor(intval($id)/1000).'/';
 	for($v=0;$v<9;++$v) {
 		$a = array();
-		$a[] = Rencontre::f_img($id.$v) . '.jpg';
 		foreach($size as $s) $a[] = Rencontre::f_img($id.$v.$s['label']) . '.jpg';
 		foreach($a as $b) if(file_exists($r.$b)) @unlink($r.$b);
-		if(has_filter('rencBlurDelP')) {
-			$ho = new StdClass();
-			$ho->id = $id;
-			$ho->v = $v;
-			$ho->rename = false;
-			$ho->size = $size;
-			apply_filters('rencBlurDelP', $ho);
-		}
 	}
 }
 function rencPhotoSize($f=0) {
 	$size = array(
+		array('label'=>'', 'width'=>1280, 'height'=>960, 'quality'=>75), // size max - W or H smaller according to photo format
 		array('label'=>'-mini', 'width'=>60, 'height'=>60, 'quality'=>75),
 		array('label'=>'-grande', 'width'=>250, 'height'=>250, 'quality'=>75),
 		array('label'=>'-libre', 'width'=>260, 'height'=>195, 'quality'=>75)
 		);
 	if(has_filter('rencImgSize')) $size = apply_filters('rencImgSize', $size);
-	if($f && has_filter('rencImgSizeP')) $size = apply_filters('rencImgSizeP', $size);
-	foreach($size as $k=>$v) if(empty($v['label']) || empty($v['width']) || empty($v['height'])) unset($size[$k]);
+	if($f && has_filter('rencImgSizeP')) $size = apply_filters('rencImgSizeP', $size); // Not added by default (Blur) (creation in P in another filter...)
+	foreach($size as $k=>$v) if(!isset($v['label']) || empty($v['width']) || empty($v['height'])) unset($size[$k]);
 	return $size;
 }
 //
@@ -1283,7 +1283,6 @@ function rencGetUserPhotos($id) {
 	global $wpdb, $rencDiv;
 	$photos = array();
 	$size = rencPhotoSize();
-	$size[] = array('label' => '');
 	$hob = false; if(has_filter('rencBlurP')) $hob = apply_filters('rencBlurP', $hob);
 	$p = $wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id=".$id." LIMIT 1");
 	if(empty($p)) return $photos;

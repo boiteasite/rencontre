@@ -1094,6 +1094,7 @@ function update_rencontre_options($P) {
 		else unset($rencOpt['hcron']);
 		if(!empty($P['rol'])) $rencOpt['rol'] = 1; else unset($rencOpt['rol']);
 		if(!empty($P['rolu'])) $rencOpt['rolu'] = 1; else unset($rencOpt['rolu']);
+		if(!empty($P['menutab']) && !current_theme_supports('menus')) $rencOpt['menutab'] = 1; else unset($rencOpt['menutab']);
 		if(!empty($P['uni'])) $rencOpt['uni'] = 1; else unset($rencOpt['uni']);
 		if(!empty($P['imcode'])) $rencOpt['imcode'] = 1; else unset($rencOpt['imcode']); // Not a POST value
 	}
@@ -1255,6 +1256,13 @@ function rencMenuGeneral() {
 					<th scope="row"><label><?php _e('Do not remove user in WP when remove in Rencontre', 'rencontre'); ?> (ADMIN del)</label></th>
 					<td><input type="checkbox" name="rolu" value="1" <?php if(!empty($rencOpt['rolu'])) echo 'checked'; ?>></td>
 				</tr>
+				<?php if(!current_theme_supports('menus')) { ?>
+				<tr>
+					<th><?php _e('Restores \'Menus\' item in the WordPress Appearance tab', 'rencontre'); ?></th>
+					<td><input type="checkbox" name="menutab" value="1" <?php if(!empty($rencOpt['menutab'])) echo 'checked'; ?>></td>
+				</tr>
+				<?php } ?>
+				
 				<tr>
 					<td colspan = "2">
 						<strong style="color:#500">* </strong>
@@ -1399,7 +1407,7 @@ function rencTabDis() {
 		echo '<div class="notice notice-success is-dismissible"><p>'.__('Done!', 'rencontre').'</p></div>';
 	}
 	$size = rencPhotoSize(); $wlibre = '';
-	foreach($size as $s) if($s['label']=='-libre') $wlibre = $s['width'];
+	foreach($size as $s) if($s['label']==='-libre') $wlibre = $s['width'];
 	$rencToka = wp_create_nonce('rencToka');
 	?>
 	
@@ -4412,9 +4420,10 @@ function renc_encodeImg($f=1) {
 	// $f = 1 => encode ; $f = 0 => decode
 	if(!current_user_can("administrator")) die;
 	global $rencDiv, $rencOpt;
-	$size = array("","-mini","-grande","-libre");
+	$size = rencPhotoSize(1); // 1 : P added in list
+	$label = array();
+	foreach($size as $s) $label[] = $s['label']; // ("","-mini","-grande","-libre"...);
 	$nocode = array(); // exclusion
-	if(has_filter('rencImgName')) $size = apply_filters('rencImgName', $size);
 	if(has_filter('rencImgNoCode')) $nocode = apply_filters('rencImgNoCode', $nocode);
 	if($f) { // ENCODE
 		$a = renc_list_files($rencDiv['basedir'].'/portrait/');
@@ -4444,7 +4453,7 @@ function renc_encodeImg($f=1) {
 			$b = 0;
 			if(!file_exists($rencDiv['basedir'].'/portrait/'.$r0.Rencontre::f_img(($v*10),1).'.jpg')) $b = 1;
 			for($w=0;$w<10;++$w) {
-				foreach($size as $s) {
+				foreach($label as $s) {
 					$c = $rencDiv['basedir'].'/portrait/'.$r0.Rencontre::f_img((($v*10)+$w).$s,1);
 					if(file_exists($c.'.jpg')) {
 						if($b) unlink($c.'.jpg');
@@ -4580,54 +4589,100 @@ function rencMetaMenu() {
 }
 function rencMetaMenuContent() {
 	if(!current_user_can("administrator")) die;
-	global $rencOpt;
-	$o = '<div id="posttype-rencontre" class="posttypediv">';
-	$o .= '<div id="tabs-panel-rencontre" class="tabs-panel tabs-panel-active">';
-	$o .= '<ul id ="rencontre-checklist" class="categorychecklist form-no-clear">'."\r\n";
+	global $rencOpt, $_nav_menu_placeholder;
+	$Lrenc = (!empty($rencOpt['lbl']['renc'])?$rencOpt['lbl']['renc']:'renc');
+	$Lcard = (!empty($rencOpt['lbl']['card'])?$rencOpt['lbl']['card']:'card');
+	$Ledit = (!empty($rencOpt['lbl']['edit'])?$rencOpt['lbl']['edit']:'edit');
+	$Lmsg = (!empty($rencOpt['lbl']['msg'])?$rencOpt['lbl']['msg']:'msg');
+	$Lgsearch = (!empty($rencOpt['lbl']['gsearch'])?$rencOpt['lbl']['gsearch']:'gsearch');
+	$Laccount = (!empty($rencOpt['lbl']['account'])?$rencOpt['lbl']['account']:'account');
+	$Lqsearch = (!empty($rencOpt['lbl']['qsearch'])?$rencOpt['lbl']['qsearch']:'qsearch');
+	if(strpos($rencOpt['home'].'-','?')!==false && strpos($rencOpt['home'].'-','=')!==false) $u = $rencOpt['home'].'&'.$Lrenc.'=';
+	else $u = $rencOpt['home'].'?'.$Lrenc.'=';
+
+	?>
+	<div id="posttype-rencontre" class="posttypediv">
+		<div id="tabs-panel-rencontre" class="tabs-panel tabs-panel-active">
+			<ul id ="rencontre-checklist" class="categorychecklist form-no-clear">
+	<?php			
 	$a = array(	// title, url, CSS class, sub-level
-		"-1"=>array(__('My homepage','rencontre'),$rencOpt['home'],'rencHome',0),
-		"-2"=>array(__('My card','rencontre'),'#rencnav#card#','',1),
-		"-3"=>array(__('Edit My Profile','rencontre'),'#rencnav#edit#','',1),
-		"-4"=>array(__('Messaging','rencontre'),'#rencnav#msg#','',1),
-		"-5"=>array(__('Search','rencontre'),'#rencnav#gsearch#','',1),
-		"-6"=>array(__('My Account','rencontre'),'#rencnav#account#','',1));
-	if(file_exists(get_stylesheet_directory().'/templates/rencontre_custom_page1.php')) $a['-9'] = array('custom1','#rencnav#c1#','',1);
-	if(file_exists(get_stylesheet_directory().'/templates/rencontre_custom_page2.php')) $a['-10'] = array('custom2','#rencnav#c2#','',1);
-		$a["-7"] = array(__('Log in'),'#rencloginout#','rencLoginout',0);
-		$a["-8"] = array(__('Register'),'#rencregister#','rencRegister',0);
+		"-1"=>array(__('My homepage','rencontre'), $rencOpt['home'], 'onlyLog', 0),
+		"-2"=>array(__('My card','rencontre'), $u.$Lcard, 'onlyLog', 1),
+		"-3"=>array(__('Edit My Profile','rencontre'), $u.$Ledit, 'onlyLog', 1),
+		"-4"=>array(__('Messaging','rencontre'), $u.$Lmsg, 'onlyLog', 1),
+		"-5"=>array(__('Search','rencontre'), $u.$Lgsearch, 'onlyLog', 1),
+		"-6"=>array(__('My Account','rencontre'), $u.$Laccount, 'onlyLog', 1));
+	if(file_exists(get_stylesheet_directory().'/templates/rencontre_custom_page1.php')) $a['-9'] = array('custom1', $u.'c1', 'onlyLog', 1);
+	if(file_exists(get_stylesheet_directory().'/templates/rencontre_custom_page2.php')) $a['-10'] = array('custom2', $u.'c2', 'onlyLog', 1);
+		$a["-7"] = array(__('Log in'), wp_login_url(), 'rLoginout', 0); // wp_logout_url(get_permalink());
+		$a["-8"] = array(__('Register'), wp_registration_url(), 'rRegister', 0);
 		//
-		$a["-11"] = array(__('Smile'),'#rencnav#qsearchs#','',1);
-		$a["-12"] = array(__('Look'),'#rencnav#qsearchl#','',1);
-		$a["-13"] = array(__('Contact requests'),'#rencnav#qsearchc#','',1);
-		$a["-14"] = array(__('Who I smiled?'),'#rencnav#qsearchis#','',1);
-		$a["-15"] = array(__('Who I asked for a contact?'),'#rencnav#qsearchic#','',1);
-		$a["-16"] = array(__('Who I\'ve blocked?'),'#rencnav#qsearchib#','',1);
+		$a["-11"] = array(__('Smile','rencontre'), $u.$Lqsearch.'s', 'onlyLog', 1);
+		$a["-12"] = array(__('Look','rencontre'), $u.$Lqsearch.'l', 'onlyLog', 1);
+		$a["-13"] = array(__('Contact requests','rencontre'), $u.$Lqsearch.'c', 'onlyLog', 1);
+		$a["-14"] = array(__('Who I smiled?','rencontre'), $u.$Lqsearch.'is', 'onlyLog', 1);
+		$a["-15"] = array(__('Who I asked for a contact?','rencontre'), $u.$Lqsearch.'ic', 'onlyLog', 1);
+		$a["-16"] = array(__('Who I\'ve blocked?','rencontre'), $u.$Lqsearch.'ib', 'onlyLog', 1);
 		//
 	$n = 0;
-	foreach($a as $k=>$v) {
-		$oi = ''; $of = '';
-		if($n==0 && $v[3]==1) {
-			$oi = "\r\n".'<ul>';
-			$n = 1;
-		}
-		else if($n==1 && $v[3]==0) {
-			$oi = '</li>'."\r\n".'</ul></li>';
-			$n = 0;
-		}
-		else if($k!='-1') $o .= '</li>'."\r\n";
-		$o .= $oi . '<li>';
-		$o .= '<label class="menu-item-title"><input type="checkbox" class="menu-item-checkbox" name="menu-item['.$k.'][menu-item-object-id]" value="'.$k.'" />'.$v[0].'</label>';
-		$o .= '<input type="hidden" class="menu-item-type" name="menu-item['.$k.'][menu-item-type]" value="custom" />';
-		$o .= '<input type="hidden" class="menu-item-title" name="menu-item['.$k.'][menu-item-title]" value="'.$v[0].'" />';
-		$o .= '<input type="hidden" class="menu-item-url" name="menu-item['.$k.'][menu-item-url]" value="'.$v[1].'" />';
-		$o .= '<input type="hidden" class="menu-item-classes" name="menu-item['.$k.'][menu-item-classes]" value="'.$v[2].'">';
-	}
-	if($n==1) $o .= '</li></ul>';
-	$o .= '</li></ul></div>'."\r\n";
-	$o .= '<p class="button-controls">';
-	$o .= '<span class="add-to-menu"><input type="submit" class="button-secondary submit-add-to-menu right" value="Add to Menu" name="add-post-type-menu-item" id="submit-posttype-rencontre"><span class="spinner"></span></span>';
-	$o .= '</p></div><!-- #posttype-rencontre -->'."\r\n";
-	echo $o;
+	if(!empty($rencOpt['home'])) {
+		foreach($a as $k=>$v) {
+			if($n==0 && $v[3]==1) { // Open submenu (in parent item) ?>
+						<ul>
+				<?php $n = 1;
+			}
+			else if($n==1 && $v[3]==0) { // Close previous item and submenu and parent item ?>
+						</li>
+					</ul>
+				</li>
+				<?php $n = 0;
+			}
+			else if($k!='-1') { // Close previous item (menu or submenu) ?>
+				</li>
+			<?php }
+			$id = $_nav_menu_placeholder + $k; // $_nav_menu_placeholder : global Item Index
+			?>
+				<li>
+					<label class="menu-item-title">
+						<input type="checkbox" class="menu-item-checkbox" name="menu-item[<?php echo $id; ?>][menu-item-object-id]" value="<?php echo $k; ?>" />
+						<?php echo $v[0]; ?>
+					</label>
+					<input type="hidden" class="menu-item-type" name="menu-item[<?php echo $id; ?>][menu-item-type]" value="custom" />
+					<input type="hidden" class="menu-item-title" name="menu-item[<?php echo $id; ?>][menu-item-title]" value="<?php echo $v[0]; ?>" />
+					<input type="hidden" class="menu-item-url" name="menu-item[<?php echo $id; ?>][menu-item-url]" value="<?php echo $v[1]; ?>" />
+					<input type="hidden" class="menu-item-classes" name="menu-item[<?php echo $id; ?>][menu-item-classes]" value="<?php echo $v[2]; ?>">
+		<?php }
+		$_nav_menu_placeholder = $id; // Update global Item Index
+		if($n==1) { // Last item is in submenu ?>
+							</li>
+						</ul>
+		<?php } ?>
+					</li>
+	<?php } else echo '??? ' . __('Plugin page','rencontre') . ' ???'; ?>
+				</ul>
+			</div>
+		<p class="button-controls">
+			<span class="add-to-menu">
+				<input type="submit" class="button-secondary submit-add-to-menu right" value="<?php _e('Add to Menu'); ?>" name="add-post-type-menu-item" id="submit-posttype-rencontre">
+				<span class="spinner"></span>
+			</span>
+		</p>
+	</div><!-- #posttype-rencontre -->
+	<script>
+		jQuery(document).ready(function(){jQuery("#rencontre-metaMenu").click(function(){
+			jQuery("#rencNotice").remove();
+			if(document.getElementById("rencontre-metaMenu-content").style.display!="block"){
+				<?php
+				$o = '<div id=\'rencNotice\' class=\'notice notice-warning\'>';
+				$o .= '<p>'.__('Before adding Rencontre items to your menu, make sure you have <mark>correctly registered the plugin page</mark>: ','rencontre');
+				$o .= '<a href=\'admin.php?page=rencontre.php\'><strong>Rencontre > General > '. __('Plugin page','rencontre').'</strong></a></p>';
+				$o .= '<p>'.__('If the plugin page changes, you\'ll have to delete the items and redo your menu.','rencontre').'</p>';
+				$o .= '</div>'; ?>
+				jQuery(<?php echo '"'.$o.'"'; ?>).insertBefore("#nav-menu-header");
+			}
+		});});
+	</script>
+	<?php
 }
 function rencSaveCollation() {
 	// Check and save the Collation of the tables users and rencontre_msg

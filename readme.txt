@@ -5,7 +5,7 @@ Tags: dating, meet, love, match, social
 Requires at least: 4.6
 Tested up to: 6.7
 Requires PHP: 5.5
-Stable tag: 3.13
+Stable tag: 3.13.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -407,6 +407,16 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+= 3.13.2 =
+
+* Enhanced menu creation.
+* Option to display 'Menus' item in the dashboard Appearance menu when absent if the theme is in block format.
+
+= 3.13.1 =
+
+* Fix Zstrict issue with 0.
+* Image-size code cleanup.
 
 = 3.13 =
 

@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.13
+Version: 3.13.2
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -14,7 +14,7 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 });
 //
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.13';
+$rencVersion = '3.13.2';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -217,12 +217,18 @@ class Rencontre {
 		if(is_admin()) { // Check for an administrative interface page
 			add_action('admin_menu', array($this, 'admin_menu_link')); // Menu admin
 			add_action('admin_print_scripts', array($this, 'adminCSS')); // CSS pour le bouton du menu
+			if(!empty($rencOpt['menutab'])) {
+				add_action('customize_register', '__return_true'); // Restaure Customize tab in Dashboard Appearance when hidden by Block-Theme
+				add_action('after_setup_theme', array($this, 'ClassicMenuTab')); // Restaure Menu tab
+			}
 			if(file_exists(dirname(__FILE__).'/inc/patch.php') && $wpdb->get_var("SHOW TABLES LIKE '".$wpdb->prefix."rencontre_users' ")==$wpdb->prefix."rencontre_users") include(dirname(__FILE__).'/inc/patch.php'); // VERSIONS PATCH - ONLY ONCE - NOT DURING ACTIVATION
 			global $pagenow;
 			if('nav-menus.php'===$pagenow) add_action('admin_init','rencMetaMenu'); // Rencontre menu items in admin menu tab - base.php
 			if(file_exists(dirname(__FILE__).'/rencontre_github.php')) include(dirname(__FILE__).'/rencontre_github.php');
 		}
 	}
+	// Restaure MENU Tab in Dashboard Appearance when Block-Theme is activated
+	function ClassicMenuTab() { add_theme_support('menus'); }
 	//
 	function admin_menu_link() {
 		if(current_user_can("manage_options")) {
@@ -614,7 +620,7 @@ class Rencontre {
 			if($ho) $out .= $ho."\r\n";
 			//
 			$size = rencPhotoSize(); $wlibre = '';
-			foreach($size as $s) if($s['label']=='-libre') $wlibre = $s['width'];
+			foreach($size as $s) if($s['label']==='-libre') $wlibre = $s['width'];
 			//
 			$wlm = (!empty($rencOpt['wlibre'])?$rencOpt['wlibre']:(!empty($wlibre)?$wlibre:200));
 			$ws = (!empty($rencOpt['wslibre'])?$rencOpt['wslibre']:128);
@@ -890,7 +896,7 @@ class Rencontre {
 		$Gagemax = (isset($_GET[$Lagemax])?rencSanit($_GET[$Lagemax],'int'):95);
 		if($Grenc=='searchLibre') { // RESULT
 			$size = rencPhotoSize();
-			foreach($size as $s) if($s['label']=='-libre') $photoWidth = $s['width'];
+			foreach($size as $s) if($s['label']==='-libre') $photoWidth = $s['width'];
 			if(empty($photoWidth)) $photoWidth = 141;
 			$q = $wpdb->get_results("SELECT
 					c_liste_categ,

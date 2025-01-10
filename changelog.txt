@@ -1,5 +1,19 @@
 == Changelog ==
 
+= 3.13.2 =
+
+10/01/2025
+
+* Enhanced menu creation.
+* Option to display 'Menus' item in the dashboard Appearance menu when absent if the theme is in block format.
+
+= 3.13.1 =
+
+02/01/2025
+
+* Fix Zstrict issue with 0.
+* Image-size code cleanup.
+
 = 3.13 =
 
 08/12/2024

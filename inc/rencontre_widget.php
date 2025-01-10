@@ -610,7 +610,7 @@ class RencontreWidget extends WP_widget {
 				}
 				$photoWidth = 250;
 				$size = rencPhotoSize();
-				foreach($size as $s) if($s['label']=='-grande') $photoWidth = $s['width'];
+				foreach($size as $s) if($s['label']==='-grande') $photoWidth = $s['width'];
 				$buttonPlus = ''; if($mid!=$id && has_filter('rencMyPortraitPlusBtnP')) $buttonPlus = apply_filters('rencMyPortraitPlusBtnP', $u);
 				$portraitPlus = ''; if(has_filter('rencMyPortraitPlusP')) $portraitPlus = apply_filters('rencMyPortraitPlusP', $u);
 				$head = __('You have no photo on your profile?','rencontre');
@@ -753,7 +753,7 @@ class RencontreWidget extends WP_widget {
 				//
 				$photoWidth = 250;
 				$size = rencPhotoSize();
-				foreach($size as $s) if($s['label']=='-grande') $photoWidth = $s['width'];
+				foreach($size as $s) if($s['label']==='-grande') $photoWidth = $s['width'];
 				$portraitPlus = ''; if(has_filter('rencMyPortraitPlusEditP')) $portraitPlus = apply_filters('rencMyPortraitPlusEditP', $u0);
 				$head = __('Add a photo','rencontre');
 				$info = '';
@@ -847,7 +847,7 @@ class RencontreWidget extends WP_widget {
 				<div <?php if(empty($rencCustom['side'])) echo 'class="w3-twothird w3-left"'; ?>>
 				<?php
 				$size = rencPhotoSize();
-				foreach($size as $si) if($si['label']=='-mini') $photoWidth = $si['width'];
+				foreach($size as $si) if($si['label']==='-mini') $photoWidth = $si['width'];
 				if(empty($photoWidth)) $photoWidth = 60;
 				$feat = (!empty($rencOpt['nbr']['featured'])?$rencOpt['nbr']['featured']:8);
 				$uFeatProf = $wpdb->get_results("SELECT DISTINCT(R.user_id) 
@@ -1324,13 +1324,12 @@ class RencontreWidget extends WP_widget {
 	//
 	static function suppImg($im,$id) {
 		// entree : nom de la photo (id * 10 + 1 ou 2 ou 3...)
-		$size = rencPhotoSize();
+		$size = rencPhotoSize(1); // 1 : P added in list
 		global $rencDiv,$rencU0;
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
 		$typ = array('.jpg', '.webp', '@2x.jpg', '@2x.webp');
 		//
 		$a = array(); 
-		foreach($typ as $v) $a[] = Rencontre::f_img($im) . $v;
 		foreach($size as $s) {
 			foreach($typ as $v) $a[] = Rencontre::f_img($im.$s['label']) . $v;
 		}
@@ -1345,18 +1344,9 @@ class RencontreWidget extends WP_widget {
 		if(is_object($rencU0)) $rencU0->i_photo = $p; // ADMIN can delete (admin has no rencU0)
 		$c = 0;
 		for($v=$im; $v<$q; ++$v) {
-			foreach($typ as $w) if(file_exists($r.Rencontre::f_img(($v+1)).$w)) rename($r.Rencontre::f_img(($v+1)).$w, $r.Rencontre::f_img($v).$w);
 			foreach($size as $s) {
 				foreach($typ as $w) if(file_exists($r.Rencontre::f_img(($v+1).$s['label']).$w)) rename($r.Rencontre::f_img(($v+1).$s['label']).$w, $r.Rencontre::f_img($v.$s['label']).$w);
 			}
-		}
-		if(has_filter('rencBlurDelP')) {
-			$ho = new StdClass();
-			$ho->id = $id;
-			$ho->v = $im - ($id * 10);
-			$ho->rename = $q;
-			$ho->size = $size;
-			apply_filters('rencBlurDelP', $ho);
 		}
 		//
 		if(file_exists($rencDiv['basedir'].'/portrait/libre/libreIDs.json')) {
@@ -1368,14 +1358,13 @@ class RencontreWidget extends WP_widget {
 	//
 	static function mainImg($im,$id) {
 		// entree : nom de la photo (id * 10 + 1 ou 2 ou 3...) crypte
-		$size = rencPhotoSize(1);
+		$size = rencPhotoSize(1); // 1 : P added in list
 		$pos = $im - intval($id.'0');
 		global $rencDiv;
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
 		$typ = array('.jpg', '.webp', '@2x.jpg', '@2x.webp');
 		// 1. Future Main TMP name
 		$a = array();
-		foreach($typ as $v) $a[] = array(Rencontre::f_img($im).$v, '', $v);
 		foreach($size as $s) {
 			foreach($typ as $v) $a[] = array(Rencontre::f_img($im.$s['label']).$v, $s['label'], $v);
 		}
@@ -1384,7 +1373,6 @@ class RencontreWidget extends WP_widget {
 		}
 		// 2. Current Main
 		$a = array();
-		foreach($typ as $v) $a[] = array(Rencontre::f_img($id.'0').$v, '', $v);
 		foreach($size as $s) {
 			foreach($typ as $v) $a[] = array(Rencontre::f_img($id.'0'.$s['label']).$v, $s['label'], $v);
 		}
@@ -1393,7 +1381,6 @@ class RencontreWidget extends WP_widget {
 		}
 		// 3. Future Main 
 		$a = array();
-		foreach($typ as $v) $a[] = array($id.'main00'.$v, '', $v);
 		foreach($size as $s) {
 			foreach($typ as $v) $a[] = array($id.'main00'.$s['label'].$v, $s['label'], $v);
 		}
@@ -1470,24 +1457,15 @@ class RencontreWidget extends WP_widget {
 	static function suppImgAll($id,$upd=true) {
 		// entree : id
 		global $rencDiv,$rencU0;
-		$size = rencPhotoSize();
+		$size = rencPhotoSize(1); // 1 : P added in list
 		$r = $rencDiv['basedir'].'/portrait/'.floor($id/1000).'/';
 		$typ = array('.jpg', '.webp', '@2x.jpg', '@2x.webp');
 		for($v=0;$v<=9;++$v) {
 			$a = array();
-			foreach($typ as $w) $a[] = Rencontre::f_img($id.$v) . $w;
 			foreach($size as $s) {
 				foreach($typ as $w) $a[] = Rencontre::f_img($id.$v.$s['label']) . $w;
 			}
 			foreach($a as $b) if(file_exists($r.$b)) unlink($r.$b);
-			if(has_filter('rencBlurDelP')) {
-				$ho = new StdClass();
-				$ho->id = $id;
-				$ho->v = $v;
-				$ho->rename = false;
-				$ho->size = $size;
-				apply_filters('rencBlurDelP', $ho);
-			}
 		}
 		global $wpdb;
 		if($upd) {
@@ -1607,7 +1585,8 @@ class RencontreWidget extends WP_widget {
 		if(!file_exists($rim)) return;
 		global $rencOpt, $rencDiv;
 		$size = rencPhotoSize();
-		$fullSize = array(1280,960);
+		$fullSize = array(1280,960); // Default
+		foreach($size as $s) if($s['label']==='') $fullSize = array($s['width'],$s['height']);
 		if(has_filter('rencImgFullSize')) $fullSize = apply_filters('rencImgFullSize', $fullSize);
 		$r = $rencDiv['basedir'].'/portrait/'.floor($im/10000);
 		if($rot) $rot = floor((((floatval($rot)+45)/360)-floor((floatval($rot)+45)/360))*4)*(-90); // NEGAT and only 0, 90, 180, 270
@@ -1661,6 +1640,7 @@ class RencontreWidget extends WP_widget {
 				// We do not create RETINA @2x if not exists previously
 			}
 			foreach($size as $k=>$v) {
+				if(empty($v['label'])) continue; // Fullsize already done
 				$out[$k+1] = imagecreatetruecolor($v['width'], $v['height']);
 				if(($v['height']/$v['width'])>($sim[1]/$sim[0])) { // new more verticale
 					$inW = intval($v['width']/$v['height']*$sim[1]);
@@ -1803,8 +1783,8 @@ class RencontreWidget extends WP_widget {
 		// 3. zrelation
 		if($rencU0->i_zrelation!=99 && $u->i_zrelation!=99 && $rencU0->i_zrelation!=$u->i_zrelation) $b = 'zrel';
 		else if($rencU0->i_zrelation==99 && $u->i_zrelation==99) {
-			$zr0 = array_filter(explode(',', $rencU0->c_zrelation));
-			$zr = array_filter(explode(',', $u->c_zrelation));
+			$zr0 = array_filter(explode(',', str_replace(',0,',',Z,',$rencU0->c_zrelation))); // '0' is empty => replace by 'Z'
+			$zr = array_filter(explode(',', str_replace(',0,',',Z,',$u->c_zrelation)));
 			if(empty(array_intersect($zr0,$zr))) $b = 'zrel99';
 		}
 		// Mixed 99 / not 99 not treated
