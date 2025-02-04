@@ -6,7 +6,7 @@ class RencontreWidget extends WP_widget {
 	}
 	//
 	function widget($arguments, $data) { // Partie Site
-		if(!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) return; // Stop AJAX CALL to improve server speed (by Rencontre or other plugin...)
+		if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && stripos($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest')!==false) return; // Stop AJAX CALL to improve server speed (by Rencontre or other plugin...)
 		if(current_user_can("administrator")) {
 			echo '<div class="w3-bar w3-padding w3-center w3-renc-wabg">';
 			echo '<h2>'.__('You are connected as ADMIN','rencontre').'</h2>';
@@ -228,6 +228,7 @@ class RencontreWidget extends WP_widget {
 				$y = current_time('Y');
 				$oldmax = $y-(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99)-1;
 				$oldmin = $y-(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18)+1;
+				$old35 = $y-35;
 				$month = array();
 				for($v=0;$v<12;++$v) $month[$v+1] = date_i18n('M', $v*2626560+1263556800); // $v * 30j + 15 jan 2010
 				// ****** TEMPLATE ********
@@ -254,9 +255,10 @@ class RencontreWidget extends WP_widget {
 					);
 				$hetero = false;
 				if(empty($rencCustom['born'])) {
-					$a = (isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18);
+					// Not used from V3.13.3 
+					$a = (isset($rencCustom['agemin'])?intval($rencCustom['agemin']):25);
 					$u0->agemin = ($u0->age-10>$a?$u0->age-10:$a);
-					$a = (isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99);
+					$a = (isset($rencCustom['agemax'])?intval($rencCustom['agemax']):45);
 					$u0->agemax = ($u0->age+10<$a?$u0->age+10:$a);
 				}
 				if(!empty($rencCustom['hetero'])) $hetero = $u0->i_sex;
@@ -3369,22 +3371,23 @@ class RencontreWidget extends WP_widget {
 		// $f : ID
 		// $g : 1, 2, OK
 		global $wpdb, $rencOpt, $rencU0;
-		$Pannee = (isset($_POST['annee'])?rencSanit($_POST['annee'],'int'):0);
-		$Pmois = (isset($_POST['mois'])?rencSanit($_POST['mois'],'int'):0);
-		$Pjour = (isset($_POST['jour'])?rencSanit($_POST['jour'],'int'):0);
+		$Pannee = (isset($_POST['annee'])?rencSanit($_POST['annee'],'int'):(date('Y')-35));
+		$Pmois = (isset($_POST['mois'])?rencSanit($_POST['mois'],'int'):date('m'));
+		$Pjour = (isset($_POST['jour'])?rencSanit($_POST['jour'],'int'):date('d'));
 		$Ppays = (isset($_POST['pays'])?rencSanit($_POST['pays'],'AZ'):(!empty($rencOpt['pays'])?$rencOpt['pays']:'FR'));
 		$Pregion = (isset($_POST['region'])?rencSanit($_POST['region'],'words'):''); // !! Region GET = id  -  Region POST = c_liste_valeur (string)
 		$Pville = (isset($_POST['ville'])?rencSanit($_POST['ville'],'words'):'');
 		$Psex = (isset($_POST['sex'])?rencSanit($_POST['sex'],'int'):0);
-		$Ptaille = (isset($_POST['taille'])?rencSanit($_POST['taille'],'num'):'');
+		$Ptaille = (isset($_POST['taille'])?rencSanit($_POST['taille'],'num'):175);
 		if(!empty($rencU0->imperials)) $Ptaille = rencConvertUnit($Ptaille, 'in', 2); // Metric x10 in DB
 		else $Ptaille = intval(10 * (float)$Ptaille + .5);
-		$Ppoids = (isset($_POST['poids'])?rencSanit($_POST['poids'],'int'):'');
+		$Ppoids = (isset($_POST['poids'])?rencSanit($_POST['poids'],'int'):72);
 		if(!empty($rencU0->imperialw)) $Ppoids = rencConvertUnit($Ppoids, 'lbs', 2); // Metric x10 in DB
 		else $Ppoids = intval(10 * (float)$Ppoids + .5);
 		$Pgps = (isset($_POST['gps'])?rencSanit($_POST['gps'],'pipe'):'');
-		$Pzagemin = (isset($_POST['zageMin'])?rencSanit($_POST['zageMin'],'int'):'');
-		$Pzagemax = (isset($_POST['zageMax'])?rencSanit($_POST['zageMax'],'int'):'');
+		$Pzagemin = (isset($_POST['zageMin'])?rencSanit($_POST['zageMin'],'int'):25);
+		$Pzagemax = (isset($_POST['zageMax'])?rencSanit($_POST['zageMax'],'int'):45);
+		$Pzsex = (isset($_POST['zsex'])?rencSanit($post['zsex'],'int'):1);
 		if(has_action('rencontre_registration')) do_action('rencontre_registration', $f, $g);
 		else {
 			if($g=='1') {
@@ -3418,7 +3421,7 @@ class RencontreWidget extends WP_widget {
 				global $rencCustom;
 				if(!isset($rencCustom['multiSR']) || !$rencCustom['multiSR'] || !is_array($_POST['zsex']) || !is_array($_POST['zrelation'])) {
 					$wpdb->update($wpdb->prefix.'rencontre_users', array(
-						'i_zsex'=>rencSanit($_POST['zsex'],'int'),
+						'i_zsex'=>$Pzsex,
 						'c_zsex'=>',',
 						'i_zage_min'=>$Pzagemin,
 						'i_zage_max'=>$Pzagemax,
@@ -3451,22 +3454,22 @@ class RencontreWidget extends WP_widget {
 			$post = (!empty($_POST)?$_POST:array());
 			if(has_filter('rencUserPost')) $post = apply_filters('rencUserPost', $post, 'updateMember');
 			$Pdname = (!empty($post['dname'])?rencSanit($post['dname'],'words'):'');
-			$Pannee = (isset($post['annee'])?rencSanit($post['annee'],'int'):0);
-			$Pmois = (isset($post['mois'])?rencSanit($post['mois'],'int'):0);
-			$Pjour = (isset($post['jour'])?rencSanit($post['jour'],'int'):0);
+			$Pannee = (isset($post['annee'])?rencSanit($post['annee'],'int'):(date('Y')-35));
+			$Pmois = (isset($post['mois'])?rencSanit($post['mois'],'int'):date('m'));
+			$Pjour = (isset($post['jour'])?rencSanit($post['jour'],'int'):date('d'));
 			$Ppays = (isset($post['pays'])?rencSanit($post['pays'],'AZ'):(!empty($rencOpt['pays'])?$rencOpt['pays']:'FR'));
 			$Pregion = (isset($post['region'])?rencSanit($post['region'],'words'):'');  // !! Region GET = id  -  Region POST = c_liste_valeur (string)
 			$Pville = (isset($post['ville'])?rencSanit($post['ville'],'words'):'');
-			$Ptaille = (isset($post['taille'])?rencSanit($post['taille'],'num'):'');
+			$Ptaille = (isset($post['taille'])?rencSanit($post['taille'],'num'):175);
 			if(!empty($rencU0->imperials)) $Ptaille = rencConvertUnit($Ptaille, 'in', 2); // Metric x10 in DB
 			else $Ptaille = intval(10 * (float)$Ptaille + .5);
-			$Ppoids = (isset($post['poids'])?rencSanit($post['poids'],'int'):'');
+			$Ppoids = (isset($post['poids'])?rencSanit($post['poids'],'int'):72);
 			if(!empty($rencU0->imperialw)) $Ppoids = rencConvertUnit($Ppoids, 'lbs', 2); // Metric x10 in DB
 			else $Ppoids = intval(10 * (float)$Ppoids + .5);
 			$Pgps = (isset($post['gps'])?rencSanit($post['gps'],'pipe'):'');
-			$Pzagemin = (isset($post['zageMin'])?rencSanit($post['zageMin'],'int'):'');
-			$Pzagemax = (isset($post['zageMax'])?rencSanit($post['zageMax'],'int'):'');
-			$Psex = (isset($post['sex'])?rencSanit($post['sex'],'int'):'');
+			$Pzagemin = (isset($post['zageMin'])?rencSanit($post['zageMin'],'int'):25);
+			$Pzagemax = (isset($post['zageMax'])?rencSanit($post['zageMax'],'int'):45);
+			$Psex = (isset($post['sex'])?rencSanit($post['sex'],'int'):0);
 			if(strlen($Pdname)>2) {
 				global $current_user;
 				if($Pdname!=$current_user->display_name) wp_update_user(array('ID'=>$current_user->ID, 'display_name'=>substr(strtok($Pdname,'@'),0,30)));
@@ -3476,7 +3479,7 @@ class RencontreWidget extends WP_widget {
 			if(ctype_digit($Pregion)) $Pregion = $wpdb->get_var("SELECT c_liste_valeur FROM ".$wpdb->prefix."rencontre_liste WHERE id='".intval($Pregion)."' LIMIT 1");
 			if($Pgps) $gps = explode('|',$Pgps.'|0|0');
 			if(empty($rencCustom['multiSR'])) {
-				$Pzsex = (isset($post['zsex'])?rencSanit($post['zsex'],'int'):'');
+				$Pzsex = (isset($post['zsex'])?rencSanit($post['zsex'],'int'):1);
 				if(!empty($rencCustom['hetero']) && $Psex==$Pzsex) {
 					if(!$Psex) $Pzsex = 1;
 					else if($Psex==1) $Pzsex = 0;
@@ -3630,6 +3633,7 @@ class RencontreWidget extends WP_widget {
 		if(empty($u0->i_zage_min)) $u0->i_zage_min = $u0->agemin;
 		if(empty($u0->i_zage_max)) $u0->i_zage_max = $u0->agemax;
 		$u0->pause = (strpos($u0->t_action.'-',',pause2,')!==false?2:(strpos($u0->t_action.'-',',pause1,')!==false?1:0));
+		$ho = false; if(has_filter('rencBeforeUserDel')) $ho = apply_filters('rencBeforeUserDel', $u0->ID);
 		$onClick = array(
 			"change"=>"f_password(document.forms['formPass'].elements['pass0'].value,document.forms['formPass'].elements['pass1'].value,document.forms['formPass'].elements['pass2'].value,".$u0->ID.",'".admin_url('admin-ajax.php')."')",
 			"country"=>"f_region_select(this.options[this.selectedIndex].value,'".admin_url('admin-ajax.php')."','regionSelect');",
@@ -3637,7 +3641,7 @@ class RencontreWidget extends WP_widget {
 			"agemin"=>"f_min(this.options[this.selectedIndex].value,'formNouveau','zageMin','zageMax');",
 			"agemax"=>"f_max(this.options[this.selectedIndex].value,'formNouveau','zageMin','zageMax');",
 			"save"=>"f_mod_nouveau(".$u0->ID.")",
-			"delete"=>"f_fin(".$u0->ID.")"
+			"delete"=>($ho?$ho:"f_fin()")
 			);
 		if(empty($rencOpt['accprof'])) $scriptMap = '<script>jQuery(document).ready(function(){jQuery(":checkbox.rencLabelauty").labelauty({icon:false});});</script>';
 		else $scriptMap = ''; // Already loaded in portrait_edit template
@@ -3678,6 +3682,7 @@ class RencontreWidget extends WP_widget {
 		// ****** TEMPLATE ********
 		if($tpl=rencTpl('rencontre_account.php')) include($tpl);
 		// ************************
+		if(has_filter('rencBeforeUserDel')) apply_filters('rencBeforeUserDel', 0);
 		// ****** TEMPLATE ********
 		if($tpl=rencTpl('rencontre_account_delete.php')) include($tpl);
 		// ************************

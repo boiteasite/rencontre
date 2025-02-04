@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 1/3 and 1/2
- * Last Change : Rencontre 3.13
+ * Last Change : Rencontre 3.13.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part1.php
  * Call : rencontre_widget.php => widget()
  * Filter : do_action('rencontre_registration', $f, $g) - see below
@@ -92,7 +92,7 @@
 									<select name="annee" class="w3-select w3-border w3-renc-sebg">
 										<?php for($v=$oldmax;$v<$oldmin;++$v) { ?>
 										
-										<option value="<?php echo $v; ?>"><?php echo $v; ?></option>
+										<option value="<?php echo $v; ?>" <?php if($v==$old35) echo 'selected'; ?>><?php echo $v; ?></option>
 										<?php } ?>
 										
 									</select>
@@ -107,12 +107,12 @@
 							<select name="taille" class="w3-select w3-border w3-renc-sebg">
 							<?php if(empty($u0->imperials)) {
 								for($v=(!empty($rencCustom['sizemin'])?$rencCustom['sizemin']:140); $v<=(!empty($rencCustom['sizemax'])?$rencCustom['sizemax']:220); ++$v) {
-									?><option value="<?php echo $v; ?>"><?php echo $v.' '.__('cm','rencontre'); ?></option>
+									?><option value="<?php echo $v; ?>" <?php if($v==175) echo 'selected'; ?>><?php echo $v.' '.__('cm','rencontre'); ?></option>
 								<?php }
 							}
 							else {
 								for($v=(!empty($rencCustom['sizemin'])?rencConvertUnit($rencCustom['sizemin'],'cm',1):55); $v<=(!empty($rencCustom['sizemax'])?rencConvertUnit($rencCustom['sizemax'],'cm',1):86.5); $v+=.5) {
-									?><option value="<?php echo $v; ?>"><?php echo rencIn2Ft($v); ?></option>
+									?><option value="<?php echo $v; ?>" <?php if($v==175) echo 'selected'; ?>><?php echo rencIn2Ft($v); ?></option>
 								<?php }
 							} ?>
 							
@@ -126,12 +126,12 @@
 							<select name="poids" class="w3-select w3-border w3-renc-sebg">
 							<?php if(empty($u0->imperialw)) {
 								for($v=(!empty($rencCustom['weightmin'])?$rencCustom['weightmin']:40); $v<=(!empty($rencCustom['weightmax'])?$rencCustom['weightmax']:140); ++$v) {
-									?><option value="<?php echo $v; ?>"><?php echo $v.' '.__('kg','rencontre'); ?></option>
+									?><option value="<?php echo $v; ?>" <?php if($v==72) echo 'selected'; ?>><?php echo $v.' '.__('kg','rencontre'); ?></option>
 								<?php }
 							}
 							else {
 								for($v=(!empty($rencCustom['weightmin'])?rencConvertUnit($rencCustom['weightmin'],'kg',1):88); $v<=(!empty($rencCustom['weightmax'])?rencConvertUnit($rencCustom['weightmax'],'kg',1):309); $v++) {
-									?><option value="<?php echo $v; ?>"><?php echo $v.' '.__('lbs','rencontre'); ?></option>
+									?><option value="<?php echo $v; ?>" <?php if($v==72) echo 'selected'; ?>><?php echo $v.' '.__('lbs','rencontre'); ?></option>
 								<?php }
 							} ?>
 							

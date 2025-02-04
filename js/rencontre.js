@@ -270,14 +270,12 @@ function f_mod_nouveau(f){
 	}
 	else jQuery('#rencAlert').html(a+'&nbsp;'+rencobjet.champs_incomplets).show(0).delay(5000).hide(0);
 }
-function f_fin(f){
+function f_fin(){
 	if(confirm(rencobjet.conf_supp_compte)){
 		var a=document.forms['formFin'],
 			jrenc='P'+(typeof lbl.renc!="undefined"?lbl.renc:'renc'),
-			jid='P'+(typeof lbl.id!="undefined"?lbl.id:'id'),
 			jfin=(typeof lbl.fin!="undefined"?lbl.fin:'fin');
 		a.elements[jrenc].value=jfin;
-		a.elements[jid].value=f;
 		a.submit();
 	}
 }

@@ -6,7 +6,7 @@ Text Domain: rencontre
 Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.13.2
+Version: 3.13.3
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
@@ -14,7 +14,7 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 });
 //
 $a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.13.2';
+$rencVersion = '3.13.3';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -382,15 +382,6 @@ class Rencontre {
 					if(!empty($disnam[0])) wp_update_user(array('ID'=>$current_user->ID, 'display_name'=>$disnam[0]));
 				}
 				if($Pnouveau==='') {
-//					$q = $wpdb->get_row("SELECT
-//							c_ville,
-//							c_zsex
-//						FROM
-//							".$wpdb->prefix."rencontre_users
-//						WHERE
-//							user_id='".$current_user->ID."'
-//						LIMIT 1
-//						");
 					if(!empty($rencU0->c_ville) || (isset($rencCustom['place']) && $q)) $_SESSION['rencontre'] = 'nouveau2';
 					else if(isset($rencU0->c_ville)) $_SESSION['rencontre'] = 'nouveau1';
 					else $_SESSION['rencontre'] = 'nouveau';
@@ -420,6 +411,7 @@ class Rencontre {
 					renc_clear_cache_portrait();
 				}
 				f_userSupp($current_user->ID,$current_user->user_login,0);
+
 				if(!empty($rencOpt['mailsupp'])) {
 					$a = rencModerType(); // rencontre_filter.php
 					$objet = (!empty($a['title'])?$a['title']:wp_specialchars_decode($rencDiv['blogname'], ENT_QUOTES).' - '.__('Account deletion','rencontre'));
@@ -914,7 +906,7 @@ class Rencontre {
 				if($r->c_liste_categ=='d') $rencDrap[$r->c_liste_iso] = $r->c_liste_valeur;
 				else if($r->c_liste_categ=='p')$rencDrapNom[$r->c_liste_iso] = $r->c_liste_valeur;
 			}
-			$ses =date("Y-m-d H:i:s",mktime(0, 0, 0, date("m"), date("d"), date("Y"))-(86400*$day));
+			$ses =date("Y-m-d H:i:s",mktime(0, 0, 0, date("m"), date("d"), date("Y"))-(86400*$atts['day']));
 			$s = "SELECT
 					U.ID,
 					U.display_name,

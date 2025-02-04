@@ -229,7 +229,7 @@ function f_cronasync(){
 			$p = file_get_contents($d);
 			$s = strlen($p);
 			file_put_contents($d,($s<5?($p.($s+1)):'')); // 1234 or empty
-			unlink($dOn); // Off
+			if(file_exists($dOn)) unlink($dOn); // Off - Error not exists sometimes
 		}
 		break;
 		// ************************************************************
@@ -238,7 +238,7 @@ function f_cronasync(){
 			file_put_contents($dOn, '');
 			f_cron_list();
 			file_put_contents($dList, ''); // Filetime reset
-			unlink($dOn); // Off
+			if(file_exists($dOn)) unlink($dOn); // Off - Error not exists sometimes
 		}
 		break;
 		// ************************************************************
@@ -761,6 +761,51 @@ function rencPhotoSize($f=0) {
 	if($f && has_filter('rencImgSizeP')) $size = apply_filters('rencImgSizeP', $size); // Not added by default (Blur) (creation in P in another filter...)
 	foreach($size as $k=>$v) if(!isset($v['label']) || empty($v['width']) || empty($v['height'])) unset($size[$k]);
 	return $size;
+}
+//
+function rencGetPhotos($id,$iph=false) {
+	// Return array with all photos available for this member
+	// $iph : i_photo
+	global $rencDiv, $wpdb;
+	if($iph===false) $iph = $wpdb->get_var("SELECT i_photo FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$id."' LIMIT 1");
+	if(empty($id) || empty($iph)) return; // No photo
+	if(floor($id*10)>$iph || $iph-($id*10)>10) return; // Error
+	$a = array();
+	$size = rencPhotoSize();
+	for($v=floor(10*$id); $v<=$iph; ++$v) {
+		foreach($size as $s) {
+			$i = Rencontre::f_img($v.$s['label']);
+			if(file_exists($rencDiv['basedir'].'/portrait/'.floor($id/1000).'/'.$i.'.jpg')) $a[$v]['jpg'.$s['label']] = array(
+				'label' => $s['label'],
+				'width' => $s['width'],
+				'height' => $s['height'],
+				'quality' => $s['quality'],
+				'url' => $rencDiv['baseurl'].'/portrait/'.floor($id/1000).'/'.$i.'.jpg'
+			);
+			if(file_exists($rencDiv['basedir'].'/portrait/'.floor($id/1000).'/'.$i.'.webp')) $a[$v]['webp'.$s['label']] = array(
+				'label' => $s['label'],
+				'width' => $s['width'],
+				'height' => $s['height'],
+				'quality' => $s['quality'],
+				'url' => $rencDiv['baseurl'].'/portrait/'.floor($id/1000).'/'.$i.'.webp'
+			);
+			if(file_exists($rencDiv['basedir'].'/portrait/'.floor($id/1000).'/'.$i.'@2x.jpg')) $a[$v]['@2x.jpg'.$s['label']] = array(
+				'label' => $s['label'],
+				'width' => $s['width']*2,
+				'height' => $s['height']*2,
+				'quality' => $s['quality'],
+				'url' => $rencDiv['baseurl'].'/portrait/'.floor($id/1000).'/'.$i.'@2x.jpg'
+			);
+			if(file_exists($rencDiv['basedir'].'/portrait/'.floor($id/1000).'/'.$i.'@2x.webp')) $a[$v]['@2x.webp'.$s['label']] = array(
+				'label' => $s['label'],
+				'width' => $s['width']*2,
+				'height' => $s['height']*2,
+				'quality' => $s['quality'],
+				'url' => $rencDiv['baseurl'].'/portrait/'.floor($id/1000).'/'.$i.'@2x.webp'
+			);
+		}
+	}
+	return $a;
 }
 //
 function rencNumbers() {

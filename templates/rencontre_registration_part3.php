@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 3/3 and 2/2
- * Last Change : Rencontre 3.13
+ * Last Change : Rencontre 3.13.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part3.php
  * Call : rencontre_widget.php => widget()
  * $u0 (myself) : i_sex, d_naissance, age, agemin, agemax
@@ -63,7 +63,7 @@
 									<select name="zageMin" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemin']; ?>">
 									<?php for($v=(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18);$v<(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99);++$v) { ?>
 										
-										<option value="<?php echo $v; ?>" <?php if($v==$u0->agemin) echo 'selected'; ?> ><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
+										<option value="<?php echo $v; ?>" <?php if($v==25) echo 'selected'; ?> ><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
 									<?php } ?>
 										
 									</select>
@@ -72,7 +72,7 @@
 									<select name="zageMax" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemax']; ?>">
 									<?php for($v=(isset($rencCustom['agemin'])?intval($rencCustom['agemin']):18)+1;$v<(isset($rencCustom['agemax'])?intval($rencCustom['agemax']):99)+1;++$v) { ?>
 										
-										<option value="<?php echo $v; ?>" <?php if($v==$u0->agemax) echo 'selected'; ?> ><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
+										<option value="<?php echo $v; ?>" <?php if($v==45) echo 'selected'; ?> ><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
 									<?php } ?>
 										
 									</select>

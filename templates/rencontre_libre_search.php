@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Libre Search
- * Last Change : Rencontre 3.12.3
+ * Last Change : Rencontre 3.13.3
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_libre_search.php
  * Call : rencontre.php => f_rencontreSearch()
 */
@@ -43,7 +43,7 @@
 								<select name="<?php echo (!empty($rencOpt['lbl']['ageMin'])?$rencOpt['lbl']['ageMin']:'ageMin'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemin']; ?>">
 								<?php for($v=20;$v<91;$v+=5) { ?>
 								
-									<option value="<?php echo $v; ?>" <?php if((!empty($Gagemin)&&$Gagemin==$v)||(empty($Gagemin)&&$v==20)) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
+									<option value="<?php echo $v; ?>" <?php if($v==25) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
 								<?php } ?>
 								
 								</select>
@@ -53,7 +53,7 @@
 								<select name="<?php echo (!empty($rencOpt['lbl']['ageMax'])?$rencOpt['lbl']['ageMax']:'ageMax'); ?>" class="w3-select w3-border w3-renc-sebg" onChange="<?php echo $onClick['agemax']; ?>">
 								<?php for($v=25;$v<96;$v+=5) { ?>
 								
-									<option value="<?php echo $v; ?>" <?php if((!empty($Gagemax)&&$Gagemax==$v)||(empty($Gagemax)&&$v==95)) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
+									<option value="<?php echo $v; ?>" <?php if($v==45) echo 'selected'; ?>><?php echo $v; ?>&nbsp;<?php _e('years','rencontre'); ?></option>
 								<?php } ?>
 								
 								</select>

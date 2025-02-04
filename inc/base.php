@@ -1150,6 +1150,7 @@ function update_rencontre_options($P) {
 		if(!empty($P['qmail'])) $rencOpt['qmail'] = rencSanit($P['qmail'],'int'); else unset($rencOpt['qmail']);
 		if(!empty($P['mailph'])) $rencOpt['mailph'] = 1; else unset($rencOpt['mailph']);
 		if(!empty($P['mailfo'])) $rencOpt['mailfo'] = 1; else unset($rencOpt['mailfo']);
+		if(has_filter('rencUnsubAP')) apply_filters('rencUnsubAP', $P);
 	}
 	else if($Grenctab=='pre') {
 		if(has_filter('rencSaveOptP')) $rencOpt = apply_filters('rencSaveOptP', $rencOpt, $P);
@@ -1258,7 +1259,7 @@ function rencMenuGeneral() {
 				</tr>
 				<?php if(!current_theme_supports('menus')) { ?>
 				<tr>
-					<th><?php _e('Restores \'Menus\' item in the WordPress Appearance tab', 'rencontre'); ?></th>
+					<th><?php _e('Restores the Menu item in the WordPress Appearance tab', 'rencontre'); ?></th>
 					<td><input type="checkbox" name="menutab" value="1" <?php if(!empty($rencOpt['menutab'])) echo 'checked'; ?>></td>
 				</tr>
 				<?php } ?>
@@ -1691,6 +1692,9 @@ function rencTabMel() {
 				<th scope="row"><label><?php _e('Force HTML mode (mail not readable)', 'rencontre'); ?></label></th>
 				<td><input type="checkbox" name="mailfo" value="1" <?php if(!empty($rencOpt['mailfo'])) echo 'checked'; ?>></td>
 			</tr>
+			<?php $ho = 0; if(has_filter('rencUnsubAP')) $ho = apply_filters('rencUnsubAP',0);
+			if($ho) echo $ho; ?>
+			
 		</table>
 		<p><?php _e('The language used for emails is the one of your ADMIN interface (hardcoded in DB).','rencontre') ?><br /><strong>WPLANG<?php _e(': ','rencontre'); ?><span style="color:#D54E21;"><?php echo $rencWPLANG; ?></span></strong></p>
 		<p class="submit">
@@ -1861,10 +1865,9 @@ function rencMenuMembres() {
 				");
 			if($q) {
 				echo '<div style="float:right;margin:0 0 0 10px;"><select id="rencNewMember"><option value="0" selected="selected">-</option>';
-				foreach($q as $r)
-					{
+				foreach($q as $r) {
 					if(!user_can($r->ID,'activate_plugins') && !user_can($r->ID,'switch_themes')) echo '<option value="'.$r->ID.'">'.$r->user_login.'</option>';
-					}
+				}
 				echo '</select><div class="button-primary" onClick="f_newMember(document.getElementById(\'rencNewMember\'))">'.__('Add new from WordPress','rencontre').'</div></div>';
 			} ?>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" />
@@ -4548,6 +4551,16 @@ function f_newMember() {
 		'user_id'=>$Pid,
 		'c_ip'=>'127.0.0.90',
 		'c_pays'=>(empty($rencOpt['pays'])?'FR':$rencOpt['pays']), // default - custom no localisation
+		'i_sex'=>0, // Men
+		'd_naissance'=>(date('Y')-35).'-'.date('m').'-'.date('d'), // 35 year
+		'i_taille'=>1750, // 1m75
+		'i_poids'=>720, // 72 kg
+		'i_zsex'=>1, // Girl
+		'c_zsex'=>',',
+		'i_zrelation'=>0,
+		'c_zrelation'=>',',
+		'i_zage_min'=>25,
+		'i_zage_max'=>45,
 		'd_session'=>current_time("mysql"),
 		'i_photo'=>0));
 	$wpdb->insert($wpdb->prefix.'rencontre_users_profil', array(
@@ -4674,7 +4687,7 @@ function rencMetaMenuContent() {
 			if(document.getElementById("rencontre-metaMenu-content").style.display!="block"){
 				<?php
 				$o = '<div id=\'rencNotice\' class=\'notice notice-warning\'>';
-				$o .= '<p>'.__('Before adding Rencontre items to your menu, make sure you have <mark>correctly registered the plugin page</mark>: ','rencontre');
+				$o .= '<p>'.__('Before adding Rencontre items to your menu, make sure you have <mark>correctly registered the plugin page</mark> : ','rencontre');
 				$o .= '<a href=\'admin.php?page=rencontre.php\'><strong>Rencontre > General > '. __('Plugin page','rencontre').'</strong></a></p>';
 				$o .= '<p>'.__('If the plugin page changes, you\'ll have to delete the items and redo your menu.','rencontre').'</p>';
 				$o .= '</div>'; ?>

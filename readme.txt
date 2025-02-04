@@ -2,10 +2,10 @@
 Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: dating, meet, love, match, social
-Requires at least: 4.6
+Requires at least: 5.0
 Tested up to: 6.7
-Requires PHP: 5.5
-Stable tag: 3.13.2
+Requires PHP: 7.0
+Stable tag: 3.13.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,7 +176,7 @@ Expect some difficulties. It's a little more than plug and play. Do not wait for
 = Useful plugins to work with Rencontre =
 * WP GeoNames : Insert all or part of the global GeoNames database in your WordPress base - Suggest city to members.
 * WP Mail SMTP : fixes your email deliverability issues by reconfiguring WordPress to use a proper SMTP provider when sending emails.
-* Email Templates : Send beautiful emails with the WordPress Email Templates plugin.
+* WP HTML Mail - Email Template Designer : Send beautiful HTML emails in template.
 * Theme My Login : Creates a page to use in place of wp-login.php, using a page template from your theme.
 * Polylang : Use Rencontre in a multilingual environment.
 
@@ -372,6 +372,12 @@ It's better to limit the data size.
    * top=10 (Top position in purcentage of the parent container size)
    * login=1 (login form). Empty => (registration form)
 
+= Available Functions =
+
+* rencGetUser($userID) : Return object with all Rencontre User Datas
+* rencGetUserProfils($userID) : Return array() with all user profil elements
+* rencGetPhotos($userID) : Return array with all user photos in all sizes/format
+
 = Available Filters =
 
 * rencWidget - return bool : Rencontre can be used as widget
@@ -392,6 +398,7 @@ It's better to limit the data size.
 * rencMailRemind - args $u - send a registration remind email to $u->user_email. See rencontre_filter function f_cron_on().
 * rencMailInstant - args $u - send an instant email (One per hour) to $u->user_email. See rencontre_filter function f_cron_liste().
 * rencCron : Control the launch of the 2 functions f_cron_ (on & liste) of maintenance and sending of daily and immediate emails. See rencontre_filter.php function f_cron().
+* rencBeforeUserDel - arg $userID - Fired just after user click to delete his account and before deletion. If !empty return => deletion canceled
 
 [Howto](https://www.boiteasite.fr/site_rencontre_wordpress.html#Developpeurs)
 
@@ -407,6 +414,12 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+= 3.13.3 =
+
+* Fix issue with Duckduckgo browser.
+* Set default value to new member : 35 year, 1m75, 72kg, men finding girl.
+* Add function to get all photos from a member : rencontre_filter.php - rencGetPhotos($userID)
 
 = 3.13.2 =
 
