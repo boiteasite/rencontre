@@ -6,7 +6,7 @@ class RencontreWidget extends WP_widget {
 	}
 	//
 	function widget($arguments, $data) { // Partie Site
-		if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && stripos($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest')!==false) return; // Stop AJAX CALL to improve server speed (by Rencontre or other plugin...)
+		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && stripos($_SERVER['HTTP_X_REQUESTED_WITH'], 'XMLHttpRequest')!==false) return; // Stop AJAX CALL to improve server speed (by Rencontre or other plugin...)
 		if(current_user_can("administrator")) {
 			echo '<div class="w3-bar w3-padding w3-center w3-renc-wabg">';
 			echo '<h2>'.__('You are connected as ADMIN','rencontre').'</h2>';
@@ -3387,7 +3387,7 @@ class RencontreWidget extends WP_widget {
 		$Pgps = (isset($_POST['gps'])?rencSanit($_POST['gps'],'pipe'):'');
 		$Pzagemin = (isset($_POST['zageMin'])?rencSanit($_POST['zageMin'],'int'):25);
 		$Pzagemax = (isset($_POST['zageMax'])?rencSanit($_POST['zageMax'],'int'):45);
-		$Pzsex = (isset($_POST['zsex'])?rencSanit($post['zsex'],'int'):1);
+		$Pzsex = (isset($_POST['zsex'])?rencSanit($_POST['zsex'],'int'):1);
 		if(has_action('rencontre_registration')) do_action('rencontre_registration', $f, $g);
 		else {
 			if($g=='1') {

@@ -2,19 +2,16 @@
 /*
 Plugin Name: Rencontre
 Author: Jacques Malgrange
-Text Domain: rencontre
-Domain Path: /lang
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.13.3
+Version: 3.13.5
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
 	return (isset($_COOKIE['lang'])?$_COOKIE['lang']:$lang);
 });
 //
-$a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
-$rencVersion = '3.13.3';
+$rencVersion = '3.13.5';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -179,9 +176,11 @@ class Rencontre {
 		$CURLANG = get_locale(); // Can be changed with cookie (user lang), see FAQ - default : en_US
 		$rencWPLANG = get_site_option('WPLANG'); // WordPress lang (Dashboard/Settings/General/site language => options table WPLANG) - Can be empty or not exists
 		if(empty($rencWPLANG)) $rencWPLANG = $CURLANG;
-		if(!empty(WP_LANG_DIR) && file_exists(WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo');
-		else if(file_exists(WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo');
-		else if(file_exists(dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo');
+		add_action('init', function() use($CURLANG) {
+			if(!empty(WP_LANG_DIR) && file_exists(WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo');
+			else if(file_exists(WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo');
+			else if(file_exists(dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo');
+		});
 		// Lang2 : PROFIL LANG - DB rencontre_profil - rencontre, base, widget, hook_user
 		$l2 = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".strtolower(substr($CURLANG,0,2))."' LIMIT 1");
 		$rencDiv['lang2'] = (!empty($l2)?$CURLANG:(!empty($rencOpt['lang2'])?$rencOpt['lang2']:$CURLANG)); // Profile lang
@@ -193,6 +192,7 @@ class Rencontre {
 		if(!isset($rencOpt['for'])) $rencOpt['for'] = array();
 		add_action('init', function() { // Hook already loaded...
 			global $rencOpt, $rencCustom;
+			$a = __('A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.','rencontre'); // Description
 			$rencOpt['for'][0] = __('Serious relationship','rencontre');
 			$rencOpt['for'][1] = __('Open relationship','rencontre');
 			$rencOpt['for'][2] = __('Friendship','rencontre');

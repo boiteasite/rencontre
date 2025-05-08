@@ -1,5 +1,25 @@
 == Changelog ==
 
+= 3.13.5 =
+
+08/05/2025
+
+* Fix gender error on registration.
+
+= 3.13.4 =
+
+02/05/2025
+
+* Fix translation warning with WP 6.8.
+
+= 3.13.3 =
+
+04/02/2025
+
+* Fix issue with Duckduckgo browser.
+* Set default value to new member : 35 year, 1m75, 72kg, men finding girl.
+* Add function to get all photos from a member : rencontre_filter.php - rencGetPhotos($userID)
+
 = 3.13.2 =
 
 10/01/2025

@@ -6,7 +6,7 @@ if(empty($rencOpt) || !is_array($rencOpt)) $rencOpt = array();
 add_filter('show_admin_bar' , 'rencAdminBar'); // Viewing the admin bar
 add_action('init', 'rencPreventAdminAccess', 0); // blocks access to the dashboard
 add_action('init', 'rencInLine', 1); // session
-add_action('plugins_loaded', 'rencTextdomain'); // lang
+add_action('init', 'rencTextdomain'); // lang (previous : plugins_loaded)
 add_action('wp_logout', 'rencOutLine'); // session
 add_filter('login_redirect', 'rencLogRedir', 10, 3); // redirection after login
 add_filter('wp_authenticate_user', 'rencUserLogin',10,2);
@@ -348,7 +348,7 @@ function rencSanit($f,$g) {
 			if($a) $a = $f;
 			break;
 			
-		case 'pipe': // pipe separation text && url && location
+		case 'pipe': // pipe separation text && url && location GPS
 			$a = rencSanit($f,'text');
 			break;
 			

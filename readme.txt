@@ -5,7 +5,7 @@ Tags: dating, meet, love, match, social
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 3.13.3
+Stable tag: 3.13.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -230,6 +230,8 @@ With the Premium kit, Goelocation is needed to enable the proximity search with 
 <div class="fb-like" data-href="http://mysite.com" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
 `
 
+A connection app on the Facobook-developer account must be created, as the button alone is useless.
+
 = How to use unconnected search =
 For visitors not connected, you can add a tiny quick search form :
 
@@ -415,6 +417,14 @@ It's better to limit the data size.
 
 == Changelog ==
 
+= 3.13.5 =
+
+* Fix gender error on registration.
+
+= 3.13.4 =
+
+* Fix translation warning with WP 6.8.
+
 = 3.13.3 =
 
 * Fix issue with Duckduckgo browser.
@@ -439,38 +449,3 @@ It's better to limit the data size.
 * Option for profile photo required.
 * Fix profil issue when merging My Account and Edit My Profil pages.
 * Fix some issues.
-
-= 3.12.5 =
-
-* Fix translation issue with WP 6.7.
-
-= 3.12.4 =
-
-* Option to merge My Account and Edit My Profil pages.
-* Update DBIP.
-* Improve Portuguese Brazil translation - thanks to Cesar Ramos.
-* Fix some issues.
-
-= 3.12.3 =
-
-* Remove '&nbsp;' that cause text alignment issues.
-* Fix profil search issue on some servers.
-
-= 3.12.2 =
-
-* Fix modal warning closing issue on Android.
-
-= 3.12.1 =
-
-* Fix user photo issue when add or delete.
-
-= 3.12 =
-
-* Fix warning file not exists on plugin install - patch.php.
-* Fix issues with rencontre_login shortcode. Adds option to disable register or loginout links. See shortcodes F.A.Q.
-* Reduced menu size on smartphones - Template rencontre_menu.php and rencontre.css.
-* Auto scroll on loading (option) to display the plugin menu at the top of the page.
-* Added sorting of members by sex in the Rencontre > Members tab of the dashboard.
-* Email subjects can be customized.
-* Users have the option of prohibiting interaction with members who do not match their criteria.
-* Option to respect precise criteria for featured profiles.
