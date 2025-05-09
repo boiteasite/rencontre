@@ -1,5 +1,11 @@
 == Changelog ==
 
+= 3.13.6 =
+
+09/05/2025
+
+* Fix translation issue.
+
 = 3.13.5 =
 
 08/05/2025

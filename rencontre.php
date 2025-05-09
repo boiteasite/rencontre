@@ -4,14 +4,14 @@ Plugin Name: Rencontre
 Author: Jacques Malgrange
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.13.5
+Version: 3.13.6
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
 	return (isset($_COOKIE['lang'])?$_COOKIE['lang']:$lang);
 });
 //
-$rencVersion = '3.13.5';
+$rencVersion = '3.13.6';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -180,7 +180,7 @@ class Rencontre {
 			if(!empty(WP_LANG_DIR) && file_exists(WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_LANG_DIR.'/rencontre-'.$CURLANG.'.mo');
 			else if(file_exists(WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', WP_CONTENT_DIR.'/languages/plugins/rencontre-'.$CURLANG.'.mo');
 			else if(file_exists(dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo')) load_textdomain('rencontre', dirname(__FILE__).'/lang/rencontre-'.$CURLANG.'.mo');
-		});
+		}, 1); // Priority 1
 		// Lang2 : PROFIL LANG - DB rencontre_profil - rencontre, base, widget, hook_user
 		$l2 = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".strtolower(substr($CURLANG,0,2))."' LIMIT 1");
 		$rencDiv['lang2'] = (!empty($l2)?$CURLANG:(!empty($rencOpt['lang2'])?$rencOpt['lang2']:$CURLANG)); // Profile lang

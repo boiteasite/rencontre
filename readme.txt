@@ -5,7 +5,7 @@ Tags: dating, meet, love, match, social
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 3.13.5
+Stable tag: 3.13.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -416,6 +416,10 @@ It's better to limit the data size.
 8. Registration and connection statistics.
 
 == Changelog ==
+
+= 3.13.6 =
+
+* Fix translation issue.
 
 = 3.13.5 =
 
