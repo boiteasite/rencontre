@@ -411,7 +411,9 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 	foreach($b4 as $b) {
 		$t=explode('=',$b);
 		if($t) {
-			$c4[] = array('a'=>$t[0], 'b'=>$t[1]);
+			$c4[] = array(
+				'a' => rencSanit($t[0],'alphanum'),
+				'b' => rencSanit($t[1],'words'));
 		}
 	}
 	if($a3=="c_categ") {
@@ -511,7 +513,7 @@ function profil_edit($a2,$a3,$a4,$a5,$a6,$g) {
 			if($a5=='ns') {
 				// ns : Numeric Select - Case 5
 				$b4[3] = str_replace("'", "&#39;", $b4[3]); // identifying quotation marks |#39;
-				$s = '["'.$b4[0].'","'.$b4[1].'","'.$b4[2].'","'.$b4[3].'"]';
+				$s = '["'.rencSanit($b4[0],'num').'","'.rencSanit($b4[1],'num').'","'.rencSanit($b4[2],'num').'","'.rencSanit($b4[3],'words').'"]';
 				$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
 					SET
 						t_valeur='".$s."',
@@ -567,7 +569,9 @@ function profil_plus($a2,$a3,$a4,$a5) {
 	foreach($b4 as $b) {
 		$t=explode('=',$b);
 		if($t) {
-			$c4[] = array('a'=>$t[0], 'b'=>$t[1]);
+			$c4[] = array(
+				'a' => rencSanit($t[0],'alphanum'),
+				'b' => rencSanit($t[1],'words'));
 		}
 	}
 	if($a3=="c_categ") {
@@ -575,10 +579,12 @@ function profil_plus($a2,$a3,$a4,$a5) {
 		for($v=0;$v<count($c4);++$v) {
 			$e = str_replace("'", "&#39;", $c4[$v]['b']);
 			if($v==0) {
-				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES(".($m+1).",1,'".$e."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
+				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang)
+					VALUES(".($m+1).",1,'".$e."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
 				$lastid = $wpdb->insert_id;
 			}
-			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$lastid."',".($m+1).",1,'".$e."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
+			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang)
+				VALUES('".$lastid."',".($m+1).",1,'".$e."','*** ". __('TO CHANGE','rencontre')." ***','',1,0,'".$c4[$v]['a']."')");
 		}
 	}
 	else if($a3=="c_label") {
@@ -588,10 +594,12 @@ function profil_plus($a2,$a3,$a4,$a5) {
 			$q = $wpdb->get_var("SELECT c_categ FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' AND c_lang='".$c4[$v]['a']."' LIMIT 1");
 			$e = str_replace("'", "&#39;", $c4[$v]['b']);
 			if($v==0) {
-				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES(".$ic.",".($m+1).",'".addslashes($q)."','".$e."','',1,0,'".$c4[$v]['a']."')");
+				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang)
+					VALUES(".$ic.",".($m+1).",'".addslashes($q)."','".$e."','',1,0,'".$c4[$v]['a']."')");
 				$lastid = $wpdb->insert_id;
 			}
-			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$lastid."',".$ic.",".($m+1).",'".addslashes($q)."','".$e."','',1,0,'".$c4[$v]['a']."')");
+			else $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang)
+				VALUES('".$lastid."',".$ic.",".($m+1).",'".addslashes($q)."','".$e."','',1,0,'".$c4[$v]['a']."')");
 		}
 	}
 	else if($a3=="t_valeur") {
@@ -599,7 +607,9 @@ function profil_plus($a2,$a3,$a4,$a5) {
 			$tval = $wpdb->get_var("SELECT t_valeur FROM ".$wpdb->prefix."rencontre_profil WHERE id='".$a2."' AND c_lang='".$c4[$v]['a']."' LIMIT 1");
 			$s = substr($tval,0,-1) . ",\"" . $c4[$v]['b'] . "\"]";
 			$s = str_replace("'", "&#39;", $s);
-			$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil SET t_valeur='".$s."' WHERE id='".$a2."' AND c_lang='".$c4[$v]['a']."' ");
+			$wpdb->query("UPDATE ".$wpdb->prefix."rencontre_profil
+				SET t_valeur='".$s."'
+				WHERE id='".$a2."' AND c_lang='".$c4[$v]['a']."' ");
 		}
 		if(!file_exists($rencDiv['basedir'].'/portrait/rencontre_synchronise.json')) $a = array();
 		else {
@@ -621,12 +631,13 @@ function profil_langplus($loc,$a4) {
 	// a4 : langue
 	if(!current_user_can("administrator")) die;
 	global $wpdb;
-	$q = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$a4."' LIMIT 1");
+	$b4 = rencSanit($a4,'alphanum');
+	$q = $wpdb->get_var("SELECT c_lang FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$b4."' LIMIT 1");
 	if(!$q) {
 		$q = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$loc."' ORDER BY id");
 		if(!$q) $q = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='en' ORDER BY id");
 		foreach($q as $r) {
-			if($r->t_valeur=='') $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$r->id."','".$r->i_categ."','".$r->i_label."','?','?','','".$r->i_type."','".$r->i_poids."','".$a4."')");
+			if($r->t_valeur=='') $wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$r->id."','".$r->i_categ."','".$r->i_label."','?','?','','".$r->i_type."','".$r->i_poids."','".$b4."')");
 			else {
 				$s='[';
 				for($v=0;$v<count(json_decode((empty($r->t_valeur)?'{}':$r->t_valeur)));++$v) {
@@ -634,7 +645,7 @@ function profil_langplus($loc,$a4) {
 				}
 				$s = str_replace("'", "&#39;", $s);
 				$s = substr($s,0,-1)."]";
-				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$r->id."','".$r->i_categ."','".$r->i_label."','?','?','".$s."','".$r->i_type."','".$r->i_poids."','".$a4."')");
+				$wpdb->query("INSERT INTO ".$wpdb->prefix."rencontre_profil (id,i_categ,i_label,c_categ,c_label,t_valeur,i_type,i_poids,c_lang) VALUES('".$r->id."','".$r->i_categ."','".$r->i_label."','?','?','".$s."','".$r->i_type."','".$r->i_poids."','".$b4."')");
 			}
 		}
 	}
@@ -644,7 +655,8 @@ function profil_langsupp($a4) {
 	// a4 : langue
 	if(!current_user_can("administrator")) die;
 	global $wpdb;
-	$wpdb->query("DELETE FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$a4."'");
+	$b4 = rencSanit($a4,'alphanum');
+	$wpdb->query("DELETE FROM ".$wpdb->prefix."rencontre_profil WHERE c_lang='".$b4."'");
 }
 //
 function f_rencUpDown() {
@@ -1880,12 +1892,12 @@ function rencMenuMembres() {
 			<?php
 			$ho = false; if(has_filter('rencMurP')) $ho = apply_filters('rencMurP', $ho); if($ho) echo $ho;
 			if($Pa1 && !empty($_REQUEST['tok']) && wp_verify_nonce($_REQUEST['tok'],'rencToka')) {
-				if($Pa2=='b0' || $Pa2=='b1' || $Pa2=='m0' || $Pa2=='m1') {
+				if($Pa2=='Gb0' || $Pa2=='b1' || $Pa2=='m0' || $Pa2=='m1') {
 					// Status : blocked = +1 ; no message = +2 ; (both : 3) ; fastreg : 4
 					$st = $wpdb->get_var("SELECT i_status FROM ".$wpdb->prefix."rencontre_users WHERE user_id='".$Pa1."' LIMIT 1");
 					if(!rencistatus($st,2)) {
 						if($Pa2=='b1') $st = rencistatusSet($st,0,0); // ($st>1?2:0);
-						else if($Pa2=='b0') $st = rencistatusSet($st,0,1); // ($st>1?3:1);
+						else if($Pa2=='Gb0') $st = rencistatusSet($st,0,1); // ($st>1?3:1);
 						else if($Pa2=='m1') $st = rencistatusSet($st,1,0); // (($st==1||$st==3)?1:0);
 						else if($Pa2=='m0') $st = rencistatusSet($st,1,1); // (($st==1||$st==3)?3:2);
 						$wpdb->update($wpdb->prefix.'rencontre_users', array('i_status'=>$st), array('user_id'=>$Pa1));
@@ -2139,7 +2151,12 @@ function rencMenuMembres() {
 						}
 					}
 					if(isset($hoUsr[8]) && $s->{$hoUsr[7]}==$hoUsr[8]) echo '<td><i>'.$hoUsr[8].($endate?'</i>'.$endate.'</td>':'');
-					else echo '<td>'.((isset($hoUsr[4][$s->{$hoUsr[3]}][0])&&$s->{$hoUsr[3]}!='')?$hoUsr[4][$s->{$hoUsr[3]}][0]:'').($endate?$endate:'').'</td>';
+					else{
+						echo '<td>';
+						if($s->{$hoUsr[3]}!==null&&isset($hoUsr[4][$s->{$hoUsr[3]}][0])&&$s->{$hoUsr[3]}!='') echo $hoUsr[4][$s->{$hoUsr[3]}][0];
+						if($endate) echo $endate;
+						echo '</td>';
+					}
 				}
 				//
 				echo '</tr>';
