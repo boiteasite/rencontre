@@ -1685,9 +1685,11 @@ class RencontreWidget extends WP_widget {
 				//
 				if(isset($ho)) apply_filters('rencBlurCreaP', $ho);
 			}
-			imagedestroy($in);
-			foreach($out as $v) imagedestroy($v);
-			if(!empty($outret)) imagedestroy($outret);
+			if(PHP_VERSION_ID<80000) {
+				imagedestroy($in);
+				foreach($out as $v) imagedestroy($v);
+				if(!empty($outret)) imagedestroy($outret);
+			}
 		}
 		if(has_filter('rencModerP')) apply_filters('rencModerP', $im);
 	}

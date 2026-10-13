@@ -4,14 +4,14 @@ Plugin Name: Rencontre
 Author: Jacques Malgrange
 Plugin URI: https://www.boiteasite.fr/site_rencontre_wordpress.html
 Description: A free powerful and exhaustive dating plugin with private messaging, webcam chat, search by profile and automatic sending of email. No third party.
-Version: 3.13.6
+Version: 3.14
 Author URI: https://www.boiteasite.fr
 */
 if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', function ($lang) {
 	return (isset($_COOKIE['lang'])?$_COOKIE['lang']:$lang);
 });
 //
-$rencVersion = '3.13.6';
+$rencVersion = '3.13.9';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
@@ -607,7 +607,8 @@ class Rencontre {
 			if(!wp_style_is('w3css') && !empty($tdir['original'])) $out .= '<link rel="stylesheet" href="'.plugins_url('rencontre/css/w3.css').'" />'."\r\n";
 			if(!wp_style_is('rencontre') && !empty($tdir['original'])) $out .= '<link rel="stylesheet" href="'.plugins_url('rencontre/css/rencontre.css').'" />'."\r\n";
 		}
-		if(!file_exists($rencDiv['basedir'].'/portrait/cache/cache_portraits_accueil'.($atts['gen']?$atts['gen']:'').'.html')) {
+		$a = count(glob($rencDiv['basedir'].'/portrait/libre/*')); // Photo in Libre Dir ?
+		if(!$a||!file_exists($rencDiv['basedir'].'/portrait/cache/cache_portraits_accueil'.($atts['gen']?$atts['gen']:'').'.html')) {
 			$ho = false; if(has_filter('rencAds3P')) $ho = apply_filters('rencAds3P', $ho);
 			if($ho) $out .= $ho."\r\n";
 			//
@@ -811,8 +812,10 @@ class Rencontre {
 						$imgP = imagecreatetruecolor($imgX, $imgY);
 						imagecopy($imgP, $imgJ, 0, 0, 0, 0, $imgX, $imgY);
 						imagewebp($imgP, $rencDiv['basedir'].'/portrait/libre/'.$photo.'.webp', 75);
-						imagedestroy($imgJ);
-						imagedestroy($imgP);
+						if(PHP_VERSION_ID<80000) {
+							imagedestroy($imgJ);
+							imagedestroy($imgP);
+						}
 						// WEBP RETINA
 						if(!empty($rencOpt['nbr']['retina']) && file_exists($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'@2x.jpg')) {
 							$imgJ = imagecreatefromjpeg($rencDiv['basedir'].'/portrait/'.floor(($u->ID)/1000).'/'.$photo.'@2x.jpg');
@@ -821,8 +824,10 @@ class Rencontre {
 							$imgP = imagecreatetruecolor($imgX, $imgY);
 							imagecopy($imgP, $imgJ, 0, 0, 0, 0, $imgX, $imgY);
 							imagewebp($imgP, $rencDiv['basedir'].'/portrait/libre/'.$photo.'@2x.webp', 75);
-							imagedestroy($imgJ);
-							imagedestroy($imgP);
+							if(PHP_VERSION_ID<80000) {
+								imagedestroy($imgJ);
+								imagedestroy($imgP);
+							}
 						}
 					}
 				}
@@ -1034,7 +1039,7 @@ class Rencontre {
 		}
 		else return $img;
 	}
-	static function f_rencontreImgReg($atts=array()) {
+	static function f_rencontreImgReg($a=array()) {
 		// Shortcode [rencontre_imgreg title= selector= left= top= login=]
 		// Registration Form on image (home page)
 		global $rencCustom, $rencOpt;
@@ -1044,12 +1049,12 @@ class Rencontre {
 			'left' => '20',
 			'top' => '15',
 			'login' => 0
-			),$atts);
-		$atts['title'] = rencSanit($atts['title'],'text');
-		$atts['selector'] = rencSanit($atts['selector'],'selector');
-		$atts['left'] = rencSanit($atts['left'],'int');
-		$atts['top'] = rencSanit($atts['top'],'int');
-		$atts['login'] = rencSanit($atts['login'],'int');
+			),$a);
+		$args['title'] = rencSanit($arg['title'],'text');
+		$arg['selector'] = rencSanit($arg['selector'],'selector');
+		$arg['left'] = rencSanit($arg['left'],'int');
+		$arg['top'] = rencSanit($arg['top'],'int');
+		$arg['login'] = rencSanit($arg['login'],'int');
 		// ****** TEMPLATE ********
 		ob_start();
 		if($tpl=rencTpl('rencontre_imgreg.php')) include $tpl;

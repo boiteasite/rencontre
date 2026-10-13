@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Registration Part 3/3 and 2/2
- * Last Change : Rencontre 3.13.3
+ * Last Change : Rencontre 3.14
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_registration_part3.php
  * Call : rencontre_widget.php => widget()
  * $u0 (myself) : i_sex, d_naissance, age, agemin, agemax
@@ -35,9 +35,9 @@
 							
 							<select name="zsex" class="w3-select w3-border w3-renc-sebg">
 							<?php for($v=(isset($rencCustom['sex'])?2:0);$v<(isset($rencCustom['sex'])?count($rencOpt['iam']):2);++$v) { ?>
-								<?php if(empty($rencCustom['hetero']) || $hetero!=$v) { ?>
+								<?php if(empty($rencCustom['hetero']) || $hetero!==$v) { ?>
 							
-								<option value="<?php echo $v; ?>"><?php echo $rencOpt['iam'][$v]; ?></option>
+								<option value="<?php echo $v; ?>" <?php if($v<2&&$v!=$u0->i_sex) echo 'selected="selected"'; ?>><?php echo $rencOpt['iam'][$v]; ?></option>
 								<?php } ?>
 							<?php } ?>
 							

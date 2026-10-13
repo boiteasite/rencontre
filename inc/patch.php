@@ -106,7 +106,7 @@ if(!empty($patchsizeu) || !empty($patchweightu)) {
 //
 // PERMANENT : Update DBIP
 //
-$versionDBIP = "202409"; // new version with this update
+$versionDBIP = "202610"; // new version with this update
 $a = get_option('rencontre_dbip');
 $b = $wpdb->get_var("SELECT ip_end FROM ".$wpdb->base_prefix."rencontre_dbip LIMIT 1"); // empty ?
 if(file_exists(dirname(__FILE__).'/dbip-country.csv.gz') && (!$a || intval($a)<intval($versionDBIP) || !$b)) {
@@ -133,38 +133,40 @@ if(file_exists(dirname(__FILE__).'/dbip-country.csv.gz') && (!$a || intval($a)<i
 			//		IGNORE 1 LINES";
 			//	$wpdb->query($q);
 	// 3. Update DB
-	$sql = array();
-	$c = 0;
-	while(($tt = fgets($fp,4096))!==false) {
-		if(strlen($tt)>50) continue;
-		$a = explode(',', str_replace('"', '', $tt));
-		if(isset($a[2])) {
-			if(preg_match('/^[0-9\.]+$/', $a[0])) {
-				++$c;
-				$a0=''; $a1='';
-				$b = explode('.', $a[0]);
-				foreach($b as $r) {
-					if(strlen($r)==1 && $a0) $a0.='00'.$r;
-					else if (strlen($r)==2 && $a0) $a0.='0'.$r;
-					else if($r!='0') $a0.=$r;
-				}
-				$b = explode('.', $a[1]);
-				foreach($b as $r) {
-					if(strlen($r)==1 && $a1) $a1.='00'.$r;
-					else if (strlen($r)==2 && $a1) $a1.='0'.$r;
-					else if($r!='0') $a1.=$r;
-				}
-				if($a0 && $a1) $sql[] = '("'.$a0.'", "'.$a1.'", "'.substr($a[2],0,2).'")';
-				if($c>20000) {
-					if(count($sql)) $wpdb->query('INSERT IGNORE INTO '.$wpdb->base_prefix.'rencontre_dbip (ip_start, ip_end, country) VALUES '.implode(',', $sql));
-					$sql = array();
-					$c = 0;
+	if(is_resource($fp)) {
+		$sql = array();
+		$c = 0;
+		while(($tt = fgets($fp,4096))!==false) {
+			if(strlen($tt)>50) continue;
+			$a = explode(',', str_replace('"', '', $tt));
+			if(isset($a[2])) {
+				if(preg_match('/^[0-9\.]+$/', $a[0])) {
+					++$c;
+					$a0=''; $a1='';
+					$b = explode('.', $a[0]);
+					foreach($b as $r) {
+						if(strlen($r)==1 && $a0) $a0.='00'.$r;
+						else if (strlen($r)==2 && $a0) $a0.='0'.$r;
+						else if($r!='0') $a0.=$r;
+					}
+					$b = explode('.', $a[1]);
+					foreach($b as $r) {
+						if(strlen($r)==1 && $a1) $a1.='00'.$r;
+						else if (strlen($r)==2 && $a1) $a1.='0'.$r;
+						else if($r!='0') $a1.=$r;
+					}
+					if($a0 && $a1) $sql[] = '("'.$a0.'", "'.$a1.'", "'.substr($a[2],0,2).'")';
+					if($c>20000) {
+						if(count($sql)) $wpdb->query('INSERT IGNORE INTO '.$wpdb->base_prefix.'rencontre_dbip (ip_start, ip_end, country) VALUES '.implode(',', $sql));
+						$sql = array();
+						$c = 0;
+					}
 				}
 			}
 		}
+		fclose($fp);
+		if(count($sql)) $wpdb->query('INSERT IGNORE INTO '.$wpdb->base_prefix.'rencontre_dbip (ip_start, ip_end, country) VALUES '.implode(',', $sql));
 	}
-	fclose($fp);
-	if(count($sql)) $wpdb->query('INSERT IGNORE INTO '.$wpdb->base_prefix.'rencontre_dbip (ip_start, ip_end, country) VALUES '.implode(',', $sql));
 	// 4. Save and clean
 	update_option('rencontre_dbip', $versionDBIP);
 	@copy(dirname(__FILE__).'/dbip-country.csv.gz', dirname(__FILE__).'/dbip-country_off.csv.gz');

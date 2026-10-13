@@ -3,9 +3,9 @@ Contributors: sojahu
 Donate link: https://www.paypal.me/JacquesMalgrange
 Tags: dating, meet, love, match, social
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 3.13.6
+Stable tag: 3.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -417,39 +417,11 @@ It's better to limit the data size.
 
 == Changelog ==
 
-= 3.13.6 =
+= 3.14 =
 
-* Fix translation issue.
-
-= 3.13.5 =
-
-* Fix gender error on registration.
-
-= 3.13.4 =
-
-* Fix translation warning with WP 6.8.
-
-= 3.13.3 =
-
-* Fix issue with Duckduckgo browser.
-* Set default value to new member : 35 year, 1m75, 72kg, men finding girl.
-* Add function to get all photos from a member : rencontre_filter.php - rencGetPhotos($userID)
-
-= 3.13.2 =
-
-* Enhanced menu creation.
-* Option to display 'Menus' item in the dashboard Appearance menu when absent if the theme is in block format.
-
-= 3.13.1 =
-
-* Fix Zstrict issue with 0.
-* Image-size code cleanup.
-
-= 3.13 =
-
-* Dashboard options reorganized for simplicity/readability.
-* Option to set min & max weight, option to set min & max size.
-* Option to use both meter/feet and both kilograms/pounds. The user can then choose which unit to use (account page).
-* Option for profile photo required.
-* Fix profil issue when merging My Account and Edit My Profil pages.
-* Fix some issues.
+* Update code for PHP 8.5
+* Fix "incomplete fields or error" warning.
+* The other gender is now the default choice for "looking for" field.
+* Fix some chat issues.
+* Chat conversation in template (previously in js)
+* Update DBIP.

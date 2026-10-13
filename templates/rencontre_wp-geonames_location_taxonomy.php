@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : WpGeonames Location taxonomy
- * Last Change : Rencontre 3.6.5
+ * Last Change : Rencontre 3.14
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_wp-geonames_location_taxonomy.php
  * Call : rencontre_filter.php => renc_wpGeonames_tpl()
  * $data : 0=>country, 1=>region, 2=>city, 3=>lat, 4=>lon
@@ -29,8 +29,8 @@ $data = explode('|',$shortcode['data']);
 		</div>
 		<div>
 			<label><?php _e('My city','rencontre'); ?></label>
-			<input id="rencVille" name="ville" type="text" autocomplete="off" class="w3-input w3-renc-inbg" value="<?php echo $data[2]; ?>" style="display:none;"  />
-			<input id="gps" name="gps" type="hidden" value="<?php echo $data[3].'|'.$data[4]; ?>" />
+			<input id="rencVille" name="ville" type="text" autocomplete="off" class="w3-input w3-renc-inbg" value="<?php echo (isset($data[2])?$data[2]:''); ?>" style="display:none;"  />
+			<input id="gps" name="gps" type="hidden" value="<?php echo ((isset($data[3])&&isset($data[4]))?$data[3].'|'.$data[4]:''); ?>" />
 			<div id="rencCity" class="rencCity"></div>
 			<div class="w3-clear" style="height:5px;"></div>					
 			<div id="geomap" style="display:none;height:300px;max-width:400px"></div>
@@ -51,10 +51,10 @@ $data = explode('|',$shortcode['data']);
 			jQuery('#rencCity').empty();
 			jQuery('#regionSelect').show().empty().append('<option value="0"> - </option>');
 			jQuery.each(r,function(k,v){
-				jQuery('#regionSelect').append('<option value="'+v.name+'" data-regionid="'+v.regionid+'">'+v.name+'</option>');
+				jQuery('#regionSelect').append('<option value="'+v.name+'" data-regionid="'+v.regionid+'" data-value="'+v.name.replace(/[^A-Za-z0-9]/g, '')+'">'+v.name+'</option>');
 			});
-			if(f==1&&'<?php echo addslashes($data[1]); ?>'!=''){
-				jQuery('#regionSelect option[value="<?php echo addslashes($data[1]); ?>"]').attr('selected','selected');
+			if(f==1&&'<?php echo (isset($data[1])?addslashes($data[1]):''); ?>'!=''){
+				jQuery('#regionSelect option[data-value="<?php echo (isset($data[1])?addslashes($data[1]):''); ?>"]').attr('selected','selected');
 				geoDataCity();
 			}
 		});

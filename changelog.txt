@@ -1,5 +1,28 @@
 == Changelog ==
 
+= 3.14 =
+
+13/10/2026
+
+* Update code for PHP 8.5
+* Fix "incomplete fields or error" warning.
+* The other gender is now the default choice for "looking for" field.
+* Fix some chat issues.
+* Chat conversation in template (previously in js)
+* Update DBIP.
+
+= 3.13.8 =
+
+27/11/2025
+
+* Fix XSS vulnerability in Admin Profile edition (Thanks to MyungJu Kim).
+
+= 3.13.7 =
+
+01/09/2025
+
+* Fix Libre photo display issue.
+
 = 3.13.6 =
 
 09/05/2025

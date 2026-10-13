@@ -2,7 +2,7 @@
 /*
  * Plugin : Rencontre
  * Template : Account
- * Last Change : Rencontre 3.13
+ * Last Change : Rencontre 3.14
  * Custom This File ? : wp-content/themes/name-of-my-theme/templates/rencontre_account.php
  * Call : rencontre_widget.php => f_compte()
  * $u0 : all + born_day, born_month, born_year, accountAlert, pause
@@ -138,8 +138,7 @@
 							<div>
 								<label><?php _e('My region','rencontre'); ?></label>
 								<select id="regionSelect" name="region" class="w3-select w3-border w3-renc-sebg">
-									<?php if($u0->c_region) RencontreWidget::f_regionBDD($u0->c_region,$u0->c_pays);
-									else RencontreWidget::f_regionBDD(1,$u0->c_pays); ?>
+									<?php RencontreWidget::f_regionBDD($u0->c_region,$u0->c_pays); ?>
 									
 								</select>
 							</div>
@@ -278,7 +277,7 @@
 							
 							</div>
 							<div class="w3-margin"></div>
-							<?php if(isset($rencCustom['weightu']) && $rencCustom['weightu']==3) { ?>
+							<?php if(empty($rencCustom['weight']) && isset($rencCustom['weightu']) && $rencCustom['weightu']==3) { ?>
 							
 							<div class="w3-right-align w3-padding-small">
 								<label><?php _e('Weight unit', 'rencontre'); ?>
@@ -289,7 +288,7 @@
 								</label>
 							</div>
 							<?php } ?>
-							<?php if(isset($rencCustom['sizeu']) && $rencCustom['sizeu']==3) { ?>
+							<?php if(empty($rencCustom['size']) && isset($rencCustom['sizeu']) && $rencCustom['sizeu']==3) { ?>
 							
 							<div class="w3-right-align w3-padding-small">
 								<label><?php _e('Height unit', 'rencontre'); ?>

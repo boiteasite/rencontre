@@ -735,8 +735,10 @@ function rencRotateJpg($f,$rot,$id=0) {
 	$im = imagecreatefromjpeg($img);
 	$imrot = imagerotate($im, $rot, 0);
 	imagejpeg($imrot, $img, 95); // Img rot lose quality
-	imagedestroy($im);
-	imagedestroy($imrot);
+	if(PHP_VERSION_ID<80000) {
+		imagedestroy($im);
+		imagedestroy($imrot);
+	}
 	RencontreWidget::f_photo($f,$img,0,1);
 }
 //

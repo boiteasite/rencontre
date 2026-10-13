@@ -2100,7 +2100,12 @@ function rencMenuMembres() {
 					echo '<td>';
 					if(!isset($rencCustom['country']) && isset($rencDrapNom[$s->c_pays]) && $s->c_pays!="") echo '<img class="flag" src="'.plugins_url('rencontre/images/drapeaux/').$rencDrap[$s->c_pays].'" height="22px" width="30px" alt="'.$rencDrapNom[$s->c_pays].'" title="'.$rencDrapNom[$s->c_pays].'" /><br />';
 					else if(!isset($rencCustom['country'])) echo $s->c_pays.'<br />';
-					if(!isset($rencCustom['region'])) echo $s->c_region.'<br />';
+					if(!isset($rencCustom['region'])) {
+						echo $s->c_region.'<br />';
+					//	if($s->c_region==='') echo '(vide)';
+					//	else if($s->c_region===0) echo '(zero)';
+					//	else if($s->c_region===NULL) echo '(null)';
+					}
 					echo $s->c_ville.'</td>';
 				}
 				// Registered
@@ -2340,7 +2345,7 @@ function rencMenuMembres() {
 								<span><?php _e('My region','rencontre'); ?></span><br>
 								<p>
 									<select id="regionSelect2" name="region">
-										<?php if($s->c_region) RencontreWidget::f_regionBDD($s->c_region,$s->c_pays); else RencontreWidget::f_regionBDD(1,$s->c_pays); ?>
+										<?php RencontreWidget::f_regionBDD($s->c_region,$s->c_pays); ?>
 										
 									</select>
 								</p>
@@ -2601,6 +2606,8 @@ function rencMenuPrison() {
 		if(!empty($Gtri)) {
 			if($Gtri=='date') $tri='ORDER BY Q.d_prison ASC';
 			else if($Gtri=='Rdate') $tri='ORDER BY Q.d_prison DESC';
+			else if($Gtri=='alias') $tri='ORDER BY U.user_login ASC';
+			else if($Gtri=='Ralias') $tri='ORDER BY U.user_login DESC';
 			else if($Gtri=='mail') $tri='ORDER BY Q.c_mail ASC';
 			else if($Gtri=='Rmail') $tri='ORDER BY Q.c_mail DESC';
 			else if($Gtri=='ip') $tri='ORDER BY Q.c_ip ASC';
@@ -2615,9 +2622,11 @@ function rencMenuPrison() {
 				Q.d_prison,
 				Q.c_mail,
 				Q.c_ip,
-				Q.i_type
-			FROM
-				".$wpdb->prefix."rencontre_prison Q
+				Q.i_type,
+				U.user_login
+			FROM ".$wpdb->prefix."rencontre_prison Q
+			INNER JOIN ".$wpdb->base_prefix."users U
+				ON U.user_email=Q.c_mail
 			".$tri."
 			LIMIT ".(($pagenum-1)*$limit).",".$limit);
 		$total = $wpdb->get_var("SELECT COUNT(id) FROM ".$wpdb->prefix . "rencontre_prison");
@@ -2630,6 +2639,7 @@ function rencMenuPrison() {
 		<table class="prison">
 			<tr>
 				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='date') echo 'R'; ?>date" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Date','rencontre');?></a></td>
+				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='alias') echo 'R'; ?>alias" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Alias','rencontre');?></a></td>
 				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='mail') echo 'R'; ?>mail" title="<?php _e('Sort','rencontre'); ?>"><?php _e('Email address','rencontre');?></a></td>
 				<td><a href="admin.php?page=rencjail&tri=<?php if($Gtri=='ip') echo 'R'; ?>ip" title="<?php _e('Sort','rencontre'); ?>"><?php _e('IP address','rencontre');?><a></td>
 				<td><?php _e('End','rencontre');?></td>
@@ -2639,6 +2649,7 @@ function rencMenuPrison() {
 		foreach($q as $s) {
 			echo '<tr>';
 			echo '<td>'.$s->d_prison.'</td>';
+			echo '<td>'.$s->user_login.'</td>';
 			echo '<td>'.$s->c_mail.'</td>';
 			echo '<td>'.$s->c_ip.'</td>';
 			echo '<td><a href="javascript:void(0)" class="rencSupp" onClick="f_liberte('.$s->id.')" title="'.__('Release','rencontre').'"></a></td>';
