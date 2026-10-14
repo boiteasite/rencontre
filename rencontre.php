@@ -11,7 +11,7 @@ if(isset($_COOKIE['lang']) && strlen($_COOKIE['lang'])==5) add_filter('locale', 
 	return (isset($_COOKIE['lang'])?$_COOKIE['lang']:$lang);
 });
 //
-$rencVersion = '3.13.9';
+$rencVersion = '3.14';
 // Issue with Rencontre when edit and save theme from Dashboard - AJAX issue
 if(defined('DOING_AJAX')) {
 	if(isset($_POST['_wp_http_referer']) && strpos($_POST['_wp_http_referer'].'-','theme-editor.php')) return;
