@@ -46,7 +46,7 @@ function f_exportCsv() {
 			R.i_status=0
 			".($Pphoto?" and R.i_photo!=0 ":"")."
 			".($Pad?" and CHAR_LENGTH(P.t_titre)>4 and CHAR_LENGTH(P.t_annonce)>30 ":"")."
-			".($Pactiv?" and R.d_session>'".date("Y-m-d H:i:s",mktime()-2628000*$Pactiv)."'":"")."
+			".($Pactiv?" and R.d_session>'".date("Y-m-d H:i:s",time()-2628000*$Pactiv)."'":"")."
 		");
 	$rd = mt_rand();
 	$d = $rencDiv['basedir'].'/tmp/';
@@ -153,7 +153,6 @@ function f_importCsv() {
 				$p = 1;
 				@chmod($rencDiv['basedir'].'/tmp/photo_import/',0777);
 			}
-			ini_set('auto_detect_line_endings', true); // Mac
 			$t = fopen($d,'r');
 			$c = 0; $c1 = 0;
 			while(($a=fgetcsv($t,3000,"\t"))!==false) {
@@ -246,7 +245,6 @@ function f_importCsv() {
 				}
 				++$c;
 			}
-			ini_set('auto_detect_line_endings',FALSE); // Mac
 			fclose($t);
 			@unlink($rencDiv['basedir'].'/portrait/cache/cache_portraits_accueil.html');
 			if(!empty($cr)) {
